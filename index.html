@@ -1,8 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>  
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TALLER PRO</title>
-    <link rel="stylesheet" href="styles.css">   
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TallerPro | Sistema de Gestión y Servicios Automotrices</title>
+  <meta name="description" content="TallerPro - Mantenimiento, reparación y diagnóstico automotriz con tecnología de vanguardia y personal altamente capacitado.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+    <div class="container header__inner">
+      <a href="#inicio" class="logo">
+        <svg class="logo__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M3 13l1.5-4.5A2 2 0 0 1 6.4 7h11.2a2 2 0 0 1 1.9 1.5L21 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="2.5" y="13" width="19" height="5" rx="1.5" stroke="currentColor" stroke-width="1.6"/>
+          <circle cx="6.5" cy="18" r="1.6" fill="currentColor"/>
+          <circle cx="17.5" cy="18" r="1.6" fill="currentColor"/>
+        </svg>
+        <span>Taller<strong>Pro</strong></span>
+      </a>
 
+      <nav class="nav" id="nav">
+        <ul class="nav__list">
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#servicios">Servicios</a></li>
+          <li><a href="#planes">Planes</a></li>
+          <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <a href="#contacto" class="btn btn--primary btn--sm header__cta">Agendar cita</a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="inicio">
+      <div class="container hero__grid">
+        <div class="hero__content">
+          <p class="eyebrow">Taller mecánico de confianza</p>
+          <h1>Tu vehículo, en las mejores manos</h1>
+          <p class="hero__lead">
+            Mantenimiento, reparación y diagnóstico automotriz con tecnología de vanguardia
+            y personal altamente capacitado. Registramos cada servicio, repuesto y hora de
+            trabajo para que tu factura sea siempre clara y transparente.
+          </p>
+          <div class="hero__actions">
+            <a href="#contacto" class="btn btn--primary">Agendar cita</a>
+            <a href="#servicios" class="btn btn--ghost">Ver servicios</a>
+          </div>
+
+          <ul class="hero__stats" id="statsList">
+            <li><span class="stat__number" data-target="15">0</span><span class="stat__label">años de experiencia</span></li>
+            <li><span class="stat__number" data-target="500">0</span><span class="stat__label">vehículos atendidos</span></li>
+            <li><span class="stat__number" data-target="98">0</span><span class="stat__label">% clientes satisfechos</span></li>
+          </ul>
+        </div>
+
+        <aside class="hero__form" aria-labelledby="formTitle">
+          <h2 id="formTitle">Solicita información</h2>
+          <form id="leadForm" novalidate>
+            <div class="field">
+              <label for="nombre">Nombre completo</label>
+              <input type="text" id="nombre" name="nombre" placeholder="Escribe tu nombre" required>
+              <span class="field__error" id="err-nombre"></span>
+            </div>
+            <div class="field">
+              <label for="correo">Correo electrónico</label>
+              <input type="email" id="correo" name="correo" placeholder="tucorreo@ejemplo.com" required>
+              <span class="field__error" id="err-correo"></span>
+            </div>
+            <div class="field">
+              <label for="telefono">Teléfono</label>
+              <input type="tel" id="telefono" name="telefono" placeholder="Ej: 3001234567" required>
+              <span class="field__error" id="err-telefono"></span>
+            </div>
+            <div class="field">
+              <label for="mensaje">¿Qué servicio necesitas?</label>
+              <textarea id="mensaje" name="mensaje" rows="3" placeholder="Cuéntanos brevemente" required></textarea>
+              <span class="field__error" id="err-mensaje"></span>
+            </div>
+            <button type="submit" class="btn btn--primary btn--block">Solicitar información</button>
+            <p class="form__confirm" id="formConfirm" role="status" aria-live="polite"></p>
+          </form>
+        </aside>
+      </div>
+    </section>
+    
