@@ -1,99 +1,124 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">  
-<title>TallerMax — Software de gestión para talleres mecánicos</title>
-<meta name="description" content="Digitaliza tu taller mecánico: clientes, autos, empleados, repuestos y facturación con IVA en una sola plataforma.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TallerMax — Software de gestión para talleres mecánicos</title>
+  <meta name="description"
+    content="Digitaliza tu taller mecánico: clientes, autos, empleados, repuestos y facturación con IVA en una sola plataforma.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
-<a class="enlace-saltar" href="#main">Saltar al contenido</a>
+  <a class="enlace-saltar" href="#main">Saltar al contenido</a>
 
-<!--  ENCABEZADO DEL SITIO (HEADER) -->
-<header class="encabezado-sitio">
-  <p class="logo">
-    <img src="img/Tuerca_encabezado.jpg" alt="" width="28" height="28">
-    TALLER<span class="resaltado">MAX</span>
-  </p>
-
-  <nav class="menu-principal" aria-label="Navegación principal">
-    <ul>
-      <li><a href="#servicios">Servicios</a></li>
-      <li><a href="#nosotros">Nosotros</a></li>
-      <li><a href="#beneficios">Beneficios</a></li>
-      <li><a href="#contacto">Contacto</a></li>
-    </ul>
-  </nav>
-
-  <a href="#contacto" class="boton boton-primario boton-pequeno">Prueba gratis 15 días</a>
-</header>
-
-<main id="main">
-
-  <!-- PORTADA (HERO) -->
-  <section class="portada" id="hero">
-    <p class="etiqueta-superior">● Software para talleres mecánicos</p>
-
-    <h1>La forma <span class="resaltado">inteligente</span><br>de gestionar tu taller.</h1>
-
-    <p class="descripcion-portada">
-      TallerMax controla clientes, autos, empleados, repuestos, horas trabajadas
-      y facturación con IVA — todo desde una sola plataforma.
+  <!--  ENCABEZADO DEL SITIO (HEADER) -->
+  <header class="encabezado-sitio">
+    <p class="logo">
+      <img src="img/Tuerca_encabezado.jpg" alt="" width="28" height="28">
+      TALLER<span class="resaltado">MAX</span>
     </p>
 
-    <p class="botones-portada">
-      <a href="#contacto" class="boton boton-primario">Prueba gratis 15 días →</a>
-      <a href="#servicios" class="boton boton-secundario">Conocer Taller Max</a>
-    </p>
+    <nav class="menu-principal" aria-label="Navegación principal">
+      <ul>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#beneficios">Beneficios</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
 
-    <p class="nota-portada">✔ 15 días gratis · Sin compromiso</p>
+    <a href="#contacto" class="boton boton-primario boton-pequeno">Prueba gratis 15 días</a>
+  </header>
 
-    <aside class="panel-vista-previa" aria-label="Vista previa del panel del sistema">
-      <p class="barra-panel">
-        <span class="punto punto-rojo"></span><span class="punto"></span><span class="punto"></span>
-        <span class="url-panel">tallermax.app/dashboard</span>
+  <main id="main">
+
+    <!-- PORTADA (HERO) -->
+    <section class="portada" id="hero">
+      <p class="etiqueta-superior">● Software para talleres mecánicos</p>
+
+      <h1>La forma <span class="resaltado">inteligente</span><br>de gestionar tu taller.</h1>
+
+      <p class="descripcion-portada">
+        TallerMax controla clientes, autos, empleados, repuestos, horas trabajadas
+        y facturación con IVA — todo desde una sola plataforma.
       </p>
 
-      <p class="titulo-panel">Panel principal</p>
+      <p class="botones-portada">
+        <a href="#contacto" class="boton boton-primario">Prueba gratis 15 días →</a>
+        <a href="#servicios" class="boton boton-secundario">Conocer Taller Max</a>
+      </p>
 
-      <ul class="cuadricula-estadisticas">
-        <li><span class="numero-estadistica" data-target="24">0</span><span class="etiqueta-estadistica">Servicios</span></li>
-        <li><span class="numero-estadistica" data-target="138">0</span><span class="etiqueta-estadistica">Repuestos</span></li>
-        <li><span class="numero-estadistica" data-target="96" data-suffix="h">0h</span><span class="etiqueta-estadistica">Horas</span></li>
-        <li><span class="numero-estadistica" data-target="4200" data-prefix="$" data-format="k">$0</span><span class="etiqueta-estadistica">Facturas</span></li>
-      </ul>
+      <p class="nota-portada">✔ 15 días gratis · Sin compromiso</p>
 
-      <ul class="lista-servicios">
-        <li><span class="codigo-servicio">SV-001</span><span class="nombre-servicio">Cambio de aceite</span><span class="etiqueta-estado etiqueta-completado">Completado</span></li>
-        <li><span class="codigo-servicio">SV-002</span><span class="nombre-servicio">Alineación y balanceo</span><span class="etiqueta-estado etiqueta-en-proceso">En proceso</span></li>
-        <li><span class="codigo-servicio">SV-003</span><span class="nombre-servicio">Cambio de pastillas</span><span class="etiqueta-estado etiqueta-pendiente">Pendiente</span></li>
-      </ul>
-    </aside>
-  </section>
-  <!-- ===== BENEFICIOS ===== -->
-  <section class="section" id="beneficios">
-    <p class="section-tag">Por qué cambiarte</p>
-    <h2>Beneficios que se notan en la caja</h2>
+      <aside class="panel-vista-previa" aria-label="Vista previa del panel del sistema">
+        <p class="barra-panel">
+          <span class="punto punto-rojo"></span><span class="punto"></span><span class="punto"></span>
+          <span class="url-panel">tallermax.app/dashboard</span>
+        </p>
 
-    <article class="benefit-card"><h3>Ahorro de tiempo</h3><p>Menos papeleo, más autos atendidos por semana.</p></article>
-    <article class="benefit-card"><h3>Reducción de errores</h3><p>Cálculos automáticos: sin repuestos olvidados ni IVA mal aplicado.</p></article>
-    <article class="benefit-card"><h3>Control financiero</h3><p>Sabes exactamente cuánto entra, cuánto cuesta y cuánto ganas.</p></article>
-    <article class="benefit-card"><h3>Profesionalización</h3><p>Facturas y procesos que dan confianza a tus clientes.</p></article>
-  </section>
+        <p class="titulo-panel">Panel principal</p>
+
+        <ul class="cuadricula-estadisticas">
+          <li><span class="numero-estadistica" data-target="24">0</span><span
+              class="etiqueta-estadistica">Servicios</span></li>
+          <li><span class="numero-estadistica" data-target="138">0</span><span
+              class="etiqueta-estadistica">Repuestos</span></li>
+          <li><span class="numero-estadistica" data-target="96" data-suffix="h">0h</span><span
+              class="etiqueta-estadistica">Horas</span></li>
+          <li><span class="numero-estadistica" data-target="4200" data-prefix="$" data-format="k">$0</span><span
+              class="etiqueta-estadistica">Facturas</span></li>
+        </ul>
+
+        <ul class="lista-servicios">
+          <li><span class="codigo-servicio">SV-001</span><span class="nombre-servicio">Cambio de aceite</span><span
+              class="etiqueta-estado etiqueta-completado">Completado</span></li>
+          <li><span class="codigo-servicio">SV-002</span><span class="nombre-servicio">Alineación y balanceo</span><span
+              class="etiqueta-estado etiqueta-en-proceso">En proceso</span></li>
+          <li><span class="codigo-servicio">SV-003</span><span class="nombre-servicio">Cambio de pastillas</span><span
+              class="etiqueta-estado etiqueta-pendiente">Pendiente</span></li>
+        </ul>
+      </aside>
+    </section>
+    <!-- ===== BENEFICIOS ===== -->
+    <section class="section" id="beneficios">
+      <p class="section-tag">Por qué cambiarte</p>
+      <h2>Beneficios que se notan en la caja</h2>
+
+      <article class="tarjeta-beneficio">
+        <h3>Ahorro de tiempo</h3>
+        <p>Menos papeleo, más autos atendidos por semana.</p>
+      </article>
+      <article class="tarjeta-beneficio">
+        <h3>Reducción de errores</h3>
+        <p>Cálculos automáticos: sin repuestos olvidados ni IVA mal aplicado.</p>
+      </article>
+      <article class="tarjeta-beneficio">
+        <h3>Control financiero</h3>
+        <p>Sabes exactamente cuánto entra, cuánto cuesta y cuánto ganas.</p>
+      </article>
+      <article class="tarjeta-beneficio">
+        <h3>Profesionalización</h3>
+        <p>Facturas y procesos que dan confianza a tus clientes.</p>
+      </article>
+    </section>
 
 
 
-</main>
+  </main>
 
-<!-- FOOTER -->
-<footer class="pie-de-pagina" id="contacto">
-  <p class="footer-bottom"><span id="year"></span>✔ TallerMax. Todos los derechos reservados.</p>
-</footer>
+  <!-- FOOTER -->
+  <footer class="pie-de-pagina" id="contacto">
+    <p class="footer-bottom"><span id="year"></span>✔ TallerMax. Todos los derechos reservados.</p>
+  </footer>
 
-<script src="js/script.js"></script>
+  <script src="js/script.js"></script>
 </body>
+
 </html>
