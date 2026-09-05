@@ -1,4 +1,15 @@
+body{
+  ont-family: var(--font-body);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+}
+
 :root {
+
+
   --color-primary: #1450c4;
   --color-primary-dark: #0b2e6b;
   --color-primary-light: #e8f0fe;
