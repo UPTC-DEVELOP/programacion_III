@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TallerMax — Software de gestión para talleres mecánicos</title>
+<meta name="description" content="Digitaliza tu taller mecánico: clientes, autos, empleados, repuestos y facturación con IVA en una sola plataforma.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<!-- HEADER -->
+<header class="site-header">
+  <p class="logo">
+    <img src="img/logo.svg" alt="" width="28" height="28">
+    TALLER<span class="accent">MAX</span>
+  </p>
+
+  <nav class="main-nav" aria-label="Navegación principal">
+    <ul>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#beneficios">Beneficios</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <a href="#contacto" class="btn btn-primary btn-sm">Prueba gratis 15 días</a>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <p class="eyebrow">● Software para talleres mecánicos</p>
+
+    <h1>La forma <span class="accent">inteligente</span><br>de gestionar tu taller.</h1>
+
+    <p class="hero-sub">
+      TallerMax controla clientes, autos, empleados, repuestos, horas trabajadas
+      y facturación con IVA — todo desde una sola plataforma.
+    </p>
+
+    <p class="hero-actions">
+      <a href="#contacto" class="btn btn-primary">Prueba gratis 15 días →</a>
+      <a href="#servicios" class="btn btn-secondary">Conocer Taller Max</a>
+    </p>
+
+    <p class="hero-note"> * 15 días gratis · Sin compromiso</p>
+
+    <aside class="hero-panel" aria-label="Vista previa del panel del sistema">
+      <p class="panel-bar">
+        <span class="dot dot-red"></span><span class="dot"></span><span class="dot"></span>
+        <span class="panel-url">tallermax.app/dashboard</span>
+      </p>
+
+      <p class="panel-title">Panel principal</p>
+
+      <ul class="stat-grid" id="statGrid">
+        <li><span class="stat-num" data-target="24">0</span><span class="stat-label">Servicios</span></li>
+        <li><span class="stat-num" data-target="138">0</span><span class="stat-label">Repuestos</span></li>
+        <li><span class="stat-num" data-target="96" data-suffix="h">0h</span><span class="stat-label">Horas</span></li>
+        <li><span class="stat-num" data-target="4200" data-prefix="$" data-format="k">$0</span><span class="stat-label">Facturas</span></li>
+      </ul>
+
+      <ul class="service-list">
+        <li><span class="code">SV-001</span><span class="name">Cambio de aceite</span><span class="tag tag-done">Completado</span></li>
+        <li><span class="code">SV-002</span><span class="name">Alineación y balanceo</span><span class="tag tag-progress">En proceso</span></li>
+        <li><span class="code">SV-003</span><span class="name">Cambio de pastillas</span><span class="tag tag-pending">Pendiente</span></li>
+      </ul>
+    </aside>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer" id="contacto">
+  <p class="footer-bottom"><span id="year"></span> TallerMax. Todos los derechos reservados.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
