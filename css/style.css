@@ -1,0 +1,191 @@
+/* VARIABLES GENERALES (colores, fuentes, tamaños) */
+:root {
+  --bg: #0a0a0a;
+  --bg-alt: #111112;
+  --surface: #161616;
+  --border: #262626;
+  --text: #f5f5f5;
+  --text-muted: #a3a3a0;
+  --text-dim: #6e6e6b;
+  --accent: #e8641f;
+  --accent-dark: #b94e17;
+  --success: #6fbf6f;
+  --success-bg: #16241a;
+  --warning: #e0b34a;
+  --warning-bg: #2a2413;
+  --whatsapp: #25d366;
+
+  --light-bg: #ffffff;
+  --light-text: #111111;
+  --light-muted: #6b6b68;
+  --light-border: #ececea;
+
+  --font-display: 'Oswald', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+  --wrap-width: 1140px;
+}
+
+/* Reinicio básico: quita márgenes y rellenos por defecto del navegador */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+/* Estilo general de los títulos (h1, h2, h3) en todo el sitio */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  line-height: 1.15;
+}
+h1 { font-size: clamp(34px, 5vw, 56px); }
+h2 { font-size: clamp(26px, 3.4vw, 40px); }
+h3 { font-size: 16px; }
+
+/* Texto resaltado en color naranja (la palabra "MAX", "inteligente", etc.) */
+.resaltado { color: var(--accent); }
+
+/* Enlace de accesibilidad, oculto hasta que alguien navega con teclado */
+.enlace-saltar {
+  position: absolute; left: -999px; top: 0;
+  background: var(--accent); color: #fff; padding: 10px 16px; z-index: 100;
+}
+.enlace-saltar:focus { left: 16px; top: 16px; }
+
+/* BOTONES
+   Estilo compartido por todos los botones del sitio*/
+.boton {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-body); font-weight: 600; font-size: 15px;
+  padding: 13px 24px; border-radius: var(--radius-sm);
+  text-decoration: none; border: 1px solid transparent; cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+.boton:hover { transform: translateY(-2px); }
+.boton:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.boton-primario { background: var(--accent); color: #fff; }
+.boton-primario:hover { background: var(--accent-dark); }
+
+.boton-secundario { background: transparent; color: var(--text); border-color: var(--border); }
+.boton-secundario:hover { border-color: var(--text-muted); }
+
+.boton-whatsapp { background: var(--whatsapp); color: #fff; width: fit-content; }
+.boton-whatsapp:hover { background: #1fa855; }
+
+.boton-pequeno { padding: 10px 18px; font-size: 14px; }
+.boton-ancho-completo { width: 100%; justify-content: center; margin-top: 6px; }
+
+
+/* ENCABEZADO DEL SITIO */
+.encabezado-sitio {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px; padding-block: 18px;
+  padding-inline: max(24px, calc((100% - var(--wrap-width)) / 2));
+}
+.logo {
+  font-family: var(--font-display); font-size: 19px; font-weight: 600;
+  letter-spacing: 0.5px; display: flex; align-items: center; gap: 10px; white-space: nowrap;
+}
+.menu-principal ul { display: flex; gap: 32px; list-style: none; }
+.menu-principal a {
+  color: var(--text-muted); text-decoration: none; font-size: 15px; font-weight: 500;
+  transition: color 0.2s ease; position: relative;
+}
+.menu-principal a:hover { color: var(--text); }
+.menu-principal a::after {
+  content: ""; position: absolute; left: 0; bottom: -4px; width: 0; height: 2px;
+  background: var(--accent); transition: width 0.2s ease;
+}
+.menu-principal a:hover::after { width: 100%; }
+
+
+/* PORTADA / HERO*/
+.portada {
+  padding-block: 72px 88px;
+  padding-inline: max(24px, calc((100% - var(--wrap-width)) / 2));
+  background:
+    radial-gradient(700px 420px at 78% 10%, rgba(232,100,31,0.10), transparent 60%),
+    var(--bg);
+
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  column-gap: 56px; row-gap: 18px; align-items: start;
+  grid-template-areas:
+    "etiqueta panel"
+    "titulo   panel"
+    "descripcion panel"
+    "botones  panel"
+    "nota     panel";
+}
+.portada > .etiqueta-superior    { grid-area: etiqueta; }
+.portada > h1                    { grid-area: titulo; }
+.portada > .descripcion-portada  { grid-area: descripcion; }
+.portada > .botones-portada      { grid-area: botones; }
+.portada > .nota-portada         { grid-area: nota; }
+.portada > .panel-vista-previa   { grid-area: panel; }
+
+/* Etiqueta pequeña arriba del título ("● Software para talleres...") */
+.etiqueta-superior {
+  display: inline-block; border: 1px solid var(--accent); color: var(--accent);
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.5px;
+  padding: 6px 14px; border-radius: 20px; width: fit-content;
+}
+.descripcion-portada { color: var(--text-muted); font-size: 17px; max-width: 480px; }
+.botones-portada { display: flex; gap: 14px; flex-wrap: wrap; }
+.nota-portada { color: var(--text-dim); font-size: 13px; }
+
+/* Panel simulado que muestra cómo se ve el sistema por dentro */
+.panel-vista-previa {
+  background: var(--bg-alt); border: 1px solid var(--border); border-radius: 14px;
+  overflow: hidden; box-shadow: 0 30px 60px -30px rgba(0,0,0,0.7);
+  padding: 20px;
+}
+.barra-panel {
+  display: flex; align-items: center; gap: 7px;
+  margin: -20px -20px 18px -20px; padding: 13px 16px;
+  background: var(--surface); border-bottom: 1px solid var(--border);
+}
+.punto { width: 9px; height: 9px; border-radius: 50%; background: var(--border); }
+.punto-rojo { background: var(--accent); }
+.url-panel { margin-left: 8px; font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); }
+.titulo-panel {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 1px;
+  color: var(--text-dim); text-transform: uppercase; margin-bottom: 14px;
+}
+
+/* Números grandes que resumen la actividad del taller (servicios, repuestos, horas...) */
+.cuadricula-estadisticas { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 18px; }
+.cuadricula-estadisticas li { background: var(--surface); border-radius: 8px; padding: 12px 10px; }
+.numero-estadistica { display: block; font-family: var(--font-mono); font-weight: 500; font-size: 18px; }
+.etiqueta-estadistica { display: block; font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+
+/* Lista corta de servicios recientes, a modo de ejemplo, dentro del panel */
+.lista-servicios { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+.lista-servicios li { display: flex; align-items: center; gap: 12px; background: var(--surface); border-radius: 8px; padding: 11px 14px; }
+.lista-servicios .codigo-servicio { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); width: 54px; }
+.lista-servicios .nombre-servicio { flex: 1; font-size: 14px; }
+
+/* Etiquetas de estado del servicio: completado, en proceso, pendiente */
+.etiqueta-estado { font-size: 11px; padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
+.etiqueta-completado { background: var(--success-bg); color: var(--success); }
+.etiqueta-en-proceso { background: rgba(232,100,31,0.15); color: var(--accent); }
+.etiqueta-pendiente { background: var(--warning-bg); color: var(--warning); }
