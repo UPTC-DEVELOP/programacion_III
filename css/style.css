@@ -190,15 +190,53 @@ h3 { font-size: 16px; }
 .etiqueta-en-proceso { background: rgba(232,100,31,0.15); color: var(--accent); }
 .etiqueta-pendiente { background: var(--warning-bg); color: var(--warning); }
 
+/* Secciones Generales*/
+.seccion {
+  padding-block: 88px;
+  padding-inline: max(24px, calc((100% - var(--wrap-width)) / 2));
+  display: grid;
+  row-gap: 20px;
+}
+.seccion-alterna { background: var(--bg-alt); }
 
+.etiqueta-seccion {
+  grid-column: 1 / -1;
+  font-family: var(--font-mono); font-size: 12px; color: var(--accent);
+  letter-spacing: 1px; text-transform: uppercase;
+}
+.seccion > h2 { grid-column: 1 / -1; }
+.texto-introductorio { grid-column: 1 / -1; font-size: 16px; max-width: 560px; color: var(--text-muted); }
+
+/*Resumen de oferta*/
+.seccion-resumen { padding-block: 64px; grid-template-columns: repeat(4, 1fr); column-gap: 18px; }
+.item-resumen { border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+.item-resumen h3 { color: var(--accent); font-size: 15px; margin-bottom: 6px; }
+.item-resumen p { color: var(--text-muted); font-size: 13px; }
+
+.franja-confianza { grid-column: 1 / -1; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; margin-top: 8px; }
+.franja-confianza ul { list-style: none; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 24px; }
+.franja-confianza li { text-align: center; display: flex; flex-direction: column; }
+.numero-confianza { font-family: var(--font-mono); font-size: 28px; font-weight: 500; color: var(--accent); }
+.etiqueta-confianza { font-size: 13px; color: var(--text-muted); }
+
+/*El problema */
+.seccion-clara {
+  background: var(--light-bg); color: var(--light-text);
+  grid-template-columns: repeat(4, 1fr); column-gap: 0; row-gap: 40px;
+}
+.seccion-clara > .texto-introductorio { margin-bottom: 16px; }
+.titulo-oscuro { color: var(--light-text); }
+.texto-oscuro { color: var(--light-muted); }
+.tarjeta-problema { padding: 0 28px; border-left: 1px solid var(--light-border); }
+.tarjeta-problema:nth-of-type(1) { border-left: none; padding-left: 0; }
+.tarjeta-problema h3 { color: var(--light-text); margin-bottom: 8px; font-size: 15px; }
+.tarjeta-problema p { color: var(--light-muted); font-size: 14px; }
 
 /* BENEFICIOS */
 #beneficios { grid-template-columns: repeat(4, 1fr); column-gap: 20px; }
 .tarjeta-beneficio { border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 20px; }
 .tarjeta-beneficio h3 { font-size: 16px; margin-bottom: 8px; color: var(--accent); }
 .tarjeta-beneficio p { color: var(--text-muted); font-size: 14px; }
-
-
 
 
 /*Footer*/
