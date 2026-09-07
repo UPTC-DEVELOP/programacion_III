@@ -112,3 +112,134 @@ header small {
   font-weight: bold;
   letter-spacing: 2px;
 }
+
+/* -------------------------
+   NAV
+   ------------------------- */
+
+nav ul {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+
+  list-style: none;
+}
+
+nav a {
+  color: var(--negro);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+
+  transition: color 0.3s ease;
+}
+
+nav a:hover,
+nav a[aria-current="page"] {
+  color: var(--rojo);
+}
+
+
+/* ------------------------
+   MAIN
+   --------------------- */
+
+main {
+  width: 100%;
+}
+
+
+/* --------------------------------------
+   HERO / PRESENTACIÓN
+   ----------------------------------- */
+
+main > section:first-child {
+  min-height: 600px;
+
+  background-image:
+    linear-gradient(
+      rgba(0, 0, 0, 0.72),
+      rgba(0, 0, 0, 0.78)
+    ),
+    url("../img/taller.jpg");
+
+  background-size: cover;
+  background-position: center;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+  color: var(--blanco);
+
+  padding: 80px 20px;
+}
+
+main > section:first-child > article {
+  width: 100%;
+  max-width: 1000px;
+}
+
+main > section:first-child h1 {
+  margin-bottom: 25px;
+
+  font-size: clamp(42px, 6vw, 78px);
+  line-height: 1.05;
+
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -2px;
+}
+
+main > section:first-child h1 span {
+  color: var(--rojo);
+}
+
+main > section:first-child p {
+  max-width: 650px;
+  margin: 0 auto;
+
+  color: #eeeeee;
+  font-size: 16px;
+}
+
+
+/* -------------------------------
+   BOTONES
+   ---------------------------- */
+
+a[role="button"],
+button[type="submit"] {
+  display: inline-block;
+
+  margin-top: 30px;
+  padding: 15px 35px;
+
+  background-color: var(--rojo);
+  color: var(--blanco);
+
+  border: 2px solid var(--rojo);
+
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+a[role="button"]:hover,
+button[type="submit"]:hover {
+  background-color: var(--blanco);
+  color: var(--rojo);
+
+  transform: translateY(-3px);
+}
