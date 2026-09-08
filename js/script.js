@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileNav();
   initAnimatedCounters();
   initFormValidation();
+  initToggleDetalleServicio(); // mostrar/ocultar detalle por servicio
 });
 
 // ---------------------------------------------
@@ -164,4 +165,29 @@ function initFormValidation() {
     });
   });
   
+}
+
+// Cada tarjeta de servicio tiene su propio botón para desplegar o esconder los detalles
+function initToggleDetalleServicio() {
+  const botonesDetalle = document.querySelectorAll('.boton-detalle-servicio');
+  if (!botonesDetalle.length) return;
+
+  botonesDetalle.forEach(boton => {
+    boton.addEventListener('click', () => {
+      const idPanel = boton.getAttribute('aria-controls');
+      const panelDetalle = document.getElementById(idPanel);
+      if (!panelDetalle) return;
+
+      const estaAbierto = boton.getAttribute('aria-expanded') === 'true';
+
+      // Cambia el estado accesible del botón (para lectores de pantalla)
+      boton.setAttribute('aria-expanded', String(!estaAbierto));
+
+      // Muestra u oculta la lista usando el atributo nativo "hidden"
+      panelDetalle.hidden = estaAbierto;
+
+      // Cambia el texto del botón según el estado, sin tocar el ícono de flecha
+      boton.firstChild.textContent = estaAbierto ? 'Ver detalles ' : 'Ocultar detalles ';
+    });
+  });
 }
