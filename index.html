@@ -99,14 +99,14 @@
     <!-- Franja con cifras que respaldan la confianza en el producto -->
     <aside class="franja-confianza" aria-label="Estadísticas de confianza">
       <ul>
-        <li><span class="numero-confianza" data-target="180">0</span><span class="etiqueta-confianza">talleres activos</span></li>
-        <li><span class="numero-confianza" data-target="98" data-suffix="%">0%</span><span class="etiqueta-confianza">satisfacción</span></li>
-        <li><span class="numero-confianza" data-target="15" data-suffix=" h/mes">0</span><span class="etiqueta-confianza">ahorradas en promedio</span></li>
+        <li><span class="numero-confianza" data-count="180">0</span><span class="etiqueta-confianza">talleres activos</span></li>
+        <li><span class="numero-confianza" data-count="98" data-suffix="%">0%</span><span class="etiqueta-confianza">satisfacción</span></li>
+        <li><span class="numero-confianza" data-count="15" data-suffix=" h/mes">0</span><span class="etiqueta-confianza">ahorradas en promedio</span></li>
       </ul>
     </aside>
   </section>
 
-  <!-- El problema -->s
+  <!-- El problema -->
   <section class="seccion seccion-clara" id="problema">
     <p class="etiqueta-seccion">El problema</p>
     <h2 class="titulo-oscuro">Gestionar un taller no<br>debería ser complicado.</h2>
@@ -118,26 +118,47 @@
     <article class="tarjeta-problema"><h3>Facturación manual</h3><p>Más tiempo dedicado a tareas administrativas.</p></article>
   </section>
     <!-- ===== BENEFICIOS ===== -->
-    <section class="section" id="beneficios">
-      <p class="section-tag">Por qué cambiarte</p>
-      <h2>Beneficios que se notan en la caja</h2>
+     <section class="section beneficios" id="beneficios">
+      <div class="container">
+        <p class="eyebrow">Tablero de beneficios</p>
+        <h2>Resultados que se sienten desde la primera semana </h2>
 
-      <article class="tarjeta-beneficio">
-        <h3>Ahorro de tiempo</h3>
-        <p>Menos papeleo, más autos atendidos por semana.</p>
-      </article>
-      <article class="tarjeta-beneficio">
-        <h3>Reducción de errores</h3>
-        <p>Cálculos automáticos: sin repuestos olvidados ni IVA mal aplicado.</p>
-      </article>
-      <article class="tarjeta-beneficio">
-        <h3>Control financiero</h3>
-        <p>Sabes exactamente cuánto entra, cuánto cuesta y cuánto ganas.</p>
-      </article>
-      <article class="tarjeta-beneficio">
-        <h3>Profesionalización</h3>
-        <p>Facturas y procesos que dan confianza a tus clientes.</p>
-      </article>
+        <div class="cuadricula-beneficio">
+          <article class="tarjeta-beneficio">
+            <span class="valores-tarjeta" data-count="70" data-suffix="%">0%</span>
+            <h3>Ahorro de tiempo</h3>
+            <p>Menos papeleo, más carros atendidos por semana.</p>
+          </article>
+          <article class="tarjeta-beneficio">
+            <span class="valores-tarjeta" data-count="95" data-suffix="%">0%</span>
+            <h3>Reducción de errores</h3>
+            <p>La facturación y el inventario se calculan solos.</p>
+          </article>
+          <article class="tarjeta-beneficio">
+            <span class="valores-tarjeta" data-count="100" data-suffix="%">0%</span>
+            <h3>Control financiero</h3>
+            <p>Sabes exactamente cuánto entra y cuánto se gasta en repuestos.</p>
+          </article>
+          <article class="tarjeta-beneficio">
+            <span class="valores-tarjeta" data-count="1" data-suffix="er">0</span>
+            <h3>Profesionalización</h3>
+            <p>Facturas y reportes que dan confianza al cliente.</p>
+          </article>
+        </div>
+
+        <details class="detalles-panel" id="detailsPanel">
+          <summary class="boton boton-outline">Ver cómo se calculan estos beneficios</summary>
+          <p>Las cifras se basan en talleres que migraron de registros en papel a un sistema digital:
+          reducen tiempo administrativo, evitan pérdidas por repuestos no facturados y eliminan errores
+          de cálculo manual de IVA gracias a la automatización de TallerMax.</p>
+        </details>
+
+        <blockquote class="testimonio">
+          <p>"Antes cuadrar la caja del mes tomaba un día completo. Con TallerMax lo reviso en minutos
+          y ya no se me pierde ni un repuesto."</p>
+          <cite>— Dueño de taller mecánico, Boyacá</cite>
+        </blockquote>
+      </div>
     </section>
 
 

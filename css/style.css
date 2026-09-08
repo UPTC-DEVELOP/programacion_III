@@ -9,6 +9,8 @@
   --text-dim: #6e6e6b;
   --accent: #e8641f;
   --accent-dark: #b94e17;
+  --accent-2: #2fb6a3; 
+   --muted: #98a2b3;
   --success: #6fbf6f;
   --success-bg: #16241a;
   --warning: #e0b34a;
@@ -23,6 +25,7 @@
   --font-display: 'Oswald', sans-serif;
   --font-body: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+  --transition: 0.25s ease;
 
   --radius: 10px;
   --radius-sm: 6px;
@@ -88,6 +91,16 @@ h3 { font-size: 16px; }
 
 .boton-pequeno { padding: 10px 18px; font-size: 14px; }
 .boton-ancho-completo { width: 100%; justify-content: center; margin-top: 6px; }
+
+.boton-outline {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  display: inline-block;
+}
+.boton-outline:hover { border-color: var(--accent-2); color: var(--accent-2); }
 
 
 /* ENCABEZADO DEL SITIO */
@@ -222,7 +235,7 @@ h3 { font-size: 16px; }
 /*El problema */
 .seccion-clara {
   background: var(--light-bg); color: var(--light-text);
-  grid-template-columns: repeat(4, 1fr); column-gap: 0; row-gap: 40px;
+  grid-template-columns: repeat(4, 4fr); column-gap: 0; row-gap: 40px;
 }
 .seccion-clara > .texto-introductorio { margin-bottom: 16px; }
 .titulo-oscuro { color: var(--light-text); }
@@ -233,11 +246,76 @@ h3 { font-size: 16px; }
 .tarjeta-problema p { color: var(--light-muted); font-size: 14px; }
 
 /* BENEFICIOS */
-#beneficios { grid-template-columns: repeat(4, 1fr); column-gap: 20px; }
-.tarjeta-beneficio { border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 20px; }
-.tarjeta-beneficio h3 { font-size: 16px; margin-bottom: 8px; color: var(--accent); }
-.tarjeta-beneficio p { color: var(--text-muted); font-size: 14px; }
+.beneficios { background: var(--surface); border-top: 10px solid var(--border); border-bottom: 1px solid var(--border); 
+padding-inline: max(24px, calc((100% - var(--wrap-width)) / 2));
+}
+.cuadricula-beneficio {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
 
+.tarjeta-beneficio {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.8rem;
+  text-align: center;
+  transition: border-color var(--transition), transform var(--transition);
+}
+.tarjeta-beneficio:hover { border-color: var(--accent-2); transform: translateX(-3px); left: 2px;}
+
+.valores-tarjeta {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.tarjeta-beneficio p { font-size: 0.85rem; }
+
+
+.detalles-panel {
+  margin-top: 2.5rem;
+}
+
+.detalles-panel summary {
+  cursor: pointer;
+  list-style: none;
+}
+.detalles-panel summary::-webkit-details-marker,
+.detalles-panel summary::marker {
+  display: none;
+  content: "";
+}
+.detalles-panel[open] summary {
+  border-color: var(--accent-2);
+  color: var(--accent-2);
+  margin-bottom: 1rem;
+}
+
+.detalles-panel p {
+  padding: 1.4rem;
+  background: var(--bg);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+}
+
+.testimonio {
+  margin-top: 3rem;
+  padding: 2rem;
+  border-left: 3px solid var(--accent);
+  background: var(--bg);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.testimonio p { color: var(--text); font-style: italic; font-size: 1.05rem; }
+.testimonio cite { display: block; margin-top: 0.8rem; color: var(--accent-2); font-size: 0.85rem; font-style: normal; }
+
+/* ============================================ */
 
 /*Footer*/
 .site-footer {
