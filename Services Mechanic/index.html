@@ -1,254 +1,342 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Services Mechanic</title>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Services Mechanic</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
 
-<body>
-  <header>
-    <h1>Services Mechanic</h1>
+  <body>
+    <header>
+      <img
+        src="img/LOGO SERVICE MECHANIC.png"
+        alt="Logo de Services Mechanic"
+        width="150"
+      />
 
-    <nav aria-label="Navegación principal">
-      <ul>
-        <li><a href="#inicio">Inicio</a></li>
-        <li><a href="#servicios">Servicios</a></li>
-        <li><a href="#contacto">Contacto</a></li>
-      </ul>
-    </nav>
+      <h1>Services Mechanic</h1>
 
-    <a
-      href="#contacto"
-      aria-label="Ir a la sección de contacto para cotizar un servicio mecánico"
-    >
-      Cotizar
-    </a>
-  </header>
+      <nav aria-label="Navegación principal">
+        <ul>
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#servicios">Nuestros servicios</a></li>
+          <li><a href="#beneficios">Beneficios</a></li>
+          <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
 
-  <main>
-    <section id="inicio" aria-labelledby="titulo-inicio">
-      <h2 id="titulo-inicio">Organiza tu taller. Controla cada servicio.</h2>
+      <a href="#contacto">Solicitar información</a>
+    </header>
 
-      <p>
-        Services Mechanic facilita la gestión de clientes, vehículos,
-        empleados, repuestos, servicios y facturación de un taller mecánico.
-      </p>
-    </section>
-
-    <section id="servicios" aria-labelledby="titulo-servicios">
-      <h2 id="titulo-servicios">Nuestros servicios</h2>
-
-      <p>
-        Services Mechanic permite administrar las principales áreas
-        operativas de un taller mecánico.
-      </p>
-
-      <article aria-labelledby="titulo-clientes-vehiculos">
-        <h3 id="titulo-clientes-vehiculos">Gestión de clientes y vehículos</h3>
+    <main>
+      <section id="inicio" aria-labelledby="titulo-inicio">
+        <h2 id="titulo-inicio">Organiza tu taller. Controla cada servicio.</h2>
 
         <p>
-          Permite registrar y organizar la información de los clientes
-          y los vehículos atendidos en el taller.
+          Services Mechanic facilita la gestión de clientes, vehículos,
+          empleados, repuestos, servicios y facturación de un taller mecánico.
         </p>
-      </article>
+      </section>
 
-      <article aria-labelledby="titulo-empleados">
-        <h3 id="titulo-empleados">Gestión de empleados</h3>
+      <section id="problema" aria-labelledby="titulo-problema">
+        <h2 id="titulo-problema">
+          Administrar tu taller no debería ser complicado
+        </h2>
 
         <p>
-          Permite registrar y organizar la información de los empleados
-          que trabajan en el taller mecánico.
+          Los registros en papel y la información dispersa dificultan la
+          organización del trabajo diario.
         </p>
-      </article>
 
-      <article aria-labelledby="titulo-repuestos">
-        <h3 id="titulo-repuestos">Gestión de repuestos</h3>
+        <ul>
+          <li>Información de clientes y vehículos difícil de encontrar.</li>
+          <li>Dificultad para controlar los repuestos utilizados.</li>
+          <li>Poco seguimiento de las horas trabajadas.</li>
+          <li>Errores al realizar cálculos manuales de facturación.</li>
+        </ul>
+      </section>
+
+      <section id="servicios" aria-labelledby="titulo-servicios">
+        <h2 id="titulo-servicios">Nuestros servicios</h2>
 
         <p>
-          Permite registrar y controlar los repuestos utilizados
-          durante los servicios realizados en el taller.
+          Services Mechanic permite administrar las principales áreas operativas
+          de un taller mecánico.
         </p>
-      </article>
 
-      <article aria-labelledby="titulo-horas">
-        <h3 id="titulo-horas">Control de horas trabajadas</h3>
+        <article aria-labelledby="titulo-clientes-vehiculos">
+          <h3 id="titulo-clientes-vehiculos">
+            Gestión de clientes y vehículos
+          </h3>
+
+          <p>
+            Permite registrar y organizar la información de los clientes y los
+            vehículos atendidos en el taller.
+          </p>
+        </article>
+
+        <article aria-labelledby="titulo-empleados">
+          <h3 id="titulo-empleados">Gestión de empleados</h3>
+
+          <p>
+            Permite registrar y organizar la información de los empleados que
+            trabajan en el taller mecánico.
+          </p>
+        </article>
+
+        <article aria-labelledby="titulo-repuestos">
+          <h3 id="titulo-repuestos">Gestión de repuestos</h3>
+
+          <p>
+            Permite registrar y controlar los repuestos utilizados durante los
+            servicios realizados en el taller.
+          </p>
+        </article>
+
+        <article aria-labelledby="titulo-horas">
+          <h3 id="titulo-horas">Control de horas trabajadas</h3>
+
+          <p>
+            Permite registrar y controlar el tiempo empleado por los
+            trabajadores en cada servicio realizado.
+          </p>
+        </article>
+
+        <article aria-labelledby="titulo-facturacion">
+          <h3 id="titulo-facturacion">Facturación</h3>
+
+          <p>
+            Permite organizar el valor de los repuestos, las horas trabajadas y
+            el cálculo del IVA correspondiente a cada servicio.
+          </p>
+        </article>
+      </section>
+
+      <section id="nosotros" aria-labelledby="titulo-nosotros">
+        <h2 id="titulo-nosotros">Nosotros</h2>
 
         <p>
-          Permite registrar y controlar el tiempo empleado
-          por los trabajadores en cada servicio realizado.
+          Services Mechanic surge al identificar que muchos talleres gestionan
+          la información de sus clientes, vehículos, empleados, repuestos,
+          servicios y facturación mediante papeles y registros separados.
         </p>
-      </article>
-
-      <article aria-labelledby="titulo-facturacion">
-        <h3 id="titulo-facturacion">Facturación</h3>
 
         <p>
-          Permite organizar el valor de los repuestos, las horas trabajadas
-          y el cálculo del IVA correspondiente a cada servicio.
+          Nuestra propuesta reúne estos procesos en un entorno digital para
+          facilitar una administración más organizada, reducir tareas manuales y
+          mejorar el control de cada servicio.
         </p>
-      </article>
-    </section>
+        <h3>Misión</h3>
 
-    <section id="solicitud-servicio" aria-labelledby="titulo-solicitud-servicio">
-      <h2 id="titulo-solicitud-servicio">Solicitud de servicio mecánico</h2>
+        <p>
+          Simplificar la administración de los talleres mecánicos mediante una
+          solución digital que centralice la información de clientes, vehículos,
+          empleados, repuestos y facturación, reduciendo errores y liberando
+          tiempo para que los propietarios se enfoquen en lo que mejor saben
+          hacer.
+        </p>
 
-      <form
-        action="#"
-        method="post"
-        data-form-type="solicitud-servicio"
-        data-business-area="taller-mecanico"
+        <h3>Visión</h3>
+
+        <p>
+          Para 2030, consolidarnos como una solución de gestión digital para
+          talleres mecánicos en Colombia, reconocida por su facilidad de uso y
+          por contribuir a una administración más organizada y eficiente.
+        </p>
+
+        <h3>Nuestros valores</h3>
+
+        <ul>
+          <li>
+            <strong>Innovación útil:</strong>
+            Tecnología que resuelve problemas reales del taller.
+          </li>
+          <li>
+            <strong>Organización:</strong>
+            Claridad y estructura en cada proceso del negocio.
+          </li>
+          <li>
+            <strong>Confianza:</strong>
+            Compromiso con el manejo responsable de la información.
+          </li>
+          <li>
+            <strong>Cercanía:</strong>
+            Escuchamos las necesidades de los talleres para desarrollar
+            soluciones fáciles de utilizar.
+          </li>
+          <li>
+            <strong>Mejora continua:</strong>
+            Evolucionamos junto con las necesidades del sector.
+          </li>
+        </ul>
+      </section>
+
+      <section
+        id="solicitud-servicio"
+        aria-labelledby="titulo-solicitud-servicio"
       >
-        <p>
-          <label for="nombre">Nombre</label>
-          <input
-            id="nombre"
-            name="nombre"
-            type="text"
-            required
-            minlength="3"
-            maxlength="80"
-            data-field-purpose="identificacion-cliente"
-          >
-        </p>
+        <h2 id="titulo-solicitud-servicio">Solicitud de servicio mecánico</h2>
+
+        <form
+          action="#"
+          method="post"
+          data-form-type="solicitud-servicio"
+          data-business-area="taller-mecanico"
+        >
+          <p>
+            <label for="nombre">Nombre</label>
+            <input
+              id="nombre"
+              name="nombre"
+              type="text"
+              required
+              minlength="3"
+              maxlength="80"
+              data-field-purpose="identificacion-cliente"
+            />
+          </p>
+
+          <p>
+            <label for="correo">Correo</label>
+            <input
+              id="correo"
+              name="correo"
+              type="email"
+              required
+              data-field-purpose="contacto-cliente"
+            />
+          </p>
+
+          <p>
+            <label for="telefono">Teléfono</label>
+            <input
+              id="telefono"
+              name="telefono"
+              type="tel"
+              required
+              pattern="[0-9+() -]{7,20}"
+              data-field-purpose="contacto-telefonico"
+            />
+          </p>
+
+          <p>
+            <label for="placa">Placa</label>
+            <input
+              id="placa"
+              name="placa"
+              type="text"
+              required
+              pattern="([A-Za-z]{3}[0-9]{3}|[A-Za-z]{3}[0-9]{2}[A-Za-z])"
+              minlength="6"
+              maxlength="6"
+              data-field-purpose="identificacion-vehiculo"
+            />
+          </p>
+
+          <p>
+            <label for="fecha">Fecha</label>
+            <input
+              id="fecha"
+              name="fecha"
+              type="date"
+              required
+              data-field-purpose="programacion-servicio"
+            />
+          </p>
+
+          <p>
+            <label for="kilometraje">Kilometraje</label>
+            <input
+              id="kilometraje"
+              name="kilometraje"
+              type="number"
+              min="0"
+              max="999999"
+              data-field-purpose="estado-vehiculo"
+            />
+          </p>
+
+          <p>
+            <label for="tipo-servicio">Tipo de servicio</label>
+            <select
+              id="tipo-servicio"
+              name="tipo-servicio"
+              required
+              data-field-purpose="clasificacion-servicio"
+            >
+              <option value="">Seleccione una opción</option>
+              <option value="diagnostico" data-service-category="revision">
+                Diagnóstico general
+              </option>
+              <option value="mantenimiento" data-service-category="preventivo">
+                Mantenimiento preventivo
+              </option>
+              <option value="reparacion" data-service-category="correctivo">
+                Reparación mecánica
+              </option>
+            </select>
+          </p>
+
+          <p>
+            <label for="descripcion-problema">Descripción del problema</label>
+            <textarea
+              id="descripcion-problema"
+              name="descripcion-problema"
+              required
+              minlength="10"
+              maxlength="500"
+              data-field-purpose="detalle-solicitud"
+            ></textarea>
+          </p>
+
+          <p>
+            <button type="submit" data-action="enviar-solicitud">
+              Enviar solicitud
+            </button>
+          </p>
+        </form>
+      </section>
+
+      <aside aria-labelledby="titulo-informacion-complementaria">
+        <h2 id="titulo-informacion-complementaria">
+          Información complementaria
+        </h2>
 
         <p>
-          <label for="correo">Correo</label>
-          <input
-            id="correo"
-            name="correo"
-            type="email"
-            required
-            data-field-purpose="contacto-cliente"
-          >
+          Para aprovechar mejor Services Mechanic, el taller debe mantener
+          actualizados los datos de clientes, vehículos, repuestos y servicios
+          realizados.
         </p>
+      </aside>
 
-        <p>
-          <label for="telefono">Teléfono</label>
-          <input
-            id="telefono"
-            name="telefono"
-            type="tel"
-            required
-            pattern="[0-9+() -]{7,20}"
-            data-field-purpose="contacto-telefonico"
-          >
-        </p>
+      <p id="estado-sistema" role="status" aria-live="polite"></p>
+    </main>
 
-        <p>
-          <label for="placa">Placa</label>
-          <input
-            id="placa"
-            name="placa"
-            type="text"
-            required
-            pattern="([A-Za-z]{3}[0-9]{3}|[A-Za-z]{3}[0-9]{2}[A-Za-z])"
-            minlength="6"
-            maxlength="6"
-            data-field-purpose="identificacion-vehiculo"
-          >
-        </p>
-
-        <p>
-          <label for="fecha">Fecha</label>
-          <input
-            id="fecha"
-            name="fecha"
-            type="date"
-            required
-            data-field-purpose="programacion-servicio"
-          >
-        </p>
-
-        <p>
-          <label for="kilometraje">Kilometraje</label>
-          <input
-            id="kilometraje"
-            name="kilometraje"
-            type="number"
-            min="0"
-            max="999999"
-            data-field-purpose="estado-vehiculo"
-          >
-        </p>
-
-        <p>
-          <label for="tipo-servicio">Tipo de servicio</label>
-          <select
-            id="tipo-servicio"
-            name="tipo-servicio"
-            required
-            data-field-purpose="clasificacion-servicio"
-          >
-            <option value="">Seleccione una opción</option>
-            <option value="diagnostico" data-service-category="revision">
-              Diagnóstico general
-            </option>
-            <option value="mantenimiento" data-service-category="preventivo">
-              Mantenimiento preventivo
-            </option>
-            <option value="reparacion" data-service-category="correctivo">
-              Reparación mecánica
-            </option>
-          </select>
-        </p>
-
-        <p>
-          <label for="descripcion-problema">Descripción del problema</label>
-          <textarea
-            id="descripcion-problema"
-            name="descripcion-problema"
-            required
-            minlength="10"
-            maxlength="500"
-            data-field-purpose="detalle-solicitud"
-          ></textarea>
-        </p>
-
-        <p>
-          <button type="submit" data-action="enviar-solicitud">
-            Enviar solicitud
-          </button>
-        </p>
-      </form>
-    </section>
-
-    <aside aria-labelledby="titulo-informacion-complementaria">
-      <h2 id="titulo-informacion-complementaria">Información complementaria</h2>
+    <footer id="contacto" aria-labelledby="titulo-contacto">
+      <h2 id="titulo-contacto">Contacto y datos del proyecto</h2>
 
       <p>
-        Para aprovechar mejor Services Mechanic, el taller debe mantener
-        actualizados los datos de clientes, vehículos, repuestos y servicios
-        realizados.
+        Services Mechanic es un caso de estudio académico orientado a la
+        organización de talleres mecánicos.
       </p>
-    </aside>
 
-    <p id="estado-sistema" role="status" aria-live="polite"></p>
-  </main>
+      <address>
+        Correo electrónico:
+        <a href="mailto:contacto@servicesmechanic.com">
+          contacto@servicesmechanic.com
+        </a>
+      </address>
 
-  <footer id="contacto" aria-labelledby="titulo-contacto">
-    <h2 id="titulo-contacto">Contacto y datos del proyecto</h2>
+      <nav aria-label="Navegación secundaria">
+        <ul>
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#servicios">Servicios</a></li>
+        </ul>
+      </nav>
 
-    <p>
-      Services Mechanic es un caso de estudio académico orientado a la
-      organización de talleres mecánicos.
-    </p>
-
-    <address>
-      Correo electrónico:
-      <a href="mailto:contacto@servicesmechanic.com">
-        contacto@servicesmechanic.com
-      </a>
-    </address>
-
-    <nav aria-label="Navegación secundaria">
-      <ul>
-        <li><a href="#inicio">Inicio</a></li>
-        <li><a href="#servicios">Servicios</a></li>
-      </ul>
-    </nav>
-
-    <p>&copy; 2026 Services Mechanic. Todos los derechos reservados.</p>
-  </footer>
-</body>
+      <p>&copy; 2026 Services Mechanic. Todos los derechos reservados.</p>
+    </footer>
+  </body>
 </html>
