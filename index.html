@@ -293,7 +293,54 @@
       </div>
     </section>
 
+ <!-- CONTACTO Y FORMULARIO -->
+  <section class="seccion seccion-formulario" id="contacto" aria-labelledby="contacto-title">
+    <p class="etiqueta-seccion">Empieza hoy</p>
+    <h2 id="contacto-title">Solicita información sin compromiso</h2>
+    <p class="texto-introductorio">Un asesor te contacta para agendar una demostración de TallerMax en tu taller.</p>
 
+    <address class="datos-contacto">
+      <p>📍 Cra 9 # 20-45, Tunja, Boyacá — Colombia</p>
+      <p>📞 <a href="tel:+573000000000">+57 300 000 0000</a></p>
+      <p>✉️ <a href="mailto:contacto@tallermax.app">contacto@tallermax.app</a></p>
+    </address>
+
+    <a class="boton boton-whatsapp"
+       href="https://wa.me/573000000000?text=Hola%2C%20quiero%20informaci%C3%B3n%20de%20TallerMax"
+       target="_blank" rel="noopener">
+      💬 Escríbenos por WhatsApp
+    </a>
+
+    <figure class="mapa-ubicacion" aria-label="Mapa ilustrativo de la ubicación de TallerMax en Tunja, Boyacá">
+      <figcaption>Mapa de ubicación — Tunja, Boyacá</figcaption>
+    </figure>
+
+    <!-- Formulario para solicitar información. La validación real
+         (mensajes de error, envío) vive en script.js -->
+    <form id="leadForm" class="formulario-contacto" novalidate>
+      <p class="campo-formulario">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Ej. Juan Pérez" required>
+        <span class="error-campo" data-error-for="nombre"></span>
+      </p>
+
+      <p class="campo-formulario">
+        <label for="correo">Correo electrónico</label>
+        <input type="email" id="correo" name="correo" placeholder="ejemplo@correo.com" required>
+        <span class="error-campo" data-error-for="correo"></span>
+      </p>
+
+      <p class="campo-formulario">
+        <label for="mensaje">Mensaje o solicitud</label>
+        <textarea id="mensaje" name="mensaje" rows="4" placeholder="Cuéntanos sobre tu taller..." required></textarea>
+        <span class="error-campo" data-error-for="mensaje"></span>
+      </p>
+
+      <button type="submit" class="boton boton-primario boton-ancho-completo">Solicitar información</button>
+
+      <p class="estado-formulario" id="formStatus" role="status" aria-live="polite"></p>
+    </form>
+  </section>
 
   </main>
 

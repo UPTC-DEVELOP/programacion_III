@@ -390,6 +390,59 @@ padding-inline: max(24px, calc((100% - var(--wrap-width)) / 2));
 
 /* ============================================ */
 
+/* CONTACTO Y FORMULARIO*/
+.seccion-formulario {
+  background: var(--bg-alt);
+  grid-template-columns: 1fr 1fr;
+  column-gap: 56px; row-gap: 16px;
+  grid-template-areas:
+    "etiqueta   formulario"
+    "titulo     formulario"
+    "texto      formulario"
+    "direccion  formulario"
+    "whatsapp   formulario"
+    "mapa       formulario";
+}
+.seccion-formulario > .etiqueta-seccion     { grid-area: etiqueta; }
+.seccion-formulario > h2                     { grid-area: titulo; }
+.seccion-formulario > .texto-introductorio   { grid-area: texto; }
+.seccion-formulario > .datos-contacto        { grid-area: direccion; }
+.seccion-formulario > .boton-whatsapp        { grid-area: whatsapp; }
+.seccion-formulario > .mapa-ubicacion        { grid-area: mapa; }
+.seccion-formulario > .formulario-contacto   { grid-area: formulario; }
+
+.datos-contacto { font-style: normal; }
+.datos-contacto p { color: var(--text-muted); font-size: 14px; margin-bottom: 8px; }
+.datos-contacto a { color: var(--text); text-decoration: none; }
+.datos-contacto a:hover { color: var(--accent); }
+
+.mapa-ubicacion {
+  border: 1px dashed var(--border); border-radius: var(--radius);
+  padding: 40px 20px; text-align: center; color: var(--text-dim); font-size: 13px;
+}
+
+/* El formulario para solicitar información, en sí */
+.formulario-contacto {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 32px; display: flex; flex-direction: column; gap: 18px;
+}
+.campo-formulario { display: flex; flex-direction: column; gap: 7px; }
+.campo-formulario label { font-size: 13px; font-weight: 500; color: var(--text-muted); }
+.campo-formulario input, .campo-formulario textarea {
+  background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 12px 14px; color: var(--text); font-family: var(--font-body); font-size: 15px;
+  transition: border-color 0.2s ease; resize: vertical;
+}
+.campo-formulario input:focus, .campo-formulario textarea:focus { outline: none; border-color: var(--accent); }
+/* Borde rojo cuando el campo no pasa la validación (lo agrega script.js) */
+.campo-formulario input.invalid, .campo-formulario textarea.invalid { border-color: #d84a4a; }
+.error-campo { font-size: 12px; color: #f08080; min-height: 14px; }
+.estado-formulario { margin-top: 4px; font-size: 14px; min-height: 20px; }
+.estado-formulario.success { color: var(--success); }
+.estado-formulario.error { color: #f08080; }
+
+
+
 /*Footer*/
 .site-footer {
   background: #050505; border-top: 1px solid var(--border);
