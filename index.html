@@ -332,6 +332,14 @@
       <!-- Formulario para solicitar información. La validación real
          (mensajes de error, envío) vive en script.js -->
       <form id="formulario-cliente" class="formulario-contacto" novalidate>
+
+        <p class="campo-formulario">
+          <label for="taller">Nombre Taller</label>
+          <input type="text" id="taller" name="taller" placeholder="Ej. Taller +x-" required>
+          <span class="error-campo" data-error-for="taller"></span>
+        </p>
+
+
         <p class="campo-formulario">
           <label for="nombre">Nombre</label>
           <input type="text" id="nombre" name="nombre" placeholder="Ej. Juan Pérez" required>
@@ -340,14 +348,14 @@
 
         <p class="campo-formulario">
           <label for="correo">Correo electrónico</label>
-          <input type="email" id="correo" name="correo" placeholder="ejemplo@correo.com" required>
+          <input type="email" id="correo" name="correo" placeholder="Ejemplo@correo.com" required>
           <span class="error-campo" data-error-for="correo"></span>
         </p>
 
         <p class="campo-formulario">
           <label for="telefono">Numero Telefonico</label>
-          <input type="tel" id="telefono" name="telefono" placeholder="ej 3000000000" required>
-          <span class="error-campo" data-error-for="correo"></span>
+          <input type="tel" id="telefono" name="telefono" placeholder="Ej. 3000000000" required>
+          <span class="error-campo" data-error-for="telefono"></span>
         </p>
         <p class="campo-formulario">
           <label for="mensaje">Mensaje o solicitud</label>

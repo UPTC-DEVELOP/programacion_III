@@ -101,20 +101,23 @@ function initFormValidation() {
   const statusEl = document.getElementById('formStatus');
 
   const validators = {
+    taller: (value) => value.trim().length >= 2,
     nombre: (value) => value.trim().length >= 2,
     correo: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim()),
     telefono: (value) => /^[0-9+\s]{7,15}$/.test(value.trim()),
     mensaje: (value) => value.trim().length >= 2,
-    
-    
+
+
   };
 
   const errorMessages = {
+
+    taller: 'Escribe el nombre de tu taller (mínimo 2 caracteres).',
     nombre: 'Escribe tu nombre (mínimo 2 caracteres).',
     correo: 'Escribe tu correo electronico valido.',
     telefono: 'Ingresa un teléfono válido (solo números, 7 a 15 dígitos).',
     mensaje: 'Tu opinion es importante para nosotros.',
-    
+
   };
 
   // Validación en tiempo real por campo
@@ -167,7 +170,7 @@ function initFormValidation() {
       input.classList.remove('valid', 'invalid');
     });
   });
-  
+
 }
 
 // Cada tarjeta de servicio tiene su propio botón para desplegar o esconder los detalles
