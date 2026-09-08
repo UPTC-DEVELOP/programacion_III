@@ -66,13 +66,13 @@
         <p class="titulo-panel">Panel principal</p>
 
         <ul class="cuadricula-estadisticas">
-          <li><span class="numero-estadistica" data-target="24">0</span><span
+          <li><span class="numero-estadistica" data-count="24">0</span><span
               class="etiqueta-estadistica">Servicios</span></li>
-          <li><span class="numero-estadistica" data-target="138">0</span><span
+          <li><span class="numero-estadistica" data-count="138">0</span><span
               class="etiqueta-estadistica">Repuestos</span></li>
-          <li><span class="numero-estadistica" data-target="96" data-suffix="h">0h</span><span
+          <li><span class="numero-estadistica" data-count="96" data-suffix="h">0h</span><span
               class="etiqueta-estadistica">Horas</span></li>
-          <li><span class="numero-estadistica" data-target="4200" data-prefix="$" data-format="k">$0</span><span
+          <li><span class="numero-estadistica" data-count="4200" data-prefix="$" data-format="k">$0</span><span
               class="etiqueta-estadistica">Facturas</span></li>
         </ul>
 
@@ -86,261 +86,280 @@
         </ul>
       </aside>
     </section>
-<!--Resumen de lo que hace Taller Max-->
-  <section class="seccion seccion-resumen">
-    <p class="etiqueta-seccion">Qué hace TallerMax</p>
-    <h2>Todo lo que tu taller necesita, en un solo lugar</h2>
+    <!--Resumen de lo que hace Taller Max-->
+    <section class="seccion seccion-resumen">
+      <p class="etiqueta-seccion">Qué hace TallerMax</p>
+      <h2>Todo lo que tu taller necesita, en un solo lugar</h2>
 
-    <article class="item-resumen"><h3>Clientes y autos</h3><p>Registro único, consulta al instante.</p></article>
-    <article class="item-resumen"><h3>Empleados y agenda</h3><p>Asigna quién está disponible, sin choques de horario.</p></article>
-    <article class="item-resumen"><h3>Repuestos</h3><p>Control de referencia, marca y precio.</p></article>
-    <article class="item-resumen"><h3>Facturación con IVA</h3><p>Repuestos + horas + utilidad + IVA 19 %, automático.</p></article>
+      <article class="item-resumen">
+        <h3>Clientes y autos</h3>
+        <p>Registro único, consulta al instante.</p>
+      </article>
+      <article class="item-resumen">
+        <h3>Empleados y agenda</h3>
+        <p>Asigna quién está disponible, sin choques de horario.</p>
+      </article>
+      <article class="item-resumen">
+        <h3>Repuestos</h3>
+        <p>Control de referencia, marca y precio.</p>
+      </article>
+      <article class="item-resumen">
+        <h3>Facturación con IVA</h3>
+        <p>Repuestos + horas + utilidad + IVA 19 %, automático.</p>
+      </article>
 
-    <!-- Franja con cifras que respaldan la confianza en el producto -->
-    <aside class="franja-confianza" aria-label="Estadísticas de confianza">
-      <ul>
-        <li><span class="numero-confianza" data-count="180">0</span><span class="etiqueta-confianza">talleres activos</span></li>
-        <li><span class="numero-confianza" data-count="98" data-suffix="%">0%</span><span class="etiqueta-confianza">satisfacción</span></li>
-        <li><span class="numero-confianza" data-count="15" data-suffix=" h/mes">0</span><span class="etiqueta-confianza">ahorradas en promedio</span></li>
-      </ul>
-    </aside>
-  </section>
-
-  <!-- El problema -->
-  <section class="seccion seccion-clara" id="problema">
-    <p class="etiqueta-seccion">El problema</p>
-    <h2 class="titulo-oscuro">Gestionar un taller no<br>debería ser complicado.</h2>
-    <p class="texto-introductorio texto-oscuro">Cuando la información está dispersa, cada servicio puede convertirse en más trabajo del necesario.</p>
-
-    <article class="tarjeta-problema"><h3>Servicios desorganizados</h3><p>Dificultad para llevar un control claro de los trabajos realizados.</p></article>
-    <article class="tarjeta-problema"><h3>Repuestos sin control</h3><p>Complicaciones para relacionar los repuestos utilizados con cada servicio.</p></article>
-    <article class="tarjeta-problema"><h3>Horas difíciles de controlar</h3><p>Mayor dificultad para registrar y calcular el trabajo realizado.</p></article>
-    <article class="tarjeta-problema"><h3>Facturación manual</h3><p>Más tiempo dedicado a tareas administrativas.</p></article>
-  </section>
-
-   <!--CATÁLOGO DE SERVICIOS -->
-  <section class="seccion" id="servicios" aria-labelledby="servicios-title">
-    <p class="etiqueta-seccion">Módulo de servicios</p>
-    <h2 id="servicios-title">Gestiona los servicios de tu taller<br>con <span class="resaltado">TallerMax</span></h2>
-    <p class="texto-introductorio">Cada servicio queda registrado con sus repuestos, horas y estado — sin cuadernos ni hojas sueltas.</p>
-
-    <!-- Cada tarjeta tiene un botón que muestra/oculta información adicional del servicio -->
-
-<article class="tarjeta-servicio">
-  <img src="img/icono-cambio-aceite.png" alt="Ícono de cambio de aceite y filtro">
-  <p class="numero-servicio">01</p>
-  <h3>Cambio de aceite y filtro</h3>
-  <p>Registra el servicio, controla el tiempo de trabajo y relaciona los repuestos utilizados.</p>
-  <p class="duracion-servicio">⏱ 0.5 – 1 hora</p>
-
-  <button type="button"
-          class="boton-detalle-servicio"
-          aria-expanded="false"
-          aria-controls="detalle-srv-01">
-    Ver detalles <span class="icono-flecha" aria-hidden="true">▾</span>
-  </button>
-
-  <ul id="detalle-srv-01" class="info-servicio" hidden>
-    <li>Repuestos comunes: filtro de aceite, aceite 20W-50</li>
-    <li>Incluye revisión de niveles (frenos, refrigerante)</li>
-    <li>Se factura como repuestos + mano de obra</li>
-  </ul>
-</article>
-
-<article class="tarjeta-servicio">
-  <img src="img/icono-alineacion-balanceo.png" alt="Ícono de alineación y balanceo">
-  <p class="numero-servicio">02</p>
-  <h3>Alineación y balanceo</h3>
-  <p>Gestiona servicios principalmente de mano de obra y controla su facturación.</p>
-  <p class="duracion-servicio">⏱ 1 hora</p>
-
-  <button type="button"
-          class="boton-detalle-servicio"
-          aria-expanded="false"
-          aria-controls="detalle-srv-02">
-    Ver detalles <span class="icono-flecha" aria-hidden="true">▾</span>
-  </button>
-
-  <ul id="detalle-srv-02" class="info-servicio" hidden>
-    <li>Servicio basado casi 100% en horas de mano de obra</li>
-    <li>No suele requerir repuestos, solo el uso del alineador</li>
-    <li>Se recomienda cada 10.000 km o al cambiar llantas</li>
-  </ul>
-</article>
-
-<article class="tarjeta-servicio">
-  <img src="img/icono-cambio-frenos.png" alt="Ícono de cambio de pastillas y discos de freno">
-  <p class="numero-servicio">03</p>
-  <h3>Cambio de pastillas y discos</h3>
-  <p>Relaciona múltiples repuestos con un mismo servicio y facilita el control de costos.</p>
-  <p class="duracion-servicio">⏱ 1.5 – 2 horas</p>
-
-  <button type="button"
-          class="boton-detalle-servicio"
-          aria-expanded="false"
-          aria-controls="detalle-srv-03">
-    Ver detalles <span class="icono-flecha" aria-hidden="true">▾</span>
-  </button>
-
-  <ul id="detalle-srv-03" class="info-servicio" hidden>
-    <li>Repuestos comunes: pastillas delanteras/traseras, discos</li>
-    <li>Incluye revisión del sistema hidráulico de frenos</li>
-    <li>El costo varía según marca y modelo del vehículo</li>
-  </ul>
-</article>
-
-<article class="tarjeta-servicio">
-  <img src="img/icono-revision-bateria.png" alt="Ícono de revisión y cambio de batería">
-  <p class="numero-servicio">04</p>
-  <h3>Revisión y cambio de batería</h3>
-  <p>Registra servicios rápidos y controla repuestos de mayor valor.</p>
-  <p class="duracion-servicio">⏱ 0.5 hora</p>
-
-  <button type="button"
-          class="boton-detalle-servicio"
-          aria-expanded="false"
-          aria-controls="detalle-srv-04">
-    Ver detalles <span class="icono-flecha" aria-hidden="true">▾</span>
-  </button>
-
-  <ul id="detalle-srv-04" class="info-servicio" hidden>
-    <li>Incluye prueba de carga y diagnóstico del alternador</li>
-    <li>Repuesto de mayor valor: batería (varía según amperaje)</li>
-    <li>Servicio express, no requiere cita previa</li>
-  </ul>
-</article>
-
-<article class="tarjeta-servicio">
-  <img src="img/icono-diagnostico-general.png" alt="Ícono de diagnóstico general y escaneo electrónico">
-  <p class="numero-servicio">05</p>
-  <h3>Diagnóstico general</h3>
-  <p>Registra servicios basados principalmente en horas de trabajo.</p>
-  <p class="duracion-servicio">⏱ 1 hora</p>
-
-  <button type="button"
-          class="boton-detalle-servicio"
-          aria-expanded="false"
-          aria-controls="detalle-srv-05">
-    Ver detalles <span class="icono-flecha" aria-hidden="true">▾</span>
-  </button>
-
-  <ul id="detalle-srv-05" class="info-servicio" hidden>
-    <li>Incluye escaneo electrónico con equipo de diagnóstico</li>
-    <li>Detecta fallas antes de que se conviertan en servicios mayores</li>
-    <li>Se factura solo por horas, salvo que se requiera repuesto</li>
-  </ul>
-</article>
-
-    <!-- Tarjeta final del catálogo: invita a probar el sistema completo -->
-    <article class="tarjeta-servicio tarjeta-servicio-final">
-      <h3>Y esto es solo el comienzo.</h3>
-      <p>TallerMax se adapta a los servicios propios de tu taller.</p>
-      <a href="#contacto" class="boton boton-primario boton-pequeno">Prueba Taller Max gratis →</a>
-    </article>
-
-    <!-- Bloque comparativo: por qué TallerMax es mejor que Excel -->
-    <aside class="bloque-diferenciadores" aria-labelledby="diff-title">
-      <h3 id="diff-title">¿Por qué TallerMax y no una hoja de cálculo?</h3>
-      <ul class="lista-diferenciadores">
-        <li>Cálculo automático de IVA y utilidad, sin fórmulas manuales que se rompen.</li>
-        <li>Agenda de empleados en tiempo real: nunca agendas dos servicios al mismo tiempo.</li>
-        <li>Historial completo por cliente y por auto, sin buscar en varias hojas.</li>
-      </ul>
-    </aside>
-  </section>
-
-    <!-- ===== BENEFICIOS ===== -->
-     <section class="section beneficios" id="beneficios">
-      <div class="container">
-        <p class="eyebrow">Tablero de beneficios</p>
-        <h2>Resultados que se sienten desde la primera semana </h2>
-
-        <div class="cuadricula-beneficio">
-          <article class="tarjeta-beneficio">
-            <span class="valores-tarjeta" data-count="70" data-suffix="%">0%</span>
-            <h3>Ahorro de tiempo</h3>
-            <p>Menos papeleo, más carros atendidos por semana.</p>
-          </article>
-          <article class="tarjeta-beneficio">
-            <span class="valores-tarjeta" data-count="95" data-suffix="%">0%</span>
-            <h3>Reducción de errores</h3>
-            <p>La facturación y el inventario se calculan solos.</p>
-          </article>
-          <article class="tarjeta-beneficio">
-            <span class="valores-tarjeta" data-count="100" data-suffix="%">0%</span>
-            <h3>Control financiero</h3>
-            <p>Sabes exactamente cuánto entra y cuánto se gasta en repuestos.</p>
-          </article>
-          <article class="tarjeta-beneficio">
-            <span class="valores-tarjeta" data-count="1" data-suffix="er">0</span>
-            <h3>Profesionalización</h3>
-            <p>Facturas y reportes que dan confianza al cliente.</p>
-          </article>
-        </div>
-
-        <details class="detalles-panel" id="detailsPanel">
-          <summary class="boton boton-outline">Ver cómo se calculan estos beneficios</summary>
-          <p>Las cifras se basan en talleres que migraron de registros en papel a un sistema digital:
-          reducen tiempo administrativo, evitan pérdidas por repuestos no facturados y eliminan errores
-          de cálculo manual de IVA gracias a la automatización de TallerMax.</p>
-        </details>
-
-        <blockquote class="testimonio">
-          <p>"Antes cuadrar la caja del mes tomaba un día completo. Con TallerMax lo reviso en minutos
-          y ya no se me pierde ni un repuesto."</p>
-          <cite>— Dueño de taller mecánico, Boyacá</cite>
-        </blockquote>
-      </div>
+      <!-- Franja con cifras que respaldan la confianza en el producto -->
+      <aside class="franja-confianza" aria-label="Estadísticas de confianza">
+        <ul>
+          <li><span class="numero-confianza" data-count="180">0</span><span class="etiqueta-confianza">talleres
+              activos</span></li>
+          <li><span class="numero-confianza" data-count="98" data-suffix="%">0%</span><span
+              class="etiqueta-confianza">satisfacción</span></li>
+          <li><span class="numero-confianza" data-count="15" data-suffix=" h/mes">0</span><span
+              class="etiqueta-confianza">ahorradas en promedio</span></li>
+        </ul>
+      </aside>
     </section>
 
- <!-- CONTACTO Y FORMULARIO -->
-  <section class="seccion seccion-formulario" id="contacto" aria-labelledby="contacto-title">
-    <p class="etiqueta-seccion">Empieza hoy</p>
-    <h2 id="contacto-title">Solicita información sin compromiso</h2>
-    <p class="texto-introductorio">Un asesor te contacta para agendar una demostración de TallerMax en tu taller.</p>
+    <!-- El problema -->
+    <section class="seccion seccion-clara" id="problema">
+      <p class="etiqueta-seccion">El problema</p>
+      <h2 class="titulo-oscuro">Gestionar un taller no<br>debería ser complicado.</h2>
+      <p class="texto-introductorio texto-oscuro">Cuando la información está dispersa, cada servicio puede convertirse
+        en más trabajo del necesario.</p>
 
-    <address class="datos-contacto">
-      <p>📍 Cra 9 # 20-45, Tunja, Boyacá — Colombia</p>
-      <p>📞 <a href="tel:+573000000000">+57 300 000 0000</a></p>
-      <p>✉️ <a href="mailto:contacto@tallermax.app">contacto@tallermax.app</a></p>
-    </address>
+      <article class="tarjeta-problema">
+        <h3>Servicios desorganizados</h3>
+        <p>Dificultad para llevar un control claro de los trabajos realizados.</p>
+      </article>
+      <article class="tarjeta-problema">
+        <h3>Repuestos sin control</h3>
+        <p>Complicaciones para relacionar los repuestos utilizados con cada servicio.</p>
+      </article>
+      <article class="tarjeta-problema">
+        <h3>Horas difíciles de controlar</h3>
+        <p>Mayor dificultad para registrar y calcular el trabajo realizado.</p>
+      </article>
+      <article class="tarjeta-problema">
+        <h3>Facturación manual</h3>
+        <p>Más tiempo dedicado a tareas administrativas.</p>
+      </article>
+    </section>
 
-    <a class="boton boton-whatsapp"
-       href="https://wa.me/573000000000?text=Hola%2C%20quiero%20informaci%C3%B3n%20de%20TallerMax"
-       target="_blank" rel="noopener">
-      💬 Escríbenos por WhatsApp
-    </a>
+    <!--CATÁLOGO DE SERVICIOS -->
+    <section class="seccion" id="servicios" aria-labelledby="servicios-title">
+      <p class="etiqueta-seccion">Módulo de servicios</p>
+      <h2 id="servicios-title">Gestiona los servicios de tu taller<br>con <span class="resaltado">TallerMax</span></h2>
+      <p class="texto-introductorio">Cada servicio queda registrado con sus repuestos, horas y estado — sin cuadernos ni
+        hojas sueltas.</p>
 
-    <figure class="mapa-ubicacion" aria-label="Mapa ilustrativo de la ubicación de TallerMax en Tunja, Boyacá">
-      <figcaption>Mapa de ubicación — Tunja, Boyacá</figcaption>
-    </figure>
+      <!-- Cada tarjeta tiene un botón que muestra/oculta información adicional del servicio -->
 
-    <!-- Formulario para solicitar información. La validación real
+      <article class="tarjeta-servicio">
+        <img src="img/icono-cambio-aceite.png" alt="Ícono de cambio de aceite y filtro">
+        <p class="numero-servicio">01</p>
+        <h3>Cambio de aceite y filtro</h3>
+        <p>Registra el servicio, controla el tiempo de trabajo y relaciona los repuestos utilizados.</p>
+        <p class="duracion-servicio">⏱ 0.5 – 1 hora</p>
+
+        <button type="button" class="boton-detalle-servicio" aria-expanded="false" aria-controls="detalle-srv-01">
+          Ver detalles <span class="icono-flecha" aria-hidden="true">▾</span>
+        </button>
+
+        <ul id="detalle-srv-01" class="info-servicio" hidden>
+          <li>Repuestos comunes: filtro de aceite, aceite 20W-50</li>
+          <li>Incluye revisión de niveles (frenos, refrigerante)</li>
+          <li>Se factura como repuestos + mano de obra</li>
+        </ul>
+      </article>
+
+      <article class="tarjeta-servicio">
+        <img src="img/icono-alineacion-balanceo.png" alt="Ícono de alineación y balanceo">
+        <p class="numero-servicio">02</p>
+        <h3>Alineación y balanceo</h3>
+        <p>Gestiona servicios principalmente de mano de obra y controla su facturación.</p>
+        <p class="duracion-servicio">⏱ 1 hora</p>
+
+        <button type="button" class="boton-detalle-servicio" aria-expanded="false" aria-controls="detalle-srv-02">
+          Ver detalles <span class="icono-flecha" aria-hidden="true">▾</span>
+        </button>
+
+        <ul id="detalle-srv-02" class="info-servicio" hidden>
+          <li>Servicio basado casi 100% en horas de mano de obra</li>
+          <li>No suele requerir repuestos, solo el uso del alineador</li>
+          <li>Se recomienda cada 10.000 km o al cambiar llantas</li>
+        </ul>
+      </article>
+
+      <article class="tarjeta-servicio">
+        <img src="img/icono-cambio-frenos.png" alt="Ícono de cambio de pastillas y discos de freno">
+        <p class="numero-servicio">03</p>
+        <h3>Cambio de pastillas y discos</h3>
+        <p>Relaciona múltiples repuestos con un mismo servicio y facilita el control de costos.</p>
+        <p class="duracion-servicio">⏱ 1.5 – 2 horas</p>
+
+        <button type="button" class="boton-detalle-servicio" aria-expanded="false" aria-controls="detalle-srv-03">
+          Ver detalles <span class="icono-flecha" aria-hidden="true">▾</span>
+        </button>
+
+        <ul id="detalle-srv-03" class="info-servicio" hidden>
+          <li>Repuestos comunes: pastillas delanteras/traseras, discos</li>
+          <li>Incluye revisión del sistema hidráulico de frenos</li>
+          <li>El costo varía según marca y modelo del vehículo</li>
+        </ul>
+      </article>
+
+      <article class="tarjeta-servicio">
+        <img src="img/icono-revision-bateria.png" alt="Ícono de revisión y cambio de batería">
+        <p class="numero-servicio">04</p>
+        <h3>Revisión y cambio de batería</h3>
+        <p>Registra servicios rápidos y controla repuestos de mayor valor.</p>
+        <p class="duracion-servicio">⏱ 0.5 hora</p>
+
+        <button type="button" class="boton-detalle-servicio" aria-expanded="false" aria-controls="detalle-srv-04">
+          Ver detalles <span class="icono-flecha" aria-hidden="true">▾</span>
+        </button>
+
+        <ul id="detalle-srv-04" class="info-servicio" hidden>
+          <li>Incluye prueba de carga y diagnóstico del alternador</li>
+          <li>Repuesto de mayor valor: batería (varía según amperaje)</li>
+          <li>Servicio express, no requiere cita previa</li>
+        </ul>
+      </article>
+
+      <article class="tarjeta-servicio">
+        <img src="img/icono-diagnostico-general.png" alt="Ícono de diagnóstico general y escaneo electrónico">
+        <p class="numero-servicio">05</p>
+        <h3>Diagnóstico general</h3>
+        <p>Registra servicios basados principalmente en horas de trabajo.</p>
+        <p class="duracion-servicio">⏱ 1 hora</p>
+
+        <button type="button" class="boton-detalle-servicio" aria-expanded="false" aria-controls="detalle-srv-05">
+          Ver detalles <span class="icono-flecha" aria-hidden="true">▾</span>
+        </button>
+
+        <ul id="detalle-srv-05" class="info-servicio" hidden>
+          <li>Incluye escaneo electrónico con equipo de diagnóstico</li>
+          <li>Detecta fallas antes de que se conviertan en servicios mayores</li>
+          <li>Se factura solo por horas, salvo que se requiera repuesto</li>
+        </ul>
+      </article>
+
+      <!-- Tarjeta final del catálogo: invita a probar el sistema completo -->
+      <article class="tarjeta-servicio tarjeta-servicio-final">
+        <h3>Y esto es solo el comienzo.</h3>
+        <p>TallerMax se adapta a los servicios propios de tu taller.</p>
+        <a href="#contacto" class="boton boton-primario boton-pequeno">Prueba Taller Max gratis →</a>
+      </article>
+
+      <!-- Bloque comparativo: por qué TallerMax es mejor que Excel -->
+      <aside class="bloque-diferenciadores" aria-labelledby="diff-title">
+        <h3 id="diff-title">¿Por qué TallerMax y no una hoja de cálculo?</h3>
+        <ul class="lista-diferenciadores">
+          <li>Cálculo automático de IVA y utilidad, sin fórmulas manuales que se rompen.</li>
+          <li>Agenda de empleados en tiempo real: nunca agendas dos servicios al mismo tiempo.</li>
+          <li>Historial completo por cliente y por auto, sin buscar en varias hojas.</li>
+        </ul>
+      </aside>
+    </section>
+
+    <!-- ===== BENEFICIOS ===== -->
+    <section class="seccion beneficios" id="beneficios">
+
+      <p class="eyebrow">Tablero de beneficios</p>
+      <h2>Resultados que se sienten desde la primera semana </h2>
+
+      <div class="cuadricula-beneficio">
+        <article class="tarjeta-beneficio">
+          <span class="valores-tarjeta" data-count="70" data-suffix="%">0%</span>
+          <h3>Ahorro de tiempo</h3>
+          <p>Menos papeleo, más carros atendidos por semana.</p>
+        </article>
+        <article class="tarjeta-beneficio">
+          <span class="valores-tarjeta" data-count="95" data-suffix="%">0%</span>
+          <h3>Reducción de errores</h3>
+          <p>La facturación y el inventario se calculan solos.</p>
+        </article>
+        <article class="tarjeta-beneficio">
+          <span class="valores-tarjeta" data-count="100" data-suffix="%">0%</span>
+          <h3>Control financiero</h3>
+          <p>Sabes exactamente cuánto entra y cuánto se gasta en repuestos.</p>
+        </article>
+        <article class="tarjeta-beneficio">
+          <span class="valores-tarjeta" data-count="1" data-suffix="er">0</span>
+          <h3>Profesionalización</h3>
+          <p>Facturas y reportes que dan confianza al cliente.</p>
+        </article>
+      </div>
+
+      <details class="detalles-panel" id="detailsPanel">
+        <summary class="boton boton-outline">Ver cómo se calculan estos beneficios</summary>
+        <p>Las cifras se basan en talleres que migraron de registros en papel a un sistema digital:
+          reducen tiempo administrativo, evitan pérdidas por repuestos no facturados y eliminan errores
+          de cálculo manual de IVA gracias a la automatización de TallerMax.</p>
+      </details>
+
+      <blockquote class="testimonio">
+        <p>"Antes cuadrar la caja del mes tomaba un día completo. Con TallerMax lo reviso en minutos
+          y ya no se me pierde ni un repuesto."</p>
+        <cite>— Dueño de taller mecánico, Boyacá</cite>
+      </blockquote>
+
+    </section>
+
+    <!-- CONTACTO Y FORMULARIO -->
+    <section class="seccion seccion-formulario" id="contacto" aria-labelledby="contacto-title">
+      <p class="etiqueta-seccion">Empieza hoy</p>
+      <h2 id="contacto-title">Solicita información sin compromiso</h2>
+      <p class="texto-introductorio">Un asesor te contacta para agendar una demostración de TallerMax en tu taller.</p>
+
+      <address class="datos-contacto">
+        <p>📍 Cra 9 # 20-45, Tunja, Boyacá — Colombia</p>
+        <p>📞 <a href="tel:+573000000000">+57 300 000 0000</a></p>
+        <p>✉️ <a href="mailto:contacto@tallermax.app">contacto@tallermax.app</a></p>
+      </address>
+
+      <a class="boton boton-whatsapp"
+        href="https://wa.me/573000000000?text=Hola%2C%20quiero%20informaci%C3%B3n%20de%20TallerMax" target="_blank"
+        rel="noopener">
+        💬 Escríbenos por WhatsApp
+      </a>
+
+      <figure class="mapa-ubicacion" aria-label="Mapa ilustrativo de la ubicación de TallerMax en Tunja, Boyacá">
+        <figcaption>Mapa de ubicación — Tunja, Boyacá</figcaption>
+      </figure>
+
+      <!-- Formulario para solicitar información. La validación real
          (mensajes de error, envío) vive en script.js -->
-    <form id="leadForm" class="formulario-contacto" novalidate>
-      <p class="campo-formulario">
-        <label for="nombre">Nombre</label>
-        <input type="text" id="nombre" name="nombre" placeholder="Ej. Juan Pérez" required>
-        <span class="error-campo" data-error-for="nombre"></span>
-      </p>
+      <form id="formulario-cliente" class="formulario-contacto" novalidate>
+        <p class="campo-formulario">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" name="nombre" placeholder="Ej. Juan Pérez" required>
+          <span class="error-campo" data-error-for="nombre"></span>
+        </p>
 
-      <p class="campo-formulario">
-        <label for="correo">Correo electrónico</label>
-        <input type="email" id="correo" name="correo" placeholder="ejemplo@correo.com" required>
-        <span class="error-campo" data-error-for="correo"></span>
-      </p>
+        <p class="campo-formulario">
+          <label for="correo">Correo electrónico</label>
+          <input type="email" id="correo" name="correo" placeholder="ejemplo@correo.com" required>
+          <span class="error-campo" data-error-for="correo"></span>
+        </p>
 
-      <p class="campo-formulario">
-        <label for="mensaje">Mensaje o solicitud</label>
-        <textarea id="mensaje" name="mensaje" rows="4" placeholder="Cuéntanos sobre tu taller..." required></textarea>
-        <span class="error-campo" data-error-for="mensaje"></span>
-      </p>
+        <p class="campo-formulario">
+          <label for="telefono">Numero Telefonico</label>
+          <input type="tel" id="telefono" name="telefono" placeholder="ej 3000000000" required>
+          <span class="error-campo" data-error-for="correo"></span>
+        </p>
+        <p class="campo-formulario">
+          <label for="mensaje">Mensaje o solicitud</label>
+          <textarea id="mensaje" name="mensaje" rows="4" placeholder="Cuéntanos sobre tu taller..." required></textarea>
+          <span class="error-campo" data-error-for="mensaje"></span>
+        </p>
 
-      <button type="submit" class="boton boton-primario boton-ancho-completo">Solicitar información</button>
+        <button type="submit" class="boton boton-primario boton-ancho-completo">Solicitar información</button>
 
-      <p class="estado-formulario" id="formStatus" role="status" aria-live="polite"></p>
-    </form>
-  </section>
+        <p class="estado-formulario" id="formStatus" role="status" aria-live="polite"></p>
+      </form>
+    </section>
 
   </main>
 

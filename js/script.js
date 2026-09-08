@@ -1,5 +1,5 @@
 // ============================================
-// TallerOS - script.js
+// TallerMax - script.js
 // Interactividad: validación de formulario, contadores animados,
 // menú móvil y panel de detalles.
 // ============================================
@@ -95,23 +95,26 @@ function initAnimatedCounters() {
 // Sin usar alert(): los mensajes se inyectan en el DOM.
 // ---------------------------------------------
 function initFormValidation() {
-  const form = document.getElementById('demoForm');
+  const form = document.getElementById('formulario-cliente');
   if (!form) return;
 
   const statusEl = document.getElementById('formStatus');
 
   const validators = {
-    taller: (value) => value.trim().length >= 2,
-    propietario: (value) => value.trim().length >= 2,
+    nombre: (value) => value.trim().length >= 2,
     correo: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim()),
     telefono: (value) => /^[0-9+\s]{7,15}$/.test(value.trim()),
+    mensaje: (value) => value.trim().length >= 2,
+    
+    
   };
 
   const errorMessages = {
-    taller: 'Escribe el nombre del taller (mínimo 2 caracteres).',
-    propietario: 'Escribe el nombre del propietario.',
-    correo: 'Ingresa un correo electrónico válido.',
+    nombre: 'Escribe tu nombre (mínimo 2 caracteres).',
+    correo: 'Escribe tu correo electronico valido.',
     telefono: 'Ingresa un teléfono válido (solo números, 7 a 15 dígitos).',
+    mensaje: 'Tu opinion es importante para nosotros.',
+    
   };
 
   // Validación en tiempo real por campo
