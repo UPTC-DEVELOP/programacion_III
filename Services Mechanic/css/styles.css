@@ -1,0 +1,121 @@
+/* Configuración general */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Cabecera principal */
+body > header {
+  background-color: #111315;
+  color: #ffffff;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+body > header a {
+  color: #f5c518;
+}
+/* Menu de la cabecera*/
+body > header nav ul{
+    display:flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+body > header nav a{
+    text-decoration: none;
+}
+
+/* Botón de la cabecera */  
+body > header > a {
+    display: inline-block;
+    background-color: #f5c518;
+    color: #111315;
+    padding: 12px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 0px;
+    transition: background-color 0.2s;
+}
+
+body > header > a:hover {
+    background-color: #ddb012;
+}
+/* Tamaño del logo y nombre */
+body > header > img {
+    width: 115px;
+}
+
+body > header > h1{
+    font-size: 20px;
+    margin: 0;
+}
+/* Sección de inicio */
+#inicio{
+    background-color: #111315;
+    color: #ffffff;
+    padding: 60px 24px;
+}
+#inicio h2 {
+  font-size: clamp(32px, 5vw, 60px);
+  line-height: 1.1;
+  margin: 0 0 24px;
+  max-width: 700px;
+}
+
+#inicio p {
+  color: #b8bdc3;
+  font-size: 18px;
+  max-width: 600px;
+  margin: 0;
+}
+/* Palabra destacada del titulo */
+#inicio h2 span {
+  color: #f5c518;
+}
+/* Enlaces de la sección de inicio */
+#inicio .acciones-inicio {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  margin-top: 32px;
+}
+
+#inicio .boton-principal {
+  background-color: #f5c518;
+  color: #111315;
+  padding: 12px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+#inicio .boton-principal:hover {
+  background-color: #ddb012;
+}
+
+#inicio .enlace-servicios {
+  color: #ffffff;
+  text-decoration: none;
+}
+
