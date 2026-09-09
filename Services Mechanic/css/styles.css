@@ -21,7 +21,7 @@ body > header {
   padding: 24px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-wrap: wrap;
   gap: 20px;
 }
@@ -100,22 +100,101 @@ body > header > h1{
   margin-top: 32px;
 }
 
-#inicio .boton-principal {
-  background-color: #f5c518;
-  color: #111315;
-  padding: 12px 20px;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.2s;
-}
-
-#inicio .boton-principal:hover {
-  background-color: #ddb012;
-}
-
 #inicio .enlace-servicios {
   color: #ffffff;
   text-decoration: none;
 }
+/* Sección del problema */
+#problema{
+  background-color: #f7f7f5;
+  color: #202124;
+  padding: 60px 24px;
+}
+
+#problema h2{
+  font-size:clamp(28px, 4vw, 40px);
+  line-height: 1.2;
+  max-width: 800px;
+  margin: 0 0 24px;
+}
+#problema p{
+  color: #6b7075;
+  font-size: 18px;
+  max-width: 700px;
+  margin: 0 0 24px;
+}
+#problema ul {
+  padding-left: 24px;
+  margin: 0;
+}
+
+#problema li {
+  margin-bottom: 12px;
+}
+
+#problema li::marker {
+  color: #6b7075;
+}
+/* Sección Nosotros */
+#nosotros {
+  background-color: #ffffff;
+  color: #202124;
+  padding: 60px 24px;
+}
+
+#nosotros h2 {
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.2;
+  margin: 0 0 24px;
+}
+
+#nosotros h3 {
+  font-size: 24px;
+  margin: 32px 0 12px;
+}
+
+#nosotros p {
+  color: #6b7075;
+  max-width: 800px;
+  margin: 0 0 20px;
+}
+
+#nosotros ul {
+  max-width: 800px;
+  padding-left: 24px;
+  margin: 0;
+}
+
+#nosotros li {
+  margin-bottom: 16px;
+}
+/* Distribución de la cabecera */
+body > header > nav {
+  margin-left: auto;
+}
+
+/* Cabecera en pantallas pequeñas */
+@media (max-width: 768px) {
+  body > header {
+    gap: 16px;
+  }
+
+  body > header > img {
+    width: 80px;
+  }
+
+  body > header > h1 {
+    font-size: 18px;
+  }
+
+  body > header > nav {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  body > header nav ul {
+    gap: 12px 16px;
+  }
+}
+
 
