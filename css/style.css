@@ -318,15 +318,44 @@ h3 { font-size: 16px; }
 .lista-diferenciadores li { color: var(--text-muted); font-size: 14px; padding-left: 22px; position: relative; }
 .lista-diferenciadores li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
 
+/* NOSOTROS */
+#nosotros { grid-template-columns: repeat(6, 1fr); column-gap: 20px; row-gap: 16px; align-items: start; }
+#nosotros > .etiqueta-seccion { grid-row: 1; grid-column: 1 / 4; }
+#nosotros > h2 { grid-row: 2; grid-column: 1 / 4; }
+#nosotros > .texto-introductorio { grid-row: 3; grid-column: 1 / 4; }
+
+.tarjeta-mision { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; transition: border-color 0.2s ease, transform 0.2s ease; }
+.tarjeta-mision:nth-of-type(1) { grid-row: 1; grid-column: 4 / 7; }
+.tarjeta-mision:nth-of-type(2) { grid-row: 2; grid-column: 4 / 7; }
+.tarjeta-mision:nth-of-type(3) { grid-row: 3; grid-column: 4 / 7; }
+.tarjeta-mision:hover { border-color: var(--accent);transform: scale(1.07); }
+.tarjeta-mision h3 { display: flex; align-items: center; gap: 8px; font-size: 14px; margin-bottom: 6px; }
+.tarjeta-mision h3::before { content: "●"; color: var(--accent); font-size: 10px; }
+.tarjeta-mision p { color: var(--text-muted); font-size: 13px; }
+
+.titulo-equipo { grid-column: 1 / -1; margin-top: 32px; font-size: 20px; }
+.tarjeta-integrante { grid-column: span 2; text-align: center; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 20px; }
+.tarjeta-integrante:hover { border-color: var(--accent); transform: scale(1.07); }
+.avatar-iniciales { width: 48px; height: 48px; border-radius: 64px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 600; font-size: 15px; color: #fff; margin: 0 auto 16px; }
+.tarjeta-integrante img { width: 64px; height: 64px; object-fit: cover; border-radius: 16px; margin: 0 auto 16px; display: block; }
+.nombre-integrante { font-weight: 600; font-size: 15px; margin-bottom: 2px; }
+.cargo-integrante { color: var(--text-dim); font-size: 13px; }
+
+
 /* BENEFICIOS */
-.beneficios { background: var(--surface); border-top: 10px solid var(--border); border-bottom: 1px solid var(--border); 
-padding-inline: max(24px, calc((100% - var(--wrap-width)) / 2));
-}
-.cuadricula-beneficio {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
+.beneficios {
+  background: var(--surface);
+  border-top: 10px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding-inline: max(24px, calc((100% - var(--wrap-width)) / 2));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1.5rem;
-  margin-bottom: 1rem;
+}
+.beneficios > .etiqueta-seccion,
+.beneficios > h2,
+.beneficios > .detalles-panel,
+.beneficios > .testimonio {
+  grid-column: 1 / -1;
 }
 
 .tarjeta-beneficio {
@@ -388,7 +417,6 @@ padding-inline: max(24px, calc((100% - var(--wrap-width)) / 2));
 .testimonio p { color: var(--text); font-style: italic; font-size: 1.05rem; }
 .testimonio cite { display: block; margin-top: 0.8rem; color: var(--accent-2); font-size: 0.85rem; font-style: normal; }
 
-/* ============================================ */
 
 /* CONTACTO Y FORMULARIO*/
 .seccion-formulario {
@@ -412,13 +440,29 @@ padding-inline: max(24px, calc((100% - var(--wrap-width)) / 2));
 .seccion-formulario > .formulario-contacto   { grid-area: formulario; }
 
 .datos-contacto { font-style: normal; }
-.datos-contacto p { color: var(--text-muted); font-size: 14px; margin-bottom: 8px; }
+.datos-contacto p {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-muted);
+  font-size: 14px;
+  margin-bottom: 8px;
+}
 .datos-contacto a { color: var(--text); text-decoration: none; }
 .datos-contacto a:hover { color: var(--accent); }
 
 .mapa-ubicacion {
-  border: 1px dashed var(--border); border-radius: var(--radius);
-  padding: 40px 20px; text-align: center; color: var(--text-dim); font-size: 13px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 13px;
+  transition: border-color 0.2s ease;
+}
+
+.mapa-ubicacion:hover {
+  border-color: var(--accent);
 }
 
 /* El formulario para solicitar información, en sí */

@@ -1,8 +1,7 @@
-// ============================================
+
 // TallerMax - script.js
 // Interactividad: validación de formulario, contadores animados,
 // menú móvil y panel de detalles.
-// ============================================
 
 document.addEventListener('DOMContentLoaded', () => {
   setFooterYear();
@@ -12,9 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initToggleDetalleServicio(); // mostrar/ocultar detalle por servicio
 });
 
-// ---------------------------------------------
-// Año dinámico en el footer (manipulación del DOM)
-// ---------------------------------------------
+
+// Año dinámico en el footer 
+
 function setFooterYear() {
   const yearEl = document.getElementById('year');
   if (yearEl) {
@@ -22,9 +21,9 @@ function setFooterYear() {
   }
 }
 
-// ---------------------------------------------
-// Menú móvil (addEventListener + manipulación del DOM)
-// ---------------------------------------------
+
+// Menú móvil 
+
 function initMobileNav() {
   const toggle = document.getElementById('navToggle');
   const navList = document.getElementById('navList');
@@ -44,10 +43,10 @@ function initMobileNav() {
   });
 }
 
-// ---------------------------------------------
+
 // Contadores animados (hero + tablero de beneficios)
 // Se activan cuando el elemento entra en pantalla (IntersectionObserver)
-// ---------------------------------------------
+
 function initAnimatedCounters() {
   const counters = document.querySelectorAll('[data-count]');
   if (!counters.length) return;
@@ -85,15 +84,9 @@ function initAnimatedCounters() {
   counters.forEach(counter => observer.observe(counter));
 }
 
-// Nota: el panel "Ver cómo se calculan estos beneficios" ahora es un
-// elemento nativo <details>/<summary> en el HTML. El navegador se encarga
-// de abrirlo/cerrarlo y de actualizar aria-expanded automáticamente,
-// así que ya no hace falta JavaScript para esa parte.
 
-// ---------------------------------------------
 // Validación de formulario (evento submit + addEventListener)
 // Sin usar alert(): los mensajes se inyectan en el DOM.
-// ---------------------------------------------
 function initFormValidation() {
   const form = document.getElementById('formulario-cliente');
   if (!form) return;
