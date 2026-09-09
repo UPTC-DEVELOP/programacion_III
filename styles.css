@@ -1,0 +1,31 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-primary: #0A2463;
+    --color-secondary: #E63946;
+    --color-accent: #F4A261;
+    --color-bg-light: #F8F9FA;
+    --color-text-dark: #1A1A2E;
+    --color-text-light: #FFFFFF;
+    --color-gray: #6C757D;
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);
+    --radius: 12px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-family);
+    color: var(--color-text-dark);
+    background-color: var(--color-bg-light);
+    line-height: 1.6;
+}
+
+/* Seccion Hero */
