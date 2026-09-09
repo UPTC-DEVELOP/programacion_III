@@ -1,47 +1,407 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Servi-Auto Taller Mecánico</title>
+    <title>SERVI-AUTO | Taller Mecánico Especializado</title>
+    <meta name="description"
+        content="Taller mecánico SERVI-AUTO en Tunja. Más de 30 años de experiencia en mecánica general, revisión de aceite y frenos, accesorios y reparación de averías.">
+    <meta property="og:title" content="SERVI-AUTO | Taller Mecánico Especializado">
+    <meta property="og:description"
+        content="Servicios profesionales de reparación mecánica, mantenimiento preventivo y venta de marcas de calidad en Tunja.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
 
-    <header>
-        <figure class="logo">
-            <img src="https://cdn-icons-png.flaticon.com/512/1995/1995470.png" alt="Icono de Servi-Auto">
-            <figcaption>
-                <strong>SERVI-AUTO</strong>
-                <span>TALLER MECÁNICO</span>
-            </figcaption>
-        </figure>
-        
-        <nav>
+<body>
+    <!--  CABECERA (<header>)-->
+    <header class="site-header" role="banner">
+        <a href="#inicio" class="logo-brand" aria-label="SERVI-AUTO - Volver al inicio">
+            <figure class="logo-figure">
+                <img src="https://cdn-icons-png.flaticon.com/512/1995/1995470.png" alt="Icono de Servi-Auto"
+                    class="logo-icon-svg">
+                <figcaption class="logo-text">
+                    <span class="brand-title">SERVI-AUTO</span>
+                    <span class="brand-sub">TALLER MECÁNICO</span>
+                </figcaption>
+            </figure>
+        </a>
+        <nav class="main-nav" aria-label=" Navegación principal">
             <ul>
-                <li><a href="#inicio" class="active">INICIO</a></li>
-                <li><a href="#taller">NUESTRO TALLER</a></li>
+                <li><a href="#inicio" class="active" aria-current="page">INICIO</a></li>
+                <li><a href="#nuestro-taller">NUESTRO TALLER</a></li>
                 <li><a href="#servicios">SERVICIOS</a></li>
                 <li><a href="#personal">PERSONAL</a></li>
                 <li><a href="#contacto">CONTACTO</a></li>
             </ul>
         </nav>
     </header>
+    <!-- CONTENIDO PRINCIPAL (<main>)  -->
+    <main id="contenido-principal" role="main">
 
-    <main>
-        <section id="inicio" class="hero">
-            <span class="badge">TALLER MECÁNICO</span>
-            <h1>SERVICIOS DE <br><span class="highlight">REPARACIÓN</span></h1>
-            <button id="btn-reserva">RESERVA TU VISITA</button>
+
+        <section class="hero-section" id="inicio" aria-labelledby="hero-title">
+            <span class="hero-badge">TALLER MECÁNICO</span>
+            <h1 id="hero-title" class="hero-title">
+                SERVICIOS DE
+                <span class="highlight-red">REPARACIÓN</span>
+            </h1>
+            <a href="#reserva" class="btn-hero" role="button" aria-label="Reserva tu visita en SERVI-AUTO">RESERVA TU
+                VISITA</a>
+            <span class="hero-scroll-indicator" aria-hidden="true"></span>
         </section>
 
-        <section class="intro">
-            <h2>TE OFRECEMOS EL MEJOR SERVICIO</h2>
-            <h3>PARA TU AUTOMÓVIL</h3>
-            <p>Combinamos experiencia artesanal con equipamiento moderno para ofrecer resultados que superan las expectativas de cada cliente.</p>
+
+        <!--SERVICIOS-->
+        <section class="services-bar" id="servicios" aria-label="servicios-Destacados">
+            <article class="service-col">
+                <h2 class="service-col-title">MECÁNICA</h2>
+                <p class="service-col-desc">Diagnóstico y reparación completa de motores, transmisiones, frenos y
+                    suspensión.
+                    Contamos con tecnología de última generación para garantizar el mejor servicio.</p>
+            </article>
+            <article class="service-col">
+                <h2 class="service-col-title">ACCESORIOS AUTOMIL</h2>
+                <p class="service-col-desc">Asistencia urgente y servicio de emergencia para cualquier avería. Nuestro
+                    equipo
+                    está disponible para resolver cualquier problema con tu vehículo.</p>
+            </article>
+            <article class="service-col">
+                <h2 class="service-col-title">REPARACIÓN AVERÍAS</h2>
+                <p class="service-col-desc">Asistencia urgente y servicio de emergencia para cualquier avería. Nuestro
+                    equipo
+                    está disponible para resolver cualquier problema con tu vehículo.</p>
+            </article>
         </section>
+        </section>
+        <!--BENEFICIOS-->
+        <section class="benefits-section" id="beneficios" aria-labelledby="benefits-heading">
+            <header class="section-header">
+                <h2 id="benefits-heading" class="section-title">
+                    TE OFRECEMOS EL MEJOR SERVICIO
+                    <span class="highlight-red">PARA TU AUTOMÓVIL</span>
+                </h2>
+                <p class="section-subtitle">Combinamos experiencia artesanal con equipamiento moderno para ofrecer
+                    resultados
+                    que superan las expectativas de cada cliente.</p>
+            </header>
+            <section class="benefits-grid" aria-label="Ventajas competitivas de Servi-Auto">
+                <article class="benefit-item">
+                    <figure class="benefit-icon-wrapper">
+                        <img src="Imagenes/marcador.png" class="benefit-icon-svg" alt="Marcador" aria-hidden="true">
+                    </figure>
+                    <h3 class="benefit-title">SIEMPRE DISPONIBLES</h3>
+                    <p class="benefit-text">Atención de lunes a viernes de 7:00 a 22:00 h. Servicio de emergencia
+                        disponible.</p>
+                </article>
+                <!-- Beneficio 2 -->
+                <article class="benefit-item">
+                    <figure class="benefit-icon-wrapper">
+                        <img src="Imagenes/dolar.png" class="benefit-icon-svg" alt="Dólar" aria-hidden="true">
+                    </figure>
+                    <h3 class="benefit-title">PRECIOS INSUPERABLES</h3>
+                    <p class="benefit-text">Presupuesto gratuito y sin compromiso. Garantizamos el precio más
+                        competitivo del
+                        sector.</p>
+                </article>
+                <!-- Beneficio 3 -->
+                <article class="benefit-item">
+                    <figure class="benefit-icon-wrapper">
+                        <img src="Imagenes/estrella.png" class="benefit-icon-svg" alt="Estrella" aria-hidden="true">
+                    </figure>
+                    <h3 class="benefit-title">PROFESIONALES CUALIFICADOS</h3>
+                    <p class="benefit-text">Equipo técnico certificado con más de 30 años de experiencia acumulada.</p>
+                </article>
+            </section>
+        </section>
+        <!-- SECCIÓN "VEN A VISITARNOS"  -->
+        <section class="visit-section" id="nuestro-taller" aria-labelledby="visit-heading">
+            <section class="visit-container">
+                <article class="visit-content">
+                    <span class="red-bar" aria-hidden="true"></span>
+                    <h2 id="visit-heading" class="visit-title">VEN A VISITARNOS</h2>
+                    <p class="visit-text">
+                        Nuestro taller está ubicado a solo unos pasos de la UPTC, en la <strong>Av. Central del Norte #
+                            41 -
+                            15</strong>. Contamos con instalaciones modernas y un equipo de mecánicos expertos listos
+                        para atenderte.
+                        Tu vehículo merece el mejor cuidado — y nosotros estamos aquí para dártelo.
+                    </p>
+                    <a href="#reserva" class="btn-red" role="button"
+                        aria-label="Reserva tu visita en nuestro taller">RESERVA TU
+                        VISITA</a>
+                </article>
+
+                <figure class="visit-figure">
+                    <img src="Imagenes/taller_visitanos_1788976590606.jpg"
+                        alt="Instalaciones del taller mecánico Servi-Auto con vehículos de alta gama en revisión"
+                        class="visit-img" loading="lazy">
+                    <figcaption class="sr-only">Taller mecánico Servi-Auto en Tunja con equipamiento de vanguardia
+                    </figcaption>
+                </figure>
+            </section>
+        </section>
+        <!-- MARCAS Comerciales -->
+        <aside class="brands-aside" aria-labelledby="brands-heading">
+            <header class="brands-header">
+                <h2 id="brands-heading" class="brands-title">SOLO VENDEMOS MARCAS DE CALIDAD</h2>
+            </header>
+
+            <section class="brands-list" aria-label="Marcas y recambios certificados">
+                <!-- Marca 1: CHEVROLET -->
+                <article class="brand-item" aria-label="Marca Chevrolet">
+                    <section class="brand-road-trip">
+                        <img src="Imagenes/CHEVROLET.jpg" alt="CHEVROLET" class="brand-logo-image">
+                    </section>
+                </article>
+
+                <!-- Marca 2: ACDelco -->
+                <article class="brand-item" aria-label="Marca ACDelco">
+                    <section class="brand-auto-plus">
+                        <img src="Imagenes/ACDelco.png" alt="ACDelco" class="brand-logo-image">
+                    </section>
+                </article>
+
+                <!-- Marca 3: DENSO -->
+                <article class="brand-item" aria-label="Marca DENSO">
+                    <section class="brand-auto-point">
+                        <img src="Imagenes/DENSO.png" alt="DENSO" class="brand-logo-image">
+                    </section>
+                </article>
+
+                <!-- Marca 4: NGK -->
+                <article class="brand-item" aria-label="Marca NGK">
+                    <section class="brand-speed-car">
+                        <img src="Imagenes/NGK.png" alt="NGK" class="brand-logo-image">
+                    </section>
+                </article>
+            </section>
+
+
+
+            <section class="contact-strip" id="contacto" aria-label="Información rápida de contacto">
+                <!-- Columna 1: Llámanos -->
+                <article class="contact-strip-col">
+                    <svg class="contact-strip-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path
+                            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                        </path>
+                    </svg>
+                    <header class="contact-strip-text">
+                        <h3 class="contact-strip-title">LLÁMANOS</h3>
+                        <p class="contact-strip-detail">Tel: <a href="tel:914123456"
+                                aria-label="Llamar al teléfono 914-123-456">914-123-456</a> | Fax: 914-123-456</p>
+                    </header>
+                </article>
+
+                <!-- Columna 2: Escríbenos -->
+                <article class="contact-strip-col">
+                    <svg class="contact-strip-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                    <header class="contact-strip-text">
+                        <h3 class="contact-strip-title">ESCRÍBENOS</h3>
+                        <p class="contact-strip-detail"><a href="mailto:info@serviauto.com"
+                                aria-label="Enviar correo electrónico a info@serviauto.com">info@serviauto.com</a></p>
+                    </header>
+                </article>
+
+                <!-- Columna 3: Horario -->
+                <article class="contact-strip-col">
+                    <svg class="contact-strip-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <header class="contact-strip-text">
+                        <h3 class="contact-strip-title">HORARIO</h3>
+                        <p class="contact-strip-detail">Lun-Vie: 07:00–22:00</p>
+                    </header>
+                </article>
+            </section>
+        </aside>
+        <!-- SECCIÓN FORMULARIO DE CONTACTO -->
+        <section class="booking-section" id="reserva" aria-labelledby="booking-heading">
+            <header class="section-header">
+                <span class="red-bar" aria-hidden="true"></span>
+                <h2 id="booking-heading" class="section-title">RESERVA TU VISITA ONLINE</h2>
+                <p class="section-subtitle">Agenda tu cita técnica con nuestros mecánicos certificados. Validación en
+                    tiempo
+                    real y confirmación inmediata.</p>
+            </header>
+
+            <form id="form-reserva" class="booking-form" data-user-role="cliente"
+                data-service-type="mantenimiento-preventivo" aria-labelledby="booking-heading">
+                <section class="form-grid">
+                    <!-- Nombre completo -->
+                    <section class="form-field">
+                        <label for="nombre" class="form-label">Nombre Completo *</label>
+                        <input id="nombre" name="nombre" type="text" class="form-input" required
+                            pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,50}$"
+                            title="Por favor ingresa un nombre válido entre 3 y 50 letras" placeholder="Ej. Juan Pérez"
+                            aria-required="true">
+                    </section>
+
+                    <!-- Email -->
+                    <section class="form-field">
+                        <label for="email" class="form-label">Correo Electrónico *</label>
+                        <input id="email" name="email" type="email" class="form-input" required
+                            placeholder="tuemail@ejemplo.com" aria-required="true">
+                    </section>
+
+                    <!-- Teléfono -->
+                    <section class="form-field">
+                        <label for="telefono" class="form-label">Teléfono de Contacto *</label>
+                        <input id="telefono" name="telefono" type="tel" class="form-input" required
+                            pattern="^[0-9+\s-]{7,15}$" title="Ingresa un teléfono válido de entre 7 y 15 dígitos"
+                            placeholder="Ej. 914-123-456" aria-required="true">
+                    </section>
+
+                    <!-- Servicio -->
+                    <section class="form-field">
+                        <label for="servicio" class="form-label">Servicio Requerido *</label>
+                        <select id="servicio" name="servicio" class="form-select" required data-service-select="true"
+                            aria-required="true">
+                            <option value="">-- Selecciona una especialidad --</option>
+                            <option value="Mecánica general">Mecánica general</option>
+                            <option value="Revisión de aceite y frenos">Revisión de aceite y frenos</option>
+                            <option value="Servicios de reparación">Servicios de reparación</option>
+                            <option value="Cambio de neumáticos">Cambio de neumáticos</option>
+                            <option value="Cambio de batería">Cambio de batería</option>
+                            <option value="Chapa y pintura">Chapa y pintura</option>
+                            <option value="Accesorios del automóvil">Accesorios del automóvil</option>
+                        </select>
+                    </section>
+
+                    <!-- Fecha preferida -->
+                    <section class="form-field">
+                        <label for="fecha" class="form-label">Fecha Preferida de Visita *</label>
+                        <input id="fecha" name="fecha" type="date" class="form-input" required aria-required="true">
+                    </section>
+
+                    <!-- Vehículo -->
+                    <section class="form-field">
+                        <label for="vehiculo" class="form-label">Marca, Modelo y Año del Vehículo</label>
+                        <input id="vehiculo" name="vehiculo" type="text" class="form-input"
+                            placeholder="Ej. Renault Duster 2021">
+                    </section>
+
+                    <!-- Mensaje o detalle de avería -->
+                    <section class="form-field full-width">
+                        <label for="mensaje" class="form-label">Detalles Adicionales o Síntomas de la Avería</label>
+                        <textarea id="mensaje" name="mensaje" rows="4" class="form-textarea"
+                            placeholder="Describe si escuchas ruidos anormales, pérdida de potencia, vibración al frenar o si requieres mantenimiento rutinario..."></textarea>
+                    </section>
+                </section>
+
+                <button type="submit" id="btn-enviar-reserva" class="btn-submit"
+                    aria-label="Confirmar y solicitar cita en Servi-Auto">CONFIRMAR RESERVA</button>
+
+
+                <output id="notificacion-reserva" class="form-feedback empty" aria-live="polite" role="status"></output>
+            </form>
+        </section>
+
     </main>
+    <!--  PIE DE PÁGINA  -->
+    <footer class="site-footer" id="pie-pagina" role="contentinfo">
+        <section class="footer-container">
+            <!-- Columna 1: Experiencia y Redes Sociales -->
+            <section class="footer-col">
+                <figure class="footer-logo">
+                    <svg class="logo-icon-svg" viewBox="0 0 54 34" aria-hidden="true" focusable="false">
+                        <path d="M 2 17 C 12 5, 42 5, 52 17 C 42 29, 12 29, 2 17 Z" fill="none" stroke="#D10F16"
+                            stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <circle cx="27" cy="17" r="10.5" fill="none" stroke="#D10F16" stroke-width="2.5"></circle>
+                        <circle cx="27" cy="17" r="6.5" fill="none" stroke="#D10F16" stroke-width="1.6"
+                            stroke-dasharray="3 2">
+                        </circle>
+                        <circle cx="27" cy="17" r="2.8" fill="#D10F16"></circle>
+                    </svg>
+                    <figcaption>
+                        <span class="footer-brand-title">SERVI-AUTO</span>
+                        <span class="footer-brand-sub">TALLER MECÁNICO</span>
+                    </figcaption>
+                </figure>
 
-    <script src="script.js"></script>
+                <h3 class="footer-col-title">MÁS DE 30 AÑOS DE EXPERIENCIA</h3>
+                <p class="footer-desc">Desde 1993 ofreciendo el mejor servicio mecánico en Tunja con profesionalidad y
+                    honestidad.</p>
+
+                <nav class="social-nav" aria-label="Redes sociales de Servi-Auto">
+                    <ul>
+                        <li><a href="https://facebook.com" class="social-btn"
+                                aria-label="Visitar Facebook de Servi-Auto" target="_blank"
+                                rel="noopener noreferrer">F</a></li>
+                        <li><a href="https://twitter.com" class="social-btn" aria-label="Visitar Twitter de Servi-Auto"
+                                target="_blank" rel="noopener noreferrer">T</a></li>
+                        <li><a href="https://linkedin.com" class="social-btn"
+                                aria-label="Visitar LinkedIn de Servi-Auto" target="_blank"
+                                rel="noopener noreferrer">IN</a></li>
+                        <li><a href="https://youtube.com" class="social-btn" aria-label="Visitar YouTube de Servi-Auto"
+                                target="_blank" rel="noopener noreferrer">YT</a></li>
+                        <li><a href="https://instagram.com" class="social-btn"
+                                aria-label="Visitar Instagram de Servi-Auto" target="_blank"
+                                rel="noopener noreferrer">IG</a></li>
+                    </ul>
+                </nav>
+            </section>
+
+            <!-- Columna 2: Lista de Servicios con viñeta ▶ -->
+            <section class="footer-col">
+                <h3 class="footer-col-title underline-red">SERVICIOS</h3>
+                <ul class="footer-links">
+                    <li><a href="#servicios"><span class="bullet-red" aria-hidden="true">▶</span> Mecánica general</a>
+                    </li>
+                    <li><a href="#servicios"><span class="bullet-red" aria-hidden="true">▶</span> Revisión de aceite y
+                            frenos</a>
+                    </li>
+                    <li><a href="#servicios"><span class="bullet-red" aria-hidden="true">▶</span> Servicios de
+                            reparación</a></li>
+                    <li><a href="#servicios"><span class="bullet-red" aria-hidden="true">▶</span> Cambio de
+                            neumáticos</a></li>
+                    <li><a href="#servicios"><span class="bullet-red" aria-hidden="true">▶</span> Cambio de batería</a>
+                    </li>
+                    <li><a href="#servicios"><span class="bullet-red" aria-hidden="true">▶</span> Chapa y pintura</a>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Columna 3: Visítanos -->
+            <section class="footer-col">
+                <h3 class="footer-col-title underline-red">VISÍTANOS</h3>
+                <address class="footer-address">
+                    <p class="address-text">Avenida Central del Norte # 41 - 15, Tunja, Boyacá</p>
+                    <dl class="contact-definitions">
+                        <dt class="contact-label">TELÉFONO</dt>
+                        <dd class="contact-val"><a href="tel:914123456"
+                                aria-label="Llamar al 914-123-456">914-123-456</a></dd>
+
+                        <dt class="contact-label">FAX</dt>
+                        <dd class="contact-val">914-123-456</dd>
+
+                        <dt class="contact-label">EMAIL</dt>
+                        <dd class="contact-val"><a href="mailto:info@serviauto.com"
+                                aria-label="Escribir correo a info@serviauto.com">info@serviauto.com</a></dd>
+                    </dl>
+                </address>
+            </section>
+        </section>
+
+        <!-- Copyright inferior -->
+        <section class="footer-bottom">
+            <hr class="footer-divider" aria-hidden="true">
+            <p class="copyright-text">© 2026 Servi-Auto Taller Mecánico · Avenida Central del Norte # 41 - 15, Tunja,
+                Boyacá
+            </p>
+        </section>
+    </footer>
+    </figure>
+    </article>
+    <script src="script.js">
+    </script>
 </body>
+
 </html>
