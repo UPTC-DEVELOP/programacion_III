@@ -5,6 +5,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Services Mechanic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 
@@ -29,19 +32,101 @@
 
   <main>
     <section id="inicio" aria-labelledby="titulo-inicio">
-      <h2 id="titulo-inicio">Organiza tu taller. <span>Controla</span> cada servicio.
-      </h2>
 
-      <p>
-        Services Mechanic facilita la gestión de clientes, vehículos,
-        empleados, repuestos, servicios y facturación de un taller mecánico.
-      </p>
-      <p class="acciones-inicio">
+  <div class="contenido-inicio">
+    <p class="etiqueta-inicio">
+      Software de gestión para talleres mecánicos
+    </p>
 
-        <a class="enlace-servicios" href="#servicios">
-          Ver nuestros servicios →
-        </a>
-      </p>
+   <h2 id="titulo-inicio">
+  OPTIMIZA TU <span>TALLER</span><br>
+  <span>Controlando</span> cada servicio
+</h2>
+
+
+    <p class="descripcion-inicio">
+  Services Mechanic facilita la gestión de clientes, vehículos,
+  empleados, repuestos, servicios y facturación de un taller mecánico.
+    </p>
+
+
+    <p class="acciones-inicio">
+      <a class="enlace-servicios" href="#servicios">
+        Ver nuestros servicios →
+      </a>
+    </p>
+    <div class="resumen-inicio" aria-label="Características principales">
+
+  <div class="item-resumen">
+    <span class="check-resumen" aria-hidden="true">✓</span>
+    <span>Información<br>organizada</span>
+  </div>
+
+  <div class="item-resumen">
+    <span class="check-resumen" aria-hidden="true">✓</span>
+    <span>Mayor control<br>operativo</span>
+  </div>
+
+  <div class="item-resumen">
+    <span class="check-resumen" aria-hidden="true">✓</span>
+    <span>Gestión<br>centralizada</span>
+  </div>
+
+</div>
+
+</div>
+
+  <figure class="carrusel-inicio" aria-label="Imágenes del taller">
+  <img
+    class="imagen-carrusel"
+    src="img/Imagen 1.png"
+    alt="Mecánico utilizando una tableta junto a un vehículo en el taller"
+  />
+
+  <img
+    class="imagen-carrusel"
+    src="img/Imagen 2.png"
+    alt="Vista de un taller organizado con vehículos y equipos de reparación"
+    hidden
+  />
+
+  <img
+    class="imagen-carrusel"
+    src="img/Imagen 3.png"
+    alt="Mecánico trabajando con herramientas en el motor de un vehículo"
+    hidden
+  />
+ <figcaption class="controles-carrusel">
+  <button
+    type="button"
+    id="foto-anterior"
+    aria-label="Imagen anterior"
+  >
+    ‹
+  </button>
+
+  <button
+    type="button"
+    id="pausar-carrusel"
+    aria-label="Pausar carrusel"
+  >
+    ⏸
+  </button>
+
+  <button
+    type="button"
+    id="foto-siguiente"
+    aria-label="Imagen siguiente"
+  >
+    ›
+  </button>
+    <div class="indicadores-carrusel" aria-label="Indicadores del carrusel">
+    <button type="button" class="indicador activo" aria-label="Ir a la imagen 1"></button>
+    <button type="button" class="indicador" aria-label="Ir a la imagen 2"></button>
+    <button type="button" class="indicador" aria-label="Ir a la imagen 3"></button>
+  </div>
+</figcaption>
+</figure>
     </section>
 
     <section id="problema" aria-labelledby="titulo-problema">
@@ -132,49 +217,65 @@
         facilitar una administración más organizada, reducir tareas manuales y
         mejorar el control de cada servicio.
       </p>
-      <h3>Misión</h3>
+      <div class="mision-vision">
 
-      <p>
-        Simplificar la administración de los talleres mecánicos mediante una
-        solución digital que centralice la información de clientes, vehículos,
-        empleados, repuestos y facturación, reduciendo errores y liberando
-        tiempo para que los propietarios se enfoquen en lo que mejor saben
-        hacer.
-      </p>
+  <article class="tarjeta-mv">
+    <h3>Misión</h3>
 
-      <h3>Visión</h3>
+    <p>
+      Simplificar la administración de los talleres mecánicos mediante una
+      solución digital que centralice la información de clientes, vehículos,
+      empleados, repuestos y facturación, reduciendo errores y liberando
+      tiempo para que los propietarios se enfoquen en lo que mejor saben
+      hacer.
+    </p>
+  </article>
 
-      <p>
-        Para 2030, consolidarnos como una solución de gestión digital para
-        talleres mecánicos en Colombia, reconocida por su facilidad de uso y
-        por contribuir a una administración más organizada y eficiente.
-      </p>
+  <article class="tarjeta-mv">
+    <h3>Visión</h3>
 
-      <h3>Nuestros valores</h3>
+    <p>
+      Para 2030, consolidarnos como una solución de gestión digital para
+      talleres mecánicos en Colombia, reconocida por su facilidad de uso y
+      por contribuir a una administración más organizada y eficiente.
+    </p>
+  </article>
 
-      <ul>
-        <li>
-          <strong>Innovación útil:</strong>
-          Tecnología que resuelve problemas reales del taller.
-        </li>
-        <li>
-          <strong>Organización:</strong>
-          Claridad y estructura en cada proceso del negocio.
-        </li>
-        <li>
-          <strong>Confianza:</strong>
-          Compromiso con el manejo responsable de la información.
-        </li>
-        <li>
-          <strong>Cercanía:</strong>
-          Escuchamos las necesidades de los talleres para desarrollar
-          soluciones fáciles de utilizar.
-        </li>
-        <li>
-          <strong>Mejora continua:</strong>
-          Evolucionamos junto con las necesidades del sector.
-        </li>
-      </ul>
+</div>
+
+<h3 class="titulo-valores">Nuestros valores</h3>
+
+<div class="valores-grid">
+
+  <article class="tarjeta-valor">
+    <h4>Innovación útil</h4>
+    <p>Tecnología que resuelve problemas reales del taller.</p>
+  </article>
+
+  <article class="tarjeta-valor">
+    <h4>Organización</h4>
+    <p>Claridad y estructura en cada proceso del negocio.</p>
+  </article>
+
+  <article class="tarjeta-valor">
+    <h4>Confianza</h4>
+    <p>Compromiso con el manejo responsable de la información.</p>
+  </article>
+
+  <article class="tarjeta-valor">
+    <h4>Cercanía</h4>
+    <p>
+      Escuchamos las necesidades de los talleres para desarrollar
+      soluciones fáciles de utilizar.
+    </p>
+  </article>
+
+  <article class="tarjeta-valor">
+    <h4>Mejora continua</h4>
+    <p>Evolucionamos junto con las necesidades del sector.</p>
+  </article>
+
+</div>
     </section>
 
     <section id="solicitud-servicio" aria-labelledby="titulo-solicitud-servicio">
@@ -285,6 +386,6 @@
 
     <p>&copy; 2026 Services Mechanic. Todos los derechos reservados.</p>
   </footer>
+  <script src="js/script.js"></script>
 </body>
-
 </html>
