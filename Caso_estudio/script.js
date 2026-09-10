@@ -1,56 +1,211 @@
+document.addEventListener("DOMContentLoaded", () => {
 
-document.addEventListener('DOMContentLoaded', () => {
-    // 1) Validación y mensaje dinámico del formulario de reserva
-    const bookingForm = document.getElementById('form-reserva');
-    const notificationArea = document.getElementById('notificacion-reserva');
+  inicializarFecha();
+  inicializarFormulario();
+  inicializarBotonesReserva();
+  inicializarNavegacion();
+  actualizarAnio();
 
-    if (bookingForm && notificationArea) {
-        bookingForm.addEventListener('submit', (e) => {
-            e.preventDefault();
+});
 
-            if (!bookingForm.checkValidity()) {
-                notificationArea.className = 'form-feedback error';
-                notificationArea.textContent = 'Por favor, completa correctamente todos los campos obligatorios.';
-                return;
-            }
 
-            const nombre = (document.getElementById('nombre') || {}).value || 'Cliente';
-            const servicio = (document.getElementById('servicio') || {}).value || 'Servicio General';
-            const fecha = (document.getElementById('fecha') || {}).value || '';
-            const telefono = (document.getElementById('telefono') || {}).value || '';
+/* =====================================================
+   FECHA MÍNIMA PARA RESERVAS
+   ===================================================== */
 
-            notificationArea.className = 'form-feedback success';
-            notificationArea.textContent = `¡Solicitud enviada con éxito! Estimado(a) ${nombre}, hemos registrado tu reserva para "${servicio}" el día ${fecha}. Un asesor técnico te contactará al ${telefono} en menos de 15 minutos.`;
+function inicializarFecha() {
 
-            bookingForm.reset();
-        });
+  const campoFecha = document.getElementById("fecha");
+
+  if (!campoFecha) {
+    return;
+  }
+
+  const hoy = new Date();
+
+  const anio = hoy.getFullYear();
+
+  const mes = String(hoy.getMonth() + 1).padStart(2, "0");
+
+  const dia = String(hoy.getDate()).padStart(2, "0");
+
+  const fechaActual = `${anio}-${mes}-${dia}`;
+
+  campoFecha.min = fechaActual;
+
+}
+
+
+/* =====================================================
+   FORMULARIO
+   ===================================================== */
+
+function inicializarFormulario() {
+
+  const formulario = document.querySelector(
+    'form[data-form="reserva"]'
+  );
+
+  if (!formulario) {
+    return;
+  }
+
+
+  formulario.addEventListener("submit", (evento) => {
+
+    evento.preventDefault();
+
+
+    const mensaje = document.getElementById(
+      "mensaje-formulario"
+    );
+
+
+    /*
+     * Se comprueba la validación nativa
+     * del navegador.
+     */
+
+    if (!formulario.checkValidity()) {
+
+      formulario.reportValidity();
+
+      if (mensaje) {
+
+        mensaje.textContent =
+          "Por favor, complete correctamente todos los campos.";
+
+      }
+
+      return;
     }
 
-    // 2) Activar enlace destacado en la navegación
-    const navLinks = document.querySelectorAll('nav ul li a');
 
-    navLinks.forEach(link => {
-        link.addEventListener('click', function () {
-            navLinks.forEach(nav => nav.classList.remove('active'));
-            this.classList.add('active');
-        });
-    });
+    /* -----------------------------------------------
+       OBTENER DATOS
+       ----------------------------------------------- */
 
-    // 3) Scroll suave accesible 
-    const anchorLinks = document.querySelectorAll('a[href^="#"]');
-    anchorLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            const targetId = link.getAttribute('href')?.substring(1);
-            if (!targetId) return;
+    const nombre =
+      document.getElementById("nombre").value.trim();
 
-            const targetElement = document.getElementById(targetId);
-            if (targetElement) {
-                e.preventDefault();
-                targetElement.scrollIntoView({ behavior: 'smooth' });
+    const correo =
+      document.getElementById("correo").value.trim();
 
-                targetElement.setAttribute('tabindex', '-1');
-                targetElement.focus({ preventScroll: true });
-            }
-        });
-    });
-});
+    const telefono =
+      document.getElementById("telefono").value.trim();
+
+    const fecha =
+      document.getElementById("fecha").value;
+
+    const servicio =
+      document.getElementById("servicio").value;
+
+    const descripcion =
+      document.getElementById("mensaje").value.trim();
+
+
+    /* -----------------------------------------------
+       VALIDACIÓN ADICIONAL
+       ----------------------------------------------- */
+
+    if (nombre.length < 3) {
+
+      mostrarMensaje(
+        "El nombre debe tener mínimo 3 caracteres."
+      );
+
+      return;
+    }
+
+
+    if (descripcion.length < 10) {
+
+      mostrarMensaje(
+        "La descripción debe tener mínimo 10 caracteres."
+      );
+
+      return;
+    }
+
+
+    /* -----------------------------------------------
+       CONVERTIR SERVICIO
+       ----------------------------------------------- */
+
+    const nombresServicios = {
+
+      mecanica: "Mecánica general",
+
+      aceite: "Cambio de aceite",
+
+      frenos: "Revisión de frenos",
+
+      neumaticos: "Cambio de neumáticos",
+
+      bateria: "Cambio de batería",
+
+      averia: "Reparación de avería"
+
+    };
+
+
+    const nombreServicio =
+      nombresServicios[servicio] || servicio;
+
+
+    /* -----------------------------------------------
+       MENSAJE DE CONFIRMACIÓN
+       ----------------------------------------------- */
+
+    const mensajeFinal =
+      `Solicitud registrada correctamente. ` +
+      `Gracias, ${nombre}. ` +
+      `Has solicitado ${nombreServicio} ` +
+      `para el día ${fecha}. ` +
+      `Nos pondremos en contacto contigo al correo ${correo}.`;
+
+
+    mostrarMensaje(mensajeFinal);
+
+
+    /* -----------------------------------------------
+       GUARDAR DATOS LOCALMENTE
+       ----------------------------------------------- */
+
+    const solicitud = {
+
+      nombre: nombre,
+
+      correo: correo,
+
+      telefono: telefono,
+
+      fecha: fecha,
+
+      servicio: nombreServicio,
+
+      descripcion: descripcion,
+
+      fechaRegistro: new Date().toISOString()
+
+    };
+
+
+    localStorage.setItem(
+      "ultimaSolicitudServiAuto",
+      JSON.stringify(solicitud)
+    );
+
+
+    /*
+     * Limpiar el formulario después del envío.
+     */
+
+    formulario.reset();
+
+
+    inicializarFecha();
+
+  });
+
+}
