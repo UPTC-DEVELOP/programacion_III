@@ -1,46 +1,25 @@
+
 document.addEventListener('DOMContentLoaded', () => {
-    // Manejo  del formulario
-    const bookingForm = document.getElementById('form-reserva');
-    const notificationArea = document.getElementById('notificacion-reserva');
 
-    if (bookingForm && notificationArea) {
-        bookingForm.addEventListener('submit', (e) => {
-            e.preventDefault();
 
-            if (!bookingForm.checkValidity()) {
-                notificationArea.className = 'form-feedback error';
-                notificationArea.textContent = 'Por favor, completa correctamente todos los campos obligatorios.';
-                return;
-            }
+    const btnReserva = document.getElementById('btn-reserva');
 
-            const nombre = (document.getElementById('nombre') || {}).value || 'Cliente';
-            const servicio = (document.getElementById('servicio') || {}).value || 'Servicio General';
-            const fecha = (document.getElementById('fecha') || {}).value || '';
-            const telefono = (document.getElementById('telefono') || {}).value || '';
+    if (btnReserva) {
+        btnReserva.addEventListener('click', () => {
 
-            notificationArea.className = 'form-feedback success';
-            notificationArea.textContent = `¡Solicitud enviada con éxito! Estimado(a) ${nombre}, hemos registrado tu reserva para "${servicio}" el día ${fecha}. Un asesor técnico te contactará al ${telefono} en menos de 15 minutos.`;
-
-            bookingForm.reset();
+            alert('¡Gracias por tu interés! El sistema de reservas se abrirá en una nueva pestaña pronto.');
         });
     }
 
 
-    const anchorLinks = document.querySelectorAll('a[href^="#"]');
-    anchorLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            const targetId = link.getAttribute('href')?.substring(1);
-            if (!targetId) return;
+    const navLinks = document.querySelectorAll('nav ul li a');
 
-            const targetElement = document.getElementById(targetId);
-            if (targetElement) {
-                e.preventDefault();
-                targetElement.scrollIntoView({ behavior: 'smooth' });
+    navLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
 
+            navLinks.forEach(nav => nav.classList.remove('active'));
 
-                targetElement.setAttribute('tabindex', '-1');
-                targetElement.focus({ preventScroll: true });
-            }
+            this.classList.add('active');
         });
     });
 });
