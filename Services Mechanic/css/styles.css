@@ -1,5 +1,5 @@
-
 /* CONFIGURACIÓN GENERAL */
+
 * {
   box-sizing: border-box;
 }
@@ -15,7 +15,9 @@ img {
   height: auto;
 }
 
+
 /* CABECERA */
+
 body > header {
   background-color: #111315;
   color: #ffffff;
@@ -74,6 +76,7 @@ body > header > a {
 body > header > a:hover {
   background-color: #ddb012;
 }
+
 
 /* INICIO / HERO */
 
@@ -236,6 +239,7 @@ body > header > a:hover {
   font-size: 12px;
   font-weight: bold;
 }
+
 
 /* CARRUSEL DEL INICIO */
 
@@ -418,47 +422,219 @@ body > header > a:hover {
   transform: scale(1.25);
 }
 
-/* SECCIÓN DEL PROBLEMA */
+/* ============================= */
+/* SECCIÓN PROBLEMA */
+/* ============================= */
 
 #problema {
   background-color: #f7f7f5;
   color: #202124;
+  padding-block: 88px;
+}
 
-  padding: 60px 24px;
+#problema .contenedor-problema {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 52px;
+}
+
+#problema .intro-problema {
+  max-width: 520px;
+}
+
+#problema .etiqueta-problema {
+  color: #f5c518;
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin: 0 0 18px;
+}
+
+#problema .etiqueta-problema::before {
+  content: "";
+  width: 32px;
+  height: 3px;
+  background-color: #f5c518;
+  border-radius: 3px;
+  flex-shrink: 0;
 }
 
 #problema h2 {
-  font-size: clamp(28px, 4vw, 40px);
-  line-height: 1.2;
+  color: #202124;
+  font-size: clamp(34px, 3.1vw, 44px);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
 
-  max-width: 800px;
-
+  max-width: 560px;
   margin: 0 0 24px;
 }
 
-#problema p {
+#problema .descripcion-problema {
   color: #6b7075;
-
   font-size: 18px;
-
-  max-width: 700px;
-
-  margin: 0 0 24px;
+  line-height: 1.7;
+  max-width: 460px;
+  margin: 0;
+}
+#problema .lista-problemas {
+  display: grid;
+  gap: 18px;
 }
 
-#problema ul {
-  padding-left: 24px;
+#problema .item-problema {
+  position: relative;
+
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 18px;
+  align-items: start;
+
+  padding: 24px 22px;
+
+  background-color: #111315;
+  border: 1px solid #252829;
+  border-radius: 18px;
+
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    border-color 0.2s,
+    background-color 0.2s;
+}
+
+#problema .item-problema:hover {
+  transform: translateY(-4px);
+
+  background-color: #1b1e20;
+  border-color: #f5c518;
+
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.14);
+}
+#problema .icono-problema {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: rgba(245, 197, 24, 0.10);
+
+  border: 1px solid rgba(245, 197, 24, 0.30);
+  border-radius: 12px;
+
+  color: #f5c518;
+
+  transition:
+    color 0.2s,
+    border-color 0.2s,
+    background-color 0.2s,
+    transform 0.2s;
+}
+
+#problema .icono-problema svg {
+  width: 21px;
+  height: 21px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+#problema .item-problema:hover .icono-problema {
+  color: #ddb012;
+  border-color: #f5c518;
+  background-color: rgba(245, 197, 24, 0.16);
+  transform: scale(1.05);
+}
+#problema .contenido-problema h3 {
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 2px 0 7px;
+}
+
+#problema .contenido-problema p {
+  color:  #b8bdc3;
+  font-size: 15px;
+  line-height: 1.65;
+  max-width: none;
   margin: 0;
 }
 
-#problema li {
-  margin-bottom: 12px;
+@media (min-width: 900px) {
+  #problema .contenedor-problema {
+    grid-template-columns: minmax(320px, 5fr) minmax(440px, 7fr);
+    gap: clamp(52px, 6vw, 82px);
+    align-items: start;
+  }
 }
 
-#problema li::marker {
-  color: #6b7075;
+@media (max-width: 600px) {
+  #problema {
+    padding-block: 60px;
+  }
+
+  #problema .contenedor-problema {
+    gap: 34px;
+  }
+
+  #problema h2 {
+    font-size: clamp(30px, 8vw, 40px);
+  }
+
+  
+#problema .item-problema {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 18px;
+  align-items: start;
+
+  padding: 24px 22px;
+
+  background-color: #111315;
+  border: 1px solid #252829;
+  border-radius: 18px;
+
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    border-color 0.2s,
+    background-color 0.2s;
 }
 
+#problema .icono-problema {
+  width: 40px;
+  height: 40px;
+}
+
+#problema .item-problema:hover {
+  transform: translateY(-4px);
+
+  background-color: #fffdf8;
+  border-color: rgba(245, 197, 24, 0.45);
+
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
+}
+}
 /* SECCIÓN NOSOTROS */
 
 #nosotros {
@@ -466,6 +642,33 @@ body > header > a:hover {
   color: #202124;
 
   padding: 60px 24px;
+}
+
+#nosotros .etiqueta-nosotros {
+  color: #f5c518;
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin: 0 0 12px;
+  max-width: none;
+}
+
+#nosotros .etiqueta-nosotros::before {
+  content: "";
+
+  width: 32px;
+  height: 3px;
+
+  background-color: #f5c518;
+  border-radius: 3px;
+
+  flex-shrink: 0;
 }
 
 #nosotros h2 {
@@ -490,6 +693,32 @@ body > header > a:hover {
 }
 
 
+/* Encabezado de Nosotros */
+
+#nosotros .encabezado-nosotros {
+  display: block;
+
+  width: 100%;
+  margin-bottom: 32px;
+}
+
+#nosotros .intro-nosotros {
+  width: 100%;
+  max-width: 800px;
+}
+
+#nosotros .intro-nosotros .etiqueta-nosotros {
+  margin-bottom: 12px;
+}
+
+#nosotros .intro-nosotros h2 {
+  margin: 0 0 24px;
+}
+
+#nosotros .intro-nosotros > p:last-child {
+  margin: 0;
+  max-width: 700px;
+}
 /* Misión y visión */
 
 #nosotros .mision-vision {
@@ -498,7 +727,7 @@ body > header > a:hover {
 
   gap: 20px;
 
-  margin-top: 40px;
+  margin-top: 0;
 }
 
 #nosotros .tarjeta-mv {
@@ -506,7 +735,7 @@ body > header > a:hover {
 
   background-color: #ffffff;
 
-  border: 1px solid #e4e5e6;
+  border-color: #f5c518;
   border-radius: 16px;
 
   padding: 32px;
@@ -553,7 +782,6 @@ body > header > a:hover {
 
 #nosotros .tarjeta-mv p {
   margin: 0;
-
   max-width: none;
 }
 
@@ -561,7 +789,7 @@ body > header > a:hover {
 /* Valores */
 
 #nosotros .titulo-valores {
-  margin: 48px 0 20px;
+  margin: 36px 0 20px;
 
   font-size: 20px;
 
@@ -593,22 +821,6 @@ body > header > a:hover {
     box-shadow 0.2s;
 }
 
-#nosotros .tarjeta-valor::before {
-  content: "";
-
-  position: absolute;
-
-  top: 0;
-  left: 24px;
-
-  width: 50px;
-  height: 4px;
-
-  background-color: #f5c518;
-
-  border-radius: 0 0 8px 8px;
-}
-
 #nosotros .tarjeta-valor:hover {
   border-color: #f5c518;
 
@@ -627,13 +839,38 @@ body > header > a:hover {
 
 #nosotros .tarjeta-valor p {
   margin: 0;
-
   max-width: none;
 
   font-size: 14px;
 }
+#nosotros .icono-valor {
+  width: 46px;
+  height: 46px;
 
-/* Cabecera en pantallas pequeñas */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 18px;
+
+  border-radius: 50%;
+
+  background-color: rgba(245, 197, 24, 0.12);
+  color: #f5c518;
+}
+
+#nosotros .icono-valor svg {
+  width: 24px;
+  height: 24px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* CABECERA EN PANTALLAS PEQUEÑAS */
 
 @media (max-width: 768px) {
 
@@ -659,7 +896,8 @@ body > header > a:hover {
   }
 }
 
-/* Inicio y Nosotros en pantallas amplias */
+
+/* INICIO Y NOSOTROS EN PANTALLAS AMPLIAS */
 
 @media (min-width: 900px) {
 
@@ -686,4 +924,237 @@ body > header > a:hover {
   #nosotros .valores-grid {
     grid-template-columns: repeat(5, 1fr);
   }
+}
+
+
+/* CARACTERÍSTICAS DEL INICIO EN PANTALLAS PEQUEÑAS */
+
+@media (max-width: 600px) {
+
+  #inicio .resumen-inicio {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* TAMAÑO Y ANCHO ADAPTABLES DE LAS SECCIONES */
+
+body > header,
+#inicio,
+#problema,
+#nosotros {
+  font-size: clamp(1rem, 1vw, 1.625rem);
+
+  padding-inline:
+    max(24px, calc((100% - 90em) / 2));
+}
+
+
+/* AJUSTES PROPORCIONALES PARA VENTANAS GRANDES */
+
+@media (min-width: 1600px) {
+
+  /* Cabecera */
+
+  body > header {
+    padding-block: 1.5em;
+
+    gap: 1.25em;
+  }
+
+  body > header > img {
+    width: 7.2em;
+  }
+
+  body > header > h1 {
+    font-size: 1.25em;
+  }
+
+  body > header nav ul {
+    gap: 1.25em;
+  }
+
+  body > header > a {
+    padding: 0.75em 1.25em;
+  }
+
+
+  /* Espacio vertical de las secciones */
+
+  #inicio,
+  #problema,
+  #nosotros {
+    padding-block: 3.75em;
+  }
+
+
+  /* Inicio */
+
+  #inicio {
+    column-gap: 2.5em;
+  }
+
+  #inicio .contenido-inicio {
+    gap: 1.25em;
+  }
+
+  #inicio h2 {
+    font-size: 3em;
+    max-width: none;
+  }
+
+  #inicio p {
+    font-size: 1.125em;
+    max-width: 34em;
+  }
+
+  #inicio .descripcion-inicio {
+    font-size: 1.25em;
+    max-width: 30em;
+  }
+
+  #inicio .etiqueta-inicio,
+  #inicio .item-resumen {
+    font-size: 0.875em;
+  }
+
+  #inicio .acciones-inicio {
+    margin-top: 1.75em;
+  }
+
+  #inicio .resumen-inicio {
+    margin-top: 2.125em;
+    padding-top: 1.5em;
+
+    gap: 1.125em;
+  }
+
+  #inicio .check-resumen {
+    font-size: inherit;
+
+    width: 1.3em;
+    height: 1.3em;
+  }
+
+
+  /* Controles del carrusel */
+
+  #foto-anterior,
+  #foto-siguiente {
+    font-size: 2em;
+
+    width: 1.5em;
+    height: 1.5em;
+  }
+
+  #pausar-carrusel {
+    font-size: 1.125em;
+
+    width: 2.25em;
+    height: 2.25em;
+  }
+
+  #inicio .controles-carrusel .indicador {
+    font-size: inherit;
+
+    width: 0.5em;
+    height: 0.5em;
+  }
+
+
+  /* Problema y Nosotros */
+
+  #problema h2,
+  #nosotros h2 {
+    font-size: 2.5em;
+
+    max-width: 20em;
+  }
+
+  #problema p {
+    font-size: 1.125em;
+
+    max-width: 39em;
+  }
+
+  #nosotros p {
+    font-size: 1em;
+
+    max-width: 50em;
+  }
+
+  #nosotros h3 {
+    font-size: 1.5em;
+  }
+
+  #nosotros .tarjeta-mv {
+    padding: 2em;
+  }
+
+  #nosotros .tarjeta-mv h3 {
+    font-size: 1.375em;
+  }
+
+  #nosotros .titulo-valores {
+    font-size: 1.25em;
+  }
+
+  #nosotros .tarjeta-valor {
+    padding: 1.375em 1.125em;
+  }
+
+  #nosotros .tarjeta-valor h4 {
+    font-size: 1em;
+  }
+
+  #nosotros .tarjeta-valor p {
+    font-size: 0.875em;
+  }
+  /* Problema en pantallas grandes */
+
+#problema .contenedor-problema {
+  max-width: 75em;
+  gap: 4em;
+}
+
+#problema .intro-problema {
+  max-width: 32.5em;
+}
+
+#problema .descripcion-problema {
+  font-size: 1.125em;
+  max-width: 28.75em;
+}
+
+#problema .lista-problemas {
+  gap: 1.125em;
+}
+
+#problema .item-problema {
+  grid-template-columns: 3.25em 1fr;
+  gap: 1.125em;
+  padding: 1.5em 1.375em;
+  border-radius: 1.125em;
+}
+
+#problema .icono-problema {
+  width: 2.75em;
+  height: 2.75em;
+  border-radius: 0.75em;
+}
+
+#problema .icono-problema svg {
+  width: 1.3125em;
+  height: 1.3125em;
+}
+
+#problema .contenido-problema h3 {
+  font-size: 1.0625em;
+  margin: 0.125em 0 0.4375em;
+}
+
+#problema .contenido-problema p {
+  font-size: 0.9375em;
+  line-height: 1.65;
+}
 }
