@@ -1,8 +1,57 @@
-body{
-    background-color: lightblue;
+* {
+    box-sizing: border-box;
 }
 
-dre{
-    width: 30px;
+body{
+    margin: 0;
+    padding-top: 80px;
+    background-color: black;
+}
+
+header {
+    height: 80px;
+    padding: 0 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background-color: #151519;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+header img {
+    width: 80px;
+    height: auto;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 30px;
     
+}
+
+nav a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+}
+
+button {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
 }
