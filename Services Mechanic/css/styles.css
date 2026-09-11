@@ -585,8 +585,8 @@ body > header > a:hover {
     align-items: start;
   }
 }
-
 @media (max-width: 600px) {
+
   #problema {
     padding-block: 60px;
   }
@@ -599,41 +599,21 @@ body > header > a:hover {
     font-size: clamp(30px, 8vw, 40px);
   }
 
-  
-#problema .item-problema {
-  display: grid;
-  grid-template-columns: 52px 1fr;
-  gap: 18px;
-  align-items: start;
+  #problema .item-problema {
+    grid-template-columns: 44px 1fr;
+    gap: 14px;
+    padding: 20px 16px;
+  }
 
-  padding: 24px 22px;
+  #problema .icono-problema {
+    width: 40px;
+    height: 40px;
+  }
 
-  background-color: #111315;
-  border: 1px solid #252829;
-  border-radius: 18px;
+  #problema .item-problema:hover {
+    transform: none;
+  }
 
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
-
-  transition:
-    transform 0.2s,
-    box-shadow 0.2s,
-    border-color 0.2s,
-    background-color 0.2s;
-}
-
-#problema .icono-problema {
-  width: 40px;
-  height: 40px;
-}
-
-#problema .item-problema:hover {
-  transform: translateY(-4px);
-
-  background-color: #fffdf8;
-  border-color: rgba(245, 197, 24, 0.45);
-
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
-}
 }
 /* SECCIÓN NOSOTROS */
 
@@ -735,7 +715,7 @@ body > header > a:hover {
 
   background-color: #ffffff;
 
-  border-color: #f5c518;
+  border: 1px solid #e4e5e6;
   border-radius: 16px;
 
   padding: 32px;
@@ -922,10 +902,16 @@ body > header > a:hover {
   }
 
   #nosotros .valores-grid {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
+@media (min-width: 1200px) {
 
+  #nosotros .valores-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+}
 
 /* CARACTERÍSTICAS DEL INICIO EN PANTALLAS PEQUEÑAS */
 
