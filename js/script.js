@@ -172,3 +172,19 @@ if (formularioContacto) {
         contadores.forEach((c) => observerContador.observe(c));
     }
 });
+
+    /*BOTÓN MOSTRAR/OCULTAR INFORMACIÓN */
+    const btnToggle = document.getElementById("btnToggleInfo");
+    const infoExtra = document.getElementById("infoExtraNosotros");
+
+    if (btnToggle && infoExtra) {
+        btnToggle.addEventListener("click", () => {
+            infoExtra.classList.toggle("oculto");
+
+            if (infoExtra.classList.contains("oculto")) {
+                btnToggle.textContent = "Ver certificaciones y reconocimientos";
+            } else {
+                btnToggle.textContent = "Ocultar información";
+            }
+        });
+    }
