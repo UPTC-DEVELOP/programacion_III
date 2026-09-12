@@ -133,4 +133,42 @@ if (formularioContacto) {
 
         observerSlider.observe(sliderTestimonios);
     }
+
+        /* CONTADOR ANIMADO DE BENEFICIOS*/
+    const contadores = document.querySelectorAll(".contador");
+
+    if (contadores.length > 0) {
+        const animarContador = (elemento) => {
+            const target = parseInt(elemento.getAttribute("data-target"));
+            const duracion = 2000;
+            const incremento = target / (duracion / 16);
+            let actual = 0;
+
+            elemento.classList.add("animando");
+
+            const actualizar = () => {
+                actual += incremento;
+                if (actual < target) {
+                    elemento.textContent = Math.ceil(actual);
+                    requestAnimationFrame(actualizar);
+                } else {
+                    elemento.textContent = target;
+                    elemento.classList.remove("animando");
+                }
+            };
+
+            actualizar();
+        };
+
+        const observerContador = new IntersectionObserver((entradas) => {
+            entradas.forEach((entrada) => {
+                if (entrada.isIntersecting) {
+                    animarContador(entrada.target);
+                    observerContador.unobserve(entrada.target);
+                }
+            });
+        }, { threshold: 0.1 }); // ← CAMBIADO: antes era 0.5
+
+        contadores.forEach((c) => observerContador.observe(c));
+    }
 });

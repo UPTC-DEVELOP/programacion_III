@@ -192,7 +192,7 @@ main {
 .hero-estadisticas span {
     color: #777777;
     font-family: "Courier New", monospace;
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 2px;
 }
 
@@ -1282,4 +1282,36 @@ fieldset.visible {
     text-transform: uppercase;
     letter-spacing: 1.5px;
     font-family: "Courier New", monospace;
+}
+
+/* CONTADOR ANIMADO */
+.hero-estadisticas strong {
+    font-family: "Arial Narrow", Arial, sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: #ffffff;
+    transition: color 0.3s ease;
+    display: inline-block;
+    line-height: 1;
+}
+
+.hero-estadisticas .contador {
+    font-family: "Arial Narrow", Arial, sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: #ffffff;
+    transition: color 0.3s ease;
+}
+
+/* Hover: todo el bloque se pone rojo */
+.hero-estadisticas article:hover strong,
+.hero-estadisticas article:hover .contador {
+    color: #e3262e;
+}
+
+/* Estado de animación (mientras cuenta) */
+.hero-estadisticas .contador.animando {
+    color: #e3262e;
 }
