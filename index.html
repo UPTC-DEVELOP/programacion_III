@@ -1,43 +1,58 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TallerPro | Sistema  de Gestión y Servicios Automotrices</title>
+  <title>TallerPro | Sistema de Gestión y Servicios Automotrices</title>
   <meta name="description" content="TallerPro - Mantenimiento, reparación y diagnóstico automotriz con tecnología de vanguardia y personal altamente capacitado.">
+
+  <!--  PESTAÑA DEL NAVEGADOR ===== -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><text y=%2218%22 font-size=%2218%22>🔧</text></svg>">
+
   <link rel="stylesheet" href="styles.css">
-  <script src="script.js"></script>
 </head>
 <body>
-  <img src="C:\Users\DIANA ESTUPIÑAN\OneDrive\Desktop\programación 3 grupo 6\programacion_III\imagenes\imagen  logo.jpeg""" alt="mi foto"width="200">
 
-    
-    </header>
-       
+  <!-- ENLACE DE ACCESIBILIDAD NO FUNCIONAL -->
+  <a class="skip-link" href="#inicio">Saltar al contenido principal</a>
+
+  <header class="header" id="siteHeader">
     <div class="container header__inner">
+      <a href="#inicio" class="logo">
+        <!-- ICONO -->
+        <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+          <path d="M3 13l1.5-4.5A2 2 0 0 1 6.4 7h11.2a2 2 0 0 1 1.9 1.5L21 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <rect x="2.5" y="13" width="19" height="5" rx="1.5" stroke="currentColor" stroke-width="1.6" fill="none"/>
+          <circle cx="6.5" cy="18" r="1.6" fill="currentColor"/>
+          <circle cx="17.5" cy="18" r="1.6" fill="currentColor"/>
+        </svg>
+        <span>Taller<strong>Pro</strong></span>
+      </a>
 
+      <!-- CHEBOX JUNTO AL CSS-->
+      <input type="checkbox" class="nav-toggle-checkbox" id="navToggleCheckbox">
 
       <nav class="nav" id="nav">
         <ul class="nav__list">
           <li><a href="#inicio">Inicio</a></li>
+          <!-- ENLACES CON FUNCION SIRVEN -->
           <li><a href="#servicios">Servicios</a></li>
-          <li><a href="#precio">Precio</a></li>
-          <li><a href="#contactos">Contacto</a></li>
-
+          <li><a href="#precio">Precios</a></li>
+          <li><a href="#contacto">Contacto</a></li>
         </ul>
       </nav>
 
-c      <a href="#contacto" class="btn btn--primary btn--sm header__cta">Agendar cita</a>
+      <a href="#contacto" class="btn btn--primary btn--sm header__cta">Agendar cita</a>
 
-      <button class="nav__toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">
+      <!-- MENU NUEVO MOVIL. -->
+      <label class="nav__toggle" for="navToggleCheckbox" aria-label="Abrir menú">
         <span></span><span></span><span></span>
-      </button>
+      </label>
     </div>
   </header>
 
   <main>
-    <!-- ===== HERO ===== -->
+    <!--TITULO Y TEXTO-->
     <section class="hero" id="inicio">
       <div class="container hero__grid">
         <div class="hero__content">
@@ -48,27 +63,58 @@ c      <a href="#contacto" class="btn btn--primary btn--sm header__cta">Agendar 
             y personal altamente capacitado. Registramos cada servicio, repuesto y hora de
             trabajo para que tu factura sea siempre clara y transparente.
           </p>
-          <img src="C:\Users\DIANA ESTUPIÑAN\Desktop\mecanico.png" alt="mi foto"width="400">
+
+          <!-- ===== ILUSTRACION CON FUNCION PARA IR A LA SECCION DE CONTACTO ===== -->
+          <div class="hero__visual" aria-hidden="true">
+            <svg viewBox="0 0 200 200" width="220" height="220">
+              <circle cx="100" cy="100" r="96" fill="var(--color-primary-light)" stroke="var(--color-primary)" stroke-width="2"/>
+              <circle cx="100" cy="100" r="70" fill="var(--color-bg)"/>
+              <g stroke="var(--color-primary)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M55 120c0-8 6-14 14-14h62c8 0 14 6 14 14v10a6 6 0 0 1-6 6h-8a6 6 0 0 1-6-6v-4H75v4a6 6 0 0 1-6 6h-8a6 6 0 0 1-6-6z"/>
+                <path d="M65 106l8-18a8 8 0 0 1 7-5h40a8 8 0 0 1 7 5l8 18"/>
+              </g>
+              <circle cx="75" cy="130" r="7" fill="var(--color-primary-dark)"/>
+              <circle cx="125" cy="130" r="7" fill="var(--color-primary-dark)"/>
+              <path d="M120 70l10-10m0 10-10-10" stroke="var(--color-accent)" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="125" cy="65" r="14" fill="none" stroke="var(--color-accent)" stroke-width="4"/>
+            </svg>
+          </div>
 
           <div class="hero__actions">
-            
+            <a href="#contacto" class="btn btn--primary">Agendar cita</a>
             <a href="#beneficios" class="btn btn--ghost">Ver beneficios</a>
           </div>
 
+          <!-- TEXTO 15 500 ETC  PERO DEJE JAVASCRITP ´PARA QUE MODIFIQUEN ID STALIST  -->
           <ul class="hero__stats" id="statsList">
-            <li><span class="stat__number" data-target="15">1.</span><span class="stat__label">ahorro de tiempo</span></li>
-            <li><span class="stat__number" data-target="500">2.</span><span class="stat__label">control financiero</span></li>
-            <li><span class="stat__number" data-target="98">3.</span><span class="stat__label"> Historia vehicular</span></li>
-            <li><span class="stat__number" data-target="98">4.</span><span class="stat__label"> Atención personalizada</span></li>
-            
+            <li><span class="stat__number" data-target="15">15%</span><span class="stat__label">Ahorro de tiempo</span></li>
+            <li><span class="stat__number" data-target="500">500+</span><span class="stat__label">Servicios registrados</span></li>
+            <li><span class="stat__number" data-target="98">98%</span><span class="stat__label">Historial vehicular</span></li>
+            <li><span class="stat__number" data-target="24">24/7</span><span class="stat__label">Atención personalizada</span></li>
           </ul>
         </div>
 
+<<<<<<< HEAD
         <aside class="hero__form" aria-labelledby="formTitle">
 
 
           <h2 id="formTitle">Agenda tu proxima visita</h2>
 >>>>>>> 71b33892212c9ad08469f48f942240b3417dd754
+=======
+        <!-- CONTACTO -->
+        <aside class="hero__form contact-card" id="contacto" aria-labelledby="formTitle">
+          <div class="contact-card__intro">
+            <p class="eyebrow eyebrow--light">Contáctanos</p>
+            <h2 id="formTitle">Agenda tu próxima visita</h2>
+            <ul class="contact-card__info">
+              <li>📍 Calle Principal #123, Tunja, Boyacá, Colombia</li>
+              <li>📞 +57 300 000 0000</li>
+              <li>✉️ contacto@tallerpro.com</li>
+              <li>🕒 Lun a Sáb, 8:00 am a 6:00 pm</li>
+            </ul>
+          </div>
+
+>>>>>>> a70b3e81d67d073059aea992f19066a16f699f3d
           <form id="leadForm" novalidate>
             <div class="field">
               <label for="nombre">Nombre completo</label>
@@ -82,8 +128,20 @@ c      <a href="#contacto" class="btn btn--primary btn--sm header__cta">Agendar 
             </div>
             <div class="field">
               <label for="telefono">Celular</label>
-              <input type="tel" id="telefono" name="telefono" placeholder="Ej: 3001234567" required>
+              <input type="tel" id="telefono" name="telefono" placeholder="Ej: 3001234567" pattern="[0-9]{7,10}" title="Escribe entre 7 y 10 números" required>
               <span class="field__error" id="err-telefono"></span>
+            </div>
+            <!-- ===== NUEVO: campo que aparece en tu imagen de referencia pero no estaba en el código ===== -->
+            <div class="field">
+              <label for="servicio">Tipo de servicio</label>
+              <select id="servicio" name="servicio" required>
+                <option value="" disabled selected>Selecciona una opción</option>
+                <option value="mantenimiento">Mantenimiento preventivo</option>
+                <option value="diagnostico">Diagnóstico computarizado</option>
+                <option value="reparacion">Reparación de motor</option>
+                <option value="alineacion">Alineación y balanceo</option>
+              </select>
+              <span class="field__error" id="err-servicio"></span>
             </div>
             <div class="field">
               <label for="mensaje">¿Qué servicio necesitas?</label>
@@ -97,12 +155,41 @@ c      <a href="#contacto" class="btn btn--primary btn--sm header__cta">Agendar 
       </div>
     </section>
 
+    <!-- ===== MENU NUESTRO SERVICIOS ===== -->
+    <section class="services" id="servicios" aria-labelledby="servicesTitle">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Lo que hacemos</p>
+          <h2 id="servicesTitle">Nuestros servicios</h2>
+          <p>Todo lo que tu vehículo necesita, en un solo lugar.</p>
+        </div>
+        <div class="services__grid">
+          <article class="service-card">
+            <h3>Mantenimiento preventivo</h3>
+            <p>Cambios de aceite, filtros y revisiones periódicas para evitar daños mayores.</p>
+          </article>
+          <article class="service-card">
+            <h3>Diagnóstico computarizado</h3>
+            <p>Escaneo electrónico completo para detectar fallas con precisión.</p>
+          </article>
+          <article class="service-card">
+            <h3>Reparación de motor</h3>
+            <p>Diagnóstico y reparación especializada realizada por técnicos certificados.</p>
+          </article>
+          <article class="service-card">
+            <h3>Alineación y balanceo</h3>
+            <p>Cuidamos la vida útil de tus llantas y la estabilidad de tu vehículo.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- BENEFICIOS FALTA JAVASCRIPT DEJE EL ID=beneficios -->
     <section class="benefits" id="beneficios" aria-labelledby="benefitsTitle">
       <div class="container">
         <div class="benefits__heading">
           <p class="eyebrow">Una experiencia más sencilla</p>
           <h2 id="benefitsTitle">Beneficios</h2>
-          
         </div>
 
         <div class="benefits__grid">
@@ -129,22 +216,99 @@ c      <a href="#contacto" class="btn btn--primary btn--sm header__cta">Agendar 
         </div>
       </div>
     </section>
-    
-<footer>
+
+    <!-- ===== AGREGUE MENU PRECIOS MEJORADO AL ANTERIOR ===== -->
+    <section class="pricing" id="precio" aria-labelledby="pricingTitle">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Planes</p>
+          <h2 id="pricingTitle">Precios</h2>
+          <p>Elige el plan que mejor se ajuste al cuidado de tu vehículo.</p>
+        </div>
+        <div class="pricing__grid">
+          <article class="price-card">
+            <h3>Básico</h3>
+            <p class="price-card__amount">$80.000<span>/servicio</span></p>
+            <ul>
+              <li>Revisión general</li>
+              <li>Cambio de aceite</li>
+              <li>Chequeo de niveles</li>
+            </ul>
+            <a href="#contacto" class="btn btn--ghost btn--block">Agendar</a>
+          </article>
+          <article class="price-card price-card--featured">
+            <p class="price-card__badge">Más elegido</p>
+            <h3>Estándar</h3>
+            <p class="price-card__amount">$150.000<span>/servicio</span></p>
+            <ul>
+              <li>Todo lo del plan Básico</li>
+              <li>Diagnóstico computarizado</li>
+              <li>Alineación y balanceo</li>
+            </ul>
+            <a href="#contacto" class="btn btn--primary btn--block">Agendar</a>
+          </article>
+          <article class="price-card">
+            <h3>Premium</h3>
+            <p class="price-card__amount">$260.000<span>/servicio</span></p>
+            <ul>
+              <li>Todo lo del plan Estándar</li>
+              <li>Reparación de motor</li>
+              <li>Seguimiento por 30 días</li>
+            </ul>
+            <a href="#contacto" class="btn btn--ghost btn--block">Agendar</a>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LOGOS REDES SOCIALES WP -->
+  <footer class="site-footer">
+    <div class="container footer__grid">
+      <div class="footer__brand">
+        <span class="logo logo--footer">Taller<strong>Pro</strong></span>
+        <p>Tecnología, experiencia y confianza para mantener tu vehículo en las mejores condiciones.</p>
+      </div>
+
+      <div class="footer__contact">
+        <h4>Soporte y ventas</h4>
+        <p>contacto@tallerpro.com</p>
+        <p>+57 300 000 0000</p>
+        <p>Tunja, Boyacá, Colombia</p>
+      </div>
+
+      <!-- ===== LOGOS REDES SOCIALES ===== -->
+      <div class="footer__social">
+        <h4>Síguenos</h4>
+        <div class="social-icons">
+          <a href="#" aria-label="Facebook" class="social-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="11" fill="currentColor"/><text x="12" y="16" font-size="12" text-anchor="middle" fill="var(--color-primary-dark)">f</text></svg>
+          </a>
+          <a href="#" aria-label="Instagram" class="social-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18"><rect x="1" y="1" width="22" height="22" rx="6" fill="currentColor"/><circle cx="12" cy="12" r="5" fill="none" stroke="var(--color-primary-dark)" stroke-width="2"/><circle cx="18" cy="6" r="1.4" fill="var(--color-primary-dark)"/></svg>
+          </a>
+          <a href="#" aria-label="WhatsApp" class="social-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="M8 16l1-3a5 5 0 1 1 3 2l-4 1z" fill="none" stroke="var(--color-primary-dark)" stroke-width="1.5"/></svg>
+          </a>
+          <a href="#" aria-label="X" class="social-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="M8 8l8 8M16 8l-8 8" stroke="var(--color-primary-dark)" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© 2026 TallerPro. Todos los derechos reservados.</p>
+    </div>
+  </footer>
 
  
-<img src="C:\Users\DIANA ESTUPIÑAN\OneDrive\Desktop\jpg tic.jpg" alt="mi foto"width="50">
-<img src="C:\Users\DIANA ESTUPIÑAN\OneDrive\Desktop\inst.jpg" alt="mi foto"width="50">
-<img src="C:\Users\DIANA ESTUPIÑAN\OneDrive\Desktop\face.jpg" alt="mi foto"width="40">
-<img src="C:\Users\DIANA ESTUPIÑAN\OneDrive\Desktop\whatsap.jpg" alt="mi foto"width="90">
 
-
-
-
-  <p>©soporte y ventas  | Todos los derechos reservados</p>
-Tecnologia ,experiencia y confianza para mantener tu vehiculo en las mejores condiciones Tallerpro2026
-
-
-</footer>
+ <!-- IMPORTANTE SIN JAVASCRIPT POR AHORA: 
+  EL MENÚ MÓVIL FUNCIONA CON CSS PURO (CHECKBOX + LABEL) 
+  Y EL FORMULARIO USA VALIDACIÓN NATIVA DEL NAVEGADOR (REQUIRED, TYPE="EMAIL", PATTERN DEL TELÉFONO). 
+  SI ALGUIEN AGREGA SCRIPT.JS MÁS ADELANTE, 
+  PUEDE APOYARSE EN LOS ID="NAVTOGGLECHECKBOX", 
+  ID="LEADFORM" Y LOS ATRIBUTOS DATA-TARGET DE LAS ESTADÍSTICAS.
+   -->
 </body>
 </html>
