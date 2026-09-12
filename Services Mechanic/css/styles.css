@@ -2006,3 +2006,31 @@ body > header,
     padding: 24px;
   }
 }
+/*ASIDE - INFORMACIÓN COMPLEMENTARIA*/
+
+body > main > aside {
+  max-width: 720px;
+  margin: 32px auto 0;
+  padding: 20px 24px;
+  background-color: #fff9e6;
+  border: 1px solid rgba(245, 197, 24, 0.4);
+  border-radius: 14px;
+  color: #6b5a10;
+  padding-inline: max(24px, calc((100% - 90em) / 2 + 24px));
+}
+
+body > main > aside h2 {
+  font-size: 16px;
+  margin: 0 0 8px;
+  color: #6b5a10;
+}
+
+body > main > aside p {
+  margin: 0 0 8px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+body > main > aside p:last-child {
+  margin-bottom: 0;
+}
