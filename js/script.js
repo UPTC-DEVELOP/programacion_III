@@ -46,29 +46,37 @@ document.addEventListener("DOMContentLoaded", () => {
        3. FORMULARIO DE CONTACTO Y COTIZACIÓN
        ========================================================================== */
     const formularioContacto = document.getElementById("contactoForm");
-    const mensajeConfirmacion = document.getElementById("mensajeConfirmacion");
+const mensajeConfirmacion = document.getElementById("mensajeConfirmacion");
 
-    if (formularioContacto) {
-        formularioContacto.addEventListener("submit", (e) => {
-            e.preventDefault();
+if (formularioContacto) {
+    formularioContacto.addEventListener("submit", (e) => {
+        e.preventDefault();
 
-            // Obtener valores de los campos principales
-            const nombre = document.getElementById("nombre").value;
-            const vehiculo = document.getElementById("vehiculo").value;
+        // Validación explícita en JS
+        if (!formularioContacto.checkValidity()) {
+            formularioContacto.reportValidity();
+            mensajeConfirmacion.textContent = "Por favor completa los campos obligatorios.";
+            mensajeConfirmacion.style.color = "#e3262e";
+            return;
+        }
 
-            // Simulación de respuesta exitosa
-            mensajeConfirmacion.textContent = `¡Gracias, ${nombre}! Hemos recibido tu solicitud para el vehículo (${vehiculo}). Te contactaremos muy pronto.`;
-            mensajeConfirmacion.style.color = "#28a745"; // Verde éxito
+        // Obtener valores de los campos principales
+        const nombre = document.getElementById("nombre").value;
+        const vehiculo = document.getElementById("vehiculo").value;
 
-            // Limpiar el formulario
-            formularioContacto.reset();
+        // Simulación de respuesta exitosa
+        mensajeConfirmacion.textContent = `¡Gracias, ${nombre}! Hemos recibido tu solicitud para el vehículo (${vehiculo}). Te contactaremos muy pronto.`;
+        mensajeConfirmacion.style.color = "#28a745"; // Verde éxito
 
-            // Ocultar mensaje después de 6 segundos
-            setTimeout(() => {
-                mensajeConfirmacion.textContent = "";
-            }, 6000);
-        });
-    }
+        // Limpiar el formulario
+        formularioContacto.reset();
+
+        // Ocultar mensaje después de 6 segundos
+        setTimeout(() => {
+            mensajeConfirmacion.textContent = "";
+        }, 6000);
+    });
+}
 
     /* ==========================================================================
        4. NAVEGACIÓN Y DESPLAZAMIENTO SUAVE (SMOOTH SCROLL)
