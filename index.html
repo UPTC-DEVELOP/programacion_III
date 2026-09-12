@@ -16,7 +16,7 @@
 
 <body>
 
-  <a class="enlace-saltar" href="#main">Saltar al contenido</a>
+  
 
   <!--  ENCABEZADO DEL SITIO (HEADER) -->
   <header class="encabezado-sitio">
@@ -66,8 +66,8 @@
         <p class="titulo-panel">Panel principal</p>
 
         <ul class="cuadricula-estadisticas">
-          <li><span class="numero-estadistica" data-count="24">0</span><span
-              class="etiqueta-estadistica">Servicios</span></li>
+          <li><span class="numero-estadistica" data-count="24">0</span>
+            <span class="etiqueta-estadistica">Servicios</span></li>
           <li><span class="numero-estadistica" data-count="138">0</span><span
               class="etiqueta-estadistica">Repuestos</span></li>
           <li><span class="numero-estadistica" data-count="96" data-suffix="h">0h</span><span
@@ -362,7 +362,7 @@
 
       <!-- Formulario para solicitar información. La validación real
          (mensajes de error, envío) vive en script.js -->
-      <form id="formulario-cliente" class="formulario-contacto" novalidate>
+      <form id="formulario-cliente" class="formulario-contacto" novalidate method="post">
 
         <p class="campo-formulario">
           <label for="taller">Nombre Taller</label>
@@ -404,8 +404,8 @@
 
    
   
-<!--  PIE DE PÁGINA -->
-<footer class="pie-de-pagina" id="footer">
+ <!--  PIE DE PÁGINA -->
+ <footer class="pie-de-pagina" id="footer">
   <p class="marca-footer">
     <span class="texto-logo">TALLER<span class="resaltado">MAX</span></span><br>
     Software de gestión para talleres mecánicos.
@@ -439,8 +439,8 @@
     </ul>
   </nav>
 
-  <p class="linea-copyright">© <span id="year"></span> TallerMax. Todos los derechos reservados.</p>
-</footer>
+  <p class="linea-copyright">&copy;<span id="year"></span> TallerMax. Todos los derechos reservados.</p>
+ </footer>
 
 
   <script src="js/script.js"></script>
