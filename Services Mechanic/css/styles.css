@@ -1158,3 +1158,535 @@ body > header,
     padding: 24px 20px;
   }
 }
+
+/* =========================================================
+   SECCIÓN COMPARACIÓN
+   ========================================================= */
+
+#comparacion {
+  background-color: #111315;
+  color: #ffffff;
+
+  padding-block: 85px;
+  padding-inline: max(24px, calc((100% - 90em) / 2));
+}
+
+
+/* =========================================================
+   ENCABEZADO DE LA SECCIÓN
+   ========================================================= */
+
+#comparacion .encabezado-comparacion {
+  text-align: center;
+
+  max-width: 900px;
+
+  margin: 0 auto 42px;
+}
+
+
+/* =========================================================
+   ETIQUETA "COMPARACIÓN"
+   ========================================================= */
+
+#comparacion .etiqueta-comparacion {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  margin: 0 0 20px;
+
+  color: #f5c518;
+
+  font-size: 14px;
+
+  font-weight: 800;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1.5px;
+}
+
+
+/* Línea amarilla antes de COMPARACIÓN */
+
+#comparacion .etiqueta-comparacion::before {
+  content: "";
+
+  width: 28px;
+
+  height: 3px;
+
+  background-color: #f5c518;
+
+  border-radius: 3px;
+}
+
+
+/* =========================================================
+   TÍTULO PRINCIPAL
+   ========================================================= */
+
+#comparacion h2 {
+  margin: 0 0 18px;
+
+  color: #ffffff;
+
+  font-size: clamp(34px, 4vw, 48px);
+
+  font-weight: 800;
+
+  line-height: 1.12;
+
+  letter-spacing: -0.02em;
+}
+
+
+/* Parte amarilla del título */
+
+#comparacion h2 span {
+  color: #f5c518;
+}
+
+
+/* =========================================================
+   DESCRIPCIÓN
+   ========================================================= */
+
+#comparacion .descripcion-comparacion {
+  max-width: 750px;
+
+  margin: 0 auto;
+
+  color: #b8bdc3;
+
+  font-size: 17px;
+
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   TABLA DE COMPARACIÓN
+   ========================================================= */
+
+#comparacion .tabla-comparacion {
+  width: 100%;
+
+  max-width: 1300px;
+
+  margin: 0 auto;
+
+  overflow: hidden;
+
+  border: 1px solid #303336;
+
+  border-radius: 18px;
+
+  background-color: #1b1e20;
+
+  box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.30);
+}
+
+
+/* =========================================================
+   FILAS
+   ========================================================= */
+
+#comparacion .fila-comparacion {
+  display: grid;
+
+  grid-template-columns:
+    1.05fr
+    1fr
+    1fr;
+
+  min-height: 58px;
+
+  border-bottom: 1px solid #303336;
+}
+
+
+/* Última fila sin borde */
+
+#comparacion .fila-comparacion:last-child {
+  border-bottom: none;
+}
+
+
+/* =========================================================
+   ENCABEZADO DE LA TABLA
+   ========================================================= */
+
+#comparacion .encabezado-tabla {
+  background-color: #080a0b;
+
+  color: #ffffff;
+
+  font-weight: 700;
+
+  border-bottom: 1px solid #303336;
+}
+
+
+/* =========================================================
+   CELDAS
+   ========================================================= */
+
+#comparacion .fila-comparacion > div {
+  display: flex;
+
+  align-items: center;
+
+  padding: 18px 20px;
+
+  border-right: 1px solid #303336;
+}
+
+
+/* Última columna sin borde */
+
+#comparacion .fila-comparacion > div:last-child {
+  border-right: none;
+}
+
+
+/* =========================================================
+   COLUMNA GESTIÓN
+   ========================================================= */
+
+#comparacion .nombre-gestion {
+  color: #ffffff;
+
+  font-size: 15px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   COLUMNA MÉTODO MANUAL
+   ========================================================= */
+
+#comparacion .metodo-manual {
+  color: #b8bdc3;
+
+  font-size: 15px;
+}
+
+
+/* =========================================================
+   COLUMNA SERVICES MECHANIC
+   ========================================================= */
+
+#comparacion .gestion-digital {
+  color: #ffffff;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  gap: 10px;
+}
+
+
+/* =========================================================
+   CHECK AMARILLO
+   ========================================================= */
+
+#comparacion .gestion-digital span {
+  color: #f5c518;
+
+  font-size: 20px;
+
+  font-weight: 800;
+
+  line-height: 1;
+}
+
+
+/* =========================================================
+   EFECTO AL PASAR EL MOUSE
+   ========================================================= */
+
+#comparacion .fila-comparacion:not(.encabezado-tabla):hover {
+  background-color: #222527;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  #comparacion {
+    padding-block: 65px;
+  }
+
+
+  #comparacion .fila-comparacion {
+    grid-template-columns:
+      1fr
+      1fr
+      1fr;
+  }
+
+
+  #comparacion .fila-comparacion > div {
+    padding: 15px 12px;
+
+    font-size: 14px;
+  }
+
+}
+
+
+/* =========================================================
+   CELULAR
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  #comparacion {
+    padding-inline: 16px;
+
+    padding-block: 55px;
+  }
+
+
+  #comparacion h2 {
+    font-size: 32px;
+  }
+
+
+  #comparacion .descripcion-comparacion {
+    font-size: 15px;
+  }
+
+
+  #comparacion .tabla-comparacion {
+    border-radius: 14px;
+  }
+
+
+  #comparacion .fila-comparacion {
+    grid-template-columns:
+      1fr
+      1fr
+      1fr;
+  }
+
+
+  #comparacion .fila-comparacion > div {
+    padding: 14px 8px;
+
+    font-size: 12px;
+
+    line-height: 1.35;
+  }
+
+
+  #comparacion .encabezado-tabla > div {
+    font-size: 12px;
+  }
+
+
+  #comparacion .gestion-digital {
+    gap: 5px;
+  }
+
+
+  #comparacion .gestion-digital span {
+    font-size: 16px;
+  }
+
+}
+
+/* =========================================================
+   EQUIPO
+   ========================================================= */
+
+.seccion-equipo {
+  background-color: #f7f7f5;
+  color: #202124;
+  padding-block: 70px;
+  padding-inline: max(24px, calc((100% - 90em) / 2));
+}
+
+
+.encabezado-equipo {
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto 42px;
+}
+
+
+.etiqueta-equipo {
+  color: #f5c518;
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  margin: 0 0 18px;
+}
+
+
+.etiqueta-equipo::before {
+  content: "";
+
+  width: 28px;
+  height: 3px;
+
+  background-color: #f5c518;
+  border-radius: 3px;
+
+  flex-shrink: 0;
+}
+
+
+.seccion-equipo h2 {
+  color: #202124;
+  font-size: clamp(32px, 4vw, 42px);
+  line-height: 1.2;
+  margin: 0 0 16px;
+}
+
+
+.seccion-equipo h2 span {
+  color: #f5c518;
+}
+
+
+.descripcion-equipo {
+  color: #6b7075;
+  font-size: 16px;
+  line-height: 1.7;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+
+.grid-equipo {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+
+.tarjeta-equipo {
+  background-color: #ffffff;
+  border: 1px solid #e4e5e6;
+  border-radius: 16px;
+
+  min-height: 245px;
+  padding: 28px 24px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    border-color 0.2s;
+}
+
+
+.tarjeta-equipo:hover {
+  transform: translateY(-4px);
+  border-color: #f5c518;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.10);
+}
+
+
+.burbuja-equipo {
+  width: 64px;
+  height: 64px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #111315;
+  color: #ffffff;
+
+  border: 1px solid #111315;
+  border-radius: 50%;
+
+  font-size: 28px;
+
+  margin-bottom: 20px;
+
+  transition:
+    transform 0.2s,
+    background-color 0.2s;
+}
+
+
+.tarjeta-equipo:hover .burbuja-equipo {
+  background-color: #000000;
+  transform: scale(1.08);
+}
+
+
+.tarjeta-equipo h3 {
+  color: #111315;
+  font-size: 18px;
+  font-weight: 700;
+
+  margin: 0 0 12px;
+}
+
+
+.tarjeta-equipo p {
+  color: #6b7075;
+  font-size: 14px;
+  line-height: 1.65;
+
+  max-width: 260px;
+  margin: 0;
+}
+
+
+/* EQUIPO EN PANTALLAS MEDIANAS */
+
+@media (max-width: 1000px) {
+
+  .grid-equipo {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* EQUIPO EN CELULARES */
+
+@media (max-width: 600px) {
+
+  .seccion-equipo {
+    padding-block: 60px;
+  }
+
+  .grid-equipo {
+    grid-template-columns: 1fr;
+  }
+
+  .tarjeta-equipo {
+    min-height: auto;
+  }
+
+}
