@@ -4,7 +4,7 @@
 
 body{
     margin: 0;
-    padding-top: 80px;
+    padding-top: 0px;
     background-color: black;
 }
 
@@ -23,6 +23,8 @@ header {
     left: 0;
     width: 100%;
     z-index: 1000;
+
+    border-bottom: 1px solid #ffffff;
 }
 
 header img {
@@ -54,4 +56,299 @@ button {
     padding: 12px 24px;
     border: none;
     border-radius: 10px;
+}
+
+/* HERO*/
+main {
+    margin: 0;
+}
+
+.hero {
+    min-height: calc(100vh - 80px);
+    padding: 70px 11%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 70px;
+
+    background-color: #111216;
+    background-image: repeating-linear-gradient(
+        135deg,
+        transparent 0,
+        transparent 75px,
+        rgba(196, 30, 30, 0.18) 76px,
+        transparent 77px
+    );
+
+    color: white;
+}
+
+.hero-contenido {
+    max-width: 650px;
+}
+
+.hero-etiqueta {
+    display: inline-block;
+    margin: 0 0 25px;
+    padding: 8px 12px;
+
+    border: 1px solid #e3262e;
+
+    color: #e3262e;
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
+.hero h1 {
+    margin: 0;
+    font-family: "Arial Narrow", Arial, sans-serif;
+    font-size: 68px;
+    font-weight: 800;
+    line-height: 0.98;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+}
+
+.hero h1 span {
+    color: #e3262e;
+}
+
+.hero-descripcion {
+    max-width: 620px;
+    margin: 28px 0;
+
+    color: #c8c8c8;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+/* Botones del hero */
+
+.hero-botones {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    height: auto;
+    margin: 30px 0 0;
+    padding: 0;
+
+    background-color: transparent;
+    position: static;
+    width: auto;
+    z-index: auto;
+}
+
+.hero-botones a {
+    padding: 18px 25px;
+
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+
+    transition: 0.3s;
+}
+
+.boton-principal {
+    background-color: #e3262e;
+    color: white;
+}
+
+.boton-secundario {
+    border: 1px solid #666;
+    color: white;
+}
+
+.boton-principal:hover {
+    background-color: #b91d24;
+}
+
+.boton-secundario:hover {
+    border-color: #e3262e;
+    color: #e3262e;
+}
+
+/* Estadísticas */
+
+.hero-estadisticas {
+    display: flex;
+    gap: 45px;
+    margin-top: 55px;
+}
+
+.hero-estadisticas article {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.hero-estadisticas span {
+    color: #777;
+    font-family: "Courier New", monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.hero-estadisticas strong {
+    font-family: "Arial Narrow", Arial, sans-serif;
+    font-size: 27px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+}
+
+/* Factura */
+
+.factura-card {
+    width: 100%;
+    max-width: 560px;
+    justify-self: center;
+
+    background-color: white;
+    color: #111;
+
+    border-radius: 8px;
+    overflow: hidden;
+
+    font-family: Arial, sans-serif;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+}
+
+/* Encabezado interno de la factura */
+
+.factura-card .factura-header {
+    height: auto;
+    margin: 0;
+    padding: 25px;
+
+    display: block;
+
+    background-color: #151519;
+    color: white;
+
+    position: static;
+    width: auto;
+    z-index: auto;
+}
+
+.factura-header p {
+    margin: 0 0 12px;
+
+    color: #9ba2ad;
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+}
+
+.factura-header div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.factura-header h2 {
+    margin: 0;
+
+    font-family: Impact, "Arial Narrow", sans-serif;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.factura-header strong {
+    color: #e3262e;
+    font-family: "Courier New", monospace;
+    font-size: 14px;
+}
+
+/* Datos de la factura */
+
+.factura-datos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    padding: 25px;
+}
+
+.factura-datos article {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.factura-datos span,
+.factura-detalles header span {
+    color: #707782;
+    font-family: "Courier New", monospace;
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.factura-datos strong {
+    font-size: 14px;
+}
+
+/* Detalles en la factura */
+
+.factura-detalles {
+    padding: 0 25px;
+}
+
+.factura-detalles > header {
+    height: auto;
+    padding: 12px 0;
+
+    display: grid;
+    grid-template-columns: 1fr 70px 100px;
+
+    background-color: transparent;
+    position: static;
+    width: auto;
+}
+
+.factura-detalles p {
+    display: grid;
+    grid-template-columns: 1fr 70px 100px;
+
+    margin: 0;
+    padding: 14px 0;
+
+    border-bottom: 1px solid #ddd;
+
+    font-size: 13px;
+}
+
+/* Total en factura */
+
+.factura-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 25px;
+}
+
+.factura-total span {
+    color: #707782;
+    font-size: 11px;
+}
+
+.factura-total strong {
+    color: #e3262e;
+    font-family: "Courier New", monospace;
+    font-size: 27px;
+}
+
+.factura-nota {
+    margin: 0;
+    padding: 0 25px 22px;
+
+    color: #777;
+    text-align: center;
+    font-size: 11px;
 }
