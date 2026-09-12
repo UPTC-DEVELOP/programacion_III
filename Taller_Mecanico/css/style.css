@@ -61,7 +61,7 @@ nav a:hover {
     color: var(--primary-blue);
 }
 
-header > a {
+header .Acces {
     background-color: var(--primary-blue);
     padding: 0.6rem 1.5rem;
     border-radius: 6px;
@@ -69,7 +69,7 @@ header > a {
     transition: background 0.3s ease;
 }
 
-header > a:hover {
+header .Acces:hover {
     background-color: #1d4ed8;
 }
 
