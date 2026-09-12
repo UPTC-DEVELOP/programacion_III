@@ -418,3 +418,16 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .hero__stats { grid-template-columns: repeat(2, 1fr); }
   .services__grid { grid-template-columns: 1fr; }
 
+<<<<<<< HEAD
+  .benefits {
+    padding: 64px 0;
+  }
+
+  .benefits__grid {
+    grid-template-columns: 1fr;
+  }
+}
+>>>>>>> 71b33892212c9ad08469f48f942240b3417dd754
+
+=======
+>>>>>>> a70b3e81d67d073059aea992f19066a16f699f3d
