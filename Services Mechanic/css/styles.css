@@ -1690,3 +1690,168 @@ body > header,
   }
 
 }
+/* =========================================================
+   EXPERIENCIAS
+   ========================================================= */
+
+.seccion-experiencias {
+  background-color: #f7f7f5;
+  padding: 70px 24px;
+}
+
+
+.encabezado-experiencias {
+  max-width: 850px;
+  margin: 0 auto 42px;
+  text-align: center;
+}
+
+
+.etiqueta-experiencias {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  margin: 0 0 18px;
+
+  color: #f5c518;
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+
+.etiqueta-experiencias::before {
+  content: "";
+
+  width: 28px;
+  height: 3px;
+
+  background-color: #f5c518;
+  border-radius: 3px;
+}
+
+
+.encabezado-experiencias h2 {
+  margin: 0 0 18px;
+
+  color: #111315;
+
+  font-size: clamp(32px, 4vw, 42px);
+  line-height: 1.2;
+}
+
+
+.encabezado-experiencias h2 span {
+  color: #f5c518;
+}
+
+
+.descripcion-experiencias {
+  max-width: 760px;
+  margin: 0 auto;
+
+  color: #687078;
+
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+
+.grid-experiencias {
+  max-width: 1280px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+
+.tarjeta-experiencia {
+  background-color: #111315;
+
+  border-radius: 16px;
+
+  padding: 32px 28px;
+
+  min-height: 220px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  box-sizing: border-box;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+.tarjeta-experiencia:hover {
+  transform: translateY(-4px);
+
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
+}
+
+
+.estrellas-experiencia {
+  color: #f5c518;
+
+  font-size: 20px;
+  letter-spacing: 2px;
+
+  margin-bottom: 20px;
+}
+
+
+.opinion-experiencia {
+  color: #ffffff;
+
+  font-size: 15px;
+  line-height: 1.7;
+
+  margin: 0 0 20px;
+}
+
+
+.nombre-experiencia {
+  color: #d7dadd;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  margin: 0;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .grid-experiencias {
+    grid-template-columns: 1fr;
+    max-width: 600px;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .seccion-experiencias {
+    padding: 60px 20px;
+  }
+
+  .tarjeta-experiencia {
+    padding: 28px 24px;
+  }
+
+  .encabezado-experiencias h2 {
+    font-size: 30px;
+  }
+
+}
