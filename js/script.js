@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     /* ==========================================================================
        2. ANIMACIONES AL HACER SCROLL (INTERSECTION OBSERVER)
        ========================================================================== */
-    const elementosAnimados = document.querySelectorAll(".paso, .tarjeta-modulo-detalle, fieldset");
+    const elementosAnimados = document.querySelectorAll(".paso, .tarjeta-modulo-detalle, fieldset, .miembro, .nosotros-texto");
 
     const observadorScroll = new IntersectionObserver((entradas, observador) => {
         entradas.forEach((entrada) => {

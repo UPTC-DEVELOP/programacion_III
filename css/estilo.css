@@ -870,6 +870,11 @@ fieldset.visible {
     .footer-contenido {
         grid-template-columns: 1fr 1fr;
     }
+
+    .nosotros-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
 }
 
 @media (max-width: 600px) {
@@ -971,5 +976,159 @@ fieldset.visible {
 .testimonio-autor span {
     color: #74777b;
     font-size: 13px;
+    font-family: "Courier New", monospace;
+}
+
+/* SECCIÓN SOBRE NOSOTROS*/
+.nosotros-seccion {
+    background-color: #111216;
+    padding: 100px 11%;
+    border-top: 1px solid #222222;
+    color: #f2f2f2;
+}
+
+.nosotros-seccion .proceso-encabezado p {
+    color: #e3262e;
+}
+
+.nosotros-seccion .proceso-encabezado h2 {
+    color: #f2f2f2;
+}
+
+.nosotros-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 70px;
+    margin-top: 60px;
+}
+
+.nosotros-texto {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.nosotros-texto.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.nosotros-texto h3,
+.nosotros-equipo h3 {
+    color: #e3262e;
+    font-family: "Arial Narrow", Arial, sans-serif;
+    font-size: 24px;
+    margin-top: 35px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+}
+
+.nosotros-texto h3:first-child,
+.nosotros-equipo h3:first-child {
+    margin-top: 0;
+}
+
+.nosotros-texto p {
+    color: #c8c8c8;
+    font-size: 16px;
+    line-height: 1.7;
+    margin: 0 0 10px;
+}
+
+.valores-lista {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.valores-lista li {
+    color: #c8c8c8;
+    font-size: 15px;
+    padding-left: 25px;
+    position: relative;
+    line-height: 1.5;
+}
+
+.valores-lista li::before {
+    content: "▸";
+    color: #e3262e;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    font-size: 18px;
+}
+
+.equipo-intro {
+    color: #c8c8c8;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    font-style: italic;
+}
+
+/* Tarjetas del equipo */
+.equipo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.miembro {
+    background-color: #1a1b20;
+    border: 1px solid #33353a;
+    padding: 30px 20px;
+    text-align: center;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.3s ease;
+}
+
+.miembro.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.miembro.visible:hover {
+    border-color: #e3262e;
+    transform: translateY(-5px) !important;
+}
+
+.miembro-avatar {
+    width: 65px;
+    height: 65px;
+    background-color: #e3262e;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    font-weight: bold;
+    margin: 0 auto 18px;
+    font-family: "Arial Narrow", Arial, sans-serif;
+}
+
+.miembro h4 {
+    color: #ffffff;
+    font-size: 16px;
+    margin: 0 0 8px;
+    font-family: "Arial Narrow", Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.miembro p {
+    color: #9ba2ad;
+    font-size: 11px;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
     font-family: "Courier New", monospace;
 }
