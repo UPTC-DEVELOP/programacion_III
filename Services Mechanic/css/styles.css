@@ -2034,3 +2034,96 @@ body > main > aside p {
 body > main > aside p:last-child {
   margin-bottom: 0;
 }
+
+/*FOOTER*/
+
+footer#contacto {
+  background-color: #111315;
+  color: #b8bdc3;
+  padding-block: 60px 28px;
+  padding-inline: max(24px, calc((100% - 90em) / 2));
+}
+
+footer#contacto .contenedor-footer {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 32px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid #252829;
+}
+
+footer#contacto h2 {
+  color: #ffffff;
+  font-size: 20px;
+  margin: 0 0 12px;
+}
+
+footer#contacto h3 {
+  color: #ffffff;
+  font-size: 15px;
+  margin: 0 0 14px;
+}
+
+footer#contacto p {
+  margin: 0 0 10px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+footer#contacto a {
+  color: #b8bdc3;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+footer#contacto a:hover {
+  color: #f5c518;
+}
+
+footer#contacto address {
+  font-style: normal;
+}
+
+footer#contacto .enlace-whatsapp {
+  display: inline-block;
+  margin-top: 8px;
+  color: #f5c518;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+footer#contacto nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+footer#contacto .redes-sociales {
+  flex-direction: row;
+  gap: 16px;
+  margin-top: 4px;
+}
+
+footer#contacto .derechos-footer {
+  margin: 20px 0 0;
+  text-align: center;
+  font-size: 13px;
+  color: #6b7075;
+}
+
+/* Responsivo del footer */
+@media (max-width: 900px) {
+  footer#contacto .contenedor-footer {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  footer#contacto .contenedor-footer {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
