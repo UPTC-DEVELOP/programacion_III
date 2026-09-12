@@ -1,7 +1,7 @@
-
-
 :root {
-  --color-primary: #1450c4;
+
+
+  --color-primary: #1466c4;
   --color-primary-dark: #0b2e6b;
   --color-primary-light: #e8f0fe;
   --color-accent: #16a34a;
@@ -21,3 +21,100 @@
   --shadow-md: 0 12px 30px rgba(11, 46, 107, 0.12);
   --transition: 0.2s ease;
 }
+<<<<<<< HEAD
+=======
+
+.container {
+  width: min(1120px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.benefits {
+  padding: 88px 0;
+  background: var(--color-bg-alt);
+}
+
+.benefits__heading {
+  max-width: 680px;
+  margin-bottom: 36px;
+}
+
+.benefits__heading .eyebrow {
+  margin: 0 0 8px;
+  color: var(--color-primary);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.78rem;
+}
+
+.benefits__heading h2 {
+  margin: 0 0 12px;
+  color: var(--color-primary-dark);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.1;
+}
+
+.benefits__heading p:last-child {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 1.05rem;
+}
+
+.benefits__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.benefit-card {
+  min-height: 220px;
+  padding: 24px;
+  border: 1px solid var(--color-border);
+  border-top: 4px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  box-shadow: var(--shadow-sm);
+}
+
+.benefit-card__number {
+  color: var(--color-accent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.benefit-card h3 {
+  margin: 26px 0 10px;
+  color: var(--color-primary-dark);
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+}
+
+.benefit-card p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 850px) {
+  .benefits__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .container {
+    width: min(100% - 28px, 1120px);
+  }
+
+  .benefits {
+    padding: 64px 0;
+  }
+
+  .benefits__grid {
+    grid-template-columns: 1fr;
+  }
+}
+>>>>>>> 71b33892212c9ad08469f48f942240b3417dd754

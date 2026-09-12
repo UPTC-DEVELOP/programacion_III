@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TallerPro | Sistema de Gestión y Servicios Automotrices</title>
+  <title>TallerPro | Sistema  de Gestión y Servicios Automotrices</title>
   <meta name="description" content="TallerPro - Mantenimiento, reparación y diagnóstico automotriz con tecnología de vanguardia y personal altamente capacitado.">
   <link rel="stylesheet" href="styles.css">
+  
 </head>
-<body> 
+<body>
     <header class="header">
     <div class="container header__inner">
       <a href="#inicio" class="logo">
-        
-
-        <!--Aqui esta la imagen -->
-        <svg class="logo__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> 
+        <svg class="logo__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path d="M3 13l1.5-4.5A2 2 0 0 1 6.4 7h11.2a2 2 0 0 1 1.9 1.5L21 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
           <rect x="2.5" y="13" width="19" height="5" rx="1.5" stroke="currentColor" stroke-width="1.6"/>
           <circle cx="6.5" cy="18" r="1.6" fill="currentColor"/>
@@ -27,13 +26,13 @@
         <ul class="nav__list">
           <li><a href="#inicio">Inicio</a></li>
           <li><a href="#servicios">Servicios</a></li>
-          <li><a href="#planes">Planes</a></li>
-          <li><a href="#nosotros">Nosotros</a></li>
-          <li><a href="#contacto">Contacto</a></li>
+          <li><a href="#precio">Precio</a></li>
+          <li><a href="#contactos">Contacto</a></li>
+
         </ul>
       </nav>
 
-      <a href="#contacto" class="btn btn--primary btn--sm header__cta">Agendar cita</a>
+c      <a href="#contacto" class="btn btn--primary btn--sm header__cta">Agendar cita</a>
 
       <button class="nav__toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">
         <span></span><span></span><span></span>
@@ -46,27 +45,45 @@
     <section class="hero" id="inicio">
       <div class="container hero__grid">
         <div class="hero__content">
-          <p class="eyebrow">Taller mecánico de confianza</p>
+          <p class="eyebrow">Servicio automotriz de confianza</p>
           <h1>Tu vehículo, en las mejores manos</h1>
           <p class="hero__lead">
             Mantenimiento, reparación y diagnóstico automotriz con tecnología de vanguardia
             y personal altamente capacitado. Registramos cada servicio, repuesto y hora de
             trabajo para que tu factura sea siempre clara y transparente.
           </p>
+          <img src="C:\Users\DIANA ESTUPIÑAN\Desktop\mecanico.png" alt="mi foto"width="400">
+
           <div class="hero__actions">
-            <a href="#contacto" class="btn btn--primary">Agendar cita</a>
-            <a href="#servicios" class="btn btn--ghost">Ver servicios</a>
+            
+            <a href="#beneficios" class="btn btn--ghost">Ver beneficios</a>
           </div>
 
           <ul class="hero__stats" id="statsList">
-            <li><span class="stat__number" data-target="15">0</span><span class="stat__label">años de experiencia</span></li>
-            <li><span class="stat__number" data-target="500">0</span><span class="stat__label">vehículos atendidos</span></li>
-            <li><span class="stat__number" data-target="98">0</span><span class="stat__label">% clientes satisfechos</span></li>
+            <li><span class="stat__number" data-target="15">1.</span><span class="stat__label">ahorro de tiempo</span></li>
+            <li><span class="stat__number" data-target="500">2.</span><span class="stat__label">control financiero</span></li>
+            <li><span class="stat__number" data-target="98">3.</span><span class="stat__label"> Historia vehicular</span></li>
+            <li><span class="stat__number" data-target="98">4.</span><span class="stat__label"> Atención personalizada</span></li>
+            
           </ul>
         </div>
 
         <aside class="hero__form" aria-labelledby="formTitle">
-          <h2 id="formTitle">Solicita información</h2>
+<<<<<<< HEAD
+          <h2 id="formTitle">agendatuproximavisita</h2>
+=======
+          <h2 id="formTitle">Agenda tu proxima visita</h2>
+>>>>>>> 71b33892212c9ad08469f48f942240b3417dd754
+<section>
+        <h2>contactanos</h2>
+        <h2>Agenda tu proxima visita </h2>
+        <ul>
+            <li>calle principal 123 Tunja Boyaca Colombia</li>
+            <li>Telefono +5730000000</li>
+            <li>Contacto @taller pro.com</li>
+             <li>Lun a Sab 8:00am a 6:00pm</li>
+        </ul>
+    </section>
           <form id="leadForm" novalidate>
             <div class="field">
               <label for="nombre">Nombre completo</label>
@@ -94,4 +111,48 @@
         </aside>
       </div>
     </section>
+
+    <section class="benefits" id="beneficios" aria-labelledby="benefitsTitle">
+      <div class="container">
+        <div class="benefits__heading">
+          <p class="eyebrow">Una experiencia más sencilla</p>
+          <h2 id="benefitsTitle">Beneficios</h2>
+          
+        </div>
+
+        <div class="benefits__grid">
+          <article class="benefit-card">
+            <span class="benefit-card__number">01</span>
+            <h3>Ahorra tiempo</h3>
+            <p>Agenda tu cita con facilidad y recibe actualizaciones claras sobre el avance del trabajo.</p>
+          </article>
+          <article class="benefit-card">
+            <span class="benefit-card__number">02</span>
+            <h3>Control financiero</h3>
+            <p>Consulta repuestos, mano de obra y costos antes de aprobar cualquier reparación.</p>
+          </article>
+          <article class="benefit-card">
+            <span class="benefit-card__number">03</span>
+            <h3>Historial completo</h3>
+            <p>Conserva la historia de mantenimiento de tu vehículo para tomar mejores decisiones.</p>
+          </article>
+          <article class="benefit-card">
+            <span class="benefit-card__number">04</span>
+            <h3>Atención personalizada</h3>
+            <p>Recibe recomendaciones ajustadas a las necesidades reales de tu vehículo.</p>
+          </article>
+        </div>
+      </div>
+    </section>
     
+<footer>
+
+ 
+  <img src="C:\Users\DIANA ESTUPIÑAN\Desktop\whatsap.jpg" alt="mi foto"width="100">
+
+  <p>©soporte y ventas  | Todos los derechos reservados</p>
+Tecnologia ,experiencia y confianza para mantener tu vehiculo en las mejores condiciones 
+
+</footer>
+</body>
+</html>
