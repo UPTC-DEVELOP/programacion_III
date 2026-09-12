@@ -14,6 +14,7 @@
             <a href="#proceso">Cómo funciona</a>
             <a href="#modulos">Módulos</a>
             <a href="#facturacion">Facturación</a>
+            <a href="#quienes-somos">Quiénes Somos</a>
             <button>INGRESAR</button>
         </nav>
     </header>
@@ -172,6 +173,122 @@
             </div>
 
         </section>
+    <!-- CONTACTO Y CONVERSIÓN -->
+<section id="contacto" class="contacto">
+
+    <header class="contacto-titulo">
+
+        <p>CONTACTO</p>
+
+        <h2>SOLICITA UNA COTIZACIÓN</h2>
+
+        <p>
+            Completa los datos y agenda el servicio que necesita tu vehículo.
+            Te contactamos para confirmar la cita.
+        </p>
+
+    </header>
+
+
+    <article class="formulario-contenedor">
+
+        <p class="formulario-info">
+            Todos los campos marcados con * son obligatorios.
+        </p>
+
+        <form id="contactoForm">
+
+            <fieldset>
+
+                <legend class="visualmente-oculto">Datos de contacto</legend>
+
+                <p class="campo">
+                    <label for="nombre">Nombre completo *</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </p>
+
+                <p class="campo">
+                    <label for="correo">Correo electrónico *</label>
+                    <input type="email" id="correo" name="correo" required>
+                </p>
+
+                <p class="campo">
+                    <label for="telefono">Teléfono *</label>
+                    <input type="tel" id="telefono" name="telefono" required>
+                </p>
+
+                <p class="campo">
+                    <label for="fecha">Fecha preferida *</label>
+                    <input type="date" id="fecha" name="fecha" required>
+                </p>
+
+                <p class="campo">
+                    <label for="vehiculo">Marca y modelo del vehículo *</label>
+                    <input type="text" id="vehiculo" name="vehiculo" placeholder="Ej: Mazda 3, 2018" required>
+                </p>
+
+                <p class="campo">
+                    <label for="servicio">Servicio requerido</label>
+                    <input type="text" id="servicio" name="servicio" placeholder="Ej: cambio de aceite, frenos...">
+                </p>
+
+                <p class="campo campo-mensaje">
+                    <label for="mensaje">Mensaje o solicitud *</label>
+                    <textarea id="mensaje" name="mensaje" rows="5" placeholder="Cuéntanos qué necesitas..." required></textarea>
+                </p>
+
+            </fieldset>
+
+            <button type="submit" class="boton-principal">
+                SOLICITAR COTIZACIÓN
+            </button>
+
+            <p id="mensajeConfirmacion" class="mensaje-confirmacion"></p>
+
+        </form>
+
+    </article>
+
+
+    <aside class="contacto-info">
+
+        <h3>HABLEMOS</h3>
+
+        <p>
+            En nuestro taller diagnosticamos y reparamos tu vehículo con
+            repuestos de calidad y tiempos de entrega claros.
+        </p>
+
+        <article class="dato-contacto">
+            <span>DIRECCIÓN</span>
+            <strong>Bogotá D.C., Colombia</strong>
+        </article>
+
+        <article class="dato-contacto">
+            <span>TELÉFONO</span>
+            <strong>+57 300 000 0000</strong>
+        </article>
+
+        <article class="dato-contacto">
+            <span>CORREO</span>
+            <strong>autogestionerp@gmail.com</strong>
+        </article>
+
+        <a href="#" class="whatsapp">
+            CONTACTAR POR WHATSAPP
+        </a>
+
+        <figure class="mapa">
+            <iframe
+                src="https://www.google.com/maps?q=Bogotá%20Colombia&output=embed"
+                loading="lazy"
+                title="Ubicación del taller mecánico">
+            </iframe>
+        </figure>
+
+    </aside>
+
+</section>
     </main>
 
 </body>
