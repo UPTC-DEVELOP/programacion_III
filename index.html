@@ -4,64 +4,254 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AutoTech - Sistema de Gestión para Talleres</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <header>
-        <h1>AutoTech</h1>
-        <p>Transparencia y rapidez para modernizar tu taller.</p>
-        
-        <nav aria-label="Navegación principal">
-            <ul>
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#problemas">Problemas</a></li>
-                <li><a href="#caracteristicas">Características</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-            </ul>
-        </nav>
+   <header>
+        <div class="header-left-group">
+            <div class="header-logo">
+                <a href="#hero" aria-label="AutoTech - Ir al inicio">
+                    <img src="img/Logo.jpeg" alt="AutoTech Logo" class="logo">
+                </a>
+            </div>
+            
+            <nav aria-label="Navegación principal">
+                <ul>
+                    <li><a href="#hero">Inicio</a></li>
+                    <li><a href="#sobre-nosotros">Sobre nosotros</a></li>
+                    <li><a href="#caracteristicas">Características</a></li>
+                    <li><a href="#reseñas">Reseñas</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="header-actions">
+            <a href="#login" class="btn-login">Login</a>
+            <a href="#signup" class="btn-signup">Sign up</a>
+        </div>
     </header>
 
     <main>
-        <section id="inicio">
-            <h2>Bienvenido a AutoTech</h2>
-            <p>Plataforma integral para digitalizar la recepción, inventario, órdenes de servicio y facturación de talleres mecánicos.</p>
+
+        <!-- Seccion Hero -->
+        <section id="hero" aria-labelledby="hero-titulo">
+            <div class="hero-container">
+                <div class="hero-text">
+                    <h2 id="hero-titulo">
+                        Transparencia y rapidez: <br>
+                        <span class="text-highlight">la fórmula para modernizar tu taller.</span> 
+                    </h2>
+                    <p>La plataforma integral para digitalizar la recepción, inventario, órdenes de servicio y facturación de tu taller mecánico.</p>
+                    <a href="#contacto" class="btn-hero" role="button">
+                        🚀 Probar ahora
+                    </a>
+                </div>
+                <div class="hero-image">
+                    <img src="img/Img 1.png" alt="Panel de control de AutoTech - Sistema de gestión para talleres mecánicos" loading="lazy">
+                </div>
+            </div>
         </section>
 
-        <section id="problemas">
-            <h2>Problemas comunes en el taller</h2>
+        <!-- Seccion Servicios -->
+        <section id="servicios" aria-labelledby="servicios-titulo">
+            <h2 id="servicios-titulo">¿Identificas estos problemas en el día a día en tu taller?</h2>
+            <div class="servicios-grid">
+                <article class="servicio-card" aria-labelledby="servicio1-titulo">
+                    <div class="servicio-icon">📝</div>
+                    <h3 id="servicio1-titulo">Registros Manuales</h3>
+                    <p>Perdida de fichas de clientes y desorden al recibir los vehículos en el taller.</p>
+                </article>
+                <article class="servicio-card" aria-labelledby="servicio2-titulo">
+                    <div class="servicio-icon">📰</div>
+                    <h3 id="servicio2-titulo">Fuga de Repuestos</h3>
+                    <p>Falta de control real en el inventario y de alertas sobre repuestos faltantes.</p>
+                </article>
+                <article class="servicio-card" aria-labelledby="servicio3-titulo">
+                    <div class="servicio-icon">📠</div>
+                    <h3 id="servicio3-titulo">Errores de Facturación</h3>
+                    <p>Cálculos manuales imprecisos en la mano de obra y en el valor del IVA.</p>
+                </article>
+                <article class="servicio-card" aria-labelledby="servicio4-titulo">
+                    <div class="servicio-icon">🕧</div>
+                    <h3 id="servicio4-titulo">Registro de Tiempos</h3>
+                    <p>Control preciso del tiempo dedicado a cada tarea y seguimiento de la productividad del personal.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Seccion Sobre Nosotros -->
+        <section id="sobre-nosotros" aria-labelledby="sobre-titulo">
+            <h2 id="sobre-titulo">Quiénes somos</h2>
+            <p class="section-subtitle">Conoce al equipo detrás de AutoTech</p>
+
+            <div class="sobre-container">
+                <div class="sobre-imagen">
+                    <img src="img/Img 2.png" alt="Equipo de AutoTech - Kevin, Estefanía y Camilo" loading="lazy">
+                </div>
+                <div class="sobre-texto">
+                    <div class="sobre-bloque">
+                        <h3> Nuestra Historia</h3>
+                        <p>AutoTech nació de la mano de tres estudiantes de Tecnología en Programación de Sistemas Informáticos de la UPTC. Al ver de cerca las dificultades que enfrentan los talleres mecánicos para gestionar sus clientes, vehículos, repuestos y facturación, decidimos crear una solución que digitalizara todos esos procesos. Hoy, AutoTech es una plataforma integral que ayuda a los talleres a ser más eficientes, rentables y profesionales.</p>
+                    </div>
+                    <div class="sobre-bloque">
+                        <h3> Misión</h3>
+                        <p>Brindar a los talleres mecánicos de Colombia una plataforma integral, intuitiva y accesible que les permita digitalizar y optimizar la gestión de sus clientes, vehículos, empleados, repuestos y facturación, mejorando su rentabilidad y la calidad del servicio al cliente.</p>
+                    </div>
+                    <div class="sobre-bloque">
+                        <h3> Visión</h3>
+                        <p>Ser en 2030 la plataforma líder en gestión de talleres mecánicos en Latinoamérica, reconocida por su innovación, facilidad de uso y por transformar la manera en que los talleres gestionan su negocio, impulsando su crecimiento y profesionalización.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Integrantes -->
+            <div class="equipo">
+                <h3> Nuestro Equipo</h3>
+                <div class="equipo-grid">
+                    <div class="integrante">
+                        <div class="integrante-foto">👨</div>
+                        <h4>Kevin Buitrago</h4>
+                        <p>Frontend Developer</p>
+                    </div>
+                    <div class="integrante">
+                        <div class="integrante-foto">👩</div>
+                        <h4>Estefanía López</h4>
+                        <p>Frontend Developer</p>
+                    </div>
+                    <div class="integrante">
+                        <div class="integrante-foto">👨</div>
+                        <h4>Camilo Borda</h4>
+                        <p>Frontend Developer</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reseñas -->
+        <section id="reseñas" aria-labelledby="reseñas-titulo">
+            <h2 id="reseñas-titulo">Reseñas de Clientes</h2>
+            <!-- ... -->
+        </section>
+
+        <!-- Características  -->
+        <section id="caracteristicas" aria-labelledby="modulos-titulo">
+            <h2 id="modulos-titulo">Todo lo que necesitas para tomar el control de tu negocio en una sola pantalla.</h2>
+            <div class="servicios-grid">
+                <article class="servicio-card">
+                    <div class="servicio-icon">🚗</div>
+                    <h3>Gestión de Clientes y Autos</h3>
+                    <p>Historial completo por patente y datos del propietario al instante.</p>
+                </article>
+                <article class="servicio-card">
+                    <div class="servicio-icon">👨‍🔧</div>
+                    <h3>Control de Empleados</h3>
+                    <p>Asignación de tareas y seguimiento de horas laboradas por técnico.</p>
+                </article>
+                <article class="servicio-card">
+                    <div class="servicio-icon">📦</div>
+                    <h3>Control de Inventario</h3>
+                    <p>Descuento automático de repuestos con cada orden de trabajo.</p>
+                </article>
+                <article class="servicio-card">
+                    <div class="servicio-icon">📄</div>
+                    <h3>Facturación Automática (IVA 19%)</h3>
+                    <p>Generación inmediata de comprobantes con desglose legal exacto de repuestos y mano de obra.</p>
+                </article>
+            </div>
+        </section>
+
+       <!-- Sección 4: ¿Por qué elegir AutoTech para tu taller? -->
+        <section id="por-que-elegir">
+            <h2>¿Por qué elegir AutoTech para tu taller?</h2>
+            <p class="subtitulo-beneficios">Transforma la gestión diaria con resultados medibles desde el primer mes.</p>
             
-            <article>
-                <h3>Registros Manuales</h3>
-                <p>Pérdida de fichas de clientes y desorden al recibir los vehículos en el taller.</p>
-            </article>
-
-            <article>
-                <h3>Fuga de Repuestos</h3>
-                <p>Falta de control real en el inventario y de alertas sobre repuestos faltantes.</p>
-            </article>
-
-            <article>
-                <h3>Errores de Facturación</h3>
-                <p>Cálculos manuales imprecisos en la mano de obra y en el valor del IVA.</p>
-            </article>
+            <div class="servicios-grid">
+                <article class="servicio-card">
+                    <div class="servicio-icon">
+                        <img src="img/ahorrotiempo.png" alt="Ahorro de tiempo" class="card-img">
+                    </div>
+                    <h3>AHORRO DE TIEMPO</h3>
+                    <p>Automatiza el registro de entradas y facturas. Recupera hasta 2 horas diarias de trabajo administrativo.</p>
+                </article>
+                <article class="servicio-card">
+                    <div class="servicio-icon">
+                        <img src="img/reduccion.png" alt="Reducción de errores" class="card-img">
+                    </div>
+                    <h3>REDUCCIÓN DE ERRORES</h3>
+                    <p>Elimina las equivocaciones manuales en piezas y el cálculo de IVA (19%) en cada servicio.</p>
+                </article>
+                <article class="servicio-card">
+                    <div class="servicio-icon">
+                        <img src="img/controlfi.png" alt="Control financiero" class="card-img">
+                    </div>
+                    <h3>CONTROL FINANCIERO</h3>
+                    <p>Visualiza tus ingresos, egresos e inventario en tiempo real con reportes claros y precisos.</p>
+                </article>
+                <article class="servicio-card">
+                    <div class="servicio-icon">
+                        <img src="img/protaller.png" alt="Profesionalización del taller" class="card-img">
+                    </div>
+                    <h3>PROFESIONALIZACIÓN DEL TALLER</h3>
+                    <p>Ofrece a tus clientes comprobantes digitales, historial técnico y una atención moderna que genera confianza.</p>
+                </article>
+            </div>
         </section>
 
-        <section id="caracteristicas">
-            <h2>Módulos del Sistema</h2>
-            <p>Control total de clientes, vehículos, mecánicos y repuestos en una sola pantalla.</p>
-        </section>
     </main>
 
-    <aside>
-        <h3>Acceso Rápido</h3>
-        <p>Seleccione su rol asignado para ingresar al panel de control del sistema.</p>
-    </aside>
+    <!-- Contacto -->
+    <section id="contacto" aria-labelledby="contacto-titulo">
+        <h2 id="contacto-titulo">Solicita información</h2>
+        <!-- ... -->
+    </section>
 
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2026 AutoTech. Todos los derechos reservados.</p>
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <img src="img/Logo.jpeg" alt="Logo AutoTech">
+                </div>
+                <p>Sistema de Gestión para Taller Mecánico</p>
+                <p>📞 +57 xxx xxx xxxx</p>
+                <p>📧 contacto@autotech.com</p>
+                <p>📍 x, Colombia</p>
+            </div>
+
+            <div class="footer-col">
+                <h4> Empresa</h4>
+                <ul>
+                    <li><a href="#sobre-nosotros">Sobre nosotros</a></li>
+                    <li><a href="#contacto">Contáctanos</a></li>
+                    <li><a href="#caracteristicas">Precios</a></li>
+                    <li><a href="#reseñas">Reseñas</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4> Soporte</h4>
+                <ul>
+                    <li><a href="#">Términos de servicio</a></li>
+                    <li><a href="#">Política de privacidad</a></li>
+                    <li><a href="#">Legal</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">    
+                <h4> Síguenos</h4>
+                <ul>
+                    <li><a href="https://www.instagram.com/e__autotech_a/" target="_blank" rel="noopener" aria-label="Instagram">📷</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 AutoTech - Todos los derechos reservados</p>
+        </div>
     </footer>
 
-    <script src="js/script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
