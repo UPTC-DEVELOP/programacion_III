@@ -52,15 +52,24 @@ header {
 .header-logo {
     display: flex;
     align-items: center;
-    gap: 10px;
+}
+
+.header-logo a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
 }
 
 .header-logo .logo {
-    height: 50px;
-    width: auto;
-    border-radius: 6px;
+    height: 55px;        
+    width: auto;          
+    object-fit: contain;  
+    transition: transform 0.3s ease;
 }
 
+.header-logo .logo:hover {
+    transform: scale(1.05); 
+}
 /* ---------- NAVEGACIÓN ---------- */
 header nav ul {
     list-style: none;
@@ -83,7 +92,7 @@ header nav ul li a:hover {
     color: #E63946;
 }
 
-/* Subrayado animado al hacer hover */
+
 header nav ul li a::after {
     content: '';
     position: absolute;
@@ -99,7 +108,7 @@ header nav ul li a:hover::after {
     width: 100%;
 }
 
-/* ---------- BOTONES LOGIN / SIGN UP ---------- */
+/* ---------- BOTON LOGIN / SIGN UP ---------- */
 .header-actions {
     display: flex;
     align-items: center;
@@ -271,7 +280,6 @@ section h2 {
     height: auto;
 }
 
-/* ---------- RESPONSIVE: HERO ---------- */
 
 @media (max-width: 992px) {
     .hero-container {
@@ -379,9 +387,209 @@ section h2 {
     line-height: 1.5;
 }
 
+/* ---------- Quienes somos ---------- */
 
 
+#sobre-nosotros {
+    padding: 60px 20px;
+    background: #FFFFFF;
+    text-align: center;
+}
 
+#sobre-nosotros h2 {
+    font-size: 2.5rem;
+    color: #E63946;   /* ROJO como el resto de la página */
+    margin-bottom: 10px;
+}
+
+.section-subtitle {
+    font-size: 1.1rem;
+    color: #6C757D;
+    margin-bottom: 50px;
+}
+
+
+.sobre-container {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    max-width: 1200px;
+    margin: 0 auto 60px;
+    text-align: left;
+}
+
+/* ---------- COLUMNA IZQUIERDA: IMAGEN ---------- */
+.sobre-imagen {
+    flex: 1 1 30%;
+    display: flex;
+    justify-content: center;   
+    align-items: center;      
+}
+
+.sobre-imagen img {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+}
+
+.sobre-imagen img:hover {
+    transform: scale(1.02);
+}
+
+/* ---------- COLUMNA DERECHA: HISTORIA, MISIÓN, VISIÓN ---------- */
+.sobre-texto {
+    flex: 1 1 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.sobre-bloque {
+    background: #F8F9FA;
+    padding: 25px 30px;
+    border-radius: 12px;
+    border-left: 5px solid #E63946;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sobre-bloque:hover {
+    transform: translateX(5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.sobre-bloque h3 {
+    color: #E63946;   /* ROJO */
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.sobre-bloque p {
+    color: #333;
+    font-size: 0.98rem;
+    line-height: 1.7;
+    text-align: justify;
+}
+
+/* ---------- SECCIÓN DEL EQUIPO ---------- */
+.equipo {
+    margin-top: 20px;
+}
+
+.equipo h3 {
+    font-size: 1.8rem;
+    color: #E63946;   /* ROJO */
+    margin-bottom: 30px;
+}
+
+.equipo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.integrante {
+    background: #F8F9FA;
+    padding: 25px 15px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-top: 4px solid #E63946;
+}
+
+.integrante:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.integrante-foto {
+    width: 80px;
+    height: 80px;
+    background: #E63946;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    margin: 0 auto 15px;
+    box-shadow: 0 6px 20px rgba(230, 57, 70, 0.3);
+}
+
+.integrante h4 {
+    color: #E63946;   /* ROJO */
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.integrante p {
+    color: #6C757D;
+    font-size: 0.9rem;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 992px) {
+    .sobre-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .sobre-imagen {
+        max-width: 100%;
+    }
+
+    .sobre-imagen img {
+        max-width: 100%;
+    }
+
+    .sobre-texto {
+        text-align: left;
+    }
+
+    .sobre-bloque p {
+        text-align: left;
+    }
+
+    .equipo-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .sobre-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+    }
+
+    .equipo-grid {
+        grid-template-columns: 1fr;
+        max-width: 300px;
+    }
+
+    #sobre-nosotros h2 {
+        font-size: 1.8rem;
+    }
+
+    .sobre-bloque {
+        padding: 20px;
+    }
+
+    .sobre-bloque h3 {
+        font-size: 1.2rem;
+    }
+
+    .sobre-bloque p {
+        font-size: 0.9rem;
+    }
+}
 
 
 
