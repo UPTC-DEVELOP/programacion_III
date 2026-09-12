@@ -7,27 +7,29 @@
     <link rel="stylesheet" href="css/estilo.css">
 </head>
 <body>
+
+    <!-- ENCABEZADO Y NAVEGACIÓN -->
     <header>
         <img src="img/logo.jpeg" alt="AutoGestión ERP">
 
         <nav>
             <a href="#proceso">Cómo funciona</a>
             <a href="#modulos">Módulos</a>
-            <a href="#facturacion">Facturación</a>
-            <a href="#quienes-somos">Quiénes Somos</a>
-            <button>INGRESAR</button>
+            <a href="#contacto">Contacto</a>
+            <button class="btn-ingresar">INGRESAR</button>
         </nav>
     </header>
 
-    <!-- HERO -->
     <main>
+
+        <!-- SECCIÓN HERO -->
         <section class="hero" id="inicio">
 
             <article class="hero-contenido">
                 <p class="hero-etiqueta">ERP PARA TALLERES AUTOMOTRICES</p>
 
                 <h1>
-                    EL TALLER,
+                    EL TALLER,<br>
                     <span>BAJO CONTROL</span> TOTAL
                 </h1>
 
@@ -65,6 +67,7 @@
                 </aside>
             </article>
 
+            <!-- MAQUETA DE FACTURA EN HERO -->
             <article class="factura-card" aria-label="Vista previa de factura">
                 <header class="factura-header">
                     <p>AUTOGESTIÓN ERP</p>
@@ -125,6 +128,7 @@
 
         </section>
 
+        <!-- SECCIÓN PROCESO -->
         <section id="proceso" class="proceso">
 
             <header class="proceso-encabezado">
@@ -134,163 +138,242 @@
 
             <div class="proceso-pasos">
 
-            <article class="paso">
-                <span class="numero-paso">01</span>
-                <h3>CLIENTE Y VEHÍCULO</h3>
-                <p>
-                Registra los datos del cliente y relaciona
-                su vehículo para iniciar el servicio.
-                </p>
-            </article>
+                <article class="paso">
+                    <span class="numero-paso">01</span>
+                    <h3>CLIENTE Y VEHÍCULO</h3>
+                    <p>
+                        Registra los datos del cliente y relaciona
+                        su vehículo para iniciar el servicio.
+                    </p>
+                </article>
 
-            <article class="paso">
-                <span class="numero-paso">02</span>
-                <h3>ASIGNAR EMPLEADO</h3>
-                <p>
-                    El taller asigna el trabajador responsable
-                    de realizar el mantenimiento.
-                </p>
-            </article>
+                <article class="paso">
+                    <span class="numero-paso">02</span>
+                    <h3>ASIGNAR EMPLEADO</h3>
+                    <p>
+                        El taller asigna el trabajador responsable
+                        de realizar el mantenimiento.
+                    </p>
+                </article>
 
-            <article class="paso">
-                <span class="numero-paso">03</span>
-                <h3>REPUESTOS Y HORAS</h3>
-                <p>
-                    Controla los repuestos utilizados y las
-                    horas de trabajo invertidas.
-                </p>
-            </article>
+                <article class="paso">
+                    <span class="numero-paso">03</span>
+                    <h3>REPUESTOS Y HORAS</h3>
+                    <p>
+                        Controla los repuestos utilizados y las
+                        horas de trabajo invertidas.
+                    </p>
+                </article>
 
-            <article class="paso paso-final">
-                <span class="numero-paso">04</span>
-                <h3>FACTURA LISTA</h3>
-                <p>
-                    Consolida los servicios y genera la
-                    información necesaria para la facturación.
-                </p>
-            </article>
+                <article class="paso paso-final">
+                    <span class="numero-paso">04</span>
+                    <h3>FACTURA LISTA</h3>
+                    <p>
+                        Consolida los servicios y genera la
+                        información necesaria para la facturación.
+                    </p>
+                </article>
 
             </div>
 
         </section>
-    <!-- CONTACTO Y CONVERSIÓN -->
-<section id="contacto" class="contacto">
 
-    <header class="contacto-titulo">
+        <!-- SECCIÓN MÓDULOS -->
+        <section id="modulos" class="modulos-seccion">
 
-        <p>CONTACTO</p>
+            <header class="proceso-encabezado">
+                <p>MÓDULOS DEL SISTEMA</p>
+                <h2>GESTIÓN INTEGRAL AUTOMOTRIZ</h2>
+            </header>
 
-        <h2>SOLICITA UNA COTIZACIÓN</h2>
+            <div class="selector-modulo-container">
+                <label for="controlModulos">FILTRAR MÓDULO:</label>
+                <select id="controlModulos">
+                    <option value="todos">Todos los Módulos</option>
+                    <option value="clientes">01. Clientes y Vehículos</option>
+                    <option value="taller">02. Gestión de Taller</option>
+                    <option value="inventario">03. Inventario y Repuestos</option>
+                    <option value="facturacion">04. Facturación y Caja</option>
+                </select>
+            </div>
 
-        <p>
-            Completa los datos y agenda el servicio que necesita tu vehículo.
-            Te contactamos para confirmar la cita.
-        </p>
+            <div class="grid-modulos">
 
-    </header>
+                <article class="tarjeta-modulo-detalle modulo-item" data-modulo="clientes">
+                    <header class="modulo-card-header">
+                        <div class="modulo-icono-box">
+                            <i>🚗</i>
+                        </div>
+                        <span class="modulo-numero">MOD-01</span>
+                    </header>
+                    <h2>CLIENTES Y VEHÍCULOS</h2>
+                    <p>Historial mecánico completo por placa, datos del propietario y vinculación directa con órdenes activas.</p>
+                    <div class="modulo-tags">
+                        <span>HOJA DE VIDA</span>
+                        <span>HISTORIAL</span>
+                    </div>
+                </article>
 
+                <article class="tarjeta-modulo-detalle modulo-item" data-modulo="taller">
+                    <header class="modulo-card-header">
+                        <div class="modulo-icono-box">
+                            <i>🔧</i>
+                        </div>
+                        <span class="modulo-numero">MOD-02</span>
+                    </header>
+                    <h2>GESTIÓN DE TALLER</h2>
+                    <p>Asignación de mecánicos responsables, control de tiempos de entrega y seguimiento de estados de reparación.</p>
+                    <div class="modulo-tags">
+                        <span>ÓRDENES</span>
+                        <span>ASIGNACIÓN</span>
+                    </div>
+                </article>
 
-    <article class="formulario-contenedor">
+                <article class="tarjeta-modulo-detalle modulo-item" data-modulo="inventario">
+                    <header class="modulo-card-header">
+                        <div class="modulo-icono-box">
+                            <i>📦</i>
+                        </div>
+                        <span class="modulo-numero">MOD-03</span>
+                    </header>
+                    <h2>INVENTARIO Y REPUESTOS</h2>
+                    <p>Entradas y salidas de insumos, alertas de stock mínimo y desacople automático según la orden de trabajo.</p>
+                    <div class="modulo-tags">
+                        <span>STOCK</span>
+                        <span>REPUESTOS</span>
+                    </div>
+                </article>
 
-        <p class="formulario-info">
-            Todos los campos marcados con * son obligatorios.
-        </p>
+                <article class="tarjeta-modulo-detalle modulo-item" data-modulo="facturacion">
+                    <header class="modulo-card-header">
+                        <div class="modulo-icono-box">
+                            <i>💳</i>
+                        </div>
+                        <span class="modulo-numero">MOD-04</span>
+                    </header>
+                    <h2>FACTURACIÓN Y CAJA</h2>
+                    <p>Liquidación de órdenes de servicio, desglose de mano de obra, cálculo automático del IVA e historial de pagos.</p>
+                    <div class="modulo-tags">
+                        <span>PAGOS</span>
+                        <span>LIQUIDACIÓN</span>
+                    </div>
+                </article>
 
-        <form id="contactoForm">
+            </div>
 
-            <fieldset>
+        </section>
 
-                <legend class="visualmente-oculto">Datos de contacto</legend>
+        <!-- SECCIÓN CONTACTO Y SOLICITUD DE COTIZACIÓN -->
+        <section id="contacto" class="contacto">
 
-                <p class="campo">
-                    <label for="nombre">Nombre completo *</label>
-                    <input type="text" id="nombre" name="nombre" required>
+            <header class="contacto-titulo">
+                <p>CONTACTO</p>
+                <h2>SOLICITA UNA COTIZACIÓN</h2>
+                <p>
+                    Completa los datos y agenda el servicio que necesita tu vehículo.
+                    Te contactamos para confirmar la cita.
                 </p>
+            </header>
 
-                <p class="campo">
-                    <label for="correo">Correo electrónico *</label>
-                    <input type="email" id="correo" name="correo" required>
-                </p>
+            <div class="contacto-flex-layout">
+                <article class="formulario-contenedor">
+                    <p class="formulario-info">
+                        Todos los campos marcados con * son obligatorios.
+                    </p>
 
-                <p class="campo">
-                    <label for="telefono">Teléfono *</label>
-                    <input type="tel" id="telefono" name="telefono" required>
-                </p>
+                    <form id="contactoForm">
+                        <fieldset>
+                            <legend class="visualmente-oculto">Datos de contacto</legend>
 
-                <p class="campo">
-                    <label for="fecha">Fecha preferida *</label>
-                    <input type="date" id="fecha" name="fecha" required>
-                </p>
+                            <p class="campo">
+                                <label for="nombre">Nombre completo *</label>
+                                <input type="text" id="nombre" name="nombre" required>
+                            </p>
 
-                <p class="campo">
-                    <label for="vehiculo">Marca y modelo del vehículo *</label>
-                    <input type="text" id="vehiculo" name="vehiculo" placeholder="Ej: Mazda 3, 2018" required>
-                </p>
+                            <p class="campo">
+                                <label for="correo">Correo electrónico *</label>
+                                <input type="email" id="correo" name="correo" required>
+                            </p>
 
-                <p class="campo">
-                    <label for="servicio">Servicio requerido</label>
-                    <input type="text" id="servicio" name="servicio" placeholder="Ej: cambio de aceite, frenos...">
-                </p>
+                            <p class="campo">
+                                <label for="telefono">Teléfono *</label>
+                                <input type="tel" id="telefono" name="telefono" required>
+                            </p>
 
-                <p class="campo campo-mensaje">
-                    <label for="mensaje">Mensaje o solicitud *</label>
-                    <textarea id="mensaje" name="mensaje" rows="5" placeholder="Cuéntanos qué necesitas..." required></textarea>
-                </p>
+                            <p class="campo">
+                                <label for="fecha">Fecha preferida *</label>
+                                <input type="date" id="fecha" name="fecha" required>
+                            </p>
 
-            </fieldset>
+                            <p class="campo">
+                                <label for="vehiculo">Marca y modelo del vehículo *</label>
+                                <input type="text" id="vehiculo" name="vehiculo" placeholder="Ej: Mazda 3, 2018" required>
+                            </p>
 
-            <button type="submit" class="boton-principal">
-                SOLICITAR COTIZACIÓN
-            </button>
+                            <p class="campo">
+                                <label for="servicio">Servicio requerido</label>
+                                <input type="text" id="servicio" name="servicio" placeholder="Ej: cambio de aceite, frenos...">
+                            </p>
 
-            <p id="mensajeConfirmacion" class="mensaje-confirmacion"></p>
+                            <p class="campo campo-mensaje">
+                                <label for="mensaje">Mensaje o solicitud *</label>
+                                <textarea id="mensaje" name="mensaje" rows="5" placeholder="Cuéntanos qué necesitas..." required></textarea>
+                            </p>
+                        </fieldset>
 
-        </form>
+                        <button type="submit" class="boton-principal">
+                            SOLICITAR COTIZACIÓN
+                        </button>
 
-    </article>
+                        <p id="mensajeConfirmacion" class="mensaje-confirmacion"></p>
+                    </form>
+                </article>
 
+                <aside class="contacto-info">
+                    <h3>HABLEMOS</h3>
+                    <p>
+                        En nuestro taller diagnosticamos y reparamos tu vehículo con
+                        repuestos de calidad y tiempos de entrega claros.
+                    </p>
 
-    <aside class="contacto-info">
+                    <article class="dato-contacto">
+                        <span>DIRECCIÓN</span>
+                        <strong>Bogotá D.C., Colombia</strong>
+                    </article>
 
-        <h3>HABLEMOS</h3>
+                    <article class="dato-contacto">
+                        <span>TELÉFONO</span>
+                        <strong>+57 300 000 0000</strong>
+                    </article>
 
-        <p>
-            En nuestro taller diagnosticamos y reparamos tu vehículo con
-            repuestos de calidad y tiempos de entrega claros.
-        </p>
+                    <article class="dato-contacto">
+                        <span>CORREO</span>
+                        <strong>autogestionerp@gmail.com</strong>
+                    </article>
 
-        <article class="dato-contacto">
-            <span>DIRECCIÓN</span>
-            <strong>Bogotá D.C., Colombia</strong>
-        </article>
+                    <a href="#" class="whatsapp">
+                        CONTACTAR POR WHATSAPP
+                    </a>
 
-        <article class="dato-contacto">
-            <span>TELÉFONO</span>
-            <strong>+57 300 000 0000</strong>
-        </article>
+                    <figure class="mapa">
+                        <iframe
+                            src="https://www.google.com/maps?q=Bogotá%20Colombia&output=embed"
+                            loading="lazy"
+                            title="Ubicación del taller mecánico">
+                        </iframe>
+                    </figure>
+                </aside>
+            </div>
 
-        <article class="dato-contacto">
-            <span>CORREO</span>
-            <strong>autogestionerp@gmail.com</strong>
-        </article>
+        </section>
 
-        <a href="#" class="whatsapp">
-            CONTACTAR POR WHATSAPP
-        </a>
-
-        <figure class="mapa">
-            <iframe
-                src="https://www.google.com/maps?q=Bogotá%20Colombia&output=embed"
-                loading="lazy"
-                title="Ubicación del taller mecánico">
-            </iframe>
-        </figure>
-
-    </aside>
-
-</section>
     </main>
 
+    <footer>
+        <p>&copy; AutoGestión ERP. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+
 </body>
-    
 </html>

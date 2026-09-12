@@ -1,30 +1,38 @@
+/* ==========================================================================
+   1. RESET Y CONFIGURACIÓN BASE
+   ========================================================================== */
 * {
     box-sizing: border-box;
 }
 
-body{
-    margin: 0;
-    padding-top: 80px;
-    background-color: black;
+html {
+    scroll-behavior: smooth;
 }
 
+body {
+    margin: 0;
+    padding-top: 80px;
+    background-color: #111216;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+}
+
+/* ==========================================================================
+   2. ENCABEZADO Y NAVEGACIÓN
+   ========================================================================== */
 body > header {
     height: 80px;
     padding: 0 30px;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     background-color: #151519;
-
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 1000;
-
-    border-bottom: 1px solid #ffffff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 header img {
@@ -36,29 +44,39 @@ nav {
     display: flex;
     align-items: center;
     gap: 30px;
-    
 }
 
 nav a {
-    color: white;
+    color: #ffffff;
     font-weight: bold;
     text-decoration: none;
     font-size: 15px;
-    font-family: Arial, sans-serif;
+    transition: color 0.3s ease;
 }
 
-button {
-    background-color: red;
-    color: white;
+nav a:hover {
+    color: #e3262e;
+}
+
+.btn-ingresar {
+    background-color: #e3262e;
+    color: #ffffff;
     font-weight: bold;
     font-family: Arial, sans-serif;
-
     padding: 12px 24px;
     border: none;
-    border-radius: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-/* HERO*/
+.btn-ingresar:hover {
+    background-color: #b91d24;
+}
+
+/* ==========================================================================
+   3. SECCIÓN HERO
+   ========================================================================== */
 main {
     margin: 0;
 }
@@ -70,7 +88,6 @@ main {
     grid-template-columns: 1fr 1fr;
     align-items: center;
     gap: 70px;
-
     background-color: #111216;
     background-image: repeating-linear-gradient(
         135deg,
@@ -79,8 +96,6 @@ main {
         rgba(196, 30, 30, 0.18) 76px,
         transparent 77px
     );
-
-    color: white;
 }
 
 .hero-contenido {
@@ -91,9 +106,7 @@ main {
     display: inline-block;
     margin: 0 0 25px;
     padding: 8px 12px;
-
     border: 1px solid #e3262e;
-
     color: #e3262e;
     font-family: "Courier New", monospace;
     font-size: 12px;
@@ -118,49 +131,35 @@ main {
 .hero-descripcion {
     max-width: 620px;
     margin: 28px 0;
-
     color: #c8c8c8;
-    font-family: Arial, sans-serif;
     font-size: 18px;
     line-height: 1.7;
 }
 
-/* Botones del hero */
-
+/* Botones Hero */
 .hero-botones {
     display: flex;
     align-items: center;
     gap: 12px;
-
-    height: auto;
     margin: 30px 0 0;
-    padding: 0;
-
-    background-color: transparent;
-    position: static;
-    width: auto;
-    z-index: auto;
 }
 
 .hero-botones a {
     padding: 18px 25px;
-
-    font-family: Arial, sans-serif;
     font-size: 14px;
     font-weight: bold;
     text-decoration: none;
-
     transition: 0.3s;
 }
 
 .boton-principal {
     background-color: #e3262e;
-    color: white;
+    color: #ffffff;
 }
 
 .boton-secundario {
-    border: 1px solid #666;
-    color: white;
+    border: 1px solid #666666;
+    color: #ffffff;
 }
 
 .boton-principal:hover {
@@ -172,8 +171,7 @@ main {
     color: #e3262e;
 }
 
-/* Estadísticas */
-
+/* Estadísticas Hero */
 .hero-estadisticas {
     display: flex;
     gap: 45px;
@@ -187,7 +185,7 @@ main {
 }
 
 .hero-estadisticas span {
-    color: #777;
+    color: #777777;
     font-family: "Courier New", monospace;
     font-size: 10px;
     letter-spacing: 2px;
@@ -201,43 +199,28 @@ main {
     text-transform: uppercase;
 }
 
-/* Factura */
-
+/* ==========================================================================
+   4. TARJETA MAQUETA DE FACTURA (HERO)
+   ========================================================================== */
 .factura-card {
     width: 100%;
     max-width: 560px;
     justify-self: center;
-
-    background-color: white;
-    color: #111;
-
+    background-color: #ffffff;
+    color: #111111;
     border-radius: 8px;
     overflow: hidden;
-
-    font-family: Arial, sans-serif;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
 }
 
-/* Encabezado interno de la factura */
-
 .factura-card .factura-header {
-    height: auto;
-    margin: 0;
     padding: 25px;
-
-    display: block;
-
     background-color: #151519;
-    color: white;
-
-    position: static;
-    width: auto;
-    z-index: auto;
+    color: #ffffff;
 }
 
 .factura-header p {
     margin: 0 0 12px;
-
     color: #9ba2ad;
     font-family: "Courier New", monospace;
     font-size: 11px;
@@ -253,7 +236,6 @@ main {
 
 .factura-header h2 {
     margin: 0;
-
     font-family: Impact, "Arial Narrow", sans-serif;
     font-size: 18px;
     font-weight: normal;
@@ -264,8 +246,6 @@ main {
     font-family: "Courier New", monospace;
     font-size: 14px;
 }
-
-/* Datos de la factura */
 
 .factura-datos {
     display: grid;
@@ -293,43 +273,29 @@ main {
     font-size: 14px;
 }
 
-/* Detalles en la factura */
-
 .factura-detalles {
     padding: 0 25px;
 }
 
 .factura-detalles > header {
-    height: auto;
     padding: 12px 0;
-
     display: grid;
     grid-template-columns: 1fr 70px 100px;
-
-    background-color: transparent;
-    position: static;
-    width: auto;
 }
 
 .factura-detalles p {
     display: grid;
     grid-template-columns: 1fr 70px 100px;
-
     margin: 0;
     padding: 14px 0;
-
-    border-bottom: 1px solid #ddd;
-
+    border-bottom: 1px solid #dddddd;
     font-size: 13px;
 }
-
-/* Total en factura */
 
 .factura-total {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     padding: 25px;
 }
 
@@ -347,14 +313,14 @@ main {
 .factura-nota {
     margin: 0;
     padding: 0 25px 22px;
-
-    color: #777;
+    color: #777777;
     text-align: center;
     font-size: 11px;
 }
 
-/* SECCIÓN PROCESO */
-
+/* ==========================================================================
+   5. SECCIÓN PROCESO
+   ========================================================================== */
 .proceso {
     background-color: #f4f1eb;
     border-top: 4px solid #e5252a;
@@ -365,7 +331,6 @@ main {
 .proceso-encabezado p {
     margin: 0 0 15px;
     color: #e5252a;
-    font-family: Arial, sans-serif;
     font-size: 12px;
     letter-spacing: 4px;
     font-weight: bold;
@@ -373,7 +338,6 @@ main {
 
 .proceso-encabezado h2 {
     margin: 0;
-    font-family: Arial, sans-serif;
     font-size: 58px;
     font-weight: 300;
     letter-spacing: -2px;
@@ -389,6 +353,7 @@ main {
 .paso {
     border-top: 3px solid #bfc2c5;
     padding-top: 24px;
+    transition: transform 0.3s ease, opacity 0.6s ease;
 }
 
 .paso-final {
@@ -399,14 +364,10 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
-
     width: 49px;
     height: 49px;
-
     background-color: #151519;
-    color: white;
-
-    font-family: Arial, sans-serif;
+    color: #ffffff;
     font-size: 13px;
     font-weight: bold;
 }
@@ -417,7 +378,6 @@ main {
 
 .paso h3 {
     margin: 28px 0 15px;
-    font-family: Arial, sans-serif;
     font-size: 25px;
     font-weight: bold;
 }
@@ -425,24 +385,127 @@ main {
 .paso p {
     margin: 0;
     color: #74777b;
-    font-family: Arial, sans-serif;
     font-size: 16px;
     line-height: 1.6;
-}
-
-.paso {
-    transition: transform 0.3s ease;
 }
 
 .paso:hover {
     transform: translateY(-5px);
 }
 
-html {
-    scroll-behavior: smooth;
+/* ==========================================================================
+   6. SECCIÓN MÓDULOS DEL SISTEMA
+   ========================================================================== */
+.modulos-seccion {
+    background-color: #111216;
+    padding: 100px 10%;
+    border-top: 1px solid #222222;
 }
-/* CONTACTO Y CONVERSIÓN */
 
+.selector-modulo-container {
+    margin: 30px 0 50px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.selector-modulo-container label {
+    font-family: "Courier New", monospace;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: #e3262e;
+    font-weight: bold;
+}
+
+.selector-modulo-container select {
+    background-color: #1a1b20;
+    color: #ffffff;
+    border: 1px solid #33353a;
+    padding: 12px 20px;
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.grid-modulos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+}
+
+.tarjeta-modulo-detalle {
+    background-color: #1a1b20;
+    border: 1px solid #33353a;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, border-color 0.3s ease, opacity 0.4s ease;
+}
+
+.tarjeta-modulo-detalle:hover {
+    border-color: #e3262e;
+    transform: translateY(-5px);
+}
+
+.modulo-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.modulo-icono-box {
+    font-size: 28px;
+}
+
+.modulo-numero {
+    font-family: "Courier New", monospace;
+    color: #e3262e;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.tarjeta-modulo-detalle h2 {
+    font-family: "Arial Narrow", Arial, sans-serif;
+    font-size: 24px;
+    margin: 0 0 15px;
+    text-transform: uppercase;
+}
+
+.tarjeta-modulo-detalle p {
+    color: #c8c8c8;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0 0 25px;
+}
+
+.modulo-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.modulo-tags span {
+    background-color: #202226;
+    border: 1px solid #33353a;
+    color: #9ba2ad;
+    font-family: "Courier New", monospace;
+    font-size: 10px;
+    padding: 5px 10px;
+    letter-spacing: 1px;
+}
+
+/* Estado oculto para el filtro con JavaScript */
+.modulo-item.oculto {
+    display: none !important;
+}
+
+/* ==========================================================================
+   7. SECCIÓN CONTACTO Y CONVERSIÓN
+   ========================================================================== */
 .visualmente-oculto {
     position: absolute;
     width: 1px;
@@ -459,18 +522,11 @@ html {
     background-color: #151519;
     color: #f2f2f2;
     padding: 90px 11%;
-
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 40px;
-
-    font-family: Arial, sans-serif;
 }
 
 .contacto-titulo {
-    grid-column: 1 / -1;
     max-width: 900px;
-    margin-bottom: 15px;
+    margin-bottom: 40px;
 }
 
 .contacto-titulo p:first-child {
@@ -498,6 +554,12 @@ html {
     max-width: 650px;
 }
 
+.contacto-flex-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+}
+
 .formulario-contenedor {
     border: 1px solid #33353a;
     background-color: #1a1b20;
@@ -521,9 +583,8 @@ html {
     border: none;
     padding: 0;
     margin: 0;
-
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 24px 22px;
 }
 
@@ -543,16 +604,12 @@ html {
 .campo input,
 .campo textarea {
     width: 100%;
-
     background-color: #202226;
-    color: white;
-
+    color: #ffffff;
     border: 1px solid #33353a;
     padding: 13px;
-
     font-family: Arial, sans-serif;
     font-size: 15px;
-
     outline: none;
 }
 
@@ -614,7 +671,6 @@ html {
 .dato-contacto {
     border-top: 1px solid #33353a;
     padding: 18px 0;
-
     display: flex;
     flex-direction: column;
     gap: 7px;
@@ -635,19 +691,14 @@ html {
 
 .whatsapp {
     display: block;
-
     background-color: #e3262e;
-    color: white;
-
+    color: #ffffff;
     text-align: center;
     text-decoration: none;
-
     padding: 14px;
     margin-top: 10px;
-
     font-size: 13px;
     font-weight: bold;
-
     transition: background-color 0.3s ease;
 }
 
@@ -666,3 +717,74 @@ html {
     border: 0;
 }
 
+/* ==========================================================================
+   8. PIE DE PÁGINA
+   ========================================================================== */
+footer {
+    background-color: #0c0d0e;
+    padding: 25px;
+    text-align: center;
+    border-top: 1px solid #222222;
+}
+
+footer p {
+    color: #666666;
+    font-size: 13px;
+    margin: 0;
+}
+
+/* ==========================================================================
+   9. ANIMACIONES POR SCROLL (INTERSECTION OBSERVER)
+   ========================================================================== */
+.paso, 
+.tarjeta-modulo-detalle, 
+fieldset {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.paso.visible, 
+.tarjeta-modulo-detalle.visible, 
+fieldset.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   10. DISEÑO ADAPTATIVO (RESPONSIVE)
+   ========================================================================== */
+@media (max-width: 992px) {
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 50px 5%;
+        text-align: center;
+    }
+
+    .hero-botones,
+    .hero-estadisticas {
+        justify-content: center;
+    }
+
+    .proceso-pasos {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .contacto-flex-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .proceso-pasos {
+        grid-template-columns: 1fr;
+    }
+
+    #contactoForm fieldset {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+        font-size: 42px;
+    }
+}
