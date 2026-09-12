@@ -2040,4 +2040,186 @@ body > header,
     font-size: 16px;
   }
 
+}/* =========================================================
+   EQUIPO
+   ========================================================= */
+
+.seccion-equipo {
+  background-color: #f7f7f5;
+  color: #202124;
+  padding-block: 70px;
+  padding-inline: max(24px, calc((100% - 90em) / 2));
+}
+
+
+.encabezado-equipo {
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto 42px;
+}
+
+
+.etiqueta-equipo {
+  color: #f5c518;
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  margin: 0 0 18px;
+}
+
+
+.etiqueta-equipo::before {
+  content: "";
+
+  width: 28px;
+  height: 3px;
+
+  background-color: #f5c518;
+  border-radius: 3px;
+
+  flex-shrink: 0;
+}
+
+
+.seccion-equipo h2 {
+  color: #202124;
+  font-size: clamp(32px, 4vw, 42px);
+  line-height: 1.2;
+  margin: 0 0 16px;
+}
+
+
+.seccion-equipo h2 span {
+  color: #f5c518;
+}
+
+
+.descripcion-equipo {
+  color: #6b7075;
+  font-size: 16px;
+  line-height: 1.7;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+
+.grid-equipo {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+
+.tarjeta-equipo {
+  background-color: #ffffff;
+  border: 1px solid #e4e5e6;
+  border-radius: 16px;
+
+  min-height: 245px;
+  padding: 28px 24px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    border-color 0.2s;
+}
+
+
+.tarjeta-equipo:hover {
+  transform: translateY(-4px);
+  border-color: #f5c518;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.10);
+}
+
+
+.burbuja-equipo {
+  width: 64px;
+  height: 64px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #111315;
+  color: #ffffff;
+
+  border: 1px solid #111315;
+  border-radius: 50%;
+
+  font-size: 28px;
+
+  margin-bottom: 20px;
+
+  transition:
+    transform 0.2s,
+    background-color 0.2s;
+}
+
+
+.tarjeta-equipo:hover .burbuja-equipo {
+  background-color: #000000;
+  transform: scale(1.08);
+}
+
+
+.tarjeta-equipo h3 {
+  color: #111315;
+  font-size: 18px;
+  font-weight: 700;
+
+  margin: 0 0 12px;
+}
+
+
+.tarjeta-equipo p {
+  color: #6b7075;
+  font-size: 14px;
+  line-height: 1.65;
+
+  max-width: 260px;
+  margin: 0;
+}
+
+
+/* EQUIPO EN PANTALLAS MEDIANAS */
+
+@media (max-width: 1000px) {
+
+  .grid-equipo {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* EQUIPO EN CELULARES */
+
+@media (max-width: 600px) {
+
+  .seccion-equipo {
+    padding-block: 60px;
+  }
+
+  .grid-equipo {
+    grid-template-columns: 1fr;
+  }
+
+  .tarjeta-equipo {
+    min-height: auto;
+  }
+
 }
