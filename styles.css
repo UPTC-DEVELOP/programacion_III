@@ -1,6 +1,4 @@
 :root {
-
-
   --color-primary: #1466c4;
   --color-primary-dark: #0b2e6b;
   --color-primary-light: #e8f0fe;
@@ -21,8 +19,6 @@
   --shadow-md: 0 12px 30px rgba(11, 46, 107, 0.12);
   --transition: 0.2s ease;
 }
-<<<<<<< HEAD
-=======
 
 .container {
   width: min(1120px, calc(100% - 40px));
@@ -117,4 +113,3 @@
     grid-template-columns: 1fr;
   }
 }
->>>>>>> 71b33892212c9ad08469f48f942240b3417dd754
