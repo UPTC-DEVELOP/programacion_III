@@ -8,7 +8,7 @@ body{
     background-color: black;
 }
 
-header {
+body > header {
     height: 80px;
     padding: 0 30px;
 
@@ -351,4 +351,93 @@ main {
     color: #777;
     text-align: center;
     font-size: 11px;
+}
+
+/* SECCIÓN PROCESO */
+
+.proceso {
+    background-color: #f4f1eb;
+    border-top: 4px solid #e5252a;
+    padding: 110px 10%;
+    color: #151519;
+}
+
+.proceso-encabezado p {
+    margin: 0 0 15px;
+    color: #e5252a;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    letter-spacing: 4px;
+    font-weight: bold;
+}
+
+.proceso-encabezado h2 {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    font-size: 58px;
+    font-weight: 300;
+    letter-spacing: -2px;
+}
+
+.proceso-pasos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+    margin-top: 60px;
+}
+
+.paso {
+    border-top: 3px solid #bfc2c5;
+    padding-top: 24px;
+}
+
+.paso-final {
+    border-top-color: #e5252a;
+}
+
+.numero-paso {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 49px;
+    height: 49px;
+
+    background-color: #151519;
+    color: white;
+
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.paso-final .numero-paso {
+    background-color: #e5252a;
+}
+
+.paso h3 {
+    margin: 28px 0 15px;
+    font-family: Arial, sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.paso p {
+    margin: 0;
+    color: #74777b;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.paso {
+    transition: transform 0.3s ease;
+}
+
+.paso:hover {
+    transform: translateY(-5px);
+}
+
+html {
+    scroll-behavior: smooth;
 }
