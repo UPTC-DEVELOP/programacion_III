@@ -890,3 +890,86 @@ fieldset.visible {
         gap: 30px;
     }
 }
+
+/* SECCIÓN TESTIMONIOS */
+.testimonios-seccion {
+    background-color: #f4f1eb;
+    padding: 90px 11%;
+    text-align: center;
+    border-top: 4px solid #e3262e;
+    color: #151519;
+}
+
+.testimonios-seccion .proceso-encabezado p {
+    color: #e3262e;
+}
+
+.testimonios-seccion .proceso-encabezado h2 {
+    color: #151519;
+}
+
+.slider-testimonios {
+    max-width: 800px;
+    margin: 50px auto 0;
+    position: relative;
+    min-height: 260px;
+
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.slider-testimonios.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.testimonio {
+    display: none;
+    padding: 0 20px;
+}
+
+.testimonio.activo {
+    display: block;
+    animation: fadeInTestimonio 0.8s ease-in-out;
+}
+
+@keyframes fadeInTestimonio {
+    from { 
+        opacity: 0; 
+        transform: translateY(20px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+.testimonio > p {
+    font-size: 22px;
+    font-style: italic;
+    line-height: 1.6;
+    color: #4a4a4a;
+    margin-bottom: 30px;
+}
+
+.testimonio-autor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.testimonio-autor strong {
+    color: #e3262e;
+    font-size: 18px;
+    font-family: "Arial Narrow", Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.testimonio-autor span {
+    color: #74777b;
+    font-size: 13px;
+    font-family: "Courier New", monospace;
+}

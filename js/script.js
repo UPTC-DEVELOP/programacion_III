@@ -93,4 +93,36 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-});
+        /* SLIDER AUTOMÁTICO DE TESTIMONIOS*/
+    const sliderTestimonios = document.querySelector(".slider-testimonios");
+    const testimonios = document.querySelectorAll(".testimonio");
+
+    if (sliderTestimonios && testimonios.length > 0) {
+        // Preparar el primer testimonio antes de que se vea
+        testimonios.forEach(t => t.classList.remove("activo"));
+        testimonios[0].classList.add("activo");
+
+        let indiceActual = 0;
+        let sliderIniciado = false;
+
+        const observerSlider = new IntersectionObserver((entradas) => {
+            if (entradas[0].isIntersecting && !sliderIniciado) {
+                sliderIniciado = true;
+
+                // 1. Animar la aparición del contenedor
+                sliderTestimonios.classList.add("visible");
+
+                // 2. Iniciar el cambio automático de testimonios
+                setInterval(() => {
+                    testimonios[indiceActual].classList.remove("activo");
+                    indiceActual = (indiceActual + 1) % testimonios.length;
+                    testimonios[indiceActual].classList.add("activo");
+                }, 5000);
+
+                observerSlider.disconnect();
+            }
+        }, { threshold: 0.3 });
+
+        observerSlider.observe(sliderTestimonios);
+    }
+});    
