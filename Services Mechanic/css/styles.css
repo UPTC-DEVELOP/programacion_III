@@ -1141,4 +1141,133 @@ body > header,
   font-size: 0.9375em;
   line-height: 1.65;
 }
+}/* =========================================================
+   SERVICIOS
+   ========================================================= */
+
+#servicios {
+  background-color: #111315;
+  color: #ffffff;
+
+  padding-block: 70px;
+  padding-inline: max(24px, calc((100% - 90em) / 2));
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+#servicios > h2 {
+  grid-column: 1 / -1;
+
+  margin: 0;
+
+  color: #ffffff;
+  font-size: clamp(30px, 4vw, 42px);
+  line-height: 1.15;
+}
+
+#servicios > p {
+  grid-column: 1 / -1;
+
+  max-width: 700px;
+
+  margin: 0 0 20px;
+
+  color: #b8bdc3;
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+#servicios > article {
+  position: relative;
+
+  padding: 28px;
+
+  background-color: #1b1e20;
+
+  border: 1px solid #252829;
+  border-radius: 16px;
+
+  transition:
+    transform 0.2s,
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+#servicios > article::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 24px;
+
+  width: 45px;
+  height: 4px;
+
+  background-color: #f5c518;
+
+  border-radius: 0 0 6px 6px;
+}
+
+#servicios > article:hover {
+  transform: translateY(-4px);
+
+  border-color: #f5c518;
+
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+}
+
+#servicios > article h3 {
+  margin: 4px 0 10px;
+
+  color: #ffffff;
+
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+#servicios > article p {
+  margin: 0;
+
+  color: #b8bdc3;
+
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+
+/* =========================================================
+   SERVICIOS EN CELULAR
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  #servicios {
+    grid-template-columns: 1fr;
+    padding-block: 55px;
+  }
+
+  #servicios > article {
+    padding: 24px;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  #servicios {
+    padding-inline: 20px;
+  }
+
+  #servicios > h2 {
+    font-size: 32px;
+  }
+
+  #servicios > p {
+    font-size: 15px;
+  }
+
 }
