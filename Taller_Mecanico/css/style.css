@@ -1,0 +1,48 @@
+
+/* Variables de Diseño (Design Tokens) */
+:root {
+  --color-primary: #0056b3;
+  --color-dark: #0f172a;
+  --color-light: #f8fafc;
+  --font-main: 'Inter', system-ui, sans-serif;
+}
+
+/* Reset Profesional */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--font-main);
+  color: var(--color-dark);
+  background-color: var(--color-light);
+}
+
+/* Navegación y Layouts con Flexbox */
+header, nav ul {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+/* Grid Auto-Responsivo para los Servicios */
+.servicios01 { /* Referencia al div que agrupa los <article> en el HTML */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 3rem 1rem;
+}
+
+/* Tarjetas (Cards) UI/UX */
+.servicios01 article {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+  border: 1px solid #e2e8f0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.servicios01 article:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+}
