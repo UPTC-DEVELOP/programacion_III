@@ -1,8 +1,11 @@
-/* CONFIGURACIÓN GENERAL */
+/* =========================================================
+   CONFIGURACIÓN GENERAL
+   ========================================================= */
 
 * {
   box-sizing: border-box;
 }
+
 
 body {
   margin: 0;
@@ -10,17 +13,21 @@ body {
   line-height: 1.5;
 }
 
+
 img {
   max-width: 100%;
   height: auto;
 }
 
 
-/* CABECERA */
+/* =========================================================
+   CABECERA
+   ========================================================= */
 
 body > header {
   background-color: #111315;
   color: #ffffff;
+
   padding: 24px;
 
   display: flex;
@@ -30,18 +37,22 @@ body > header {
   gap: 20px;
 }
 
+
 body > header > img {
   width: 115px;
 }
+
 
 body > header > h1 {
   margin: 0;
   font-size: 20px;
 }
 
+
 body > header > nav {
   margin-left: auto;
 }
+
 
 body > header nav ul {
   display: flex;
@@ -53,10 +64,12 @@ body > header nav ul {
   margin: 0;
 }
 
+
 body > header nav a {
   color: #f5c518;
   text-decoration: none;
 }
+
 
 body > header > a {
   display: inline-block;
@@ -73,12 +86,15 @@ body > header > a {
   transition: background-color 0.2s;
 }
 
+
 body > header > a:hover {
   background-color: #ddb012;
 }
 
 
-/* INICIO / HERO */
+/* =========================================================
+   INICIO / HERO
+   ========================================================= */
 
 #inicio {
   background-color: #111315;
@@ -105,6 +121,7 @@ body > header > a:hover {
   align-items: center;
 }
 
+
 #inicio .contenido-inicio {
   display: flex;
   flex-direction: column;
@@ -121,6 +138,7 @@ body > header > a:hover {
   margin: 0;
   max-width: 700px;
 }
+
 
 #inicio h2 span {
   color: #f5c518;
@@ -151,6 +169,7 @@ body > header > a:hover {
   align-items: center;
   gap: 14px;
 }
+
 
 #inicio .etiqueta-inicio::before {
   content: "";
@@ -183,12 +202,14 @@ body > header > a:hover {
   margin-top: 32px;
 }
 
+
 #inicio .enlace-servicios {
   color: #ffffff;
   text-decoration: none;
 
   transition: color 0.2s;
 }
+
 
 #inicio .enlace-servicios:hover {
   color: #f5c518;
@@ -210,6 +231,7 @@ body > header > a:hover {
   gap: 18px;
 }
 
+
 #inicio .item-resumen {
   display: flex;
   align-items: flex-start;
@@ -220,6 +242,7 @@ body > header > a:hover {
   font-size: 14px;
   line-height: 1.4;
 }
+
 
 #inicio .check-resumen {
   width: 18px;
@@ -241,7 +264,9 @@ body > header > a:hover {
 }
 
 
-/* CARRUSEL DEL INICIO */
+/* =========================================================
+   CARRUSEL DEL INICIO
+   ========================================================= */
 
 #inicio .carrusel-inicio {
   position: relative;
@@ -272,6 +297,7 @@ body > header > a:hover {
   pointer-events: none;
 }
 
+
 #inicio .carrusel-inicio::before {
   top: 0;
   left: 0;
@@ -281,6 +307,7 @@ body > header > a:hover {
 
   border-radius: 16px 0 0 0;
 }
+
 
 #inicio .carrusel-inicio::after {
   right: 0;
@@ -304,6 +331,7 @@ body > header > a:hover {
   object-fit: cover;
 }
 
+
 #inicio .imagen-carrusel[hidden] {
   display: none;
 }
@@ -317,6 +345,7 @@ body > header > a:hover {
 
   pointer-events: none;
 }
+
 
 #inicio .controles-carrusel button {
   position: absolute;
@@ -335,6 +364,7 @@ body > header > a:hover {
     transform 0.2s;
 }
 
+
 #foto-anterior,
 #foto-siguiente {
   width: 48px;
@@ -347,13 +377,16 @@ body > header > a:hover {
   line-height: 1;
 }
 
+
 #foto-anterior {
   left: 16px;
 }
 
+
 #foto-siguiente {
   right: 16px;
 }
+
 
 #pausar-carrusel {
   width: 40px;
@@ -365,18 +398,22 @@ body > header > a:hover {
   font-size: 18px;
 }
 
+
 #inicio .controles-carrusel button:hover {
   background-color: #6b7075;
 }
+
 
 #foto-anterior:hover,
 #foto-siguiente:hover {
   transform: translateY(-50%) scale(1.08);
 }
 
+
 #pausar-carrusel:hover {
   transform: scale(1.08);
 }
+
 
 #inicio .controles-carrusel button:focus-visible {
   outline: 3px solid #f5c518;
@@ -400,6 +437,7 @@ body > header > a:hover {
   pointer-events: auto;
 }
 
+
 #inicio .controles-carrusel .indicador {
   position: static;
 
@@ -417,18 +455,23 @@ body > header > a:hover {
   transform: none;
 }
 
+
 #inicio .controles-carrusel .indicador.activo {
   background-color: #f5c518;
   transform: scale(1.25);
 }
 
-/* SECCIÓN PROBLEMA */
+
+/* =========================================================
+   SECCIÓN PROBLEMA
+   ========================================================= */
 
 #problema {
   background-color: #f7f7f5;
   color: #202124;
   padding-block: 88px;
 }
+
 
 #problema .contenedor-problema {
   width: 100%;
@@ -440,9 +483,11 @@ body > header > a:hover {
   gap: 52px;
 }
 
+
 #problema .intro-problema {
   max-width: 520px;
 }
+
 
 #problema .etiqueta-problema {
   color: #6b7075;
@@ -458,14 +503,19 @@ body > header > a:hover {
   margin: 0 0 18px;
 }
 
+
 #problema .etiqueta-problema::before {
   content: "";
+
   width: 32px;
   height: 3px;
+
   background-color: #f5c518;
   border-radius: 3px;
+
   flex-shrink: 0;
 }
+
 
 #problema h2 {
   color: #202124;
@@ -478,6 +528,7 @@ body > header > a:hover {
   margin: 0 0 24px;
 }
 
+
 #problema .descripcion-problema {
   color: #6b7075;
   font-size: 18px;
@@ -485,10 +536,13 @@ body > header > a:hover {
   max-width: 460px;
   margin: 0;
 }
+
+
 #problema .lista-problemas {
   display: grid;
   gap: 18px;
 }
+
 
 #problema .item-problema {
   position: relative;
@@ -513,6 +567,7 @@ body > header > a:hover {
     background-color 0.2s;
 }
 
+
 #problema .item-problema:hover {
   transform: translateY(-4px);
 
@@ -521,6 +576,8 @@ body > header > a:hover {
 
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.14);
 }
+
+
 #problema .icono-problema {
   width: 44px;
   height: 44px;
@@ -543,6 +600,7 @@ body > header > a:hover {
     transform 0.2s;
 }
 
+
 #problema .icono-problema svg {
   width: 21px;
   height: 21px;
@@ -554,12 +612,15 @@ body > header > a:hover {
   stroke-linejoin: round;
 }
 
+
 #problema .item-problema:hover .icono-problema {
   color: #ddb012;
   border-color: #f5c518;
   background-color: rgba(245, 197, 24, 0.16);
   transform: scale(1.05);
 }
+
+
 #problema .contenido-problema h3 {
   color: #ffffff;
   font-size: 17px;
@@ -568,34 +629,47 @@ body > header > a:hover {
   margin: 2px 0 7px;
 }
 
+
 #problema .contenido-problema p {
-  color:  #b8bdc3;
+  color: #b8bdc3;
   font-size: 15px;
   line-height: 1.65;
   max-width: none;
   margin: 0;
 }
 
+
 @media (min-width: 900px) {
+
   #problema .contenedor-problema {
-    grid-template-columns: minmax(320px, 5fr) minmax(440px, 7fr);
+    grid-template-columns:
+      minmax(320px, 5fr)
+      minmax(440px, 7fr);
+
     gap: clamp(52px, 6vw, 82px);
+
     align-items: start;
   }
+
 }
+
+
 @media (max-width: 600px) {
 
   #problema {
     padding-block: 60px;
   }
 
+
   #problema .contenedor-problema {
     gap: 34px;
   }
 
+
   #problema h2 {
     font-size: clamp(30px, 8vw, 40px);
   }
+
 
   #problema .item-problema {
     grid-template-columns: 44px 1fr;
@@ -603,17 +677,23 @@ body > header > a:hover {
     padding: 20px 16px;
   }
 
+
   #problema .icono-problema {
     width: 40px;
     height: 40px;
   }
+
 
   #problema .item-problema:hover {
     transform: none;
   }
 
 }
-/* SECCIÓN NOSOTROS */
+
+
+/* =========================================================
+   SECCIÓN NOSOTROS
+   ========================================================= */
 
 #nosotros {
   background-color: #f7f7f5;
@@ -621,6 +701,7 @@ body > header > a:hover {
 
   padding: 60px 24px;
 }
+
 
 #nosotros .etiqueta-nosotros {
   color: #f5c518;
@@ -637,6 +718,7 @@ body > header > a:hover {
   max-width: none;
 }
 
+
 #nosotros .etiqueta-nosotros::before {
   content: "";
 
@@ -649,6 +731,7 @@ body > header > a:hover {
   flex-shrink: 0;
 }
 
+
 #nosotros h2 {
   font-size: clamp(28px, 4vw, 40px);
   line-height: 1.2;
@@ -656,11 +739,13 @@ body > header > a:hover {
   margin: 0 0 24px;
 }
 
+
 #nosotros h3 {
   font-size: 24px;
 
   margin: 32px 0 12px;
 }
+
 
 #nosotros p {
   color: #6b7075;
@@ -680,23 +765,29 @@ body > header > a:hover {
   margin-bottom: 32px;
 }
 
+
 #nosotros .intro-nosotros {
   width: 100%;
   max-width: 800px;
 }
 
+
 #nosotros .intro-nosotros .etiqueta-nosotros {
   margin-bottom: 12px;
 }
+
 
 #nosotros .intro-nosotros h2 {
   margin: 0 0 24px;
 }
 
+
 #nosotros .intro-nosotros > p:last-child {
   margin: 0;
   max-width: 700px;
 }
+
+
 /* Misión y visión */
 
 #nosotros .mision-vision {
@@ -707,6 +798,7 @@ body > header > a:hover {
 
   margin-top: 0;
 }
+
 
 #nosotros .tarjeta-mv {
   position: relative;
@@ -726,6 +818,7 @@ body > header > a:hover {
     box-shadow 0.2s;
 }
 
+
 #nosotros .tarjeta-mv::before {
   content: "";
 
@@ -742,6 +835,7 @@ body > header > a:hover {
   border-radius: 0 0 8px 8px;
 }
 
+
 #nosotros .tarjeta-mv:hover {
   border-color: #f5c518;
 
@@ -750,6 +844,7 @@ body > header > a:hover {
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.10);
 }
 
+
 #nosotros .tarjeta-mv h3 {
   margin: 0 0 12px;
 
@@ -757,6 +852,7 @@ body > header > a:hover {
 
   color: #202124;
 }
+
 
 #nosotros .tarjeta-mv p {
   margin: 0;
@@ -774,12 +870,14 @@ body > header > a:hover {
   color: #202124;
 }
 
+
 #nosotros .valores-grid {
   display: grid;
   grid-template-columns: 1fr;
 
   gap: 16px;
 }
+
 
 #nosotros .tarjeta-valor {
   position: relative;
@@ -799,6 +897,7 @@ body > header > a:hover {
     box-shadow 0.2s;
 }
 
+
 #nosotros .tarjeta-valor:hover {
   border-color: #f5c518;
 
@@ -806,6 +905,7 @@ body > header > a:hover {
 
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
 }
+
 
 #nosotros .tarjeta-valor h4 {
   margin: 0 0 8px;
@@ -815,12 +915,15 @@ body > header > a:hover {
   color: #202124;
 }
 
+
 #nosotros .tarjeta-valor p {
   margin: 0;
   max-width: none;
 
   font-size: 14px;
 }
+
+
 #nosotros .icono-valor {
   width: 46px;
   height: 46px;
@@ -837,6 +940,7 @@ body > header > a:hover {
   color: #f5c518;
 }
 
+
 #nosotros .icono-valor svg {
   width: 24px;
   height: 24px;
@@ -848,7 +952,10 @@ body > header > a:hover {
   stroke-linejoin: round;
 }
 
-/* CABECERA EN PANTALLAS PEQUEÑAS */
+
+/* =========================================================
+   CABECERA EN PANTALLAS PEQUEÑAS
+   ========================================================= */
 
 @media (max-width: 768px) {
 
@@ -856,26 +963,33 @@ body > header > a:hover {
     gap: 16px;
   }
 
+
   body > header > img {
     width: 80px;
   }
 
+
   body > header > h1 {
     font-size: 18px;
   }
+
 
   body > header > nav {
     width: 100%;
     margin-left: 0;
   }
 
+
   body > header nav ul {
     gap: 12px 16px;
   }
+
 }
 
 
-/* INICIO Y NOSOTROS EN PANTALLAS AMPLIAS */
+/* =========================================================
+   INICIO Y NOSOTROS EN PANTALLAS AMPLIAS
+   ========================================================= */
 
 @media (min-width: 900px) {
 
@@ -887,22 +1001,29 @@ body > header > a:hover {
     column-gap: 40px;
   }
 
+
   #inicio .contenido-inicio {
     grid-column: 1;
   }
+
 
   #inicio .carrusel-inicio {
     grid-column: 2;
   }
 
+
   #nosotros .mision-vision {
     grid-template-columns: repeat(2, 1fr);
   }
 
+
   #nosotros .valores-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+
 }
+
+
 @media (min-width: 1200px) {
 
   #nosotros .valores-grid {
@@ -911,17 +1032,23 @@ body > header > a:hover {
 
 }
 
-/* CARACTERÍSTICAS DEL INICIO EN PANTALLAS PEQUEÑAS */
+
+/* =========================================================
+   CARACTERÍSTICAS DEL INICIO EN PANTALLAS PEQUEÑAS
+   ========================================================= */
 
 @media (max-width: 600px) {
 
   #inicio .resumen-inicio {
     grid-template-columns: 1fr;
   }
+
 }
 
 
-/* TAMAÑO Y ANCHO ADAPTABLES DE LAS SECCIONES */
+/* =========================================================
+   TAMAÑO Y ANCHO ADAPTABLES DE LAS SECCIONES
+   ========================================================= */
 
 body > header,
 #inicio,
@@ -934,7 +1061,9 @@ body > header,
 }
 
 
-/* AJUSTES PROPORCIONALES PARA VENTANAS GRANDES */
+/* =========================================================
+   AJUSTES PROPORCIONALES PARA VENTANAS GRANDES
+   ========================================================= */
 
 @media (min-width: 1600px) {
 
@@ -946,17 +1075,21 @@ body > header,
     gap: 1.25em;
   }
 
+
   body > header > img {
     width: 7.2em;
   }
+
 
   body > header > h1 {
     font-size: 1.25em;
   }
 
+
   body > header nav ul {
     gap: 1.25em;
   }
+
 
   body > header > a {
     padding: 0.75em 1.25em;
@@ -978,33 +1111,40 @@ body > header,
     column-gap: 2.5em;
   }
 
+
   #inicio .contenido-inicio {
     gap: 1.25em;
   }
+
 
   #inicio h2 {
     font-size: 3em;
     max-width: none;
   }
 
+
   #inicio p {
     font-size: 1.125em;
     max-width: 34em;
   }
+
 
   #inicio .descripcion-inicio {
     font-size: 1.25em;
     max-width: 30em;
   }
 
+
   #inicio .etiqueta-inicio,
   #inicio .item-resumen {
     font-size: 0.875em;
   }
 
+
   #inicio .acciones-inicio {
     margin-top: 1.75em;
   }
+
 
   #inicio .resumen-inicio {
     margin-top: 2.125em;
@@ -1012,6 +1152,7 @@ body > header,
 
     gap: 1.125em;
   }
+
 
   #inicio .check-resumen {
     font-size: inherit;
@@ -1031,12 +1172,14 @@ body > header,
     height: 1.5em;
   }
 
+
   #pausar-carrusel {
     font-size: 1.125em;
 
     width: 2.25em;
     height: 2.25em;
   }
+
 
   #inicio .controles-carrusel .indicador {
     font-size: inherit;
@@ -1055,11 +1198,13 @@ body > header,
     max-width: 20em;
   }
 
+
   #problema p {
     font-size: 1.125em;
 
     max-width: 39em;
   }
+
 
   #nosotros p {
     font-size: 1em;
@@ -1067,81 +1212,102 @@ body > header,
     max-width: 50em;
   }
 
+
   #nosotros h3 {
     font-size: 1.5em;
   }
+
 
   #nosotros .tarjeta-mv {
     padding: 2em;
   }
 
+
   #nosotros .tarjeta-mv h3 {
     font-size: 1.375em;
   }
+
 
   #nosotros .titulo-valores {
     font-size: 1.25em;
   }
 
+
   #nosotros .tarjeta-valor {
     padding: 1.375em 1.125em;
   }
+
 
   #nosotros .tarjeta-valor h4 {
     font-size: 1em;
   }
 
+
   #nosotros .tarjeta-valor p {
     font-size: 0.875em;
   }
+
+
   /* Problema en pantallas grandes */
 
-#problema .contenedor-problema {
-  max-width: 75em;
-  gap: 4em;
+  #problema .contenedor-problema {
+    max-width: 75em;
+    gap: 4em;
+  }
+
+
+  #problema .intro-problema {
+    max-width: 32.5em;
+  }
+
+
+  #problema .descripcion-problema {
+    font-size: 1.125em;
+    max-width: 28.75em;
+  }
+
+
+  #problema .lista-problemas {
+    gap: 1.125em;
+  }
+
+
+  #problema .item-problema {
+    grid-template-columns: 3.25em 1fr;
+    gap: 1.125em;
+    padding: 1.5em 1.375em;
+    border-radius: 1.125em;
+  }
+
+
+  #problema .icono-problema {
+    width: 2.75em;
+    height: 2.75em;
+    border-radius: 0.75em;
+  }
+
+
+  #problema .icono-problema svg {
+    width: 1.3125em;
+    height: 1.3125em;
+  }
+
+
+  #problema .contenido-problema h3 {
+    font-size: 1.0625em;
+    margin: 0.125em 0 0.4375em;
+  }
+
+
+  #problema .contenido-problema p {
+    font-size: 0.9375em;
+    line-height: 1.65;
+  }
+
 }
 
-#problema .intro-problema {
-  max-width: 32.5em;
-}
 
-#problema .descripcion-problema {
-  font-size: 1.125em;
-  max-width: 28.75em;
-}
-
-#problema .lista-problemas {
-  gap: 1.125em;
-}
-
-#problema .item-problema {
-  grid-template-columns: 3.25em 1fr;
-  gap: 1.125em;
-  padding: 1.5em 1.375em;
-  border-radius: 1.125em;
-}
-
-#problema .icono-problema {
-  width: 2.75em;
-  height: 2.75em;
-  border-radius: 0.75em;
-}
-
-#problema .icono-problema svg {
-  width: 1.3125em;
-  height: 1.3125em;
-}
-
-#problema .contenido-problema h3 {
-  font-size: 1.0625em;
-  margin: 0.125em 0 0.4375em;
-}
-
-#problema .contenido-problema p {
-  font-size: 0.9375em;
-  line-height: 1.65;
-}
-}/* =========================================================
+/* =========================================================
    SERVICIOS
    ========================================================= */
 
@@ -1157,6 +1323,7 @@ body > header,
   gap: 20px;
 }
 
+
 #servicios > h2 {
   grid-column: 1 / -1;
 
@@ -1166,6 +1333,7 @@ body > header,
   font-size: clamp(30px, 4vw, 42px);
   line-height: 1.15;
 }
+
 
 #servicios > p {
   grid-column: 1 / -1;
@@ -1178,6 +1346,7 @@ body > header,
   font-size: 17px;
   line-height: 1.7;
 }
+
 
 #servicios > article {
   position: relative;
@@ -1195,6 +1364,7 @@ body > header,
     box-shadow 0.2s;
 }
 
+
 #servicios > article::before {
   content: "";
 
@@ -1211,6 +1381,7 @@ body > header,
   border-radius: 0 0 6px 6px;
 }
 
+
 #servicios > article:hover {
   transform: translateY(-4px);
 
@@ -1218,6 +1389,7 @@ body > header,
 
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
 }
+
 
 #servicios > article h3 {
   margin: 4px 0 10px;
@@ -1227,6 +1399,7 @@ body > header,
   font-size: 18px;
   line-height: 1.35;
 }
+
 
 #servicios > article p {
   margin: 0;
@@ -1239,6 +1412,203 @@ body > header,
 
 
 /* =========================================================
+   BENEFICIOS
+   ========================================================= */
+
+#beneficios {
+  background-color: #f7f7f5;
+  color: #202124;
+
+  padding-block: 80px;
+  padding-inline: max(24px, calc((100% - 90em) / 2));
+}
+
+
+/* Encabezado */
+
+#beneficios .encabezado-beneficios {
+  text-align: center;
+
+  max-width: 850px;
+
+  margin: 0 auto 42px;
+}
+
+
+/* Etiqueta BENEFICIOS */
+
+#beneficios .etiqueta-beneficios {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  margin: 0 0 18px;
+
+  color: #f5c518;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+
+#beneficios .etiqueta-beneficios::before {
+  content: "";
+
+  width: 28px;
+  height: 3px;
+
+  background-color: #f5c518;
+
+  border-radius: 3px;
+}
+
+
+/* Título */
+
+#beneficios h2 {
+  margin: 0 0 18px;
+
+  color: #202124;
+
+  font-size: clamp(32px, 4vw, 44px);
+
+  font-weight: 800;
+
+  line-height: 1.15;
+}
+
+
+#beneficios h2 span {
+  color: #f5c518;
+}
+
+
+/* Descripción */
+
+#beneficios .descripcion-beneficios {
+  max-width: 760px;
+
+  margin: 0 auto;
+
+  color: #6b7075;
+
+  font-size: 17px;
+
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   GRID DE BENEFICIOS
+   ========================================================= */
+
+#beneficios .beneficios-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+
+/* Tarjetas */
+
+#beneficios .tarjeta-beneficio {
+  position: relative;
+
+  min-height: 220px;
+
+  padding: 28px 22px;
+
+  background-color: #111315;
+
+  border: 1px solid #252829;
+
+  border-radius: 16px;
+
+  color: #ffffff;
+
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    border-color 0.2s;
+}
+
+
+/* Número */
+
+#beneficios .numero-beneficio {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 40px;
+
+  margin-bottom: 20px;
+
+  border: 1px solid rgba(245, 197, 24, 0.45);
+
+  border-radius: 10px;
+
+  background-color: rgba(245, 197, 24, 0.10);
+
+  color: #f5c518;
+
+  font-size: 14px;
+
+  font-weight: 700;
+}
+
+
+/* Título de tarjeta */
+
+#beneficios .tarjeta-beneficio h3 {
+  margin: 0 0 10px;
+
+  color: #ffffff;
+
+  font-size: 17px;
+
+  font-weight: 700;
+
+  line-height: 1.3;
+}
+
+
+/* Texto de tarjeta */
+
+#beneficios .tarjeta-beneficio p {
+  margin: 0;
+
+  color: #b8bdc3;
+
+  font-size: 15px;
+
+  line-height: 1.65;
+}
+
+
+/* Efecto hover */
+
+#beneficios .tarjeta-beneficio:hover {
+  transform: translateY(-4px);
+
+  border-color: #f5c518;
+
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.15);
+}
+
+
+/* =========================================================
    SERVICIOS EN CELULAR
    ========================================================= */
 
@@ -1246,8 +1616,10 @@ body > header,
 
   #servicios {
     grid-template-columns: 1fr;
+
     padding-block: 55px;
   }
+
 
   #servicios > article {
     padding: 24px;
@@ -1256,18 +1628,70 @@ body > header,
 }
 
 
+/* =========================================================
+   BENEFICIOS EN TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+  #beneficios .beneficios-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* =========================================================
+   BENEFICIOS EN CELULAR
+   ========================================================= */
+
 @media (max-width: 600px) {
 
   #servicios {
     padding-inline: 20px;
   }
 
+
   #servicios > h2 {
     font-size: 32px;
   }
 
+
   #servicios > p {
     font-size: 15px;
+  }
+
+
+  #beneficios {
+    padding-block: 60px;
+  }
+
+
+  #beneficios .encabezado-beneficios {
+    margin-bottom: 32px;
+  }
+
+
+  #beneficios h2 {
+    font-size: 32px;
+  }
+
+
+  #beneficios .descripcion-beneficios {
+    font-size: 15px;
+  }
+
+
+  #beneficios .beneficios-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  #beneficios .tarjeta-beneficio {
+    min-height: auto;
+
+    padding: 24px 20px;
   }
 
 }
