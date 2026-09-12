@@ -402,9 +402,18 @@ main {
    6. SECCIÓN MÓDULOS DEL SISTEMA
    ========================================================================== */
 .modulos-seccion {
-    background-color: #111216;
+    background-color: #f4f1eb;
     padding: 100px 10%;
-    border-top: 1px solid #222222;
+    border-top: 1px solid #dcd8ce;
+    color: #151519;
+}
+
+.modulos-seccion .proceso-encabezado p {
+    color: #e3262e;
+}
+
+.modulos-seccion .proceso-encabezado h2 {
+    color: #151519;
 }
 
 .selector-modulo-container {
@@ -423,9 +432,9 @@ main {
 }
 
 .selector-modulo-container select {
-    background-color: #1a1b20;
-    color: #ffffff;
-    border: 1px solid #33353a;
+    background-color: #ffffff;
+    color: #151519;
+    border: 1px solid #d4d0c5;
     padding: 12px 20px;
     font-size: 14px;
     outline: none;
@@ -440,18 +449,20 @@ main {
 }
 
 .tarjeta-modulo-detalle {
-    background-color: #1a1b20;
-    border: 1px solid #33353a;
+    background-color: #ffffff;
+    border: 1px solid #d4d0c5;
     padding: 30px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: transform 0.3s ease, border-color 0.3s ease, opacity 0.4s ease;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, opacity 0.4s ease;
 }
 
 .tarjeta-modulo-detalle.visible:hover {
     border-color: #e3262e;
     transform: translateY(-5px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
 }
 
 .modulo-card-header {
@@ -478,10 +489,11 @@ main {
     font-size: 24px;
     margin: 0 0 15px;
     text-transform: uppercase;
+    color: #151519;
 }
 
 .tarjeta-modulo-detalle p {
-    color: #c8c8c8;
+    color: #74777b;
     font-size: 14px;
     line-height: 1.6;
     margin: 0 0 25px;
@@ -494,9 +506,9 @@ main {
 }
 
 .modulo-tags span {
-    background-color: #202226;
-    border: 1px solid #33353a;
-    color: #9ba2ad;
+    background-color: #f4f1eb;
+    border: 1px solid #d4d0c5;
+    color: #74777b;
     font-family: "Courier New", monospace;
     font-size: 10px;
     padding: 5px 10px;
@@ -887,6 +899,21 @@ fieldset.visible {
         grid-template-columns: 1fr;
     }
 
+    .metricas-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px 15px;
+    }
+
+    .metrica-item:nth-child(2n+1) {
+        border-left: none;
+    }
+
+    .metrica-item:nth-child(n+3) {
+        border-left: none;
+        border-top: 1px solid #33353a;
+        padding-top: 25px;
+    }
+
     #contactoForm fieldset {
         grid-template-columns: 1fr;
     }
@@ -982,6 +1009,125 @@ fieldset.visible {
     color: #74777b;
     font-size: 13px;
     font-family: "Courier New", monospace;
+}
+
+/* SECCIÓN MÉTRICAS DE ÉXITO */
+.metricas-seccion {
+    background-color: #151519;
+    padding: 90px 11%;
+    text-align: center;
+    border-top: 4px solid #e3262e;
+    color: #f2f2f2;
+}
+
+.metricas-seccion .proceso-encabezado p {
+    color: #e3262e;
+}
+
+.metricas-seccion .proceso-encabezado h2 {
+    color: #f2f2f2;
+}
+
+.metricas-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    margin-top: 60px;
+
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.metricas-grid.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.metrica-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 25px 15px;
+    border-left: 1px solid #33353a;
+}
+
+.metrica-item:first-child {
+    border-left: none;
+}
+
+.metrica-item strong {
+    color: #e3262e;
+    font-family: "Arial Narrow", Arial, sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.metrica-item span {
+    color: #9ba2ad;
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+/* SECCIÓN MARCAS ALIADAS */
+.marcas-seccion {
+    background-color: #f4f1eb;
+    padding: 80px 11%;
+    text-align: center;
+    border-top: 1px solid #dcd8ce;
+    color: #151519;
+}
+
+.marcas-seccion .proceso-encabezado p {
+    color: #e3262e;
+}
+
+.marcas-seccion .proceso-encabezado h2 {
+    color: #151519;
+}
+
+.marcas-grid {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    margin-top: 55px;
+
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.marcas-grid.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.marca-logo {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.marca-logo img {
+    max-width: 130px;
+    max-height: 60px;
+    width: auto;
+    height: auto;
+    filter: grayscale(100%);
+    opacity: 0.6;
+    transition: filter 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+}
+
+.marca-logo img:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+    transform: translateY(-3px);
 }
 
 /* SECCIÓN SOBRE NOSOTROS*/
