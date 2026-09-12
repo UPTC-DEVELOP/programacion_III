@@ -1,48 +1,260 @@
-
-/* Variables de Diseño (Design Tokens) */
+/* =========================================
+   1. Variables de Diseño (Design Tokens)
+   ========================================= */
 :root {
-  --color-primary: #0056b3;
-  --color-dark: #0f172a;
-  --color-light: #f8fafc;
-  --font-main: 'Inter', system-ui, sans-serif;
+    --bg-dark: #070B19;       /* Fondo principal oscuro */
+    --bg-card: #0F172A;       /* Fondo de las tarjetas */
+    --primary-blue: #2563EB;  /* Azul corporativo LJA */
+    --text-main: #F8FAFC;     /* Texto blanco/gris claro */
+    --text-muted: #94A3B8;    /* Texto secundario */
+    --border-color: #1E293B;  /* Bordes sutiles */
+    --font-main: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-/* Reset Profesional */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* =========================================
+   2. Reset Profesional
+   ========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
-  font-family: var(--font-main);
-  color: var(--color-dark);
-  background-color: var(--color-light);
+    font-family: var(--font-main);
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    line-height: 1.6;
 }
 
-/* Navegación y Layouts con Flexbox */
-header, nav ul {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
 }
 
-/* Grid Auto-Responsivo para los Servicios */
-.servicios01 { /* Referencia al div que agrupa los <article> en el HTML */
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-  padding: 3rem 1rem;
+ul {
+    list-style: none;
 }
 
-/* Tarjetas (Cards) UI/UX */
+/* =========================================
+   3. Navegación (Header)
+   ========================================= */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 5%;
+    background-color: rgba(7, 11, 25, 0.95);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+nav ul {
+    display: flex;
+    gap: 2.5rem;
+}
+
+nav a:hover {
+    color: var(--primary-blue);
+}
+
+header > a {
+    background-color: var(--primary-blue);
+    padding: 0.6rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+header > a:hover {
+    background-color: #1d4ed8;
+}
+
+/* =========================================
+   4. Hero Section (Bloque 1)
+   ========================================= */
+#bloque_1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 6rem 5% 4rem;
+}
+
+#bloque_1 span:first-child {
+    color: var(--primary-blue);
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+#bloque_1 h1 {
+    font-size: 3.5rem;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+}
+
+#bloque_1 h1 span {
+    color: var(--primary-blue);
+}
+
+#bloque_1 p {
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    margin-bottom: 2.5rem;
+}
+
+#bloque_1 div:first-of-type {
+    display: flex;
+    gap: 1rem;
+}
+
+#bloque_1 div:first-of-type a {
+    padding: 0.8rem 2rem;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+#bloque_1 div:first-of-type a:first-child {
+    background-color: var(--primary-blue);
+}
+
+#bloque_1 div:first-of-type a:not(:first-child) {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+}
+
+/* =========================================
+   5. Módulo de Servicios (Grid)
+   ========================================= */
+#Servicios {
+    padding: 5rem 5%;
+    text-align: center;
+}
+
+#Servicios > span {
+    color: var(--primary-blue);
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+#Servicios > h2 {
+    font-size: 2.5rem;
+    margin: 1rem 0;
+}
+
+#Servicios > p {
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 3rem;
+}
+
+.servicios01 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    text-align: left;
+}
+
 .servicios01 article {
-  background: white;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-  border: 1px solid #e2e8f0;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
 .servicios01 article:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+    transform: translateY(-5px);
+    border-color: var(--primary-blue);
+}
+
+.servicios01 article h3 {
+    margin: 1rem 0;
+    font-size: 1.25rem;
+}
+
+.servicios01 article p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+
+.servicios01 article a {
+    color: var(--primary-blue);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* =========================================
+   6. Formulario y Contacto
+   ========================================= */
+#contacto {
+    background-color: var(--bg-card);
+    padding: 4rem 5%;
+    margin: 4rem 5%;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+}
+
+form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+form div:last-of-type, form button {
+    grid-column: 1 / -1;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-main);
+    margin-top: 0.5rem;
+}
+
+button[type="submit"] {
+    background-color: var(--primary-blue);
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #1d4ed8;
+}
+
+/* =========================================
+   7. Footer
+   ========================================= */
+footer {
+    padding: 4rem 5% 2rem;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+footer h3 {
+    color: var(--text-main);
+    margin-bottom: 1.5rem;
+}
+
+footer li {
+    color: var(--text-muted);
+    margin-bottom: 0.8rem;
 }
