@@ -366,7 +366,7 @@ body > header > a:hover {
 }
 
 #inicio .controles-carrusel button:hover {
-  background-color: #f5c518;
+  background-color: #6b7075;
 }
 
 #foto-anterior:hover,
@@ -422,9 +422,7 @@ body > header > a:hover {
   transform: scale(1.25);
 }
 
-/* ============================= */
 /* SECCIÓN PROBLEMA */
-/* ============================= */
 
 #problema {
   background-color: #f7f7f5;
@@ -447,7 +445,7 @@ body > header > a:hover {
 }
 
 #problema .etiqueta-problema {
-  color: #f5c518;
+  color: #6b7075;
   font-size: 14px;
   font-weight: 800;
   text-transform: uppercase;
