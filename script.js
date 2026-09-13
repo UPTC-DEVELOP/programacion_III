@@ -1,19 +1,5 @@
 const navToggle = document.getElementById('navToggle');
 const nav = document.getElementById('nav');
-<<<<<<< HEAD
-document.addEventListener("DOMContentLoaded", () => {
-    const botones = document.querySelectorAll(".btn--primary, button");
-
-    botones.forEach(boton => {
-        boton.addEventListener("click", function(e) {
-            // Efecto visual rápido de escala al hacer clic
-            this.style.transform = "scale(0.95)";
-            setTimeout(() => {
-                this.style.transform = "translateY(-4px) scale(1.02)";
-            }, 150);
-        });
-    });
-=======
 document.addEventListener('DOMContentLoaded', function() {
 
     
@@ -57,5 +43,4 @@ document.addEventListener('DOMContentLoaded', function() {
         tarjetas.forEach(tarjeta => observador.observe(tarjeta));
     }
 
->>>>>>> 2ea060b30e6ea4d7ec682614d0e38b041f419de0
 });
