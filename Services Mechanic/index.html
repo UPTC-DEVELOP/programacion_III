@@ -751,87 +751,103 @@
 </section>
 
     <section id="solicitud-servicio" aria-labelledby="titulo-solicitud-servicio">
-      <h2 id="titulo-solicitud-servicio">Solicita información sobre nuestro software</h2>
+      <div class="contenedor-solicitud">
 
-<form id="form-solicitud" action="#" method="post" novalidate
-  data-form-type="solicitud-informacion" data-business-area="software-talleres">
+  <div class="contenido-solicitud">
+    <p class="etiqueta-solicitud">Empieza hoy</p>
 
-  <p>
-    <label for="nombre">Nombre de contacto</label>
-    <input id="nombre" name="nombre" type="text" required minlength="3" maxlength="80"
-      data-field-purpose="identificacion-cliente" />
-    <span class="mensaje-error" id="error-nombre" aria-live="polite"></span>
-  </p>
+    <h2 id="titulo-solicitud-servicio">
+      Lleva la gestión de tu taller al <span>siguiente nivel</span>
+    </h2>
 
-  <p>
-    <label for="taller">Nombre del taller</label>
-    <input id="taller" name="taller" type="text" required minlength="3" maxlength="100"
-      data-field-purpose="identificacion-taller" />
-    <span class="mensaje-error" id="error-taller" aria-live="polite"></span>
-  </p>
+    <p class="descripcion-solicitud">
+      Solicita información y conoce cómo Services Mechanic puede ayudarte
+      a organizar mejor la operación de tu taller.
+    </p>
 
-  <p>
-    <label for="correo">Correo</label>
-    <input id="correo" name="correo" type="email" required data-field-purpose="contacto-cliente" />
-    <span class="mensaje-error" id="error-correo" aria-live="polite"></span>
-  </p>
+    <ul class="checklist-solicitud">
+      <li><span class="check-solicitud" aria-hidden="true">✓</span> Respuesta personalizada</li>
+      <li><span class="check-solicitud" aria-hidden="true">✓</span> Sin compromisos</li>
+      <li><span class="check-solicitud" aria-hidden="true">✓</span> Orientado a tus necesidades</li>
+    </ul>
 
-  <p>
-    <label for="telefono">Teléfono</label>
-    <input id="telefono" name="telefono" type="tel" required pattern="[0-9+() -]{7,20}"
-      data-field-purpose="contacto-telefonico" />
-    <span class="mensaje-error" id="error-telefono" aria-live="polite"></span>
-  </p>
 
-  <p>
-    <label for="num-empleados">Número de empleados del taller</label>
-    <input id="num-empleados" name="num-empleados" type="number" min="1" max="500"
-      data-field-purpose="tamano-taller" />
-    <span class="mensaje-error" id="error-num-empleados" aria-live="polite"></span>
-  </p>
+    <div class="burbujas-solicitud" aria-hidden="true">
+      <span class="burbuja burbuja-1"></span>
+      <span class="burbuja burbuja-2"></span>
+      <span class="burbuja burbuja-3"></span>
+      <span class="burbuja burbuja-4"></span>
+    </div>
+  </div>
+  </div>
 
-  <p>
-    <label for="plan-interes">Plan de interés</label>
-    <select id="plan-interes" name="plan-interes" required data-field-purpose="clasificacion-lead">
-      <option value="">Seleccione una opción</option>
-      <option value="basico" data-service-category="plan-basico">Plan Básico</option>
-      <option value="profesional" data-service-category="plan-profesional">Plan Profesional</option>
-      <option value="info" data-service-category="solo-informacion">Solo quiero más información</option>
-    </select>
-    <span class="mensaje-error" id="error-plan-interes" aria-live="polite"></span>
-  </p>
+  <form id="form-solicitud" action="#" method="post" novalidate
+    data-form-type="solicitud-informacion" data-business-area="software-talleres">
 
-  <p>
-    <label for="mensaje">Mensaje</label>
-    <textarea id="mensaje" name="mensaje" required minlength="10" maxlength="500"
-      data-field-purpose="detalle-solicitud"></textarea>
-    <span class="mensaje-error" id="error-mensaje" aria-live="polite"></span>
-  </p>
+    <p>
+      <label for="nombre">Nombre de contacto</label>
+      <input id="nombre" name="nombre" type="text" required minlength="3" maxlength="80"
+        data-field-purpose="identificacion-cliente" />
+      <span class="mensaje-error" id="error-nombre" aria-live="polite"></span>
+    </p>
 
-  <p>
-    <button type="submit" data-action="enviar-solicitud">
-      Solicitar información
-    </button>
-  </p>
+    <p>
+      <label for="taller">Nombre del taller</label>
+      <input id="taller" name="taller" type="text" required minlength="3" maxlength="100"
+        data-field-purpose="identificacion-taller" />
+      <span class="mensaje-error" id="error-taller" aria-live="polite"></span>
+    </p>
+
+    <p>
+      <label for="correo">Correo</label>
+      <input id="correo" name="correo" type="email" required data-field-purpose="contacto-cliente" />
+      <span class="mensaje-error" id="error-correo" aria-live="polite"></span>
+    </p>
+
+    <p>
+      <label for="telefono">Teléfono</label>
+      <input id="telefono" name="telefono" type="tel" required pattern="[0-9+() -]{7,20}"
+        data-field-purpose="contacto-telefonico" />
+      <span class="mensaje-error" id="error-telefono" aria-live="polite"></span>
+    </p>
+
+    <p>
+      <label for="num-empleados">Número de empleados del taller</label>
+      <input id="num-empleados" name="num-empleados" type="number" min="1" max="500"
+        data-field-purpose="tamano-taller" />
+      <span class="mensaje-error" id="error-num-empleados" aria-live="polite"></span>
+    </p>
+
+    <p>
+      <label for="plan-interes">Plan de interés</label>
+      <select id="plan-interes" name="plan-interes" required data-field-purpose="clasificacion-lead">
+        <option value="">Seleccione una opción</option>
+        <option value="basico" data-service-category="plan-basico">Plan Básico</option>
+        <option value="profesional" data-service-category="plan-profesional">Plan Profesional</option>
+        <option value="info" data-service-category="solo-informacion">Solo quiero más información</option>
+      </select>
+      <span class="mensaje-error" id="error-plan-interes" aria-live="polite"></span>
+    </p>
+
+    <p>
+      <label for="mensaje">Mensaje</label>
+      <textarea id="mensaje" name="mensaje" required minlength="10" maxlength="500"
+        data-field-purpose="detalle-solicitud"></textarea>
+      <span class="mensaje-error" id="error-mensaje" aria-live="polite"></span>
+    </p>
+
+    <p>
+      <button type="submit" data-action="enviar-solicitud">
+        Solicitar información
+      </button>
+    </p>
+  </form>
+
+</div>
 </form>
     </section>
 
-    <aside aria-labelledby="titulo-informacion-complementaria">
-      <h2 id="titulo-informacion-complementaria">
-        Información complementaria
-      </h2>
-
-      <p>
-        Para aprovechar mejor Services Mechanic, el taller debe mantener
-        actualizados los datos de clientes, vehículos, repuestos y servicios
-        realizados.
-      </p>
-
-  <p>
-    Al enviar tu solicitud de servicio, un asesor se pondrá en contacto
-    contigo en menos de 24 horas hábiles para confirmar la cita.
-  </p>
-    </aside>
+    
 
     <p id="estado-sistema" role="status" aria-live="polite"></p>
   </main>

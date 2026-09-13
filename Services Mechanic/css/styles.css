@@ -1857,36 +1857,112 @@ body > header,
 }
 
 
-/*SOLICITUD DE SERVICIO (FORMULARIO)*/
+/* SOLICITUD DE SERVICIO (FORMULARIO) */
+
 
 #solicitud-servicio {
-  background-color: #f7f7f5;
-  color: #202124;
+  background-color: #111315;
+  color: #ffffff;
   padding-block: 80px;
   padding-inline: max(24px, calc((100% - 90em) / 2));
 }
 
-#solicitud-servicio h2 {
-  font-size: clamp(30px, 4vw, 40px);
-  margin: 0 0 32px;
-  color: #202124;
+#solicitud-servicio .contenedor-solicitud {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 40px;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
+/* --- Columna izquierda: texto --- */
+
+#solicitud-servicio .etiqueta-solicitud {
+  color: #f5c518;
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 18px;
+}
+
+#solicitud-servicio .etiqueta-solicitud::before {
+  content: "";
+  width: 28px;
+  height: 3px;
+  background-color: #f5c518;
+  border-radius: 3px;
+}
+
+#solicitud-servicio h2 {
+  font-size: clamp(30px, 4vw, 44px);
+  line-height: 1.15;
+  margin: 0 0 20px;
+  color: #ffffff;
+}
+
+#solicitud-servicio h2 span {
+  color: #f5c518;
+}
+
+#solicitud-servicio .descripcion-solicitud {
+  color: #b8bdc3;
+  font-size: 17px;
+  line-height: 1.7;
+  max-width: 480px;
+  margin: 0 0 28px;
+}
+
+#solicitud-servicio .checklist-solicitud {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+#solicitud-servicio .checklist-solicitud li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #f7f7f5;
+  font-size: 15px;
+}
+
+#solicitud-servicio .check-solicitud {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgba(245, 197, 24, 0.15);
+  color: #f5c518;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+/* --- Columna derecha: formulario --- */
+
 #solicitud-servicio form {
-  max-width: 720px;
-  margin: 0 auto;
-  background-color: #ffffff;
-  border: 1px solid #e4e5e6;
+  background-color: #1b1e20;
+  border: 1px solid #252829;
   border-radius: 18px;
   padding: 36px;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 4px 24px;
+  gap: 4px 20px;
 }
 
 #solicitud-servicio form p {
-  margin: 0 0 18px;
+  margin: 0 0 16px;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -1899,9 +1975,9 @@ body > header,
 }
 
 #solicitud-servicio label {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
-  color: #202124;
+  color: #b8bdc3;
 }
 
 #solicitud-servicio input,
@@ -1910,16 +1986,16 @@ body > header,
   font-family: inherit;
   font-size: 15px;
   padding: 12px 14px;
-  border: 1px solid #d7d9db;
+  border: 1px solid #303336;
   border-radius: 10px;
-  background-color: #f7f7f5;
-  color: #202124;
+  background-color: #0c0e0f;
+  color: #ffffff;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 #solicitud-servicio textarea {
   resize: vertical;
-  min-height: 100px;
+  min-height: 90px;
 }
 
 #solicitud-servicio input:focus,
@@ -1932,25 +2008,25 @@ body > header,
 
 /* Estado inválido, aplicado por JS */
 #solicitud-servicio .campo-invalido {
-  border-color: #d64545;
-  box-shadow: 0 0 0 3px rgba(214, 69, 69, 0.15);
+  border-color: #e05a5a;
+  box-shadow: 0 0 0 3px rgba(224, 90, 90, 0.2);
 }
 
 #solicitud-servicio .mensaje-error {
   min-height: 16px;
   font-size: 13px;
-  color: #d64545;
+  color: #ff8080;
 }
 
 #solicitud-servicio button[type="submit"] {
-  justify-self: start;
+  width: 100%;
   background-color: #f5c518;
   color: #111315;
   font-weight: 700;
   font-size: 15px;
   border: none;
   border-radius: 10px;
-  padding: 14px 28px;
+  padding: 16px 28px;
   cursor: pointer;
   transition: background-color 0.2s, transform 0.2s;
 }
@@ -1962,8 +2038,8 @@ body > header,
 
 /* Mensaje de estado (confirmación / error general) */
 #estado-sistema {
-  max-width: 720px;
-  margin: 20px auto 0;
+  max-width: 1200px;
+  margin: 24px auto 0;
   padding: 0;
   text-align: center;
   font-weight: 700;
@@ -1976,34 +2052,39 @@ body > header,
 }
 
 #estado-sistema.exito {
-  background-color: rgba(58, 168, 87, 0.12);
-  color: #2f7d47;
-  border: 1px solid rgba(58, 168, 87, 0.35);
+  background-color: rgba(58, 168, 87, 0.18);
+  color: #6fcf8c;
+  border: 1px solid rgba(58, 168, 87, 0.4);
 }
 
 #estado-sistema.error {
-  background-color: rgba(214, 69, 69, 0.12);
-  color: #b23a3a;
-  border: 1px solid rgba(214, 69, 69, 0.35);
+  background-color: rgba(224, 90, 90, 0.18);
+  color: #ff9b9b;
+  border: 1px solid rgba(224, 90, 90, 0.4);
 }
 
-/* Responsivo del formulario */
-@media (max-width: 900px) {
-  #solicitud-servicio form {
-    grid-template-columns: 1fr;
-  }
-  #solicitud-servicio form p:has(textarea),
-  #solicitud-servicio form p:last-child {
-    grid-column: auto;
+/* --- Pantallas grandes: dos columnas lado a lado --- */
+
+@media (min-width: 900px) {
+  #solicitud-servicio .contenedor-solicitud {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 60px;
   }
 }
+
+/* --- Responsivo --- */
 
 @media (max-width: 600px) {
   #solicitud-servicio {
     padding-block: 55px;
   }
   #solicitud-servicio form {
+    grid-template-columns: 1fr;
     padding: 24px;
+  }
+  #solicitud-servicio form p:has(textarea),
+  #solicitud-servicio form p:last-child {
+    grid-column: auto;
   }
 }
 /*ASIDE - INFORMACIÓN COMPLEMENTARIA*/
