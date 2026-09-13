@@ -175,54 +175,96 @@
         </section>
 
         <section id="contacto">
-            <h3>Envíanos un mensaje sobre el servicio que deseas</h3>
-            
-            <form action="#" method="POST">
-                <div>
-                    <label for="nombre">Nombre</label>
-                    <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
-                </div>
+    <!-- COLUMNA IZQUIERDA: INFORMACIÓN -->
+    <div class="contacto-info">
+        <span class="contacto-tag">CONTACTO</span>
+        <h2>Agenda tu cita o consúltanos</h2>
+        <p>Estamos disponibles para atender tus consultas. Contáctanos y con gusto te asesoramos sobre el estado de tu vehículo.</p>
 
+        <ul class="contacto-lista">
+            <li>
+               
                 <div>
-                    <label for="telefono">Teléfono</label>
-                    <input type="tel" id="telefono" name="telefono" placeholder="+57 300..." required>
+                    <strong>DIRECCIÓN</strong>
+                    <p>Calle 15 # 8-42, Zona Industrial, Bogotá D.C.</p>
                 </div>
-
+            </li>
+            <li>
+               
                 <div>
-                    <label for="email">Correo electrónico</label>
-                    <input type="email" id="email" name="email" placeholder="tu@correo.com" required>
+                    <strong>TELÉFONO</strong>
+                    <p>+57 (601) 234-5678 | +57 300 000 0000</p>
                 </div>
-
+            </li>
+            <li>
+              
                 <div>
-                    <label for="servicio">Tipo de servicio</label>
-                    <select id="servicio" name="servicio">
-                        <option value="" disabled selected>Selecciona un servicio</option>
-                        <option value="cambio-aceite">Cambio de Aceite y Filtros</option>
-                        <option value="alineacion">Alineación y Balanceo</option>
-                        <option value="frenos">Revisión de Frenos</option>
-                        <option value="electrico">Sistema Eléctrico</option>
-                        <option value="aire_acondicionado">Aire Acondicionado</option>
-                        <option value="motor">Motor y Transmisión</option>
-                        <option value="diagnosticoElec">Diagnóstico Electrónico</option>
-                        <option value="suspension">Suspensión y Dirección</option>
-                        <option value="otro">Otro</option>
-                    </select>
+                    <strong>CORREO</strong>
+                    <p>contacto@lja-taller.com</p>
                 </div>
-
+            </li>
+            <li>
+                
                 <div>
-                    <label for="mensaje">Mensaje</label>
-                    <textarea id="mensaje" name="mensaje" rows="4" placeholder="Cuéntanos sobre tu vehículo y el problema que presenta..."></textarea>
+                    <strong>HORARIO</strong>
+                    <p>Lun - Sáb: 7:00 AM - 6:00 PM</p>
                 </div>
+            </li>
+        </ul>
+    </div>
 
-                <button type="submit">Enviar mensaje</button>
-            </form>
-        </section>
+    <!-- COLUMNA DERECHA: TARJETA DEL FORMULARIO -->
+    <div class="contacto-card">
+        <h3>Envíanos un mensaje</h3>
+        
+        <form action="#" method="POST">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+            </div>
+
+            <div class="form-group">
+                <label for="telefono">Teléfono</label>
+                <input type="tel" id="telefono" name="telefono" placeholder="+57 30000000" required>
+            </div>
+
+            <div class="form-group full-width">
+                <label for="email">Correo electrónico</label>
+                <input type="email" id="email" name="email" placeholder="tu@correo.com" required>
+            </div>
+
+            <div class="form-group full-width">
+                <label for="servicio">Tipo de servicio</label>
+                <select id="servicio" name="servicio">
+                    <option value="" disabled selected>Selecciona un servicio...</option>
+                    <option value="cambio-aceite">Cambio de Aceite y Filtros</option>
+                    <option value="alineacion">Alineación y Balanceo</option>
+                    <option value="frenos">Revisión de Frenos</option>
+                    <option value="electrico">Sistema Eléctrico</option>
+                    <option value="aire_acondicionado">Aire Acondicionado</option>
+                    <option value="motor">Motor y Transmisión</option>
+                    <option value="diagnosticoElec">Diagnóstico Electrónico</option>
+                    <option value="suspension">Suspensión y Dirección</option>
+                    <option value="otro">Otro</option>
+                </select>
+            </div>
+
+            <div class="form-group full-width">
+                <label for="mensaje">Mensaje</label>
+                <textarea id="mensaje" name="mensaje" rows="4" placeholder="Cuéntanos sobre tu vehículo y el problema que presenta..."></textarea>
+            </div>
+
+            <button type="submit" class="full-width">Enviar mensaje</button>
+        </form>
+    </div>
+</section>
     </main>
 
     <footer>
         <div>
             <img src="Css/IMG/LOGO.png" alt="logo de la empresa" width="100" height="100">
             <p>Tu taller de confianza con más de 10 años de experiencia en mecánica automotriz. Calidad, precisión y garantía en cada trabajo.</p>
+          <p>© 2024 LJA Taller Mecánico.</p>
         </div>
 
         <div>
@@ -248,10 +290,7 @@
 
         <hr>
         
-        <div>
-            <p>© 2024 LJA Taller Mecánico.</p>
-            <a href="#">Acceder al sistema →</a>
-        </div>
+        
     </footer>
 
     <script src="js/main.js" defer></script>

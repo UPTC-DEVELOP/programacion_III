@@ -229,70 +229,210 @@ header .Acces:hover {
 /* =========================================
    6. Formulario y Contacto
    ========================================= */
+
 #contacto {
-    background-color: var(--bg-card);
-    padding: 4rem 5%;
-    margin: 4rem 5%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    max-width: 1200px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+    align-items: center;
+}
+
+/* Información de contacto */
+.contacto-tag {
+    color: #3b82f6;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.contacto-info h2 {
+    margin: 0.5rem 0 1rem;
+    color: #fff;
+    font-size: 2.2rem;
+}
+
+.contacto-info p {
+    color: #94a3b8;
+    line-height: 1.6;
+}
+
+.contacto-lista {
+    list-style: none;
+    padding: 0;
+    margin-top: 2rem;
+}
+
+.contacto-lista li {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.icon-box {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1e293b;
+    border-radius: 10px;
+    font-size: 1.2rem;
+}
+
+.contacto-lista strong {
+    display: block;
+    color: #64748b;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+
+.contacto-lista p {
+    margin: 0.2rem 0 0;
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Formulario */
+.contacto-card {
+    padding: 2.5rem;
+    background: #0b1329;
+    border: 1px solid #1e293b;
     border-radius: 16px;
-    border: 1px solid var(--border-color);
+}
+
+.contacto-card h3 {
+    margin: 0 0 1.5rem;
+    color: #fff;
+    font-size: 1.3rem;
 }
 
 form {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-top: 2rem;
+    gap: 1.25rem;
 }
 
-form div:last-of-type, form button {
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.full-width {
     grid-column: 1 / -1;
 }
 
-input, select, textarea {
+label {
+    margin-bottom: 0.4rem;
+    color: #94a3b8;
+    font-size: 0.85rem;
+}
+
+input,
+select,
+textarea {
     width: 100%;
-    padding: 0.8rem;
-    background-color: var(--bg-dark);
-    border: 1px solid var(--border-color);
+    box-sizing: border-box;
+    padding: 0.75rem 0.9rem;
+    background: #030712;
+    border: 1px solid #1e293b;
     border-radius: 6px;
-    color: var(--text-main);
-    margin-top: 0.5rem;
+    color: #fff;
+    font-size: 0.95rem;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
 }
 
 button[type="submit"] {
-    background-color: var(--primary-blue);
-    color: white;
+    margin-top: 0.5rem;
+    padding: 0.9rem;
+    background: #2563eb;
+    color: #fff;
     border: none;
-    padding: 1rem;
     border-radius: 6px;
-    font-weight: bold;
+    font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
     transition: background 0.3s ease;
 }
 
 button[type="submit"]:hover {
-    background-color: #1d4ed8;
+    background: #1d4ed8;
 }
+
+/* Responsive */
+@media (max-width: 900px) {
+    #contacto {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+}
+
+@media (max-width: 500px) {
+    form {
+        grid-template-columns: 1fr;
+    }
+}
+
 
 /* =========================================
    7. Footer
    ========================================= */
 footer {
-    padding: 4rem 5% 2rem;
+    padding: 1.5rem 5%;
     border-top: 1px solid var(--border-color);
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
     gap: 2rem;
 }
 
+footer img {
+    width: 70px;
+    height: 70px;
+}
+
 footer h3 {
     color: var(--text-main);
-    margin-bottom: 1.5rem;
+    margin: 0 0 0.7rem;
+}
+
+footer p,
+footer li {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 footer li {
-    color: var(--text-muted);
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.4rem;
+}
+
+footer hr {
+    display: none;
+}
+
+footer a {
+    color: var(--text-main);
+    text-decoration: none;
+    font-size: 0.85rem;
 }
 /* =========================================
    8. Informacion de la empresa
@@ -313,7 +453,7 @@ footer li {
   flex: 1;
   display: flex;
   justify-content: center;
-  position: relative; /* Para posicionar la insignia flotante "10+ años" si la agregas */
+  position: relative;
 }
 
 .imagen_nosotros img {
@@ -347,14 +487,14 @@ footer li {
   line-height: 1.5;
 }
 
-/* --- Reorganización de las tarjetas en Grid 2x2 --- */
+
 .informacion ul {
   list-style: none;
   padding: 0;
   margin: 0;
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Crea 2 columnas iguales */
-  gap: 1.2rem; /* Espaciado entre tarjetas */
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 1.2rem; 
 }
 
 .informacion li {
