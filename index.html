@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Taller Mecánico - AutoFix</title>
+    <title>Taller Mecánico - Olimac Riders Store</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -23,7 +23,7 @@
 
     <header>
         <div class="logo">
-            <h1>AutoFix</h1>
+            <h1>Olimac Riders Store</h1>
         </div>
 
         <nav>
@@ -44,21 +44,84 @@
     <main>
         
         <section id="servicios">
-            <!-- Aquí van los módulos -->
+            <div class="servicio-card">
+                <h2>👥 Gestión de clientes</h2>
+                <p>Registra y consulta los datos de los clientes del taller.</p>
+            </div>
+            <div class="servicio-card">
+                <h2>⚙️ Repuestos</h2>
+                <p>Registra referencias, descripción, marca y precio de los repuestos utilizados.</p>
+            </div>
+            <div class="servicio-card">
+                <h2>👷 Empleados</h2>
+                <p>Gestiona los empleados encargados de realizar los servicios.</p>
+            </div>
+            <div class="servicio-card">
+                <h2>🔧 Servicios</h2>
+                <p>Registra cada servicio y asigna un empleado disponible.</p>
+            </div>
+            <div class="servicio-card">
+                <h2>🚗 Gestión de vehículos</h2>
+                <p>Administra la información de los vehículos asociados a cada cliente.</p>
+            </div>
+            <div class="servicio-card">
+                <h2>📄 Facturación</h2>
+                <p>Genera facturas considerando repuestos, horas trabajadas, utilidad e IVA del 19 %.</p>
+            </div>
         </section>
 
-        <section id="nosotros">
-            <!-- Aquí va la información -->
+        <section id="nosotros" class="galeria-imagenes">
+            <div class="imagen-contenedor">
+                <img src="img/image.png" alt="Mecánico reparando motor">
+            </div>
+            <div class="imagen-contenedor">
+                <img src="img/Foto 2.jpg" alt="Mecánico trabajando en motocicleta">
+            </div>
         </section>
 
         <section id="contacto">
-            <!-- Aquí va el formulario -->
+            <div class="contacto-container">
+                <aside class="contacto-info">
+                    <h2>¿Tienes preguntas o necesitas asesoría?</h2>
+                    <p>Estamos listos para ayudarte.</p>
+                    <div class="info-detalles">
+                        <p><strong>Dirección:</strong> Tunja, Colombia. Calle -- #--</p>
+                        <p><strong>Teléfono:</strong> 3024555555</p>
+                        <p><strong>Horario:</strong> Lunes a Sábado de 8:00 a.m. a 6:00 p.m.</p>
+                        <p><strong>Email:</strong> tallermecanico@gmail.com</p>
+                    </div>
+                </aside>
+            
+                <form id="form-contacto" class="formulario">
+                    <div class="form-group">
+                        <label for="nombreTaller">Nombre del taller</label>
+                        <input type="text" id="nombreTaller" name="nombreTaller" placeholder="Ej. Riders Store">
+                    </div>
+                    <div class="form-group">
+                        <label for="propietario">Propietario</label>
+                        <input type="text" id="propietario" name="propietario" placeholder="Nombre completo">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="correo@ejemplo.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Número celular</label>
+                        <input type="tel" id="telefono" name="telefono" placeholder="Ej. 3001234567">
+                    </div>
+                    
+                    <button type="submit" class="btn-submit">Enviar</button>
+                    
+                
+                    <div id="mensaje-respuesta" class="mensaje-oculto"></div>
+                </form>
+            </div>
         </section>
 
     </main>
 
     <footer>
-        <p>© 2026 AutoFix - UPTC</p>
+        <p>© 2026 Olimac Riders Store - UPTC</p>
     </footer>
 
     <script src="script.js"></script>
