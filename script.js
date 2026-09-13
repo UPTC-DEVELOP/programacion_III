@@ -2,6 +2,11 @@ const navToggle = document.getElementById('navToggle');
 const nav = document.getElementById('nav');
 document.addEventListener('DOMContentLoaded', function() {
 
+    const visualHero = document.querySelector('.hero__visual');
+if (visualHero) {
+    visualHero.innerHTML = '<img src="imagen__logo.jpeg" alt="Logo TallerPro" width="220" height="220">';
+}
+
     
     const tituloHero = document.querySelector('#inicio h1');
     if (tituloHero) {
@@ -25,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const tarjetas = document.querySelectorAll('.benefit-card');
     if (tarjetas.length > 0) {
         tarjetas.forEach((tarjeta, indice) => {
-            tarjeta.style.transition = opacity 0.6s ease ${indice * 0.15}s, transform 0.6s ease ${indice * 0.15}s;
+            tarjeta.style.transition = `opacity 0.6s ease ${indice * 0.15}s, transform 0.6s ease ${indice * 0.15}s`;
         });
 
         const observador = new IntersectionObserver((entradas) => {
