@@ -294,3 +294,101 @@ footer li {
     color: var(--text-muted);
     margin-bottom: 0.8rem;
 }
+/* =========================================
+   8. Informacion de la empresa
+   ========================================= */
+#nosotros {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
+  padding: 6rem 10% 4rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.imagen_nosotros {
+  border-radius: 12px;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  position: relative; /* Para posicionar la insignia flotante "10+ años" si la agregas */
+}
+
+.imagen_nosotros img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.informacion {
+  flex: 1;
+}
+
+.informacion span {
+  color: var(--primary-blue, #2563eb);
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.informacion h2 {
+  font-size: 1.8rem;
+  margin: 0.8rem 0;
+  color: #ffffff;
+}
+
+.informacion > p {
+  color: var(--text-muted, #9ca3af);
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+/* --- Reorganización de las tarjetas en Grid 2x2 --- */
+.informacion ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Crea 2 columnas iguales */
+  gap: 1.2rem; /* Espaciado entre tarjetas */
+}
+
+.informacion li {
+  background-color: var(--bg-card, #0f172a);
+  border: 1px solid var(--border-color, #1e293b);
+  border-radius: 12px;
+  padding: 1.25rem;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.informacion li:hover {
+  transform: translateY(-3px);
+  border-color: var(--primary-blue, #2563eb);
+}
+
+.informacion li img {
+  width: 28px;
+  height: 28px;
+  margin-bottom: 0.25rem;
+}
+
+.informacion li h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+}
+
+.informacion li p {
+  color: var(--text-muted, #9ca3af);
+  font-size: 0.82rem;
+  margin: 0;
+  line-height: 1.4;
+}
