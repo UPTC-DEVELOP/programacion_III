@@ -621,3 +621,305 @@ button[type="submit"] {
   grid-column: 1 / -1;
   justify-self: center;
 }
+
+
+/* ---------------------------------------------------------
+   ÁREA DE NOTIFICACIONES
+   --------------------------------------------------------- */
+
+[aria-live="polite"] {
+  max-width: 800px;
+
+  margin: 25px auto 0;
+  padding: 12px;
+
+  text-align: center;
+  font-size: 14px;
+}
+
+
+/* ---------------------------------------------------------
+   BARRA DE CONTACTO
+   --------------------------------------------------------- */
+
+section[aria-labelledby="contacto-rapido-titulo"] {
+  background-color: var(--rojo);
+  color: var(--blanco);
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+section[aria-labelledby="contacto-rapido-titulo"] > h2 {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+section[aria-labelledby="contacto-rapido-titulo"] article {
+  padding: 25px 40px;
+
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+section[aria-labelledby="contacto-rapido-titulo"] article:last-child {
+  border-right: none;
+}
+
+section[aria-labelledby="contacto-rapido-titulo"] h3 {
+  margin-bottom: 5px;
+
+  font-size: 12px;
+  font-weight: 900;
+
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+section[aria-labelledby="contacto-rapido-titulo"] p {
+  font-size: 14px;
+}
+
+
+/* ---------------------------------------------------------
+   FOOTER
+   --------------------------------------------------------- */
+
+footer {
+  background-color: var(--negro-2);
+  color: #aaaaaa;
+
+  padding: 65px 5% 20px;
+}
+
+footer > section {
+  max-width: var(--ancho-maximo);
+  margin: auto;
+
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 60px;
+}
+
+footer h2,
+footer h3 {
+  margin-bottom: 20px;
+
+  color: var(--blanco);
+
+  font-size: 16px;
+  font-weight: 900;
+
+  text-transform: uppercase;
+}
+
+footer h2 {
+  color: var(--rojo);
+}
+
+footer h3::after {
+  content: "";
+
+  display: block;
+
+  width: 60px;
+  height: 2px;
+
+  margin-top: 10px;
+
+  background-color: var(--rojo);
+}
+
+footer p {
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+footer ul {
+  list-style: none;
+}
+
+footer li {
+  margin-bottom: 10px;
+}
+
+footer li a {
+  color: #aaaaaa;
+  font-size: 13px;
+
+  transition: color 0.3s ease;
+}
+
+footer li a:hover {
+  color: var(--rojo);
+}
+
+
+/* ---------------------------------------------------------
+   COPYRIGHT
+   --------------------------------------------------------- */
+
+footer > p {
+  max-width: var(--ancho-maximo);
+
+  margin: 50px auto 0;
+  padding-top: 20px;
+
+  border-top: 1px solid #333333;
+
+  color: #666666;
+
+  text-align: center;
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  header {
+    padding: 15px 4%;
+  }
+
+  nav ul {
+    gap: 15px;
+  }
+
+  nav a {
+    font-size: 10px;
+  }
+
+  section[aria-labelledby="servicios-titulo"] {
+    grid-template-columns: 1fr;
+  }
+
+  section[aria-labelledby="servicios-titulo"] article {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  section[aria-labelledby="beneficios-titulo"] > article {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  section[aria-labelledby="visitanos-titulo"] {
+    grid-template-columns: 1fr;
+  }
+
+  section[aria-labelledby="visitanos-titulo"] figure {
+    min-height: 350px;
+  }
+
+  section[aria-labelledby="contacto-rapido-titulo"] {
+    grid-template-columns: 1fr;
+  }
+
+  section[aria-labelledby="contacto-rapido-titulo"] article {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  footer > section {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+
+/* =========================================================
+   CELULAR
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  header {
+    flex-direction: column;
+    gap: 15px;
+
+    padding: 15px;
+  }
+
+  nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  nav a {
+    font-size: 9px;
+  }
+
+  main > section:first-child {
+    min-height: 500px;
+  }
+
+  main > section:first-child h1 {
+    font-size: 42px;
+  }
+
+  section[aria-labelledby="beneficios-titulo"] {
+    padding: 60px 25px;
+  }
+
+  section[aria-labelledby="beneficios-titulo"] > h2 {
+    font-size: 30px;
+  }
+
+  section[aria-labelledby="visitanos-titulo"] > article {
+    padding: 60px 25px;
+  }
+
+  section[aria-labelledby="visitanos-titulo"] h2 {
+    font-size: 32px;
+  }
+
+  section[aria-labelledby="marcas-titulo"] figure {
+    gap: 30px;
+  }
+
+  section[aria-labelledby="marcas-titulo"] img {
+    width: 90px;
+  }
+
+  form {
+    grid-template-columns: 1fr;
+  }
+
+  form p:nth-last-child(-n + 2) {
+    grid-column: auto;
+  }
+
+  button[type="submit"] {
+    grid-column: auto;
+  }
+
+  footer > section {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCCIÓN DE MOVIMIENTO
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
