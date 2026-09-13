@@ -362,8 +362,8 @@ body > header > a:hover {
 }
 
 #problema .etiqueta-problema {
-  color: #6b7075;
   font-size: 14px;
+  color: #f5c518;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 1.5px;
@@ -1215,326 +1215,222 @@ body > header,
     font-size: 0.9375em;
   }
 }
-
-/*comparacion*/
+/* COMPARACIÓN */
 
 #comparacion {
   background-color: #111315;
   color: #ffffff;
-
-  padding-block: 85px;
+  padding-block: 72px;
   padding-inline: max(24px, calc((100% - 90em) / 2));
+  font-size: clamp(1rem, 1vw, 1.625rem);
 }
 
-
-/* Encabezado de la sección */
-
-#comparacion .encabezado-comparacion {
-  text-align: center;
-
-  max-width: 900px;
-
-  margin: 0 auto 42px;
-}
-
-
-/* Etiqueta "COMPARACIÓN" */
-
-#comparacion .etiqueta-comparacion {
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  gap: 12px;
-
-  margin: 0 0 20px;
-
-  color: #f5c518;
-
-  font-size: 14px;
-
-  font-weight: 800;
-
-  text-transform: uppercase;
-
-  letter-spacing: 1.5px;
-}
-
-
-/* Línea amarilla antes de COMPARACIÓN */
-
-#comparacion .etiqueta-comparacion::before {
-  content: "";
-
-  width: 28px;
-
-  height: 3px;
-
-  background-color: #f5c518;
-
-  border-radius: 3px;
-}
-
-
-/* Título principal */
+/* Título */
 
 #comparacion h2 {
-  margin: 0 0 18px;
-
+  margin: 0 0 48px;
   color: #ffffff;
-
-  font-size: clamp(34px, 4vw, 48px);
-
+  font-size: 2.5em;
   font-weight: 800;
-
-  line-height: 1.12;
-
+  line-height: 1.15;
   letter-spacing: -0.02em;
 }
-
-
-/* Parte amarilla del título */
 
 #comparacion h2 span {
   color: #f5c518;
 }
 
+/* Contenedor de las dos tarjetas */
 
-/* Descripción */
-
-#comparacion .descripcion-comparacion {
-  max-width: 750px;
-
-  margin: 0 auto;
-
-  color: #b8bdc3;
-
-  font-size: 17px;
-
-  line-height: 1.7;
-}
-
-
-/* Tabla de comparación */
-
-#comparacion .tabla-comparacion {
-  width: 100%;
-
-  max-width: 1300px;
-
-  margin: 0 auto;
-
-  overflow: hidden;
-
-  border: 1px solid #303336;
-
-  border-radius: 18px;
-
-  background-color: #1b1e20;
-
-  box-shadow:
-    0 15px 35px rgba(0, 0, 0, 0.30);
-}
-
-
-/* Filas */
-
-#comparacion .fila-comparacion {
+#comparacion .contenido-comparacion {
   display: grid;
-
-  grid-template-columns:
-    1.05fr
-    1fr
-    1fr;
-
-  min-height: 58px;
-
-  border-bottom: 1px solid #303336;
-}
-
-
-/* Última fila sin borde */
-
-#comparacion .fila-comparacion:last-child {
-  border-bottom: none;
-}
-
-
-/* Encabezado de la tabla */
-
-#comparacion .encabezado-tabla {
-  background-color: #080a0b;
-
-  color: #ffffff;
-
-  font-weight: 700;
-
-  border-bottom: 1px solid #303336;
-}
-
-
-/* Celdas */
-
-#comparacion .fila-comparacion > div {
-  display: flex;
-
+  grid-template-columns: minmax(0, 1fr) 4.5em minmax(0, 1fr);
   align-items: center;
-
-  padding: 18px 20px;
-
-  border-right: 1px solid #303336;
+  gap: 1.25em;
 }
 
+/* Tarjetas */
 
-/* Última columna sin borde */
-
-#comparacion .fila-comparacion > div:last-child {
-  border-right: none;
+#comparacion .tarjeta-comparacion {
+  min-height: 15em;
+  padding: 2em;
+  border-radius: 1em;
+  box-sizing: border-box;
 }
 
+/* Gestión tradicional */
 
-/* Columna gestión  */
-
-#comparacion .nombre-gestion {
-  color: #ffffff;
-
-  font-size: 15px;
-
-  font-weight: 700;
+#comparacion .gestion-tradicional {
+  background-color: #161819;
+  border: 1px solid #252829;
 }
 
+/* Services Mechanic */
 
-/* Columna método manual */
-
-#comparacion .metodo-manual {
-  color: #b8bdc3;
-
-  font-size: 15px;
+#comparacion .gestion-services {
+  background-color: #1b1e20;
+  border: 1px solid rgba(245, 197, 24, 0.55);
 }
 
+/* Etiquetas superiores */
 
-/* Columna services mechanic */
-
-#comparacion .gestion-digital {
-  color: #ffffff;
-
-  font-size: 15px;
-
-  font-weight: 600;
-
-  gap: 10px;
-}
-
-
-/* CHECK AMARILLO */
-
-#comparacion .gestion-digital span {
-  color: #f5c518;
-
-  font-size: 20px;
-
+#comparacion .etiqueta-tarjeta-comparacion {
+  margin: 0 0 1.75em;
+  font-size: 0.8em;
   font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
 
-  line-height: 1;
+#comparacion .gestion-tradicional .etiqueta-tarjeta-comparacion {
+  color: #6b7075;
+}
+
+#comparacion .gestion-services .etiqueta-tarjeta-comparacion {
+  color: #f5c518;
+}
+
+/* Listas */
+
+#comparacion .tarjeta-comparacion ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+#comparacion .tarjeta-comparacion li {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  font-size: 0.95em;
+  line-height: 1.4;
+}
+
+/* Texto tradicional */
+
+#comparacion .gestion-tradicional li {
+  color: #6b7075;
+}
+
+/* Texto Services */
+
+#comparacion .gestion-services li {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Iconos */
+
+#comparacion .icono-tradicional,
+#comparacion .icono-services {
+  width: 1.6em;
+  height: 1.6em;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.8em;
+  font-weight: 800;
+}
+
+/* X */
+
+#comparacion .icono-tradicional {
+  background-color: #252829;
+  color: #6b7075;
+}
+
+/* Check */
+
+#comparacion .icono-services {
+  background-color: rgba(245, 197, 24, 0.12);
+  border: 1px solid rgba(245, 197, 24, 0.35);
+  color: #f5c518;
+}
+
+/* Flecha central */
+
+#comparacion .flecha-comparacion {
+  width: 3em;
+  height: 3em;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #f5c518;
+  color: #111315;
+  font-size: 1em;
+  font-weight: 800;
 }
 
 
-/*  EFECTO AL PASAR EL MOUSE */
-
-#comparacion .fila-comparacion:not(.encabezado-tabla):hover {
-  background-color: #222527;
-}
-
-
-/* Tablet */
+/* COMPARACIÓN EN TABLET */
 
 @media (max-width: 800px) {
 
-  #comparacion {
-    padding-block: 65px;
+  #comparacion .contenido-comparacion {
+    grid-template-columns: 1fr;
+    gap: 1.5em;
   }
 
-
-  #comparacion .fila-comparacion {
-    grid-template-columns:
-      1fr
-      1fr
-      1fr;
-  }
-
-
-  #comparacion .fila-comparacion > div {
-    padding: 15px 12px;
-
-    font-size: 14px;
+  #comparacion .flecha-comparacion {
+    transform: rotate(90deg);
   }
 
 }
 
 
-/* Celular */
+/* COMPARACIÓN EN CELULAR */
 
 @media (max-width: 600px) {
 
   #comparacion {
-    padding-inline: 16px;
-
-    padding-block: 55px;
+    padding-block: 60px;
+    padding-inline: 20px;
   }
-
 
   #comparacion h2 {
-    font-size: 32px;
+    font-size: 2em;
+    margin-bottom: 1.5em;
   }
 
-
-  #comparacion .descripcion-comparacion {
-    font-size: 15px;
-  }
-
-
-  #comparacion .tabla-comparacion {
-    border-radius: 14px;
-  }
-
-
-  #comparacion .fila-comparacion {
-    grid-template-columns:
-      1fr
-      1fr
-      1fr;
-  }
-
-
-  #comparacion .fila-comparacion > div {
-    padding: 14px 8px;
-
-    font-size: 12px;
-
-    line-height: 1.35;
-  }
-
-
-  #comparacion .encabezado-tabla > div {
-    font-size: 12px;
-  }
-
-
-  #comparacion .gestion-digital {
-    gap: 5px;
-  }
-
-
-  #comparacion .gestion-digital span {
-    font-size: 16px;
+  #comparacion .tarjeta-comparacion {
+    min-height: auto;
+    padding: 1.5em;
   }
 
 }
 
-/* =========================================================
-   EQUIPO
-   ========================================================= */
+
+/* COMPARACIÓN EN PANTALLAS GRANDES */
+
+@media (min-width: 1600px) {
+
+  #comparacion {
+    padding-block: 3.75em;
+  }
+
+  #comparacion h2 {
+    font-size: 2.5em;
+    margin-bottom: 1.5em;
+  }
+
+  #comparacion .contenido-comparacion {
+    gap: 1.5em;
+  }
+
+  #comparacion .tarjeta-comparacion {
+    padding: 2em;
+  }
+
+}
+
+/* EQUIPO */
 
 .seccion-equipo {
   background-color: #f7f7f5;
@@ -1719,7 +1615,9 @@ body > header,
 
 .seccion-experiencias {
   background-color: #f7f7f5;
-  padding: 70px 24px;
+  padding-block: 70px;
+  padding-inline: max(24px, calc((100% - 90em) / 2));
+  font-size: clamp(1rem, 1vw, 1.625rem);
 }
 
 
@@ -1791,30 +1689,30 @@ body > header,
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
-
-
 .tarjeta-experiencia {
   background-color: #111315;
-
   border-radius: 16px;
-
   padding: 32px 28px;
-
   min-height: 220px;
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
   box-sizing: border-box;
-
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* Imagen de cada experiencia */
+
+.foto-experiencia {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 22px;
+}
 
 .tarjeta-experiencia:hover {
   transform: translateY(-4px);
-
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
 }
 
@@ -1875,6 +1773,58 @@ body > header,
     font-size: 30px;
   }
 
+}
+/* EXPERIENCIAS EN PANTALLAS GRANDES */
+
+@media (min-width: 1600px) {
+
+  .seccion-experiencias {
+    padding-block: 3.75em;
+  }
+
+  .encabezado-experiencias {
+    max-width: 52em;
+    margin-bottom: 2.625em;
+  }
+
+  .encabezado-experiencias h2 {
+    font-size: 2.625em;
+  }
+
+  .descripcion-experiencias {
+    max-width: 44em;
+    font-size: 1em;
+  }
+
+  .grid-experiencias {
+    max-width: 80em;
+    gap: 1.25em;
+  }
+
+  .tarjeta-experiencia {
+    padding: 2em 1.75em;
+    min-height: auto;
+    border-radius: 1em;
+  }
+
+  .foto-experiencia {
+    border-radius: 0.625em;
+    margin-bottom: 1.375em;
+  }
+
+  .estrellas-experiencia {
+    font-size: 1.25em;
+    margin-bottom: 1.25em;
+  }
+
+  .opinion-experiencia {
+    font-size: 0.9375em;
+    margin-bottom: 1.25em;
+  }
+
+  .nombre-experiencia {
+    font-size: 0.875em;
+  }
 }
 
 
