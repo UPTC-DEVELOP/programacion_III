@@ -1,0 +1,109 @@
+commit 2bed0e9124eb752a03a2da798e00c92944c1c5b4
+Author: juanhuertas07 <juan.huertas07@uptc.edu.co>
+Date:   Sun Sep 13 09:44:29 2026 -0500
+
+     incorporar redes sociales, ubicación, términos de servicio y botón de WhatsApp en el pie de página
+    
+    - Se agregaron los enlaces a las redes sociales en la sección inferior.
+    - Se incorporaron los datos de ubicación detallados y los términos de servicio.
+    - Se añadió un botón de acceso directo a WhatsApp para contacto rápido.de whasap para mejor comuncicacion con los clientes
+
+commit 562741e3f414a7b115e0c701889c92609978da38
+Author: juanhuertas07 <juan.huertas07@uptc.edu.co>
+Date:   Sat Sep 12 21:19:13 2026 -0500
+
+    Corregir estilos en formulario y pie de páginaSe arreglan los estilos visuales que estaban rotos en el formulario.Se actualiza el archivo HTML del pie de página para incluir nueva información.
+
+commit 822fb63e147be471a58e0b7ba37896dee46a6835
+Author: juanhuertas07 <juan.huertas07@uptc.edu.co>
+Date:   Sat Sep 12 20:51:23 2026 -0500
+
+    informacion de la empresa  actualizar estilo de diseño e incorporar nuevas imágenes
+
+commit d34f4b314085c96f49cd11b4a2ba7ce62efbe170
+Author: juanhuertas07 <juan.huertas07@uptc.edu.co>
+Date:   Sat Sep 12 18:17:02 2026 -0500
+
+    Restructuración de los estilos del menú de navegación y la sección del cuerpo superior
+
+commit 5537c540c5a2f2de5f3a90856938d69f03c47c4b
+Author: juanhuertas07 <juan.huertas07@uptc.edu.co>
+Date:   Sat Sep 12 17:27:14 2026 -0500
+
+     corregir interferencia en logo y optimizar imágenes de la página
+    
+    - Eliminar imágenes con fondo y reintegrar versiones sin fondo.
+    - Integrar las nuevas imágenes dentro de la estructura de la página.
+    - Modificar los estilos del logo en el CSS para evitar conflictos con otra etiqueta.
+
+commit aacdfd9a0e260895515c55451c2452a4ebb262d8
+Author: juanhuertas07 <juan.huertas07@uptc.edu.co>
+Date:   Sat Sep 12 15:41:42 2026 -0500
+
+    imagenes necesarias para la pagina web
+
+commit 3820c84cb900eb48000a97e9b0f13706a8069955
+Author: juanhuertas07 <juan.huertas07@uptc.edu.co>
+Date:   Sat Sep 12 15:33:35 2026 -0500
+
+    Eliminacion de archivos subidos por otras persona ajena al grupo
+
+commit ec04dec2f613d97a17f6aa3ef5fd277a75cb8006
+Author: Sergio Camacho <sergio.camacho@uotc.edu.co>
+Date:   Sat Sep 12 13:07:19 2026 -0500
+
+    chore: integración de tipografía corporativa Inter desde Google Fonts
+
+commit 9e4854110c255a8d6aff47f8d69b1b9e45dbc552
+Author: Sergio Camacho <sergio.camacho@uotc.edu.co>
+Date:   Sat Sep 12 13:07:00 2026 -0500
+
+    feat: implementación de interfaz Dark Mode, variables de diseño y Grid responsivo
+
+commit 719a1d43047583ca3598693caaa817b162fff0c8
+Author: Sergio Camacho <sergio.camacho@uotc.edu.co>
+Date:   Sat Sep 12 12:26:29 2026 -0500
+
+    feat: integración de script inicial para navegación y feedback de UX
+
+commit c5240d12e8893e7e8911115d4c3abf972cc221ce
+Author: Sergio Camacho <sergio.camacho@uotc.edu.co>
+Date:   Sat Sep 12 12:26:14 2026 -0500
+
+    feat: creación de hoja de estilos base e implementación de variables globales
+
+commit 64fcb23883f7d66919ac9e8e6bdef8cca39ce8de
+Author: Sergio Camacho <sergio.camacho@uotc.edu.co>
+Date:   Sat Sep 12 12:25:48 2026 -0500
+
+    refactor: reubicación de index.html a la raíz y corrección de nomenclatura
+
+commit 30924e837c123d0bf1bc283fa6d856e4f078dfe2
+Author: juanhuertas07 <juan.huertas07@uptc.edu.co>
+Date:   Sat Sep 12 11:48:51 2026 -0500
+
+    Incorporacion de nuevo elemnto html
+
+commit 9640482ec90c5ae3f7fbf211184a0d007f4985d8
+Author: juanhuertas07 <juan.huertas07@uptc.edu.co>
+Date:   Sat Sep 12 11:45:48 2026 -0500
+
+    Incorporación Adicional A La Estructura Html
+
+commit 3d33d26464a295e83ce4c6bbdc4626115f387410
+Author: juanhuertas07 <juan.huertas07@uptc.edu.co>
+Date:   Sat Sep 12 11:20:59 2026 -0500
+
+    estructura html de taller mecanico LJA
+
+commit b0d6ec3fb8266d9d960f33e106180ce9e88b0055
+Author: ESTEFANIA\user <estefania.lopez01@uptc.edu.co>
+Date:   Fri Sep 4 14:49:15 2026 -0500
+
+    Estructura base del frontend y carpetas principales
+
+commit 411eed91c6b36711a58170a1955040082fa87548
+Author: jnpvillamil <josue.pinzon@uptc.edu.co>
+Date:   Sat Aug 29 17:07:07 2026 -0500
+
+    Initial commit
