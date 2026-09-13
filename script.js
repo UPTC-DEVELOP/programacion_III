@@ -1,0 +1,1 @@
+console.log("Sistema AutoFix Pro inicializado por Grupo 3");
