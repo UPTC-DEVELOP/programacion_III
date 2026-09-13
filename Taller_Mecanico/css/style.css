@@ -414,6 +414,10 @@ footer li {
     color: var(--text-muted);
     font-size: 0.85rem;
 }
+footer li a {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
 
 footer ul {
     list-style: none;
@@ -531,4 +535,39 @@ footer a {
   font-size: 0.82rem;
   margin: 0;
   line-height: 1.4;
+}
+.botones-contacto {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.botones-contacto a {
+    display: inline-block;
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-whatsapp {
+    background-color: #25D366;
+    color: white;
+}
+
+.btn-whatsapp:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+.btn-maps {
+    background-color: #4285F4;
+    color: white;
+}
+
+.btn-maps:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
 }
