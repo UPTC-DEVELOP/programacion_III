@@ -3,32 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoFix Pro - Taller Mecánico</title>
+    <title>Taller Mecánico - AutoFix</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
+
+    <section class="inicio" id="inicio">
+        <div class="contenido-inicio">
+            <h1>Gestión taller mecánico</h1>
+            <p>Administra clientes, vehículos, servicios, repuestos y facturación.</p>
+
+            <div class="botones">
+                <a href="#servicios">Conocer servicios</a>
+                <a href="#contacto">Acceder al sistema</a>
+            </div>
+        </div>
+    </section>
+
     <header>
         <div class="logo">
-            <h1>AutoFix <span>Pro</span></h1>
+            <h1>AutoFix</h1>
         </div>
-        <nav aria-label="Navegación principal">
-            <ul>
+
+        <nav>
+            <ul class="nav-links">
                 <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#modulos">Módulos</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
+
+            <div class="nav-actions">
+                <button id="btnLogin">Inicia sesión</button>
+                <button id="btnRegister">Regístrate</button>
+            </div>
         </nav>
     </header>
 
-    <main id="inicio">
-        <h2>Estructura base del proyecto - Grupo 3</h2>
-        <p>Bienvenido al sistema de gestión de taller mecánico.</p>
+    <main>
+        
+        <section id="servicios">
+            <!-- Aquí van los módulos -->
+        </section>
+
+        <section id="nosotros">
+            <!-- Aquí va la información -->
+        </section>
+
+        <section id="contacto">
+            <!-- Aquí va el formulario -->
+        </section>
+
     </main>
 
     <footer>
-        <p>&copy; 2026 AutoFix Pro - UPTC</p>
+        <p>© 2026 AutoFix - UPTC</p>
     </footer>
 
     <script src="script.js"></script>
+
 </body>
 </html>
