@@ -1,349 +1,336 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
 
-  inicializarFecha();
-  inicializarFormulario();
-  inicializarBotonesReserva();
-  inicializarNavegacion();
-  actualizarAnio();
+    inicializarFecha();
+    inicializarFormulario();
+    inicializarBotonesReserva();
+    inicializarNavegacion();
+    actualizarAnio();
 
 });
 
 
-/* =====================================================
-   FECHA MÍNIMA PARA RESERVAS
-   ===================================================== */
+/* =========================================================
+   FECHA MÍNIMA
+   ========================================================= */
 
 function inicializarFecha() {
 
-  const campoFecha = document.getElementById("fecha");
+    const campoFecha = document.getElementById("fecha");
 
-  if (!campoFecha) {
-    return;
-  }
+    if (!campoFecha) {
+        return;
+    }
 
-  const hoy = new Date();
+    const hoy = new Date();
 
-  const anio = hoy.getFullYear();
+    const anio = hoy.getFullYear();
+    const mes = String(hoy.getMonth() + 1).padStart(2, "0");
+    const dia = String(hoy.getDate()).padStart(2, "0");
 
-  const mes = String(hoy.getMonth() + 1).padStart(2, "0");
+    const fechaActual = `${anio}-${mes}-${dia}`;
 
-  const dia = String(hoy.getDate()).padStart(2, "0");
-
-  const fechaActual = `${anio}-${mes}-${dia}`;
-
-  campoFecha.min = fechaActual;
-
+    campoFecha.min = fechaActual;
 }
 
 
-/* =====================================================
-   FORMULARIO
-   ===================================================== */
+/* =========================================================
+   FORMULARIO DE RESERVA
+   ========================================================= */
 
 function inicializarFormulario() {
 
-  const formulario = document.querySelector(
-    'form[data-form="reserva"]'
-  );
+    const formulario = document.getElementById("form-reserva");
 
-  if (!formulario) {
-    return;
-  }
-
-
-  formulario.addEventListener("submit", (evento) => {
-
-    evento.preventDefault();
-
-
-    const mensaje = document.getElementById(
-      "mensaje-formulario"
-    );
-
-
-    /*
-     * Se comprueba la validación nativa
-     * del navegador.
-     */
-
-    if (!formulario.checkValidity()) {
-
-      formulario.reportValidity();
-
-      if (mensaje) {
-
-        mensaje.textContent =
-          "Por favor, complete correctamente todos los campos.";
-
-      }
-
-      return;
+    if (!formulario) {
+        return;
     }
 
+    formulario.addEventListener("submit", function (evento) {
 
-    /* -----------------------------------------------
-       OBTENER DATOS
-       ----------------------------------------------- */
+        evento.preventDefault();
 
-    const nombre =
-      document.getElementById("nombre").value.trim();
+        const nombre = document.getElementById("nombre");
+        const correo = document.getElementById("email");
+        const telefono = document.getElementById("telefono");
+        const fecha = document.getElementById("fecha");
+        const servicio = document.getElementById("servicio");
+        const vehiculo = document.getElementById("vehiculo");
+        const mensaje = document.getElementById("mensaje");
 
-    const correo =
-      document.getElementById("correo").value.trim();
-
-    const telefono =
-      document.getElementById("telefono").value.trim();
-
-    const fecha =
-      document.getElementById("fecha").value;
-
-    const servicio =
-      document.getElementById("servicio").value;
-
-    const descripcion =
-      document.getElementById("mensaje").value.trim();
+        const notificacion =
+            document.getElementById("notificacion-reserva");
 
 
-    /* -----------------------------------------------
-       VALIDACIÓN ADICIONAL
-       ----------------------------------------------- */
+        /* Validación HTML */
 
-    if (nombre.length < 3) {
+        if (!formulario.checkValidity()) {
 
-      mostrarMensaje(
-        "El nombre debe tener mínimo 3 caracteres."
-      );
+            formulario.reportValidity();
 
-      return;
-    }
+            mostrarMensaje(
+                "Por favor, completa correctamente los campos obligatorios.",
+                "error"
+            );
 
-
-    if (descripcion.length < 10) {
-
-      mostrarMensaje(
-        "La descripción debe tener mínimo 10 caracteres."
-      );
-
-      return;
-    }
+            return;
+        }
 
 
-    /* -----------------------------------------------
-       CONVERTIR SERVICIO
-       ----------------------------------------------- */
+        /* Validación adicional del nombre */
 
-    const nombresServicios = {
+        if (nombre.value.trim().length < 3) {
 
-      mecanica: "Mecánica general",
+            mostrarMensaje(
+                "El nombre debe tener mínimo 3 caracteres.",
+                "error"
+            );
 
-      aceite: "Cambio de aceite",
+            nombre.focus();
 
-      frenos: "Revisión de frenos",
-
-      neumaticos: "Cambio de neumáticos",
-
-      bateria: "Cambio de batería",
-
-      averia: "Reparación de avería"
-
-    };
+            return;
+        }
 
 
-    const nombreServicio =
-      nombresServicios[servicio] || servicio;
+        /* Validación de teléfono */
+
+        if (telefono.value.trim().length < 7) {
+
+            mostrarMensaje(
+                "Ingresa un número de teléfono válido.",
+                "error"
+            );
+
+            telefono.focus();
+
+            return;
+        }
 
 
-    /* -----------------------------------------------
-       MENSAJE DE CONFIRMACIÓN
-       ----------------------------------------------- */
+        /* Validación de fecha */
 
-    const mensajeFinal =
-      `Solicitud registrada correctamente. ` +
-      `Gracias, ${nombre}. ` +
-      `Has solicitado ${nombreServicio} ` +
-      `para el día ${fecha}. ` +
-      `Nos pondremos en contacto contigo al correo ${correo}.`;
+        if (!fecha.value) {
 
+            mostrarMensaje(
+                "Debes seleccionar una fecha para la reserva.",
+                "error"
+            );
 
-    mostrarMensaje(mensajeFinal);
+            fecha.focus();
 
-
-    /* -----------------------------------------------
-       GUARDAR DATOS LOCALMENTE
-       ----------------------------------------------- */
-
-    const solicitud = {
-
-      nombre: nombre,
-
-      correo: correo,
-
-      telefono: telefono,
-
-      fecha: fecha,
-
-      servicio: nombreServicio,
-
-      descripcion: descripcion,
-
-      fechaRegistro: new Date().toISOString()
-
-    };
+            return;
+        }
 
 
-    localStorage.setItem(
-      "ultimaSolicitudServiAuto",
-      JSON.stringify(solicitud)
-    );
+        /* Validación del servicio */
+
+        if (!servicio.value) {
+
+            mostrarMensaje(
+                "Debes seleccionar un servicio.",
+                "error"
+            );
+
+            servicio.focus();
+
+            return;
+        }
 
 
-    /*
-     * Limpiar el formulario después del envío.
-     */
+        /* =================================================
+           CREAR INFORMACIÓN DE LA RESERVA
+           ================================================= */
 
-    formulario.reset();
+        const datosReserva = {
+
+            nombre: nombre.value.trim(),
+
+            correo: correo.value.trim(),
+
+            telefono: telefono.value.trim(),
+
+            fecha: fecha.value,
+
+            servicio: servicio.value,
+
+            vehiculo: vehiculo.value.trim(),
+
+            mensaje: mensaje.value.trim(),
+
+            fechaRegistro: new Date().toISOString()
+
+        };
 
 
-    inicializarFecha();
+        /* =================================================
+           GUARDAR EN LOCAL STORAGE
+           ================================================= */
 
-  });
+        localStorage.setItem(
+            "ultimaSolicitudServiAuto",
+            JSON.stringify(datosReserva)
+        );
 
+
+        /* =================================================
+           MENSAJE DE CONFIRMACIÓN
+           ================================================= */
+
+        const mensajeConfirmacion =
+            `¡Reserva enviada correctamente, ${datosReserva.nombre}! 
+            
+Servicio: ${datosReserva.servicio}
+
+Fecha solicitada: ${datosReserva.fecha}
+
+Nos comunicaremos contigo al correo ${datosReserva.correo} o al teléfono ${datosReserva.telefono}.`;
+
+
+        mostrarMensaje(
+            mensajeConfirmacion,
+            "exito"
+        );
+
+
+        /* =================================================
+           LIMPIAR FORMULARIO
+           ================================================= */
+
+        formulario.reset();
+
+        inicializarFecha();
+
+    });
 }
 
 
-/* =====================================================
+/* =========================================================
    MOSTRAR MENSAJES
-   ===================================================== */
+   ========================================================= */
 
-function mostrarMensaje(texto) {
+function mostrarMensaje(texto, tipo) {
 
-  const mensaje =
-    document.getElementById("mensaje-formulario");
+    const notificacion =
+        document.getElementById("notificacion-reserva");
 
+    if (!notificacion) {
+        return;
+    }
 
-  if (!mensaje) {
-    return;
-  }
+    notificacion.textContent = texto;
 
+    notificacion.style.display = "block";
 
-  mensaje.textContent = texto;
+    if (tipo === "exito") {
 
+        notificacion.style.backgroundColor = "#e8f5e9";
+        notificacion.style.color = "#1b5e20";
+        notificacion.style.border =
+            "1px solid #4caf50";
+
+    } else {
+
+        notificacion.style.backgroundColor = "#ffebee";
+        notificacion.style.color = "#b71c1c";
+        notificacion.style.border =
+            "1px solid #e21b23";
+    }
 }
 
 
-/* =====================================================
-   BOTONES "RESERVA TU VISITA"
-   ===================================================== */
+/* =========================================================
+   BOTONES DE RESERVA
+   ========================================================= */
 
 function inicializarBotonesReserva() {
 
-  const botones =
-    document.querySelectorAll(
-      '[data-action="reservar"]'
-    );
+    const botonesReserva =
+        document.querySelectorAll('a[href="#reserva"]');
 
+    botonesReserva.forEach(function (boton) {
 
-  botones.forEach((boton) => {
+        boton.addEventListener("click", function (evento) {
 
-    boton.addEventListener("click", () => {
+            const seccionReserva =
+                document.getElementById("reserva");
 
-      const formulario =
-        document.getElementById("contacto");
+            if (seccionReserva) {
 
+                evento.preventDefault();
 
-      if (formulario) {
+                seccionReserva.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
 
-        formulario.scrollIntoView({
-          behavior: "smooth",
-          block: "start"
+            }
+
         });
 
-      }
-
     });
-
-  });
 
 }
 
 
-/* =====================================================
-   NAVEGACIÓN SUAVE
-   ===================================================== */
+/* =========================================================
+   NAVEGACIÓN
+   ========================================================= */
 
 function inicializarNavegacion() {
 
-  const enlaces =
-    document.querySelectorAll(
-      'a[href^="#"]'
-    );
+    const enlaces =
+        document.querySelectorAll('a[href^="#"]');
 
+    enlaces.forEach(function (enlace) {
 
-  enlaces.forEach((enlace) => {
+        enlace.addEventListener("click", function (evento) {
 
-    enlace.addEventListener("click", (evento) => {
+            const destino =
+                enlace.getAttribute("href");
 
-      const destino =
-        enlace.getAttribute("href");
+            if (
+                !destino ||
+                destino === "#" ||
+                destino === "#reserva"
+            ) {
+                return;
+            }
 
+            const elemento =
+                document.querySelector(destino);
 
-      if (
-        !destino ||
-        destino === "#"
-      ) {
+            if (elemento) {
 
-        return;
+                evento.preventDefault();
 
-      }
+                elemento.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
 
+            }
 
-      const elemento =
-        document.querySelector(destino);
-
-
-      if (!elemento) {
-
-        return;
-
-      }
-
-
-      evento.preventDefault();
-
-
-      elemento.scrollIntoView({
-
-        behavior: "smooth",
-
-        block: "start"
-
-      });
+        });
 
     });
-
-  });
 
 }
 
 
-/* =====================================================
-   AÑO DEL FOOTER
-   ===================================================== */
+/* =========================================================
+   AÑO AUTOMÁTICO
+   ========================================================= */
 
 function actualizarAnio() {
 
-  const elemento =
-    document.getElementById("anio");
+    const elementoAnio =
+        document.getElementById("anio");
 
+    if (!elementoAnio) {
+        return;
+    }
 
-  if (!elemento) {
+    const anioActual =
+        new Date().getFullYear();
 
-    return;
-
-  }
-
-
-  elemento.textContent =
-    new Date().getFullYear();
-
+    elementoAnio.textContent = anioActual;
 }
