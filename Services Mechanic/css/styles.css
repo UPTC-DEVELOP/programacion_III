@@ -749,164 +749,13 @@ body > header > a:hover {
 body > header,
 #inicio,
 #problema,
-#nosotros {
+#nosotros,
+#servicios,
+#beneficios {
   font-size: clamp(1rem, 1vw, 1.625rem);
   padding-inline: max(24px, calc((100% - 90em) / 2));
 }
 
-/* AJUSTES PROPORCIONALES PARA VENTANAS GRANDES */
-
-@media (min-width: 1600px) {
-  /* Cabecera */
-  body > header {
-    padding-block: 1.5em;
-    gap: 1.25em;
-  }
-  body > header > img {
-    width: 7.2em;
-  }
-  body > header > h1 {
-    font-size: 1.25em;
-  }
-  body > header nav ul {
-    gap: 1.25em;
-  }
-  body > header > a {
-    padding: 0.75em 1.25em;
-  }
-  /* Espacio vertical de las secciones */
-  #inicio,
-  #problema,
-  #nosotros {
-    padding-block: 3.75em;
-  }
-  /* Inicio */
-  #inicio {
-    column-gap: 2.5em;
-  }
-  #inicio .contenido-inicio {
-    gap: 1.25em;
-  }
-  #inicio h2 {
-    font-size: 3em;
-    max-width: none;
-  }
-  #inicio p {
-    font-size: 1.125em;
-    max-width: 34em;
-  }
-  #inicio .descripcion-inicio {
-    font-size: 1.25em;
-    max-width: 30em;
-  }
-  #inicio .etiqueta-inicio,
-  #inicio .item-resumen {
-    font-size: 0.875em;
-  }
-  #inicio .acciones-inicio {
-    margin-top: 1.75em;
-  }
-  #inicio .resumen-inicio {
-    margin-top: 2.125em;
-    padding-top: 1.5em;
-    gap: 1.125em;
-  }
-  #inicio .check-resumen {
-    font-size: inherit;
-    width: 1.3em;
-    height: 1.3em;
-  }
-  /* Controles del carrusel */
-  #foto-anterior,
-  #foto-siguiente {
-    font-size: 2em;
-    width: 1.5em;
-    height: 1.5em;
-  }
-  #pausar-carrusel {
-    font-size: 1.125em;
-    width: 2.25em;
-    height: 2.25em;
-  }
-  #inicio .controles-carrusel .indicador {
-    font-size: inherit;
-    width: 0.5em;
-    height: 0.5em;
-  }
-  /* Problema y Nosotros */
-  #problema h2,
-  #nosotros h2 {
-    font-size: 2.5em;
-    max-width: 20em;
-  }
-  #problema p {
-    font-size: 1.125em;
-    max-width: 39em;
-  }
-  #nosotros p {
-    font-size: 1em;
-    max-width: 50em;
-  }
-  #nosotros h3 {
-    font-size: 1.5em;
-  }
-  #nosotros .tarjeta-mv {
-    padding: 2em;
-  }
-  #nosotros .tarjeta-mv h3 {
-    font-size: 1.375em;
-  }
-  #nosotros .titulo-valores {
-    font-size: 1.25em;
-  }
-  #nosotros .tarjeta-valor {
-    padding: 1.375em 1.125em;
-  }
-  #nosotros .tarjeta-valor h4 {
-    font-size: 1em;
-  }
-  #nosotros .tarjeta-valor p {
-    font-size: 0.875em;
-  }
-  /* Problema en pantallas grandes */
-  #problema .contenedor-problema {
-    max-width: 75em;
-    gap: 4em;
-  }
-  #problema .intro-problema {
-    max-width: 32.5em;
-  }
-  #problema .descripcion-problema {
-    font-size: 1.125em;
-    max-width: 28.75em;
-  }
-  #problema .lista-problemas {
-    gap: 1.125em;
-  }
-  #problema .item-problema {
-    grid-template-columns: 3.25em 1fr;
-    gap: 1.125em;
-    padding: 1.5em 1.375em;
-    border-radius: 1.125em;
-  }
-  #problema .icono-problema {
-    width: 2.75em;
-    height: 2.75em;
-    border-radius: 0.75em;
-  }
-  #problema .icono-problema svg {
-    width: 1.3125em;
-    height: 1.3125em;
-  }
-  #problema .contenido-problema h3 {
-    font-size: 1.0625em;
-    margin: 0.125em 0 0.4375em;
-  }
-  #problema .contenido-problema p {
-    font-size: 0.9375em;
-    line-height: 1.65;
-  }
-}
 
 /* SERVICIOS */
 
@@ -1159,9 +1008,215 @@ body > header,
   }
 }
 
-/* =========================================================
-   SECCIÓN COMPARACIÓN
-   ========================================================= */
+
+/* AJUSTES PROPORCIONALES PARA VENTANAS GRANDES */
+
+@media (min-width: 1600px) {
+  /* Cabecera */
+  body > header {
+    padding-block: 1.5em;
+    gap: 1.25em;
+  }
+  body > header > img {
+    width: 7.2em;
+  }
+  body > header > h1 {
+    font-size: 1.25em;
+  }
+  body > header nav ul {
+    gap: 1.25em;
+  }
+  body > header > a {
+    padding: 0.75em 1.25em;
+  }
+  /* Espacio vertical de las secciones */
+  #inicio,
+  #problema,
+  #nosotros,
+  #servicios,
+  #beneficios {
+    padding-block: 3.75em;
+  }
+  /* Inicio */
+  #inicio {
+    column-gap: 2.5em;
+  }
+  #inicio .contenido-inicio {
+    gap: 1.25em;
+  }
+  #inicio h2 {
+    font-size: 3em;
+    max-width: none;
+  }
+  #inicio p {
+    font-size: 1.125em;
+    max-width: 34em;
+  }
+  #inicio .descripcion-inicio {
+    font-size: 1.25em;
+    max-width: 30em;
+  }
+  #inicio .etiqueta-inicio,
+  #inicio .item-resumen {
+    font-size: 0.875em;
+  }
+  #inicio .acciones-inicio {
+    margin-top: 1.75em;
+  }
+  #inicio .resumen-inicio {
+    margin-top: 2.125em;
+    padding-top: 1.5em;
+    gap: 1.125em;
+  }
+  #inicio .check-resumen {
+    font-size: inherit;
+    width: 1.3em;
+    height: 1.3em;
+  }
+  /* Controles del carrusel */
+  #foto-anterior,
+  #foto-siguiente {
+    font-size: 2em;
+    width: 1.5em;
+    height: 1.5em;
+  }
+  #pausar-carrusel {
+    font-size: 1.125em;
+    width: 2.25em;
+    height: 2.25em;
+  }
+  #inicio .controles-carrusel .indicador {
+    font-size: inherit;
+    width: 0.5em;
+    height: 0.5em;
+  }
+  /* Problema y Nosotros */
+  #problema h2,
+  #nosotros h2 {
+    font-size: 2.5em;
+    max-width: 20em;
+  }
+  #problema p {
+    font-size: 1.125em;
+    max-width: 39em;
+  }
+  #nosotros p {
+    font-size: 1em;
+    max-width: 50em;
+  }
+  #nosotros h3 {
+    font-size: 1.5em;
+  }
+  #nosotros .tarjeta-mv {
+    padding: 2em;
+  }
+  #nosotros .tarjeta-mv h3 {
+    font-size: 1.375em;
+  }
+  #nosotros .titulo-valores {
+    font-size: 1.25em;
+  }
+  #nosotros .tarjeta-valor {
+    padding: 1.375em 1.125em;
+  }
+  #nosotros .tarjeta-valor h4 {
+    font-size: 1em;
+  }
+  #nosotros .tarjeta-valor p {
+    font-size: 0.875em;
+  }
+  /* Problema en pantallas grandes */
+  #problema .contenedor-problema {
+    max-width: 75em;
+    gap: 4em;
+  }
+  #problema .intro-problema {
+    max-width: 32.5em;
+  }
+  #problema .descripcion-problema {
+    font-size: 1.125em;
+    max-width: 28.75em;
+  }
+  #problema .lista-problemas {
+    gap: 1.125em;
+  }
+  #problema .item-problema {
+    grid-template-columns: 3.25em 1fr;
+    gap: 1.125em;
+    padding: 1.5em 1.375em;
+    border-radius: 1.125em;
+  }
+  #problema .icono-problema {
+    width: 2.75em;
+    height: 2.75em;
+    border-radius: 0.75em;
+  }
+  #problema .icono-problema svg {
+    width: 1.3125em;
+    height: 1.3125em;
+  }
+  #problema .contenido-problema h3 {
+    font-size: 1.0625em;
+    margin: 0.125em 0 0.4375em;
+  }
+  #problema .contenido-problema p {
+    font-size: 0.9375em;
+    line-height: 1.65;
+  }
+  /* Servicios */
+  #servicios {
+    gap: 1.25em;
+  }
+  #servicios > h2 {
+    font-size: 2.625em;
+  }
+  #servicios > p {
+    font-size: 1.0625em;
+    max-width: 41em;
+  }
+  #servicios > article {
+    padding: 1.75em;
+  }
+  #servicios > article h3 {
+    font-size: 1.125em;
+  }
+  #servicios > article p {
+    font-size: 0.9375em;
+  }
+  /* Beneficios */
+  #beneficios .encabezado-beneficios {
+    max-width: 52em;
+    margin-bottom: 2.625em;
+  }
+  #beneficios h2 {
+    font-size: 2.625em;
+  }
+  #beneficios .descripcion-beneficios {
+    font-size: 1.0625em;
+    max-width: 44em;
+  }
+  #beneficios .beneficios-grid {
+    gap: 1.125em;
+  }
+  #beneficios .tarjeta-beneficio {
+    min-height: 13.75em;
+    padding: 1.75em 1.375em;
+  }
+  #beneficios .numero-beneficio {
+    width: 2.5em;
+    height: 2.5em;
+    margin-bottom: 1.25em;
+    font-size: 0.875em;
+  }
+  #beneficios .tarjeta-beneficio h3 {
+    font-size: 1.0625em;
+  }
+  #beneficios .tarjeta-beneficio p {
+    font-size: 0.9375em;
+  }
+}
+
+/*comparacion*/
 
 #comparacion {
   background-color: #111315;
@@ -1172,9 +1227,7 @@ body > header,
 }
 
 
-/* =========================================================
-   ENCABEZADO DE LA SECCIÓN
-   ========================================================= */
+/* Encabezado de la sección */
 
 #comparacion .encabezado-comparacion {
   text-align: center;
@@ -1185,9 +1238,7 @@ body > header,
 }
 
 
-/* =========================================================
-   ETIQUETA "COMPARACIÓN"
-   ========================================================= */
+/* Etiqueta "COMPARACIÓN" */
 
 #comparacion .etiqueta-comparacion {
   display: flex;
@@ -1226,9 +1277,7 @@ body > header,
 }
 
 
-/* =========================================================
-   TÍTULO PRINCIPAL
-   ========================================================= */
+/* Título principal */
 
 #comparacion h2 {
   margin: 0 0 18px;
@@ -1252,9 +1301,7 @@ body > header,
 }
 
 
-/* =========================================================
-   DESCRIPCIÓN
-   ========================================================= */
+/* Descripción */
 
 #comparacion .descripcion-comparacion {
   max-width: 750px;
@@ -1269,9 +1316,7 @@ body > header,
 }
 
 
-/* =========================================================
-   TABLA DE COMPARACIÓN
-   ========================================================= */
+/* Tabla de comparación */
 
 #comparacion .tabla-comparacion {
   width: 100%;
@@ -1293,9 +1338,7 @@ body > header,
 }
 
 
-/* =========================================================
-   FILAS
-   ========================================================= */
+/* Filas */
 
 #comparacion .fila-comparacion {
   display: grid;
@@ -1318,9 +1361,7 @@ body > header,
 }
 
 
-/* =========================================================
-   ENCABEZADO DE LA TABLA
-   ========================================================= */
+/* Encabezado de la tabla */
 
 #comparacion .encabezado-tabla {
   background-color: #080a0b;
@@ -1333,9 +1374,7 @@ body > header,
 }
 
 
-/* =========================================================
-   CELDAS
-   ========================================================= */
+/* Celdas */
 
 #comparacion .fila-comparacion > div {
   display: flex;
@@ -1355,9 +1394,7 @@ body > header,
 }
 
 
-/* =========================================================
-   COLUMNA GESTIÓN
-   ========================================================= */
+/* Columna gestión  */
 
 #comparacion .nombre-gestion {
   color: #ffffff;
@@ -1368,9 +1405,7 @@ body > header,
 }
 
 
-/* =========================================================
-   COLUMNA MÉTODO MANUAL
-   ========================================================= */
+/* Columna método manual */
 
 #comparacion .metodo-manual {
   color: #b8bdc3;
@@ -1379,9 +1414,7 @@ body > header,
 }
 
 
-/* =========================================================
-   COLUMNA SERVICES MECHANIC
-   ========================================================= */
+/* Columna services mechanic */
 
 #comparacion .gestion-digital {
   color: #ffffff;
@@ -1394,9 +1427,7 @@ body > header,
 }
 
 
-/* =========================================================
-   CHECK AMARILLO
-   ========================================================= */
+/* CHECK AMARILLO */
 
 #comparacion .gestion-digital span {
   color: #f5c518;
@@ -1409,18 +1440,14 @@ body > header,
 }
 
 
-/* =========================================================
-   EFECTO AL PASAR EL MOUSE
-   ========================================================= */
+/*  EFECTO AL PASAR EL MOUSE */
 
 #comparacion .fila-comparacion:not(.encabezado-tabla):hover {
   background-color: #222527;
 }
 
 
-/* =========================================================
-   TABLET
-   ========================================================= */
+/* Tablet */
 
 @media (max-width: 800px) {
 
@@ -1446,9 +1473,7 @@ body > header,
 }
 
 
-/* =========================================================
-   CELULAR
-   ========================================================= */
+/* Celular */
 
 @media (max-width: 600px) {
 
@@ -1690,9 +1715,7 @@ body > header,
   }
 
 }
-/* =========================================================
-   EXPERIENCIAS
-   ========================================================= */
+/* EXPERIENCIAS */
 
 .seccion-experiencias {
   background-color: #f7f7f5;
@@ -1826,9 +1849,7 @@ body > header,
 }
 
 
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
+/* RESPONSIVE  */
 
 @media (max-width: 900px) {
 

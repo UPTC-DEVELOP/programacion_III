@@ -107,7 +107,7 @@
   mostrarImagen(0);
 
 
-  /* Respeta la configuración de accesibilidad del usuario */
+
   const reducirMovimiento = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
   );
