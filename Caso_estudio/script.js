@@ -209,3 +209,141 @@ function inicializarFormulario() {
   });
 
 }
+
+
+/* =====================================================
+   MOSTRAR MENSAJES
+   ===================================================== */
+
+function mostrarMensaje(texto) {
+
+  const mensaje =
+    document.getElementById("mensaje-formulario");
+
+
+  if (!mensaje) {
+    return;
+  }
+
+
+  mensaje.textContent = texto;
+
+}
+
+
+/* =====================================================
+   BOTONES "RESERVA TU VISITA"
+   ===================================================== */
+
+function inicializarBotonesReserva() {
+
+  const botones =
+    document.querySelectorAll(
+      '[data-action="reservar"]'
+    );
+
+
+  botones.forEach((boton) => {
+
+    boton.addEventListener("click", () => {
+
+      const formulario =
+        document.getElementById("contacto");
+
+
+      if (formulario) {
+
+        formulario.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+
+      }
+
+    });
+
+  });
+
+}
+
+
+/* =====================================================
+   NAVEGACIÓN SUAVE
+   ===================================================== */
+
+function inicializarNavegacion() {
+
+  const enlaces =
+    document.querySelectorAll(
+      'a[href^="#"]'
+    );
+
+
+  enlaces.forEach((enlace) => {
+
+    enlace.addEventListener("click", (evento) => {
+
+      const destino =
+        enlace.getAttribute("href");
+
+
+      if (
+        !destino ||
+        destino === "#"
+      ) {
+
+        return;
+
+      }
+
+
+      const elemento =
+        document.querySelector(destino);
+
+
+      if (!elemento) {
+
+        return;
+
+      }
+
+
+      evento.preventDefault();
+
+
+      elemento.scrollIntoView({
+
+        behavior: "smooth",
+
+        block: "start"
+
+      });
+
+    });
+
+  });
+
+}
+
+
+/* =====================================================
+   AÑO DEL FOOTER
+   ===================================================== */
+
+function actualizarAnio() {
+
+  const elemento =
+    document.getElementById("anio");
+
+
+  if (!elemento) {
+
+    return;
+
+  }
+
+
+  elemento.textContent =
+    new Date().getFullYear();
+
+}
