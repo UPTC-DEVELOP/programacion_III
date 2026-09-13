@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LJA MOTORS | Catálogo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="navbar">
+  <a class="logo" href="#">
+    <span class="logo-mark">LJA</span>
+    <span class="logo-text">MOTORS</span>
+  </a>
+
+  <nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#catalogo">Catálogo</a>
+    <a href="#servicios">Servicios</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+
+  <button class="nav-btn" onclick="document.getElementById('catalogo').scrollIntoView({behavior:'smooth'})">
+    Ver catálogo
+  </button>
+</header>
+
+<main>
+  <section class="hero" id="inicio">
+    <div class="hero-content">
+      <span class="eyebrow">REPUESTOS Y ACCESORIOS AUTOMOTRICES</span>
+      <h1>Todo para el cuidado<br>de tu <span>vehículo</span></h1>
+      <p>
+        Encuentra aceites, filtros, frenos, baterías, llantas,
+        herramientas y accesorios para mantener tu vehículo en óptimas condiciones.
+      </p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="#catalogo">Explorar catálogo</a>
+        <a class="btn-secondary" href="#contacto">Consultar disponibilidad</a>
+      </div>
+    </div>
+    <div class="hero-decoration">
+      <div class="circle"></div>
+      <div class="hero-card">
+        <strong>LJA</strong>
+        <span>MOTORS</span>
+        <small>Calidad y rendimiento</small>
+      </div>
+    </div>
+  </section>
+
+  <section class="catalog-section" id="catalogo">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow dark">NUESTRO CATÁLOGO</span>
+        <h2>Productos para tu vehículo</h2>
+        <p>Selecciona una categoría para encontrar lo que necesitas.</p>
+      </div>
+      <div class="search-box">
+        <span>⌕</span>
+        <input id="searchInput" type="search" placeholder="Buscar producto..." oninput="renderProducts()">
+      </div>
+    </div>
+
+    <div class="filters">
+      <button class="filter active" data-category="Todos">Todos</button>
+      <button class="filter" data-category="Lubricantes">Lubricantes</button>
+      <button class="filter" data-category="Frenos">Frenos</button>
+      <button class="filter" data-category="Filtros">Filtros</button>
+      <button class="filter" data-category="Motor">Motor</button>
+      <button class="filter" data-category="Electricidad">Electricidad</button>
+      <button class="filter" data-category="Suspensión">Suspensión</button>
+      <button class="filter" data-category="Accesorios">Accesorios</button>
+    </div>
+
+    <div class="product-grid" id="productGrid"></div>
+    <p class="empty" id="emptyMessage">No se encontraron productos.</p>
+  </section>
+
+  <section class="services" id="servicios">
+    <div>
+      <span class="eyebrow">LJA MOTORS</span>
+      <h2>Más que repuestos,<br>cuidamos tu vehículo.</h2>
+    </div>
+    <div class="service-list">
+      <article><span>01</span><div><h3>Asesoría especializada</h3><p>Te ayudamos a elegir el repuesto adecuado.</p></div></article>
+      <article><span>02</span><div><h3>Productos de calidad</h3><p>Opciones para mantenimiento y reparación.</p></div></article>
+      <article><span>03</span><div><h3>Servicio confiable</h3><p>Atención pensada para las necesidades de tu vehículo.</p></div></article>
+    </div>
+  </section>
+
+  <section class="contact" id="contacto">
+    <div>
+      <span class="eyebrow dark">¿NECESITAS AYUDA?</span>
+      <h2>Consulta disponibilidad<br>de tu producto.</h2>
+      <p>Escríbenos y recibe información sobre referencias, precios y disponibilidad.</p>
+    </div>
+    <a class="btn-primary" href="https://wa.me/573000000000" target="_blank">Consultar por WhatsApp</a>
+  </section>
+</main>
+
+<footer>
+  <div class="logo">
+    <span class="logo-mark">LJA</span><span class="logo-text">MOTORS</span>
+  </div>
+  <p>Calidad y rendimiento para tu vehículo.</p>
+  <span>© 2026 LJA MOTORS</span>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
