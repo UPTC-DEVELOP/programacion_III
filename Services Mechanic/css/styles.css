@@ -2016,3 +2016,73 @@ footer#contacto .derechos-footer {
     gap: 28px;
   }
 }
+
+/* SERVICIO EN PANTALLAS GRANDES */
+
+@media (min-width: 1600px) {
+
+  #solicitud-servicio {
+    padding-block: 5em;
+  }
+
+  #solicitud-servicio .contenedor-solicitud {
+    gap: 3.75em;
+  }
+
+  #solicitud-servicio h2 {
+    font-size: 2.75em;
+  }
+
+  #solicitud-servicio .descripcion-solicitud {
+    font-size: 1.125em;
+    max-width: 30em;
+  }
+
+  #solicitud-servicio .etiqueta-solicitud,
+  #solicitud-servicio .checklist-solicitud li {
+    font-size: 1em;
+  }
+
+  #solicitud-servicio .checklist-solicitud {
+    gap: 0.875em;
+  }
+
+  #solicitud-servicio .check-solicitud {
+    width: 1.5em;
+    height: 1.5em;
+  }
+
+  #solicitud-servicio .burbujas-solicitud {
+    margin-top: 2em;
+    gap: 0.875em;
+  }
+
+  #solicitud-servicio form {
+    padding: 2.25em;
+    border-radius: 1.125em;
+    gap: 0.25em 1.25em;
+  }
+
+  #solicitud-servicio label {
+    font-size: 0.875em;
+  }
+
+  #solicitud-servicio input,
+  #solicitud-servicio select,
+  #solicitud-servicio textarea {
+    font-size: 1em;
+    padding: 0.75em 0.875em;
+    border-radius: 0.625em;
+  }
+
+  #solicitud-servicio button[type="submit"] {
+    font-size: 1em;
+    padding: 1em 1.75em;
+    border-radius: 0.625em;
+  }
+
+  #estado-sistema {
+    font-size: 1.0625em;
+  }
+
+}
