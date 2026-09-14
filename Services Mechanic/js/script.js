@@ -118,3 +118,66 @@
     iniciarCarrusel();
   }
 })();
+
+
+// =========================================================
+// VALIDACIÓN DEL FORMULARIO DE SOLICITUD DE INFORMACIÓN
+// Services Mechanic
+// =========================================================
+
+document.addEventListener("DOMContentLoaded", () => {
+  const formulario = document.getElementById("form-solicitud");
+  const estadoSistema = document.getElementById("estado-sistema");
+
+  // Si esta página no tiene el formulario, no hacemos nada más
+  if (!formulario) return;
+
+  // Mensajes de error personalizados por campo
+  const mensajesError = {
+    nombre: "Ingresa un nombre válido (mínimo 3 caracteres).",
+    taller: "Ingresa el nombre del taller (mínimo 3 caracteres).",
+    correo: "Ingresa un correo electrónico válido.",
+    telefono: "Ingresa un teléfono válido (solo números, +, espacios, guiones).",
+    "num-empleados": "El número de empleados no puede ser negativo.",
+    "plan-interes": "Selecciona un plan de interés.",
+    mensaje: "Escribe tu mensaje con al menos 10 caracteres.",
+  };
+
+
+  // Valida un solo campo y muestra/oculta su mensaje de error
+  
+  function validarCampo(campo) {
+    const spanError = document.getElementById(`error-${campo.id}`);
+    const esValido = campo.checkValidity();
+
+    if (!esValido) {
+      campo.classList.add("campo-invalido");
+      if (spanError) {
+        spanError.textContent = mensajesError[campo.id] || "Este campo no es válido.";
+      }
+    } else {
+      campo.classList.remove("campo-invalido");
+      if (spanError) {
+        spanError.textContent = "";
+      }
+    }
+
+    return esValido;
+  }
+
+  
+  // Validación en tiempo real: al salir de cada campo (blur)// 
+  const campos = formulario.querySelectorAll("input, select, textarea");
+  campos.forEach((campo) => {
+    campo.addEventListener("blur", () => validarCampo(campo));
+
+    // Si el usuario corrige mientras escribe, limpiamos el error al instante
+    campo.addEventListener("input", () => {
+      if (campo.classList.contains("campo-invalido")) {
+        validarCampo(campo);
+      }
+    });
+  });
+
+  
+});
