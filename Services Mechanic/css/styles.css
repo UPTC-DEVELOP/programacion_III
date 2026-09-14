@@ -755,7 +755,9 @@ body > header,
 #problema,
 #nosotros,
 #servicios,
-#beneficios {
+#beneficios,
+#solicitud-servicio,
+footer#contacto {
   font-size: clamp(1rem, 1vw, 1.625rem);
   padding-inline: max(24px, calc((100% - 90em) / 2));
 }
@@ -2014,6 +2016,41 @@ footer#contacto .derechos-footer {
   footer#contacto .contenedor-footer {
     grid-template-columns: 1fr;
     gap: 28px;
+  }
+}
+
+/* FOOTER EN PANTALLAS GRANDES */
+
+@media (min-width: 1600px) {
+  footer#contacto {
+    padding-block: 3.75em 1.75em;
+  }
+
+  footer#contacto .contenedor-footer {
+    gap: 2em;
+    padding-bottom: 2em;
+  }
+
+  footer#contacto h2 {
+    font-size: 1.25em;
+  }
+
+  footer#contacto h3 {
+    font-size: 1em;
+  }
+
+  footer#contacto p,
+  footer#contacto a,
+  footer#contacto .enlace-whatsapp {
+    font-size: 0.9375em;
+  }
+
+  footer#contacto .derechos-footer {
+    font-size: 0.875em;
+  }
+
+  footer#contacto .mapa-footer iframe {
+    height: 14em;
   }
 }
 
