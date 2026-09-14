@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+   <!-- Encabezado principal de la pagina que maneja el menu de navegacion -->
     <header>
         <a href="#">
             <img src="Css/IMG/LOGO.png" alt="LJA Taller Mecanico Logo" width="60" height="60">
@@ -22,6 +23,7 @@
                 <li><a href="#Servicios">Servicios</a></li>
                 <li><a href="#nosotros">Nosotros</a></li>
                 <li><a href="#contacto">Contacto</a></li>
+                <li><a href="Archivos HTML/Catalogo.html">Catalogo</a></li>
 
             </ul>
         </nav>
@@ -29,6 +31,7 @@
     </header>
 
     <main>
+        <!-- Información inicial que maneja la página que ayuda a que nos conozcan los cliente -->
         <section id="bloque_1">
             <div class="columna-contenido">
             <span>Taller Abierto - Atencion Inmediata</span>
@@ -39,14 +42,15 @@
             <div class="contenedor-enlaces">
                 <a href="#Servicios">Ver nuestro servicios</a>
                 <a href="#contacto">Contacto</a>
-                <a href="#">Catalogo</a>
+                <a href="Archivos HTML/Catalogo.html">Catalogo</a>
             </div>
             </div>
             <div class="columna-imagen">
                 <img src="Css/IMG/LOGO.png" alt="LJA Taller Mecanico" width="300" height="600">
             </div>
         </section>
-
+ <!-- Seccion de los servicios ofrecidos por la empresa -->
+        
         <section id="Servicios">
             <span>NUESTROS SERVICIOS</span>
             <h2>Todo lo que tu vehiculo necesita</h2>
@@ -142,46 +146,43 @@
             </div>
         </section>
 
-       <section id="nosotros">
-    <!-- COLUMNA IZQUIERDA: TEXTO Y BOTÓN -->
-    <div class="nosotros-texto">
-        <span>¿Quienes somos?</span>
-        <h2>Expertos en mecánica automotriz con más de una década de experiencia</h2>
-        <p>En LJA Taller Mecánico nos especializamos en el diagnóstico y reparación integral de vehículos de todas las marcas. Nuestro equipo de técnicos certificados trabaja con equipos de diagnóstico de última generación para identificar y solucionar cualquier problema con precisión y eficiencia.</p>
-        
-        <a href="nosotros.html" class="btn-primario">Conoce nuestra historia y filosofía &rarr;</a>
-    </div>
+        <section id="nosotros">
+            <div class="imagen_nosotros">
+                <img src="Css/IMG/13.png" alt="Mecanico trabajando en motor de auto" width="400" height="400">
+                
+                 </div>
+               
+            <div class="informacion">
+                <span>¿Quienes somos?</span>
+                <h2>Expertos en mecánica automotriz con más de una década de experiencia</h2>
+                <p>En LJA Taller Mecánico nos especializamos en el diagnóstico y reparación integral de vehículos de todas las marcas. Nuestro equipo de técnicos certificados trabaja con equipos de diagnóstico de última generación para identificar y solucionar cualquier problema con precisión y eficiencia.</p>
 
-    <!-- COLUMNA DERECHA: TARJETAS EFECTO CRISTAL -->
-    <div class="nosotros-grid">
-        <article class="glass-card">
-            <i class='bx bx-shield-quarter'></i>
-            <h3>Garantia en todos los trabajos</h3>
-            <p>Respaldamos cada servicio con garantía escrita.</p>
-        </article>
-
-        <article class="glass-card">
-            <i class='bx bx-stopwatch'></i>
-            <h3>Servicio rápido y puntual</h3>
-            <p>Respetamos los tiempos acordados con el cliente.</p>
-        </article>
-
-        <article class="glass-card">
-            <i class='bx bx-diamond'></i>
-            <h3>Repuestos de calidad</h3>
-            <p>Solo utilizamos piezas originales y certificadas.</p>
-        </article>
-
-        <article class="glass-card">
-            <i class='bx bx-radar'></i>
-            <h3>Seguimiento en tiempo real</h3>
-            <p>Mantente informado del estado de tu vehículo.</p>
-        </article>
-    </div>
-</section>
+                <ul>
+                    <li>
+                        <img src="Css/IMG/15.png" alt="la imagen hace referencia a un listo o un okey" width="30" height="30">
+                        <h3>Garantia en todos los trabajos</h3>
+                        <p>Respaldamos cada servicio con garantía escrita.</p>
+                    </li>
+                    <li>
+                        <img src="Css/IMG/17.png" alt="cronograma" width="30" height="30">
+                        <h3>Servicio rápido y puntual</h3>
+                        <p>Respetamos los tiempos acordados con el cliente.</p>
+                    </li>
+                    <li>
+                        <img src="Css/IMG/14.png" alt="Un diamante" width="30" height="30">
+                        <h3>Repuestos de calidad</h3>
+                        <p>Solo utilizamos piezas originales y certificadas.</p>
+                    </li>
+                    <li>
+                        <img src="Css/IMG/16.png" alt="Calendario" width="30" height="30">
+                        <h3>Seguimiento en tiempo real</h3>
+                        <p>Mantente informado del estado de tu vehículo.</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
 
         <section id="contacto">
-    <!-- COLUMNA IZQUIERDA: INFORMACIÓN -->
     <div class="contacto-info">
         <span class="contacto-tag">CONTACTO</span>
         <h2>Agenda tu cita o consúltanos</h2>
@@ -199,7 +200,7 @@
                
                 <div>
                     <strong>TELÉFONO</strong>
-                    <p>+57 (601) 234-5678 | +57 300 000 0000</p>
+                    <p>+57 300 000 0000</p>
                 </div>
             </li>
             <li>
@@ -214,12 +215,15 @@
                 <div>
                     <strong>HORARIO</strong>
                     <p>Lun - Sáb: 7:00 AM - 6:00 PM</p>
+                    <div class="botones-contacto">
+                        <a href="https://web.whatsapp.com/" class="btn-whatsapp"> WhatsApp </a>
+                    </div>
                 </div>
             </li>
         </ul>
     </div>
 
-    <!-- COLUMNA DERECHA: TARJETA DEL FORMULARIO -->
+
     <div class="contacto-card">
         <h3>Envíanos un mensaje</h3>
         
@@ -270,7 +274,7 @@
         <div>
             <img src="Css/IMG/LOGO.png" alt="logo de la empresa" width="100" height="100">
             <p>Tu taller de confianza con más de 10 años de experiencia en mecánica automotriz. Calidad, precisión y garantía en cada trabajo.</p>
-          <p>© 2024 LJA Taller Mecánico.</p>
+          <p>© 2026 LJA Taller Mecánico.Derechos de autor para el grupo 2</p>
         </div>
 
         <div>
@@ -285,14 +289,23 @@
         </div>
 
         <div>
-            <h3>Contacto</h3>
+            <h3>CONTACTO</h3>
             <ul>
-                <li>+57 (601) 234-5678</li>
                 <li>+57 300 000 0000</li>
                 <li>contacto@lja-taller.com</li>
-                <li>Lun–Sáb 7am–6pm</li>
+                <li><a href="https://maps.app.goo.gl/CFy2htvujREwz8wy6">Ubicación</a></li>
+                <li><a href="https://www.instagram.com/?hl=es">Instagram</a></li>
             </ul>
-        </div>
+            </div>
+            
+       <div>
+        <h3>INFORMACIÓN</h3>
+        <ul>
+            <li><a href="#">Privacidad</a></li>
+            <li><a href="#">Términos</a></li>
+            <li><a href="#">Protección de datos</a></li>
+        </ul>
+    </div>
 
         <hr>
         
@@ -300,5 +313,6 @@
     </footer>
 
     <script src="js/main.js" defer></script>
+    <script src="JS/alerta.js"></script>
 </body>
 </html>

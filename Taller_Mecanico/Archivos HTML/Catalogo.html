@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>LJA MOTORS | Catálogo</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../Css/Catalogo.css">
+</head>
+
+<body>
+
+  <!-- ENCABEZADO -->
+  <header class="navbar">
+
+    <a class="logo" href="#">
+      <span class="logo-mark">LJA</span>
+      <span class="logo-text">MOTORS</span>
+    </a>
+
+    <nav>
+      <a href="#catalogo">Catálogo</a>
+    </nav>
+
+  </header>
+
+
+  <!-- CATÁLOGO -->
+  <main>
+
+    <section class="catalog-section" id="catalogo">
+
+      <div class="section-heading">
+
+        <div>
+          <span class="eyebrow dark">NUESTRO CATÁLOGO</span>
+
+          <h1>Productos para tu vehículo</h1>
+
+          <p>
+            Encuentra repuestos, accesorios y productos para el mantenimiento
+            de tu vehículo.
+          </p>
+        </div>
+
+
+        <!-- BUSCADOR -->
+        <div class="search-box">
+
+          <span>⌕</span>
+
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="Buscar producto..."
+            oninput="renderProducts()"
+          >
+
+        </div>
+
+      </div>
+
+
+      <!-- FILTROS -->
+      <div class="filters">
+
+        <button class="filter active" data-category="Todos">
+          Todos
+        </button>
+
+        <button class="filter" data-category="Lubricantes">
+          Lubricantes
+        </button>
+
+        <button class="filter" data-category="Frenos">
+          Frenos
+        </button>
+
+        <button class="filter" data-category="Filtros">
+          Filtros
+        </button>
+
+        <button class="filter" data-category="Motor">
+          Motor
+        </button>
+
+        <button class="filter" data-category="Electricidad">
+          Electricidad
+        </button>
+
+        <button class="filter" data-category="Suspensión">
+          Suspensión
+        </button>
+
+        <button class="filter" data-category="Accesorios">
+          Accesorios
+        </button>
+
+      </div>
+
+
+      <!-- PRODUCTOS -->
+      <div
+        class="product-grid"
+        id="productGrid">
+      </div>
+
+
+      <!-- MENSAJE CUANDO NO HAY PRODUCTOS -->
+      <p
+        class="empty"
+        id="emptyMessage">
+        No se encontraron productos.
+      </p>
+
+    </section>
+
+  </main>
+
+
+  <!-- PIE DE PÁGINA -->
+  <footer>
+
+    <div class="logo">
+
+      <span class="logo-mark">LJA</span>
+      <span class="logo-text">MOTORS</span>
+
+    </div>
+
+    <p>
+      Calidad y rendimiento para tu vehículo.
+    </p>
+
+    <span>
+      © 2026 LJA MOTORS
+    </span>
+
+  </footer>
+
+
+  <!-- JAVASCRIPT -->
+  <script src="../JS/catalogo.js"></script>
+
+</body>
+</html>
