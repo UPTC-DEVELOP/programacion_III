@@ -1853,6 +1853,9 @@ body > header,
   border-radius: 10px;
   transition: padding 0.2s;
 }
+#estado-sistema:empty {
+  display: none;
+}
 
 #estado-sistema:not(:empty) {
   padding: 16px 20px;
