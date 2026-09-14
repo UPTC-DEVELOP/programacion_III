@@ -1679,8 +1679,6 @@ body > header,
   grid-template-columns: minmax(0, 1fr);
   gap: 40px;
   align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 /* --- Columna izquierda: texto --- */
@@ -1845,7 +1843,7 @@ body > header,
 
 /* Mensaje de estado (confirmación / error general) */
 #estado-sistema {
-  max-width: 1200px;
+  max-width: 720px;
   margin: 24px auto 0;
   padding: 0;
   text-align: center;
