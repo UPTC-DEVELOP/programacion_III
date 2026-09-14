@@ -77,15 +77,47 @@ header .Acces:hover {
 /* =========================================
    4. Hero Section (Bloque 1)
    ========================================= */
+/* =========================================
+   4. Hero Section (Bloque 1 - Ancho Completo)
+   ========================================= */
 #bloque_1 {
+    position: relative;
     display: flex;
     flex-direction: row; 
     align-items: center; 
     justify-content: space-between; 
     gap: 4rem;
-    padding: 6rem 10% 4rem;
-    max-width: 1400px;
-    margin: 0 auto;
+    padding: 8rem 8% 6rem; /* Margen interior lateral adaptativo */
+    width: 100%;           /* Ocupa el 100% de la pantalla */
+    min-height: 85vh;
+    
+    /* Imagen de fondo con degradado oscuro profesional */
+    background-image: 
+        linear-gradient(to right, rgba(7, 11, 25, 0.95) 40%, rgba(7, 11, 25, 0.75) 100%),
+        url('../assets/Mechanical_engineer_scanning_car…_2K_20260912132231.jpeg'); 
+    background-size: cover;
+    background-position: center;
+    border-bottom: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+/* Efecto de brillo de luz azul (Resplandor LED corporativo) de fondo */
+#bloque_1::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, transparent 70%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.columna-contenido, 
+.columna-imagen {
+    position: relative;
+    z-index: 2;
 }
 
 .columna-contenido {
@@ -105,6 +137,7 @@ header .Acces:hover {
 .columna-imagen img {
     max-width: 100%;
     height: auto; 
+    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.5));
 }
 
 .contenedor-enlaces {
@@ -118,16 +151,23 @@ header .Acces:hover {
     font-weight: 600;
     text-decoration: none;
     white-space: nowrap; 
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.contenedor-enlaces a:hover {
+    transform: translateY(-3px);
 }
 
 .contenedor-enlaces a:first-child, 
 .contenedor-enlaces a:last-child {
     background-color: var(--primary-blue); 
     color: white;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
 }
 
 .contenedor-enlaces a:nth-child(2) {
-    background-color: transparent;
+    background-color: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(8px);
     border: 1px solid var(--border-color); 
     color: white;
 }
@@ -135,15 +175,17 @@ header .Acces:hover {
 #bloque_1 span:first-child {
     color: var(--primary-blue);
     font-size: 0.9rem;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     text-transform: uppercase;
     margin-bottom: 1rem;
+    font-weight: 700;
 }
 
 #bloque_1 h1 {
     font-size: 3.5rem;
-    line-height: 1.2;
+    line-height: 1.15;
     margin-bottom: 1.5rem;
+    color: var(--text-main);
 }
 
 #bloque_1 .columna-contenido h1 span {
@@ -154,8 +196,25 @@ header .Acces:hover {
 
 #bloque_1 p {
     color: var(--text-muted);
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     margin-bottom: 2.5rem;
+    line-height: 1.6;
+}
+
+/* Responsive para dispositivos móviles */
+@media (max-width: 900px) {
+    #bloque_1 {
+        flex-direction: column;
+        padding: 5rem 5%;
+        text-align: center;
+    }
+    .columna-contenido {
+        align-items: center;
+        text-align: center;
+    }
+    #bloque_1 h1, #bloque_1 .columna-contenido h1 span {
+        font-size: 2.5rem !important;
+    }
 }
 
 /* =========================================
@@ -428,7 +487,10 @@ footer a {
 }
 
 /* =========================================
-   8. NUEVA SECCIÓN NOSOTROS (Estilo Premium / F1)
+   8. Informacion de la empresa (Index Principal)
+   ========================================= */
+/* =========================================
+   8. SECCIÓN NOSOTROS (Fondo Parallax y Glassmorphism)
    ========================================= */
 #nosotros {
     position: relative;
@@ -437,24 +499,24 @@ footer a {
     align-items: center;
     justify-content: space-between;
     gap: 4rem;
-    min-height: 80vh;
+    min-height: 85vh;
     
-    /* Imagen de fondo con degradado oscuro */
+    /* Fondo con imagen de alta calidad, degradado oscuro y efecto Parallax */
     background-image: 
-        linear-gradient(to right, rgba(7, 11, 25, 1) 15%, rgba(7, 11, 25, 0.3) 100%),
-        url('../Css/IMG/13.png'); 
+        linear-gradient(to right, rgba(7, 11, 25, 0.92) 20%, rgba(7, 11, 25, 0.6) 100%),
+        url('IMG/13.png'); 
     background-size: cover;
     background-position: center;
-    background-attachment: fixed; /* Efecto Parallax */
+    background-attachment: fixed;
     border-top: 1px solid #1E293B;
     border-bottom: 1px solid #1E293B;
 }
 
-/* Columna Izquierda */
+/* Columna Izquierda (Texto y Botón) */
 .nosotros-texto {
     flex: 1;
     max-width: 550px;
-    z-index: 2; /* Mantiene el texto por encima del fondo */
+    z-index: 2;
 }
 
 .nosotros-texto span {
@@ -463,12 +525,14 @@ footer a {
     letter-spacing: 2px;
     text-transform: uppercase;
     font-size: 0.9rem;
+    display: block;
+    margin-bottom: 1rem;
 }
 
 .nosotros-texto h2 {
     color: #F8FAFC;
-    font-size: 3rem;
-    margin: 1rem 0 1.5rem;
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
     line-height: 1.2;
 }
 
@@ -476,10 +540,10 @@ footer a {
     color: #94A3B8;
     font-size: 1.1rem;
     margin-bottom: 2.5rem;
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
-/* Columna Derecha (Cuadrícula) */
+/* Columna Derecha (Grilla de Tarjetas) */
 .nosotros-grid {
     flex: 1;
     display: grid;
@@ -488,6 +552,69 @@ footer a {
     z-index: 2;
 }
 
+/* Efecto Glassmorphism (Cristal Translúcido) */
+.glass-card {
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2rem 1.5rem;
+    border-radius: 16px;
+    transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(37, 99, 235, 0.6);
+    background: rgba(15, 23, 42, 0.85);
+}
+
+.glass-card img {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 1rem;
+    filter: brightness(0) invert(1);
+}
+
+.glass-card h3 {
+    color: #F8FAFC;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.glass-card p {
+    color: #94A3B8;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Responsive para la sección Nosotros */
+@media (max-width: 992px) {
+    #nosotros {
+        flex-direction: column;
+        padding: 5rem 5%;
+    }
+    .nosotros-texto {
+        max-width: 100%;
+        text-align: center;
+    }
+    .nosotros-texto .btn-primario {
+        margin: 0 auto;
+    }
+    .nosotros-grid {
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .nosotros-grid {
+        grid-template-columns: 1fr;
+    }
+    .nosotros-texto h2 {
+        font-size: 2.2rem;
+    }
+}
 /* Efecto Glassmorphism (Cristal Translúcido) para las tarjetas */
 .glass-card {
     background: rgba(15, 23, 42, 0.5);
@@ -505,11 +632,13 @@ footer a {
     background: rgba(15, 23, 42, 0.8);
 }
 
+/* Corrección de los iconos en las tarjetas */
 .glass-card img {
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     margin-bottom: 1rem;
-    filter: brightness(0) invert(1); /* Asegura que los íconos sean blancos */
+    object-fit: contain;
+    /* Eliminamos el filtro que los volvía blancos sólidos para que muestren su diseño original */
 }
 
 .glass-card h3 {
@@ -890,3 +1019,20 @@ footer a {
     100% { transform: translateX(calc(-200px * 7)); }
 }
 
+/* Contenedor y diseño nítido para los nuevos iconos vectoriales */
+.glass-card .icono-caja {
+    width: 60px;
+    height: 60px;
+    background: rgba(37, 99, 235, 0.15); /* Fondo azul translúcido elegante */
+    border: 1px solid rgba(37, 99, 235, 0.3);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+}
+
+.glass-card .icono-caja i {
+    font-size: 1.5rem;
+    color: #3b82f6; /* Azul brillante, perfectamente legible sobre la tarjeta oscura */
+}
