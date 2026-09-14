@@ -5,15 +5,15 @@
 }
 
 :root {
-    --color-primary: #f12e48;
-    --color-secondary: #E63946;
+    --color-primary: #EE2524;
+    --color-secondary: #F99B9B;
     --color-accent: #F4A261;
     --color-bg-light: #F8F9FA;
-    --color-text-dark: #1A1A2E;
+    --color-text-dark: #223239;
     --color-text-light: #FFFFFF;
     --color-gray: #6C757D;
     --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    --shadow: 0 4px 20px rgba(0,0,0,0.08);
+    --shadow: 0 4px 15px rgba(0,0,0,0.05);
     --radius: 12px;
 }
 
@@ -37,7 +37,7 @@ body {
 /* --- Header --- */
 header {
     background-color: #FFFFFF;
-    color: #1A1A2E;
+    color: var(--color-text-dark);
     padding: 15px 40px;
     display: flex;
     justify-content: center;
@@ -102,7 +102,7 @@ header nav ul {
 }
 
 header nav ul li a {
-    color: #1A1A2E;
+    color: var(--color-text-dark);
     text-decoration: none;
     font-weight: 500;
     font-size: 1rem;
@@ -110,7 +110,7 @@ header nav ul li a {
 }
 
 header nav ul li a:hover {
-    color: #E63946;
+    color: var(--color-primary);
 }
 
 /* Botones de Login y Sign up */
@@ -121,14 +121,14 @@ header nav ul li a:hover {
 }
 
 .btn-login {
-    color: #E63946;
+    color: var(--color-primary);
     text-decoration: none;
     font-weight: 600;
     font-size: 1rem;
 }
 
 .btn-signup {
-    background-color: #E63946;
+    background-color: var(--color-primary);
     color: white;
     padding: 8px 18px;
     border-radius: 6px;
@@ -203,7 +203,7 @@ section h2 {
 }
 
 .hero-text h2 .text-highlight {
-    color: #E63946 !important;  
+    color: var(--color-primary) !important;  
 }
 
 .hero-text p {
@@ -215,7 +215,7 @@ section h2 {
 
 .btn-hero {
     display: inline-block;
-    background: #E63946;
+    background: var(--color-primary);
     color: white;
     padding: 16px 45px;
     border-radius: 8px;
@@ -311,7 +311,7 @@ section h2 {
 
 #sobre-nosotros h2 {
     font-size: 2.8rem;
-    color: #E63946;
+    color: var(--color-primary);
     margin-bottom: 10px;
 }
 
@@ -356,12 +356,12 @@ section h2 {
     background: #F8F9FA;
     padding: 30px 35px;
     border-radius: 12px;
-    border-left: 5px solid #E63946;
+    border-left: 5px solid var(--color-primary);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 .sobre-bloque h3 {
-    color: #E63946;
+    color: var(--color-primary);
     font-size: 1.5rem;
     margin-bottom: 12px;
     font-weight: 700;
@@ -380,7 +380,7 @@ section h2 {
 
 .equipo h3 {
     font-size: 2rem;
-    color: #E63946;
+    color: var(--color-primary);
     margin-bottom: 30px;
 }
 
@@ -398,13 +398,13 @@ section h2 {
     border-radius: 16px;
     text-align: center;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
-    border-top: 4px solid #E63946;
+    border-top: 4px solid var(--color-primary);
 }
 
 .integrante-foto {
     width: 90px;
     height: 90px;
-    background: #E63946;
+    background: var(--color-primary);
     color: white;
     border-radius: 50%;
     display: flex;
@@ -415,7 +415,7 @@ section h2 {
 }
 
 .integrante h4 {
-    color: #E63946;
+    color: var(--color-primary);
     font-size: 1.25rem;
     margin-bottom: 5px;
     font-weight: 700;
@@ -596,5 +596,369 @@ footer {
     .equipo-grid {
         grid-template-columns: 1fr;
         max-width: 300px;
+    }
+}
+/* --- Reseñas y aliados --- */
+#reseñas {
+    background-color: #FFFFFF;
+    text-align: center;
+    padding: 70px 0;
+    border-bottom: none;
+}
+
+#reseñas h2 {
+    font-size: 2.1rem;
+    color: #4A5568;
+    margin-bottom: 40px;
+}
+
+.reseñas-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    max-width: 1250px;
+    margin: 0 auto 45px auto;
+}
+
+.reseña-card {
+    background: #FFFFFF;
+    border: 1px solid #f0f0f0;
+    border-radius: var(--radius);
+    padding: 30px 25px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.reseña-avatar {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    margin-bottom: 14px;
+}
+
+.reseña-card h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-text-dark);
+    margin-bottom: 12px;
+}
+
+.reseña-estrellas {
+    width: 55px;
+    height: auto;
+    margin-bottom: 16px;
+}
+
+.reseña-card p {
+    font-size: 0.85rem;
+    color: var(--color-gray);
+    line-height: 1.6;
+    max-width: 24ch;
+    margin: 0 auto;
+}
+
+.aliados-logos {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.aliados-logos li {
+    background-color: var(--color-bg-light);
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.aliados-logos img {
+    height: 26px;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: 0.75;
+    transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+.aliados-logos img:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+/* --- Contacto --- */
+#contacto {
+    background-color: #FFFFFF;
+    padding: 80px 20px;
+}
+
+.contacto-container {
+    display: grid;
+    grid-template-columns: minmax(0, 2.2fr) minmax(280px, 1fr);
+    gap: 40px;
+    max-width: 1250px;
+    margin: 0 auto;
+    align-items: stretch;
+}
+
+.contacto-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Fila superior: texto a la izquierda, ilustración a la derecha */
+.contacto-info-top {
+    display: grid;
+    grid-template-columns: minmax(240px, 0.85fr) minmax(0, 1.15fr);
+    gap: 24px;
+    align-items: center;
+}
+
+.contacto-texto {
+    display: flex;
+    flex-direction: column;
+}
+
+.tag-rojo {
+    color: var(--color-primary);
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.contacto-info h2 {
+    font-size: 2.2rem;
+    color: var(--color-text-dark);
+    line-height: 1.2;
+    text-align: left;
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+
+.contacto-info h2 .text-highlight {
+    color: var(--color-primary);
+    font-weight: 800;
+}
+
+.contacto-descripcion {
+    font-size: 0.85rem;
+    color: var(--color-gray);
+    margin-bottom: 20px;
+    max-width: 90%;
+}
+
+.contacto-lista {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin: 10px 0 0 0;
+}
+
+.contacto-lista li {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    background-color: transparent;
+}
+
+.contacto-lista .icon {
+    font-size: 1rem;
+    background-color: #FEE2E2; /* Un rojo más claro que el rosa pastel */
+    padding: 8px;
+    border-radius: 8px;
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    margin-top: 5px;
+}
+
+.lista-texto strong {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--color-text-dark);
+    margin-bottom: 2px;
+}
+
+.lista-texto p {
+    font-size: 0.75rem;
+    color: var(--color-gray);
+    margin: 0;
+}
+
+.contacto-imagen {
+    margin: 0;
+}
+
+.contacto-imagen img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    mix-blend-mode: multiply; /* funde el fondo blanco del JPG con la sección */
+}
+
+.contacto-accion {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-top: 10px;
+}
+
+.btn-rosa {
+    background-color: #F99B9B;
+    color: var(--color-text-dark);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-rosa:hover {
+    background-color: #f77b7b;
+    transform: scale(1.05);
+}
+
+.accion-texto {
+    font-size: 0.7rem;
+    color: var(--color-gray);
+    line-height: 1.4;
+}
+
+.accion-texto .icon-check {
+    color: var(--color-primary);
+    margin-right: 5px;
+}
+
+.contacto-formulario {
+    display: flex;
+    justify-content: center;
+    background-color: #FAFAFA;
+    border-radius: var(--radius);
+}
+
+.formulario-card {
+    padding: 35px 30px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.formulario-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.formulario-header h3 {
+    background-color: #F99B9B;
+    color: var(--color-text-dark);
+    padding: 5px 15px;
+    border-radius: 6px;
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin: 0;
+}
+
+.formulario-header .icon-menu {
+    font-size: 1.5rem;
+    color: var(--color-text-dark);
+    cursor: pointer;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+    color: var(--color-text-dark);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #FFFFFF;
+    font-size: 0.9rem;
+    font-family: var(--font-family);
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.btn-submit {
+    width: 40%;
+    background-color: #F99B9B;
+    color: var(--color-text-dark);
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-submit:hover {
+    background-color: #f77b7b;
+}
+
+@media (max-width: 1024px) {
+    .reseñas-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .contacto-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .contacto-info-top {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .reseñas-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .contacto-accion {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .contacto-info h2 {
+        font-size: 1.9rem;
     }
 }

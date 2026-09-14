@@ -131,12 +131,6 @@
             </div>
         </section>
 
-        <!-- Reseñas -->
-        <section id="reseñas" aria-labelledby="reseñas-titulo">
-            <h2 id="reseñas-titulo">Reseñas de Clientes</h2>
-            <!-- ... -->
-        </section>
-
         <!-- Características  -->
         <section id="caracteristicas" aria-labelledby="modulos-titulo">
             <h2 id="modulos-titulo">Todo lo que necesitas para tomar el control de tu negocio en una sola pantalla.</h2>
@@ -201,12 +195,131 @@
             </div>
         </section>
 
+        <!-- Reseñas y aliados -->
+        <section id="reseñas" aria-labelledby="reseñas-titulo">
+            <h2 id="reseñas-titulo">Reseñas y aliados</h2>
+
+            <div class="reseñas-grid">
+                <article class="reseña-card">
+                    <img src="img/imgAliado.png" alt="" class="reseña-avatar">
+                    <h3>Roberto Carlos</h3>
+                    <img src="img/imgEstrellas.svg" alt="Calificación: 5 de 5 estrellas" class="reseña-estrellas">
+                    <p>Gracias a AutoTech, mi taller creció un 50% en solo 6 meses</p>
+                </article>
+                <article class="reseña-card">
+                    <img src="img/imgAliado.png" alt="" class="reseña-avatar">
+                    <h3>Ronaldo Nazario</h3>
+                    <img src="img/imgEstrellas.svg" alt="Calificación: 5 de 5 estrellas" class="reseña-estrellas">
+                    <p>Gracias a AutoTech, mi taller creció un 50% en solo 6 meses</p>
+                </article>
+                <article class="reseña-card">
+                    <img src="img/imgAliado.png" alt="" class="reseña-avatar">
+                    <h3>Juan Cardenas</h3>
+                    <img src="img/imgEstrellas.svg" alt="Calificación: 5 de 5 estrellas" class="reseña-estrellas">
+                    <p>Gracias a AutoTech, mi taller creció un 50% en solo 6 meses</p>
+                </article>
+                <article class="reseña-card">
+                    <img src="img/imgAliado.png" alt="" class="reseña-avatar">
+                    <h3>Messi</h3>
+                    <img src="img/imgEstrellas.svg" alt="Calificación: 5 de 5 estrellas" class="reseña-estrellas">
+                    <p>Gracias a AutoTech, mi taller creció un 50% en solo 6 meses</p>
+                </article>
+            </div>
+
+            <ul class="aliados-logos" aria-label="Aliados comerciales">
+                <li><img src="img/imgGPT.svg" alt="OpenAI"></li>
+                <li><img src="img/imgMcDonals.svg" alt="McDonald's"></li>
+                <li><img src="img/imgWindows.svg" alt="Windows"></li>
+                <li><img src="img/imgLogoAliado.png" alt="WiFi"></li>
+                <li><img src="img/imgLogoAliado.png" alt="Meta"></li>
+            </ul>
+        </section>
+
     </main>
 
     <!-- Contacto -->
     <section id="contacto" aria-labelledby="contacto-titulo">
-        <h2 id="contacto-titulo">Solicita información</h2>
-        <!-- ... -->
+        <div class="contacto-container">
+            <!-- Columna Izquierda -->
+            <div class="contacto-info">
+                <div class="contacto-info-top">
+                    <div class="contacto-texto">
+                        <span class="tag-rojo">DIGITALIZACIÓN PARA TALLERES</span>
+                        <h2 id="contacto-titulo">Transformamos tu taller, <br><span class="text-highlight">impulsamos tu negocio.</span></h2>
+                        <p class="contacto-descripcion">Automatiza procesos, controla tu información y toma mejores decisiones <strong>desde una sola plataforma.</strong></p>
+
+                        <ul class="contacto-lista">
+                            <li>
+                                <span class="icon">📄</span>
+                                <div class="lista-texto">
+                                    <strong>Menos papeles, más control</strong>
+                                    <p>Digitaliza registros, órdenes y facturas.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="icon">📊</span>
+                                <div class="lista-texto">
+                                    <strong>Información en tiempo real</strong>
+                                    <p>Consulta y analiza el estado de tu taller al instante.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="icon">👥</span>
+                                <div class="lista-texto">
+                                    <strong>Todo en un solo lugar</strong>
+                                    <p>Clientes, vehículos, empleados, inventario y más.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="icon">🛡️</span>
+                                <div class="lista-texto">
+                                    <strong>Seguro, confiable y siempre disponible</strong>
+                                    <p>Tu información protegida y accesible desde cualquier lugar.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <figure class="contacto-imagen">
+                        <img src="img/imgTaller2.jpg" alt="Mecánico usando el panel de control de AutoTech en computador y tablet" loading="lazy">
+                    </figure>
+                </div>
+
+                <div class="contacto-accion">
+                    <button class="btn-rosa">Solicitar informacion</button>
+                    <span class="accion-texto"><span class="icon-check">✔️</span> Digitalizamos tu taller para que tú te enfoques en lo que realmente importa:<br><strong>hacer crecer tu negocio.</strong></span>
+                </div>
+            </div>
+
+            <!-- Columna Derecha (Formulario) -->
+            <div class="contacto-formulario">
+                <div class="formulario-card">
+                    <div class="formulario-header">
+                        <h3>Formulario</h3>
+                        <span class="icon-menu">☰</span>
+                    </div>
+                    <form id="form-contacto">
+                        <div class="form-group">
+                            <label for="nombre-taller">Nombre del taller</label>
+                            <input type="text" id="nombre-taller" name="nombre-taller" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre-propietario">Nombre Propietario</label>
+                            <input type="text" id="nombre-propietario" name="nombre-propietario" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="correo">Correo</label>
+                            <input type="email" id="correo" name="correo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono">Telefono</label>
+                            <input type="tel" id="telefono" name="telefono" required>
+                        </div>
+                        <button type="submit" class="btn-submit">Enviar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Footer -->

@@ -46,3 +46,32 @@ document.addEventListener('DOMContentLoaded', function() {
         cards.forEach(card => observer.observe(card));
     }
     });
+
+// Lógica para el formulario de contacto
+document.addEventListener('DOMContentLoaded', () => {
+    const formContacto = document.getElementById('form-contacto');
+    
+    if (formContacto) {
+        formContacto.addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevenir el envío por defecto
+            
+            // Obtener los valores de los campos
+            const nombreTaller = document.getElementById('nombre-taller').value.trim();
+            const nombrePropietario = document.getElementById('nombre-propietario').value.trim();
+            const correo = document.getElementById('correo').value.trim();
+            const telefono = document.getElementById('telefono').value.trim();
+            
+            // Validación básica
+            if (!nombreTaller || !nombrePropietario || !correo || !telefono) {
+                alert('Por favor, completa todos los campos del formulario.');
+                return;
+            }
+            
+            // Simular envío exitoso
+            alert('¡Gracias por comunicarte! Un asesor de AutoTech te contactará pronto.');
+            
+            // Limpiar el formulario
+            formContacto.reset();
+        });
+    }
+});
