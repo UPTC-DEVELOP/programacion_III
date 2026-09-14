@@ -179,5 +179,61 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  
+    // ---------------------------------------------------------
+  // Muestra un mensaje dinámico de estado (éxito o error)
+  // Manipulación del DOM: se crea/actualiza el contenido y las clases
+  // ---------------------------------------------------------
+  function mostrarMensajeEstado(texto, tipo) {
+    estadoSistema.textContent = texto;
+    estadoSistema.classList.remove("exito", "error");
+    estadoSistema.classList.add(tipo);
+
+    // Desplaza la vista hacia el mensaje para que el usuario lo note
+    estadoSistema.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  // ---------------------------------------------------------
+  // Evento submit: valida todo el formulario antes de "enviarlo"
+  // ---------------------------------------------------------
+  formulario.addEventListener("submit", (evento) => {
+    evento.preventDefault();
+
+    let formularioValido = true;
+    let primerCampoInvalido = null;
+
+    campos.forEach((campo) => {
+      const esValido = validarCampo(campo);
+      if (!esValido) {
+        formularioValido = false;
+        if (!primerCampoInvalido) {
+          primerCampoInvalido = campo;
+        }
+      }
+    });
+
+    if (!formularioValido) {
+      mostrarMensajeEstado(
+        "Revisa los campos marcados en rojo antes de enviar la solicitud.",
+        "error"
+      );
+      if (primerCampoInvalido) {
+        primerCampoInvalido.focus();
+      }
+      return;
+    }
+
+    // --- Aquí, en un backend real, se enviarían los datos con fetch() ---
+    // Como es un caso de estudio académico, simulamos la confirmación:
+
+    const nombre = formulario.querySelector("#nombre").value.trim();
+    const taller = formulario.querySelector("#taller").value.trim();
+
+    mostrarMensajeEstado(
+      `¡Gracias, ${nombre}! Registramos la solicitud de "${taller}". Un asesor te contactará pronto.`,
+      "exito"
+    );
+
+    formulario.reset();
+    campos.forEach((campo) => campo.classList.remove("campo-invalido"));
+  });
 });
