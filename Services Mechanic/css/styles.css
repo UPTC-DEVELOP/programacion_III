@@ -2086,3 +2086,29 @@ footer#contacto .derechos-footer {
   }
 
 }
+/* =========================================================
+   MAPA EN EL FOOTER
+   ========================================================= */
+
+footer#contacto .mapa-footer {
+  margin-top: 14px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #303336;
+  filter: grayscale(0.3) invert(0.92) contrast(0.9);
+  transition: filter 0.2s;
+}
+
+footer#contacto .mapa-footer:hover {
+  filter: grayscale(0) invert(0) contrast(1);
+}
+
+footer#contacto .mapa-footer iframe {
+  display: block;
+}
+
+@media (max-width: 600px) {
+  footer#contacto .mapa-footer iframe {
+    height: 150px;
+  }
+}
