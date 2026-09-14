@@ -8,10 +8,11 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="../Css/Catalogo.css">
+  <!-- Hojas de estilo unificadas: primero el estilo general de la marca y luego el catálogo -->
+  <link rel="stylesheet" href="Css/style.css">
+  <link rel="stylesheet" href="Css/Catalogo.css">
 </head>
 
 <body>
@@ -19,13 +20,15 @@
   <!-- ENCABEZADO -->
   <header class="navbar">
 
-    <a class="logo" href="#">
-      <span class="logo-mark">LJA</span>
-      <span class="logo-text">MOTORS</span>
+    <!-- Solo el logotipo más grande y sin textos adicionales -->
+    <a class="logo" href="index.html" style="display: flex; align-items: center; text-decoration: none;">
+      <img src="css/IMG/LOGO.png" alt="LJA Taller Mecanico Logo" width="65" height="65" style="object-fit: contain;">
     </a>
 
-    <nav>
+    <nav style="display: flex; align-items: center; gap: 1.5rem;">
       <a href="#catalogo">Catálogo</a>
+      <!-- Botón de retorno al inicio -->
+      <a href="index.html" class="btn-primario" style="padding: 0.5rem 1rem; background-color: var(--primary-blue); color: white; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 0.9rem;">Volver al Inicio</a>
     </nav>
 
   </header>
@@ -124,29 +127,25 @@
   </main>
 
 
-  <!-- PIE DE PÁGINA -->
+  <!-- PIE DE PÁGINA (Idéntico al de la página principal) -->
   <footer>
-
     <div class="logo">
-
       <span class="logo-mark">LJA</span>
       <span class="logo-text">MOTORS</span>
-
     </div>
-
+    
     <p>
       Calidad y rendimiento para tu vehículo.
     </p>
-
+    
     <span>
       © 2026 LJA MOTORS
     </span>
-
   </footer>
 
 
-  <!-- JAVASCRIPT -->
-  <script src="../JS/catalogo.js"></script>
+  <!-- JAVASCRIPT (Ruta corregida sin el ../ para que cargue los productos correctamente) -->
+  <script src="JS/catalogo.js"></script>
 
 </body>
 </html>
