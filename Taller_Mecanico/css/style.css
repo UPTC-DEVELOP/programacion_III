@@ -50,15 +50,13 @@ header {
     position: sticky;
     top: 0;
     z-index: 1000;
-    
 }
 
 nav ul {
     display: flex;
     gap: 2.5rem;
-     justify-content: flex-start;
+    justify-content: flex-start;
 }
-
 
 nav a:hover {
     color: var(--primary-blue);
@@ -90,7 +88,6 @@ header .Acces:hover {
     margin: 0 auto;
 }
 
-
 .columna-contenido {
     flex: 1; 
     display: flex;
@@ -98,7 +95,6 @@ header .Acces:hover {
     align-items: flex-start; 
     text-align: left; 
 }
-
 
 .columna-imagen {
     flex: 1;
@@ -123,7 +119,6 @@ header .Acces:hover {
     text-decoration: none;
     white-space: nowrap; 
 }
-
 
 .contenedor-enlaces a:first-child, 
 .contenedor-enlaces a:last-child {
@@ -162,7 +157,6 @@ header .Acces:hover {
     font-size: 1.2rem;
     margin-bottom: 2.5rem;
 }
-
 
 /* =========================================
    5. Módulo de Servicios (Grid)
@@ -229,7 +223,6 @@ header .Acces:hover {
 /* =========================================
    6. Formulario y Contacto
    ========================================= */
-
 #contacto {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -387,7 +380,6 @@ button[type="submit"]:hover {
     }
 }
 
-
 /* =========================================
    7. Footer
    ========================================= */
@@ -434,101 +426,565 @@ footer a {
     text-decoration: none;
     font-size: 0.85rem;
 }
+
 /* =========================================
-   8. Informacion de la empresa
+   8. NUEVA SECCIÓN NOSOTROS (Estilo Premium / F1)
    ========================================= */
 #nosotros {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 4rem;
-  padding: 6rem 10% 4rem;
-  max-width: 1400px;
-  margin: 0 auto;
+    position: relative;
+    padding: 8rem 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4rem;
+    min-height: 80vh;
+    
+    /* Imagen de fondo con degradado oscuro */
+    background-image: 
+        linear-gradient(to right, rgba(7, 11, 25, 1) 15%, rgba(7, 11, 25, 0.3) 100%),
+        url('../Css/IMG/13.png'); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Efecto Parallax */
+    border-top: 1px solid #1E293B;
+    border-bottom: 1px solid #1E293B;
 }
 
-.imagen_nosotros {
-  border-radius: 12px;
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  position: relative;
+/* Columna Izquierda */
+.nosotros-texto {
+    flex: 1;
+    max-width: 550px;
+    z-index: 2; /* Mantiene el texto por encima del fondo */
 }
 
-.imagen_nosotros img {
-  width: 100%;
-  max-width: 500px;
-  height: auto;
-  border-radius: 12px;
-  object-fit: cover;
+.nosotros-texto span {
+    color: #2563EB;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
 }
 
-.informacion {
-  flex: 1;
+.nosotros-texto h2 {
+    color: #F8FAFC;
+    font-size: 3rem;
+    margin: 1rem 0 1.5rem;
+    line-height: 1.2;
 }
 
-.informacion span {
-  color: var(--primary-blue, #2563eb);
-  font-weight: bold;
-  letter-spacing: 1px;
+.nosotros-texto p {
+    color: #94A3B8;
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
 }
 
-.informacion h2 {
-  font-size: 1.8rem;
-  margin: 0.8rem 0;
-  color: #ffffff;
+/* Columna Derecha (Cuadrícula) */
+.nosotros-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    z-index: 2;
 }
 
-.informacion > p {
-  color: var(--text-muted, #9ca3af);
-  font-size: 0.95rem;
-  margin-bottom: 2rem;
-  line-height: 1.5;
+/* Efecto Glassmorphism (Cristal Translúcido) para las tarjetas */
+.glass-card {
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 2rem;
+    border-radius: 16px;
+    transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
 }
 
-
-.informacion ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); 
-  gap: 1.2rem; 
+.glass-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(37, 99, 235, 0.6);
+    background: rgba(15, 23, 42, 0.8);
 }
 
-.informacion li {
-  background-color: var(--bg-card, #0f172a);
-  border: 1px solid var(--border-color, #1e293b);
-  border-radius: 12px;
-  padding: 1.25rem;
-  transition: transform 0.3s ease, border-color 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+.glass-card img {
+    width: 35px;
+    height: 35px;
+    margin-bottom: 1rem;
+    filter: brightness(0) invert(1); /* Asegura que los íconos sean blancos */
 }
 
-.informacion li:hover {
-  transform: translateY(-3px);
-  border-color: var(--primary-blue, #2563eb);
+.glass-card h3 {
+    color: #F8FAFC;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
 }
 
-.informacion li img {
-  width: 28px;
-  height: 28px;
-  margin-bottom: 0.25rem;
+.glass-card p {
+    color: #94A3B8;
+    font-size: 0.9rem;
+    line-height: 1.5;
 }
 
-.informacion li h3 {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #ffffff;
-  margin: 0;
+/* Botón CTA */
+.btn-primario {
+    display: inline-block;
+    background-color: #2563EB;
+    color: #ffffff !important;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+    transition: all 0.3s ease;
 }
 
-.informacion li p {
-  color: var(--text-muted, #9ca3af);
-  font-size: 0.82rem;
-  margin: 0;
-  line-height: 1.4;
+.btn-primario:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+}
+/* =========================================
+   9. PÁGINA INTERIOR: NOSOTROS (Estilo Claro / Corporativo)
+   ========================================= */
+
+/* Hero Interior (Oscuro y Corregido) */
+.hero-interior {
+    height: 55vh; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-image: linear-gradient(rgba(7, 11, 25, 0.85), rgba(7, 11, 25, 0.95)), url('../assets/Mechanical_engineer_scanning_car…_2K_20260912132231.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Etiqueta superior (Soluciona el error del tamaño) */
+.hero-texto-centrado .tag-hero {
+    color: var(--primary-blue);
+    font-weight: 700;
+    letter-spacing: 3px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+/* Título principal */
+.hero-texto-centrado h1 {
+    font-size: 3.5rem;
+    color: var(--text-main);
+    line-height: 1.2;
+    margin: 0;
+}
+
+/* Obliga al span interno del h1 a heredar el tamaño gigante */
+.hero-texto-centrado h1 span {
+    font-size: inherit; 
+    color: var(--primary-blue);
+    letter-spacing: normal;
+}
+
+/* =========================================
+   Sección Historia (Fondo Blanco Roto)
+   ========================================= */
+.historia-clara {
+    padding: 6rem 5%;
+    background-color: #F8FAFC; /* Blanco grisáceo muy limpio */
+    color: #0F172A; /* Texto oscuro */
+}
+
+.historia-grid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.historia-texto-claro {
+    flex: 1;
+}
+
+.historia-texto-claro h2 {
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
+    color: #0F172A;
+    line-height: 1.1;
+}
+
+.historia-texto-claro p {
+    color: #475569; /* Gris pizarra */
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
+}
+
+/* Efecto de marco celeste para la imagen */
+.historia-imagen-clara {
+    flex: 1;
+    position: relative;
+    z-index: 1;
+}
+
+.historia-imagen-clara img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 2;
+}
+
+.adorno-celeste {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 100%;
+    height: 100%;
+    border: 3px solid #2563EB;
+    border-radius: 12px;
+    z-index: 0;
+}
+
+/* =========================================
+   Sección MVV (Blanco Puro y Celestes)
+   ========================================= */
+/* =========================================
+   Sección MVV (Fondo Técnico y Celestes)
+   ========================================= */
+.mvv-blanca {
+    padding: 8rem 5%;
+    background-color: #FFFFFF;
+    
+    /* Fondo sutil tipo "plano de ingeniería" (Grid técnico) */
+    background-image: 
+        linear-gradient(rgba(37, 99, 235, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37, 99, 235, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px; /* Tamaño de la cuadrícula */
+}
+
+.mvv-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 4rem;
+}
+
+.mvv-header h2 {
+    font-size: 2.5rem;
+    color: #0F172A;
+    margin-bottom: 1rem;
+}
+
+.mvv-header p {
+    color: #64748B;
+    font-size: 1.1rem;
+}
+
+.mvv-grid-celeste {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Tarjetas (Flexbox para igualar alturas) */
+.tarjeta-celeste {
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%; /* Asegura que todas midan lo mismo */
+}
+
+.tarjeta-celeste:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(37, 99, 235, 0.12);
+}
+
+.tarjeta-celeste.destaque {
+    background-color: #EFF6FF;
+    border-color: #BFDBFE;
+}
+
+.icono-contenedor {
+    width: 75px;
+    height: 75px;
+    background-color: #DBEAFE;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.icono-contenedor i {
+    font-size: 2.5rem;
+    color: #2563EB;
+}
+
+.tarjeta-celeste h3 {
+    color: #0F172A;
+    font-size: 1.4rem;
+    margin-bottom: 1.2rem;
+}
+
+.tarjeta-celeste p {
+    color: #475569;
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+/* Estilos específicos para la nueva lista de valores */
+.lista-valores {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left; /* Alineamos a la izquierda para mejor lectura */
+    width: 100%;
+}
+
+.lista-valores li {
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+    color: #475569;
+    line-height: 1.5;
+    padding-left: 1.2rem;
+    position: relative;
+}
+
+/* Viñeta personalizada azul para la lista */
+.lista-valores li::before {
+    content: "•";
+    color: #2563EB;
+    font-size: 1.5rem;
+    position: absolute;
+    left: 0;
+    top: -4px;
+}
+
+.lista-valores strong {
+    color: #0F172A;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .historia-grid {
+        flex-direction: column;
+    }
+    .adorno-celeste {
+        display: none; /* Se oculta en móviles para ahorrar espacio */
+    }
+    .mvv-grid-celeste {
+        grid-template-columns: 1fr; 
+    }
+    .hero-texto-centrado h1 {
+        font-size: 2.5rem;
+    }
+}
+
+/* =========================================
+   Sección Carrusel de Marcas (Fondo Gris Claro)
+   ========================================= */
+.marcas-seccion {
+    padding: 2.5rem 0; /* Reducimos el grosor (antes era 5rem) */
+    background-color: #E2E8F0; /* Gris un tono más oscuro y contrastante */
+    border-top: 1px solid #CBD5E1; /* Borde sutil acorde al nuevo gris */
+    border-bottom: 1px solid #CBD5E1;
+    overflow: hidden; 
+}
+
+.marcas-header {
+    text-align: center;
+    margin-bottom: 2rem; 
+    padding: 0 5%;
+}
+
+.marcas-header h2 {
+    color: #0F172A; 
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.marcas-header p {
+    color: #475569; 
+    font-size: 1rem;
+}
+
+/* Contenedor principal del carrusel */
+.marcas-slider {
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Efecto de degradado a los lados ajustado al nuevo fondo gris */
+.marcas-slider::before,
+.marcas-slider::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 150px;
+    height: 100%;
+    z-index: 2;
+}
+
+/* Efecto de degradado a los lados ajustado AL NUEVO GRIS */
+.marcas-slider::before {
+    left: 0;
+    /* Usamos exactamente el mismo gris #E2E8F0 para que el desvanecimiento sea invisible */
+    background: linear-gradient(to right, #E2E8F0 0%, transparent 100%);
+}
+
+.marcas-slider::after {
+    right: 0;
+    /* Usamos exactamente el mismo gris #E2E8F0 */
+    background: linear-gradient(to left, #E2E8F0 0%, transparent 100%);
+}
+
+/* La pista que se mueve */
+.marcas-track {
+    display: flex;
+    width: calc(200px * 14); 
+    animation: scrollMarcas 30s linear infinite;
+}
+
+.marcas-slider:hover .marcas-track {
+    animation-play-state: paused;
+}
+
+/* Estilo individual de cada logo */
+.slide {
+    width: 200px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Logos en su color y opacidad 100% original */
+.slide img {
+    max-width: 120px;
+    max-height: 80px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+/* Efecto de leve crecimiento al pasar el mouse */
+.slide img:hover {
+    transform: scale(1.15);
+}
+
+/* Animación */
+@keyframes scrollMarcas {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-200px * 7)); }
+}
+
+/* =========================================
+   Sección CTA Final (Cierre de Alto Impacto)
+   ========================================= */
+.cta-final {
+    /* Degradado oscuro elegante */
+    background: linear-gradient(135deg, #070B19 0%, #0F172A 100%);
+    padding: 7rem 5%;
+    text-align: center;
+    border-top: 1px solid #1E293B;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Resplandor LED azul de fondo (Efecto de iluminación premium) */
+.cta-final::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, transparent 60%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.cta-contenido {
+    position: relative;
+    z-index: 2; /* Mantiene el texto por encima del resplandor */
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.cta-contenido .tag-cta {
+    color: #3b82f6; /* Azul brillante */
+    font-weight: 700;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 1.5rem;
+}
+
+.cta-contenido h2 {
+    color: #F8FAFC;
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.cta-contenido p {
+    color: #94A3B8;
+    font-size: 1.15rem;
+    margin-bottom: 3rem;
+    line-height: 1.7;
+}
+
+/* Contenedor de los botones */
+.cta-botones {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Diseño del Botón Secundario (Borde transparente) */
+.btn-secundario {
+    display: inline-block;
+    background-color: transparent;
+    color: #F8FAFC;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid #334155;
+    transition: all 0.3s ease;
+}
+
+.btn-secundario:hover {
+    border-color: #F8FAFC;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Responsive para el CTA */
+@media (max-width: 768px) {
+    .cta-contenido h2 {
+        font-size: 2.2rem;
+    }
+    .cta-botones {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .cta-botones a {
+        width: 100%; /* Botones ocupan todo el ancho en móviles */
+        max-width: none;
+    }
 }
