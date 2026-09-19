@@ -130,6 +130,41 @@ h3 { font-size: 16px; }
 }
 .menu-principal a:hover::after { width: 100%; }
 
+/* MENÚ DE REGISTRO (desplegable)*/
+.menu-registro { position: relative; }
+
+/* Gira la flecha cuando el desplegable está abierto  */
+.boton-registro[aria-expanded="true"] .icono-flecha { transform: rotate(180deg); }
+
+.lista-registro {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 200px;
+  list-style: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.6);
+  z-index: 60;
+}
+/* Sin esto, "hidden" no ocultaría la lista por el display:flex de arriba */
+.lista-registro[hidden] { display: none; }
+
+.lista-registro a {
+  display: block;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.lista-registro a:hover { background: var(--bg); color: var(--text); }
 
 /* PORTADA / HERO*/
 .portada {

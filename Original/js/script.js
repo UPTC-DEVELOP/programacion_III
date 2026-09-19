@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initAnimatedCounters();
   initFormValidation();
   initToggleDetalleServicio(); // mostrar/ocultar detalle por servicio
+  initToggleMenuRegistro();    // desplegable de registro (autos, clientes, empleados)
 });
 
 
@@ -188,5 +189,27 @@ function initToggleDetalleServicio() {
       // Cambia el texto del botón según el estado, sin tocar el ícono de flecha
       boton.firstChild.textContent = estaAbierto ? 'Ver detalles ' : 'Ocultar detalles ';
     });
+  });
+}
+
+// Menú desplegable "Registro" (autos, clientes, empleados)
+function initToggleMenuRegistro() {
+  const boton = document.getElementById('botonRegistro');
+  const lista = document.getElementById('listaRegistro');
+  if (!boton || !lista) return;
+
+  boton.addEventListener('click', () => {
+    const estaAbierto = boton.getAttribute('aria-expanded') === 'true';
+    boton.setAttribute('aria-expanded', String(!estaAbierto));
+    lista.hidden = estaAbierto;
+  });
+
+  // Cierra el desplegable si el usuario hace clic fuera de él
+  document.addEventListener('click', (event) => {
+    const clicDentroDelMenu = boton.contains(event.target) || lista.contains(event.target);
+    if (!clicDentroDelMenu && boton.getAttribute('aria-expanded') === 'true') {
+      boton.setAttribute('aria-expanded', 'false');
+      lista.hidden = true;
+    }
   });
 }
