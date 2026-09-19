@@ -2,29 +2,27 @@ const navToggle = document.getElementById('navToggle');
 const nav = document.getElementById('nav');
 document.addEventListener('DOMContentLoaded', function() {
 
-    const visualHero = document.querySelector('.hero__visual');
-if (visualHero) {
-    visualHero.innerHTML = '<img src="imagen__logo.jpeg" alt="Logo TallerPro" width="220" height="220">';
+
+   
+
+const carro = document.querySelector(".hero__visual");
+
+if (carro) {
+  // Empieza invisible y MUY lejos por la derecha
+  carro.style.opacity = "0";
+  carro.style.transform = "translateX(800px)";
+
+  // Más velocidad: 0.4 segundos en lugar de 1s
+  carro.style.transition = "opacity 0.4s ease, transform 0.2s ease";
+
+  setTimeout(function () {
+    // Aparece y cruza casi hasta el otro lado
+    carro.style.opacity = "1";
+    carro.style.transform = "translateX(-150px)";
+  }, 250);
 }
 
-    
-    const tituloHero = document.querySelector('#inicio h1');
-    if (tituloHero) {
-        const textoOriginal = tituloHero.textContent;
-        tituloHero.textContent = "";
 
-        let i = 0;
-        const velocidad = 50;
-
-        function escribirLetra() {
-            if (i < textoOriginal.length) {
-                tituloHero.textContent += textoOriginal.charAt(i);
-                i++;
-                setTimeout(escribirLetra, velocidad);
-            }
-        }
-        setTimeout(escribirLetra, 500);
-    }
 
     //
     const tarjetas = document.querySelectorAll('.benefit-card');
@@ -48,4 +46,14 @@ if (visualHero) {
         tarjetas.forEach(tarjeta => observador.observe(tarjeta));
     }
 
+
+
+
+
+
+
+
+
+
+    
 });
