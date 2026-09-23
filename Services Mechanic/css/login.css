@@ -1,0 +1,134 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Manrope", Arial, Helvetica, sans-serif;
+    background: #111315;
+    color: #ffffff;
+}
+
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    background: #1B1E20;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+}
+
+.login-brand {
+    background: #111315;
+    padding: 28px 24px;
+    text-align: center;
+    border-bottom: 2px solid #F5C518;
+}
+
+.login-brand h1 {
+    margin: 0;
+    color: #F5C518;
+    font-size: 28px;
+}
+
+.login-brand p {
+    margin: 8px 0 0;
+    color: #B8BDC3;
+    font-size: 14px;
+}
+
+.login-content {
+    padding: 30px 26px;
+}
+
+.login-content h2 {
+    margin: 0 0 8px;
+    font-size: 26px;
+}
+
+.login-text {
+    margin: 0 0 24px;
+    color: #B8BDC3;
+}
+
+.campo {
+    margin-bottom: 18px;
+}
+
+.campo label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: bold;
+}
+
+.campo input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #6B7075;
+    border-radius: 8px;
+    background: #252829;
+    color: #ffffff;
+    font-size: 15px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.campo input::placeholder {
+    color: #8C9196;
+}
+
+.campo input:focus {
+    outline: none;
+    border-color: #F5C518;
+    box-shadow: 0 0 0 3px rgba(245, 197, 24, 0.15);
+}
+
+.btn-login {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 8px;
+    background: #F5C518;
+    color: #111315;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-login:hover {
+    background: #DDB012;
+}
+
+.volver-inicio {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    color: #F5C518;
+    text-decoration: none;
+}
+
+.volver-inicio:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .login-card {
+        max-width: 100%;
+    }
+
+    .login-brand h1 {
+        font-size: 24px;
+    }
+
+    .login-content {
+        padding: 24px 20px;
+    }
+}

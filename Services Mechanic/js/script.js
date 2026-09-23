@@ -7,7 +7,7 @@
   const pausa = document.getElementById("pausar-carrusel");
   const indicadores = document.querySelectorAll("#inicio .indicador");
 
-  /* Verifica que existan los elementos necesarios */
+  // Verifica que existan los elementos necesarios 
   if (!imagenes.length || !anterior || !siguiente || !pausa) {
     return;
   }
@@ -16,7 +16,7 @@
   let temporizador = null;
 
 
-  /* Muestra una imagen determinada */
+  // Cambia la imagen visible
   function mostrarImagen(nuevaPosicion) {
     posicion = (nuevaPosicion + imagenes.length) % imagenes.length;
 
@@ -38,7 +38,7 @@
   }
 
 
-  /* Inicia el cambio automático */
+  // Reproducción automática
   function iniciarCarrusel() {
     clearInterval(temporizador);
 
@@ -51,7 +51,7 @@
   }
 
 
-  /* Detiene el cambio automático */
+  // Detiene la reproducción automática
   function detenerCarrusel() {
     clearInterval(temporizador);
     temporizador = null;
@@ -61,7 +61,7 @@
   }
 
 
-  /* Imagen anterior */
+  // imagen anterior
   anterior.addEventListener("click", () => {
     mostrarImagen(posicion - 1);
 
@@ -71,7 +71,7 @@
   });
 
 
-  /* Imagen siguiente */
+  // imagen siguiente
   siguiente.addEventListener("click", () => {
     mostrarImagen(posicion + 1);
 
@@ -81,7 +81,7 @@
   });
 
 
-  /* Pausar o reanudar */
+  // pausar o reanudar el carrusel
   pausa.addEventListener("click", () => {
     if (temporizador !== null) {
       detenerCarrusel();
@@ -91,7 +91,7 @@
   });
 
 
-  /* Indicadores inferiores */
+  // indicadores inferiores
   indicadores.forEach((indicador, indice) => {
     indicador.addEventListener("click", () => {
       mostrarImagen(indice);
@@ -103,7 +103,7 @@
   });
 
 
-  /* Estado inicial */
+  // estado inicial
   mostrarImagen(0);
 
 
@@ -119,17 +119,13 @@
   }
 })();
 
-
-// =========================================================
 // VALIDACIÓN DEL FORMULARIO DE SOLICITUD DE INFORMACIÓN
-// Services Mechanic
-// =========================================================
 
 document.addEventListener("DOMContentLoaded", () => {
   const formulario = document.getElementById("form-solicitud");
   const estadoSistema = document.getElementById("estado-sistema");
 
-  // Si esta página no tiene el formulario, no hacemos nada más
+
   if (!formulario) return;
 
   // Mensajes de error personalizados por campo
@@ -144,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
 
-  // Valida un solo campo y muestra/oculta su mensaje de error
+  // Valida cada campo
   
   function validarCampo(campo) {
     const spanError = document.getElementById(`error-${campo.id}`);
@@ -166,12 +162,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   
-  // Validación en tiempo real: al salir de cada campo (blur)// 
+  // Validación al salir o modificar un campo 
   const campos = formulario.querySelectorAll("input, select, textarea");
   campos.forEach((campo) => {
     campo.addEventListener("blur", () => validarCampo(campo));
 
-    // Si el usuario corrige mientras escribe, limpiamos el error al instante
+    // Actualiza la validación mientras escribe
     campo.addEventListener("input", () => {
       if (campo.classList.contains("campo-invalido")) {
         validarCampo(campo);
@@ -179,22 +175,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-    // ---------------------------------------------------------
-  // Muestra un mensaje dinámico de estado (éxito o error)
-  // Manipulación del DOM: se crea/actualiza el contenido y las clases
-  // ---------------------------------------------------------
+    
+  // Muestra un mensaje de estado (éxito o error)
+
   function mostrarMensajeEstado(texto, tipo) {
     estadoSistema.textContent = texto;
     estadoSistema.classList.remove("exito", "error");
     estadoSistema.classList.add(tipo);
 
-    // Desplaza la vista hacia el mensaje para que el usuario lo note
+    
     estadoSistema.scrollIntoView({ behavior: "smooth", block: "center" });
   }
-
-  // ---------------------------------------------------------
-  // Evento submit: valida todo el formulario antes de "enviarlo"
-  // ---------------------------------------------------------
+  // Evento submit: valida todo el formulario antes de enviarlo
   formulario.addEventListener("submit", (evento) => {
     evento.preventDefault();
 
@@ -222,8 +214,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // --- Aquí, en un backend real, se enviarían los datos con fetch() ---
-    // Como es un caso de estudio académico, simulamos la confirmación:
 
     const nombre = formulario.querySelector("#nombre").value.trim();
     const taller = formulario.querySelector("#taller").value.trim();

@@ -54,8 +54,13 @@ body > header nav a {
   color: #f5c518;
   text-decoration: none;
 }
+.acciones-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
-body > header > a {
+.acciones-header > a {
   display: inline-block;
   background-color: #f5c518;
   color: #111315;
@@ -64,6 +69,10 @@ body > header > a {
   text-decoration: none;
   font-weight: bold;
   transition: background-color 0.2s;
+}
+
+.acciones-header > a:hover {
+  background-color: #ddb012;
 }
 
 body > header > a:hover {
