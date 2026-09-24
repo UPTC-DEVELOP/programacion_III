@@ -1,3 +1,7 @@
+
+
+document.getElementById('navToggle').addEventListener('click', function() {
+    alert('¡Hola! Has hecho clic en el botón de navegación.');
 const navToggle = document.getElementById('navToggle');
 const nav = document.getElementById('nav');
 document.addEventListener('DOMContentLoaded', function() {
@@ -40,7 +44,9 @@ if (visualHero) {
                     entrada.target.style.transform = "translateY(0)";
                 }
             });
-        }, {
+            
+        }, 
+        {
             threshold: 0.2,
             rootMargin: "0px 0px -50px 0px"
         });
@@ -48,4 +54,5 @@ if (visualHero) {
         tarjetas.forEach(tarjeta => observador.observe(tarjeta));
     }
 
+});
 });
