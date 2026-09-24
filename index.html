@@ -4,7 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TallerPro | Sistema de Gestión y Servicios Automotrices</title>
-  <meta name="description" content="TallerPro - Mantenimiento, reparación y diagnóstico automotriz con tecnología de vanguardia y personal altamente capacitado.">
+  <script src="script.js" defer></script>
+  <meta name="description" content="TallerPro - 
+  Mantenimiento, reparación y diagnóstico automotriz con tecnología 
+  de vanguardia y personal altamente capacitado.">
 
   <!--  PESTAÑA DEL NAVEGADOR ===== -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><text y=%2218%22 font-size=%2218%22>🔧</text></svg>">
@@ -28,6 +31,8 @@
         </svg>
         <span>Taller<strong>Pro</strong></span>
       </a>
+      
+      
 
       <!-- CHEBOX JUNTO AL CSS-->
       <input type="checkbox" class="nav-toggle-checkbox" id="navToggleCheckbox">
@@ -43,6 +48,12 @@
       </nav>
 
       <a href="#contacto" class="btn btn--primary btn--sm header__cta">Agendar cita</a>
+
+      <!-- BOTON INICIAR SESION -->
+      <button type="button" class="btn-login" id="loginOpen">Iniciar Sesión</button>   
+
+      <!-- BOTON HAMBURGUESITA -->
+      <label class="nav__toggle" for="navToggleCheckbox" aria-label="Abrir menú">
 
       <!-- MENU NUEVO MOVIL. -->
       <label class="nav__toggle" for="navToggleCheckbox" aria-label="Abrir menú">
@@ -313,16 +324,36 @@
       <p>© 2026 TallerPro. Todos los derechos reservados.</p>
     </div>
   </footer>
+  <!-- LOGIN  BOTON INICIO DE SESION -->
+
+  <div class="login-modal" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle" hidden>
+  <div class="login-modal__card">
+    <button type="button" class="login-modal__close" id="loginClose" aria-label="Cerrar">&times;</button>
+ 
+    <h2 class="login-modal__title" id="loginTitle">Iniciar Sesión</h2>
+    <p class="login-modal__hint">Consulta informacion de tu vehículo.</p>
+ 
+    <form id="loginForm" novalidate>
+      <label for="loginEmail">Correo electrónico</label>
+      <input type="email" id="loginEmail" name="email" placeholder="tucorreo@tallerpro.com" autocomplete="email" required>
+ 
+      <label for="loginPass">Contraseña</label>
+      <div class="login-modal__pass">
+        <input type="password" id="loginPass" name="password" placeholder="Tu contraseña" autocomplete="current-password" required>
+        <button type="button" id="loginShowPass" aria-label="Mostrar contraseña">Mostrar</button>
+      </div>
+ 
+      <p class="login-modal__error" id="loginError" role="alert" hidden></p>
+ 
+      <button type="submit" class="login-modal__submit">Entrar</button>
+    </form>
+  </div>
+</div>
 
  
 
- <!-- IMPORTANTE SIN JAVASCRIPT POR AHORA: 
-  EL MENÚ MÓVIL FUNCIONA CON CSS PURO (CHECKBOX + LABEL) 
-  Y EL FORMULARIO USA VALIDACIÓN NATIVA DEL NAVEGADOR (REQUIRED, TYPE="EMAIL", PATTERN DEL TELÉFONO). 
-  SI ALGUIEN AGREGA SCRIPT.JS MÁS ADELANTE, 
-  PUEDE APOYARSE EN LOS ID="NAVTOGGLECHECKBOX", 
-  ID="LEADFORM" Y LOS ATRIBUTOS DATA-TARGET DE LAS ESTADÍSTICAS.
-   -->
+ <!-- Enlazando el archivo script.js al final del body para que se cargue después del contenido de la página -->
+
   <script src="script.js"></script>
 </body>
 </html>
