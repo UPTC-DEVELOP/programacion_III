@@ -31,6 +31,8 @@
         </svg>
         <span>Taller<strong>Pro</strong></span>
       </a>
+      
+      
 
       <!-- CHEBOX JUNTO AL CSS-->
       <input type="checkbox" class="nav-toggle-checkbox" id="navToggleCheckbox">
@@ -46,6 +48,12 @@
       </nav>
 
       <a href="#contacto" class="btn btn--primary btn--sm header__cta">Agendar cita</a>
+
+      <!-- BOTON INICIAR SESION -->
+      <button type="button" class="btn-login" id="loginOpen">Iniciar sesión</button>   
+
+      <!-- BOTON HAMBURGUESITA -->
+      <label class="nav__toggle" for="navToggleCheckbox" aria-label="Abrir menú">
 
       <!-- MENU NUEVO MOVIL. -->
       <label class="nav__toggle" for="navToggleCheckbox" aria-label="Abrir menú">
@@ -316,16 +324,36 @@
       <p>© 2026 TallerPro. Todos los derechos reservados.</p>
     </div>
   </footer>
+  <!-- LOGIN MODAL BOTON INICIO DE SESION -->
+
+  <div class="login-modal" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle" hidden>
+  <div class="login-modal__card">
+    <button type="button" class="login-modal__close" id="loginClose" aria-label="Cerrar">&times;</button>
+ 
+    <h2 class="login-modal__title" id="loginTitle">Iniciar sesión</h2>
+    <p class="login-modal__hint">Consulta el historial y las facturas de tu vehículo.</p>
+ 
+    <form id="loginForm" novalidate>
+      <label for="loginEmail">Correo electrónico</label>
+      <input type="email" id="loginEmail" name="email" placeholder="tucorreo@ejemplo.com" autocomplete="email" required>
+ 
+      <label for="loginPass">Contraseña</label>
+      <div class="login-modal__pass">
+        <input type="password" id="loginPass" name="password" placeholder="Tu contraseña" autocomplete="current-password" required>
+        <button type="button" id="loginShowPass" aria-label="Mostrar contraseña">Mostrar</button>
+      </div>
+ 
+      <p class="login-modal__error" id="loginError" role="alert" hidden></p>
+ 
+      <button type="submit" class="login-modal__submit">Entrar</button>
+    </form>
+  </div>
+</div>
 
  
 
- <!-- IMPORTANTE SIN JAVASCRIPT POR AHORA: 
-  EL MENÚ MÓVIL FUNCIONA CON CSS PURO (CHECKBOX + LABEL) 
-  Y EL FORMULARIO USA VALIDACIÓN NATIVA DEL NAVEGADOR (REQUIRED, TYPE="EMAIL", PATTERN DEL TELÉFONO). 
-  SI ALGUIEN AGREGA SCRIPT.JS MÁS ADELANTE, 
-  PUEDE APOYARSE EN LOS ID="NAVTOGGLECHECKBOX", 
-  ID="LEADFORM" Y LOS ATRIBUTOS DATA-TARGET DE LAS ESTADÍSTICAS.
-   -->
+ <!-- Enlazando el archivo script.js al final del body para que se cargue después del contenido de la página -->
+
   <script src="script.js"></script>
 </body>
 </html>
