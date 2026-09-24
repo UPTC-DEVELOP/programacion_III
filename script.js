@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function abrirLogin() {
             loginModal.hidden = false;
-            // Espera un frame para que la transición de opacidad se aplique
+            // UN FRAME DE OPASICIDA
             requestAnimationFrame(() => loginModal.classList.add('is-open'));
             document.body.style.overflow = 'hidden';
             loginEmail.focus();
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const pass = loginPass.value;
 
             if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                mostrarError('Escribe un correo válido, por ejemplo tucorreo@ejemplo.com.');
+                mostrarError('Escribe un correo válido, por ejemplo tucorreo@tallerpro.com');
                 loginEmail.focus();
                 return;
             }
