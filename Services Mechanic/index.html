@@ -706,7 +706,7 @@
     </section>
      
     <!-- Login -->
-    <section id="login" class="login-page" aria-labelledby="titulo-login">
+    <section id="login" class="login-page" aria-labelledby="titulo-login" hidden>
 
     <div class="login-card">
 
@@ -755,9 +755,69 @@
     </div>
 
 </section>
+<!-- Sistema / Dashboard -->
+<section id="sistema" class="sistema" hidden>
 
-    <p id="estado-sistema" role="status" aria-live="polite"></p>
-  </main>
+  <!-- Inicio -->
+  <aside class="sidebar-sistema">
+
+    <div class="logo-sistema">
+      <img src="img/LOGO SERVICE MECHANIC.png" alt="Logo de Services Mechanic">
+
+      <div>
+        <h2>Services Mechanic</h2>
+        <p>Gestión de Taller</p>
+      </div>
+    </div>
+
+    <nav class="menu-sistema" aria-label="Menú del sistema">
+
+      <a href="#dashboard" class="activo">
+        Inicio
+      </a>
+      <a href="#clientes">
+        Clientes
+      </a>
+    </nav>
+
+  </aside>
+
+
+  <!-- Área principal -->
+  <div class="contenido-sistema">
+
+    <header class="topbar-sistema">
+
+      <div>
+        <h2>Inicio</h2>
+        <p>Panel principal</p>
+      </div>
+
+      <div class="usuario-sistema">
+        <span class="avatar-sistema">U</span>
+        <span>Usuario</span>
+      </div>
+
+    </header>
+
+
+    <section id="dashboard" class="dashboard-sistema">
+
+      <h2>Bienvenido a Services Mechanic</h2>
+
+      <p>
+        Selecciona una opción del menú para gestionar la información del taller.
+      </p>
+
+    </section>
+
+  </div>
+
+</section>
+
+<p id="estado-sistema" role="status" aria-live="polite"></p>
+</main>
+
 
   <footer id="contacto" aria-labelledby="titulo-contacto">
   <div class="contenedor-footer">

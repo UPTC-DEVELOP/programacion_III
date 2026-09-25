@@ -2338,3 +2338,206 @@ footer#contacto .mapa-footer iframe {
     }
 
 }
+/* APLICATIVO / DASHBOA*/
+#sistema {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  background-color: #f7f7f5;
+  color: #202124;
+}
+
+/* MENÚ LATERAL */
+
+#sistema .sidebar-sistema {
+  min-height: 100vh;
+  background-color: #111315;
+  color: #ffffff;
+  padding: 24px 18px;
+  border-right: 1px solid #252829;
+}
+
+/* Logo y nombre */
+
+#sistema .logo-sistema {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 22px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid #252829;
+}
+
+#sistema .logo-sistema img {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+}
+
+#sistema .logo-sistema h2 {
+  margin: 0;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+#sistema .logo-sistema p {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: #b8bdc3;
+}
+
+/* Navegación */
+
+#sistema .menu-sistema {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#sistema .menu-sistema a {
+  display: block;
+  padding: 12px 14px;
+  border-radius: 8px;
+  color: #b8bdc3;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+#sistema .menu-sistema a:hover {
+  background-color: #1b1e20;
+  color: #ffffff;
+}
+
+#sistema .menu-sistema a.activo {
+  background-color: #f5c518;
+  color: #111315;
+}
+
+/* ÁREA PRINCIPAL */
+
+#sistema .contenido-sistema {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: #f7f7f5;
+}
+
+/* Barra superior */
+
+#sistema .topbar-sistema {
+  min-height: 86px;
+  padding: 18px 28px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e4e5e6;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+#sistema .topbar-sistema h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #202124;
+}
+
+#sistema .topbar-sistema p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #6b7075;
+}
+
+/* Usuario */
+
+#sistema .usuario-sistema {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #202124;
+}
+
+#sistema .avatar-sistema {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: #111315;
+  color: #f5c518;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 14px;
+  font-weight: 800;
+}
+
+/* DASHBOARD */
+
+#sistema .dashboard-sistema {
+  flex: 1;
+  padding: 40px 32px;
+}
+
+#sistema .dashboard-sistema h2 {
+  margin: 0 0 10px;
+  font-size: 28px;
+  color: #202124;
+}
+
+#sistema .dashboard-sistema p {
+  margin: 0;
+  max-width: 650px;
+  color: #6b7075;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+  #sistema {
+    grid-template-columns: 220px 1fr;
+  }
+
+  #sistema .sidebar-sistema {
+    padding: 20px 14px;
+  }
+
+  #sistema .dashboard-sistema {
+    padding: 30px 24px;
+  }
+}
+
+@media (max-width: 700px) {
+  #sistema {
+    grid-template-columns: 1fr;
+  }
+
+  #sistema .sidebar-sistema {
+    min-height: auto;
+  }
+
+  #sistema .menu-sistema {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  #sistema .menu-sistema a {
+    flex: 1 1 140px;
+  }
+
+  #sistema .topbar-sistema {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+[hidden] {
+  display: none !important;
+}

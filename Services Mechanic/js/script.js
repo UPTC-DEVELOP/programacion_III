@@ -122,13 +122,12 @@
 // VALIDACIÓN DEL FORMULARIO DE SOLICITUD DE INFORMACIÓN
 
 document.addEventListener("DOMContentLoaded", () => {
+
   const formulario = document.getElementById("form-solicitud");
   const estadoSistema = document.getElementById("estado-sistema");
 
-
   if (!formulario) return;
 
-  // Mensajes de error personalizados por campo
   const mensajesError = {
     nombre: "Ingresa un nombre válido (mínimo 3 caracteres).",
     taller: "Ingresa el nombre del taller (mínimo 3 caracteres).",
@@ -136,23 +135,23 @@ document.addEventListener("DOMContentLoaded", () => {
     telefono: "Ingresa un teléfono válido (solo números, +, espacios, guiones).",
     "num-empleados": "El número de empleados no puede ser negativo.",
     "plan-interes": "Selecciona un plan de interés.",
-    mensaje: "Escribe tu mensaje con al menos 10 caracteres.",
+    mensaje: "Escribe tu mensaje con al menos 10 caracteres."
   };
 
-
-  // Valida cada campo
-  
   function validarCampo(campo) {
     const spanError = document.getElementById(`error-${campo.id}`);
     const esValido = campo.checkValidity();
 
     if (!esValido) {
       campo.classList.add("campo-invalido");
+
       if (spanError) {
-        spanError.textContent = mensajesError[campo.id] || "Este campo no es válido.";
+        spanError.textContent =
+          mensajesError[campo.id] || "Este campo no es válido.";
       }
     } else {
       campo.classList.remove("campo-invalido");
+
       if (spanError) {
         spanError.textContent = "";
       }
@@ -161,42 +160,47 @@ document.addEventListener("DOMContentLoaded", () => {
     return esValido;
   }
 
-  
-  // Validación al salir o modificar un campo 
-  const campos = formulario.querySelectorAll("input, select, textarea");
-  campos.forEach((campo) => {
-    campo.addEventListener("blur", () => validarCampo(campo));
+  const campos = formulario.querySelectorAll(
+    "input, select, textarea"
+  );
 
-    // Actualiza la validación mientras escribe
+  campos.forEach((campo) => {
+
+    campo.addEventListener("blur", () => {
+      validarCampo(campo);
+    });
+
     campo.addEventListener("input", () => {
       if (campo.classList.contains("campo-invalido")) {
         validarCampo(campo);
       }
     });
+
   });
 
-    
-  // Muestra un mensaje de estado (éxito o error)
-
   function mostrarMensajeEstado(texto, tipo) {
+
+    if (!estadoSistema) return;
+
     estadoSistema.textContent = texto;
     estadoSistema.classList.remove("exito", "error");
     estadoSistema.classList.add(tipo);
-
-    
-    estadoSistema.scrollIntoView({ behavior: "smooth", block: "center" });
   }
-  // Evento submit: valida todo el formulario antes de enviarlo
+
   formulario.addEventListener("submit", (evento) => {
+
     evento.preventDefault();
 
     let formularioValido = true;
     let primerCampoInvalido = null;
 
     campos.forEach((campo) => {
+
       const esValido = validarCampo(campo);
+
       if (!esValido) {
         formularioValido = false;
+
         if (!primerCampoInvalido) {
           primerCampoInvalido = campo;
         }
@@ -204,19 +208,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     if (!formularioValido) {
+
       mostrarMensajeEstado(
         "Revisa los campos marcados en rojo antes de enviar la solicitud.",
         "error"
       );
+
       if (primerCampoInvalido) {
         primerCampoInvalido.focus();
       }
+
       return;
     }
 
+    const nombre =
+      formulario.querySelector("#nombre").value.trim();
 
-    const nombre = formulario.querySelector("#nombre").value.trim();
-    const taller = formulario.querySelector("#taller").value.trim();
+    const taller =
+      formulario.querySelector("#taller").value.trim();
 
     mostrarMensajeEstado(
       `¡Gracias, ${nombre}! Registramos la solicitud de "${taller}". Un asesor te contactará pronto.`,
@@ -224,6 +233,78 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     formulario.reset();
-    campos.forEach((campo) => campo.classList.remove("campo-invalido"));
+
+    campos.forEach((campo) => {
+      campo.classList.remove("campo-invalido");
+    });
+
   });
+
+});
+
+
+// LOGIN Y ACCESO AL APLICATIVO
+document.addEventListener("DOMContentLoaded", () => {
+
+  const botonLoginHeader = document.querySelector(".btn-login-header");
+  const botonLogin = document.querySelector(".btn-login");
+
+  const sistema = document.getElementById("sistema");
+  const login = document.getElementById("login");
+  const headerPrincipal = document.querySelector("body > header");
+  const main = document.querySelector("main");
+  const footer = document.getElementById("contacto");
+
+  // Mostrar pantalla de login desde el landing
+  if (botonLoginHeader && login && main) {
+    botonLoginHeader.addEventListener("click", (evento) => {
+      evento.preventDefault();
+
+      main.querySelectorAll(":scope > section").forEach((seccion) => {
+        seccion.hidden = true;
+      });
+
+      login.hidden = false;
+
+      if (headerPrincipal) {
+        headerPrincipal.hidden = true;
+      }
+
+      if (footer) {
+        footer.hidden = true;
+      }
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
+  }
+
+  // Entrar al aplicativo desde el login
+  if (botonLogin && sistema && login && main) {
+    botonLogin.addEventListener("click", () => {
+
+      main.querySelectorAll(":scope > section").forEach((seccion) => {
+        seccion.hidden = true;
+      });
+
+      login.hidden = true;
+      sistema.hidden = false;
+
+      if (headerPrincipal) {
+        headerPrincipal.hidden = true;
+      }
+
+      if (footer) {
+        footer.hidden = true;
+      }
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
+  }
+
 });
