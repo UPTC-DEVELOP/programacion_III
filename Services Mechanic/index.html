@@ -34,7 +34,7 @@
 
     <div class="acciones-header">
       <a href="#solicitud-servicio">Solicitar información</a>
-      <a href="login.html" class="btn-login-header">Iniciar sesión</a>
+      <a href="#login" class="btn-login-header">Iniciar sesión</a>
     </div>
   </header>
 
@@ -704,8 +704,57 @@
   </form>
 </div>
     </section>
+     
+    <!-- Login -->
+    <section id="login" class="login-page" aria-labelledby="titulo-login">
 
-    
+    <div class="login-card">
+
+        <div class="login-brand">
+            <h2>Services Mechanic</h2>
+            <p>Gestión inteligente para talleres mecánicos</p>
+        </div>
+
+        <div class="login-content">
+
+            <h2 id="titulo-login">Iniciar sesión</h2>
+
+            <p class="login-text">
+                Ingresa tus datos para acceder.
+            </p>
+
+            <form>
+
+                <div class="campo-login">
+                    <label for="correo-login">Correo electrónico</label>
+                    <input
+                        type="email"
+                        id="correo-login"
+                        name="correo-login"
+                    >
+                </div>
+
+                <div class="campo-login">
+                    <label for="contrasena-login">Contraseña</label>
+                    <input
+                        type="password"
+                        id="contrasena-login"
+                        name="contrasena-login"
+                        placeholder="Ingresa tu contraseña"
+                    >
+                </div>
+
+                <button type="button" class="btn-login">
+                    Iniciar sesión
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
 
     <p id="estado-sistema" role="status" aria-live="polite"></p>
   </main>

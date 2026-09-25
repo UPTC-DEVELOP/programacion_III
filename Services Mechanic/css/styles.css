@@ -2158,3 +2158,183 @@ footer#contacto .mapa-footer iframe {
     height: 150px;
   }
 }
+/* =========================================
+   LOGIN
+========================================= */
+
+#login {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 60px 24px;
+
+    background-color: #111315;
+    color: #ffffff;
+}
+
+
+#login .login-card {
+    width: 100%;
+    max-width: 420px;
+
+    background-color: #1b1e20;
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+}
+
+
+#login .login-brand {
+    background-color: #111315;
+
+    padding: 28px 24px;
+
+    text-align: center;
+
+    border-bottom: 2px solid #f5c518;
+}
+
+
+#login .login-brand h2 {
+    margin: 0;
+
+    color: #f5c518;
+
+    font-size: 28px;
+}
+
+
+#login .login-brand p {
+    margin: 8px 0 0;
+
+    color: #b8bdc3;
+
+    font-size: 14px;
+}
+
+
+#login .login-content {
+    padding: 30px 26px;
+}
+
+
+#login .login-content h2 {
+    margin: 0 0 8px;
+
+    font-size: 26px;
+
+    color: #ffffff;
+}
+
+
+#login .login-text {
+    margin: 0 0 24px;
+
+    color: #b8bdc3;
+}
+
+
+#login .campo-login {
+    margin-bottom: 18px;
+}
+
+
+#login .campo-login label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-weight: 700;
+
+    color: #ffffff;
+}
+
+
+#login .campo-login input {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    border: 1px solid #6b7075;
+
+    border-radius: 8px;
+
+    background-color: #252829;
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+#login .campo-login input::placeholder {
+    color: #8c9196;
+}
+
+
+#login .campo-login input:focus {
+    outline: none;
+
+    border-color: #f5c518;
+
+    box-shadow: 0 0 0 3px rgba(245, 197, 24, 0.15);
+}
+
+
+#login .btn-login {
+    width: 100%;
+
+    padding: 13px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background-color: #f5c518;
+
+    color: #111315;
+
+    font-family: inherit;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: background-color 0.2s ease;
+}
+
+
+#login .btn-login:hover {
+    background-color: #ddb012;
+}
+
+
+@media (max-width: 480px) {
+
+    #login .login-card {
+        max-width: 100%;
+    }
+
+    #login .login-brand h2 {
+        font-size: 24px;
+    }
+
+    #login .login-content {
+        padding: 24px 20px;
+    }
+
+}
