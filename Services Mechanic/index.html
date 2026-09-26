@@ -778,6 +778,9 @@
       <a href="#clientes">
         Clientes
       </a>
+      <a href="#empleados">
+        Empleados
+</a>
     </nav>
 
   </aside>
@@ -810,7 +813,209 @@
       </p>
 
     </section>
+<section id="empleados" class="seccion-empleados">
 
+    <div class="encabezado-pagina-empleados">
+        <div>
+            <h1>Empleados</h1>
+            <p>Registro y consulta de empleados</p>
+        </div>
+    </div>
+
+    <div class="contenedor-empleados">
+
+        <div class="cabecera-empleados">
+
+            <div>
+                <h2>Empleados registrados</h2>
+                <p id="cantidad-empleados">0 empleados</p>
+            </div>
+
+            <button type="button" id="btn-registrar-empleado">
+                + Registrar empleado
+            </button>
+
+        </div>
+
+        <div class="buscador-empleados">
+
+            <input
+                type="text"
+                id="buscar-empleado"
+                placeholder="Buscar por cédula, nombres o apellidos..."
+            >
+
+        </div>
+
+        <div class="tabla-empleados-contenedor">
+
+            <table class="tabla-empleados">
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Cédula</th>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <th>Teléfono</th>
+                        <th>Cargo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tabla-empleados-body">
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<div id="modal-empleado" class="modal-empleado">
+
+    <div class="contenido-modal-empleado">
+
+        <div class="cabecera-modal-empleado">
+
+            <h2 id="titulo-modal-empleado">
+                Registrar empleado
+            </h2>
+
+            <button
+                type="button"
+                id="cerrar-modal-empleado"
+                class="cerrar-modal-empleado"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <form id="formulario-empleado">
+
+            <input
+                type="hidden"
+                id="empleado-id"
+            >
+
+            <div class="grupo-formulario-empleado">
+
+                <label for="empleado-cedula">
+                    Cédula
+                </label>
+
+                <input
+                    type="text"
+                    id="empleado-cedula"
+                    required
+                >
+
+            </div>
+
+            <div class="grupo-formulario-empleado">
+
+                <label for="empleado-nombres">
+                    Nombres
+                </label>
+
+                <input
+                    type="text"
+                    id="empleado-nombres"
+                    required
+                >
+
+            </div>
+
+            <div class="grupo-formulario-empleado">
+
+                <label for="empleado-apellidos">
+                    Apellidos
+                </label>
+
+                <input
+                    type="text"
+                    id="empleado-apellidos"
+                    required
+                >
+
+            </div>
+
+            <div class="grupo-formulario-empleado">
+
+                <label for="empleado-telefono">
+                    Teléfono
+                </label>
+
+                <input
+                    type="text"
+                    id="empleado-telefono"
+                    required
+                >
+
+            </div>
+
+            <div class="grupo-formulario-empleado">
+
+                <label for="empleado-cargo">
+                    Cargo
+                </label>
+
+                <select
+                    id="empleado-cargo"
+                    required
+                >
+                    <option value="">
+                        Seleccionar cargo
+                    </option>
+
+                    <option value="Mecánico">
+                        Mecánico
+                    </option>
+
+                    <option value="Recepcionista">
+                        Recepcionista
+                    </option>
+
+                    <option value="Administrador">
+                        Administrador
+                    </option>
+
+                    <option value="Auxiliar">
+                        Auxiliar
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="botones-formulario-empleado">
+
+                <button
+                    type="button"
+                    id="btn-cancelar-empleado"
+                    class="btn-cancelar-empleado"
+                >
+                    Cancelar
+                </button>
+
+                <button
+                    type="submit"
+                    class="btn-guardar-empleado"
+                >
+                    Guardar empleado
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
   </div>
 
 </section>

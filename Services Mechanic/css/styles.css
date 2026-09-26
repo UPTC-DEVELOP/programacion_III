@@ -2541,3 +2541,249 @@ footer#contacto .mapa-footer iframe {
 [hidden] {
   display: none !important;
 }
+.seccion-empleados {
+    display: none;
+    min-height: calc(100vh - 64px);
+    background: #f7f7f7;
+}
+
+.encabezado-pagina-empleados {
+    height: 78px;
+    background: #ffffff;
+    border-bottom: 1px solid #dddddd;
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+    box-sizing: border-box;
+}
+
+.encabezado-pagina-empleados h1 {
+    margin: 0;
+    font-size: 21px;
+    font-weight: 500;
+    color: #111111;
+}
+
+.encabezado-pagina-empleados p {
+    margin: 4px 0 0;
+    color: #777777;
+    font-size: 13px;
+}
+
+.contenedor-empleados {
+    margin: 32px;
+    background: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 14px;
+    padding: 26px;
+    box-sizing: border-box;
+}
+
+.cabecera-empleados {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.cabecera-empleados h2 {
+    margin: 0;
+    font-size: 18px;
+    color: #111111;
+}
+
+.cabecera-empleados p {
+    margin: 6px 0 0;
+    color: #777777;
+    font-size: 13px;
+}
+
+#btn-registrar-empleado {
+    background: #fbc515;
+    border: none;
+    border-radius: 10px;
+    padding: 13px 20px;
+    font-weight: 700;
+    cursor: pointer;
+    color: #111111;
+}
+
+#btn-registrar-empleado:hover {
+    background: #eeb900;
+}
+
+.buscador-empleados {
+    margin-bottom: 20px;
+}
+
+#buscar-empleado {
+    width: 420px;
+    max-width: 100%;
+    height: 44px;
+    border: 1px solid #d5d9df;
+    border-radius: 8px;
+    padding: 0 14px;
+    font-size: 14px;
+    box-sizing: border-box;
+    outline: none;
+}
+
+#buscar-empleado:focus {
+    border-color: #fbc515;
+}
+
+.tabla-empleados-contenedor {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.tabla-empleados {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla-empleados thead {
+    background: #f3f3f1;
+}
+
+.tabla-empleados th {
+    text-align: left;
+    padding: 13px 12px;
+    font-size: 12px;
+    color: #555555;
+    font-weight: 700;
+}
+
+.tabla-empleados td {
+    padding: 15px 12px;
+    border-bottom: 1px solid #dddddd;
+    font-size: 13px;
+    color: #222222;
+}
+
+.acciones-empleado {
+    display: flex;
+    gap: 7px;
+}
+
+.btn-editar-empleado,
+.btn-eliminar-empleado {
+    border-radius: 7px;
+    padding: 9px 13px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.btn-editar-empleado {
+    background: #ffffff;
+    border: 1px solid #d5d9df;
+    color: #222222;
+}
+
+.btn-editar-empleado:hover {
+    background: #f4f4f4;
+}
+
+.btn-eliminar-empleado {
+    background: #ffe1e1;
+    border: 1px solid #ffcaca;
+    color: #e02b2b;
+}
+
+.btn-eliminar-empleado:hover {
+    background: #ffd2d2;
+}
+
+.modal-empleado {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.contenido-modal-empleado {
+    width: 430px;
+    max-width: calc(100% - 30px);
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 25px;
+    box-sizing: border-box;
+}
+
+.cabecera-modal-empleado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.cabecera-modal-empleado h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #111111;
+}
+
+.cerrar-modal-empleado {
+    border: none;
+    background: transparent;
+    font-size: 27px;
+    cursor: pointer;
+    color: #555555;
+}
+
+.grupo-formulario-empleado {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.grupo-formulario-empleado label {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333333;
+}
+
+.grupo-formulario-empleado input,
+.grupo-formulario-empleado select {
+    height: 42px;
+    border: 1px solid #d5d9df;
+    border-radius: 7px;
+    padding: 0 11px;
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.grupo-formulario-empleado input:focus,
+.grupo-formulario-empleado select:focus {
+    border-color: #fbc515;
+}
+
+.botones-formulario-empleado {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.btn-cancelar-empleado,
+.btn-guardar-empleado {
+    padding: 11px 17px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-cancelar-empleado {
+    background: #ffffff;
+    border: 1px solid #d5d9df;
+}
+
+.btn-guardar-empleado {
+    background: #fbc515;
+    border: none;
+}
