@@ -1,899 +1,990 @@
 ﻿<!doctype html>
 <html lang="es">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Services Mechanic</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css" />
-</head>
-
-<body>
-
-  <header>
-    <img
-      src="img/LOGO SERVICE MECHANIC.png"
-      alt="Logo de Services Mechanic"
-      width="150"
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Services Mechanic</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
     />
-
-    <h1>Services Mechanic</h1>
-
-    <nav aria-label="Navegación principal">
-      <ul>
-        <li><a href="#inicio">Inicio</a></li>
-        <li><a href="#servicios">Nuestros servicios</a></li>
-        <li><a href="#beneficios">Beneficios</a></li>
-        <li><a href="#nosotros">Nosotros</a></li>
-        <li><a href="#solicitud-servicio">Contacto</a></li>
-      </ul>
-    </nav>
-
-    <div class="acciones-header">
-      <a href="#solicitud-servicio">Solicitar información</a>
-      <a href="#login" class="btn-login-header">Iniciar sesión</a>
-    </div>
-  </header>
-
-  <main>
-    <section id="inicio" aria-labelledby="titulo-inicio">
-
-  <div class="contenido-inicio">
-    <p class="etiqueta-inicio">
-      Software de gestión para talleres mecánicos
-    </p>
-
-   <h2 id="titulo-inicio">
-  OPTIMIZA TU <span>TALLER</span><br>
-  <span>Controlando</span> cada servicio
-</h2>
-
-
-    <p class="descripcion-inicio">
-  Services Mechanic facilita la gestión de clientes, vehículos,
-  empleados, repuestos, servicios y facturación de un taller mecánico.
-    </p>
-
-
-    <p class="acciones-inicio">
-      <a class="enlace-servicios" href="#servicios">
-        Ver nuestros servicios →
-      </a>
-    </p>
-    <div class="resumen-inicio" aria-label="Características principales">
-
-  <div class="item-resumen">
-    <span class="check-resumen" aria-hidden="true">✓</span>
-    <span>Información<br>organizada</span>
-  </div>
-
-  <div class="item-resumen">
-    <span class="check-resumen" aria-hidden="true">✓</span>
-    <span>Mayor control<br>operativo</span>
-  </div>
-
-  <div class="item-resumen">
-    <span class="check-resumen" aria-hidden="true">✓</span>
-    <span>Gestión<br>centralizada</span>
-  </div>
-
-</div>
-
-</div>
-
-  <figure class="carrusel-inicio" aria-label="Imágenes del taller">
-  <img
-    class="imagen-carrusel"
-    src="img/Imagen 1.png"
-    alt="Mecánico utilizando una tableta junto a un vehículo en el taller"
-  />
-
-  <img
-    class="imagen-carrusel"
-    src="img/Imagen 2.png"
-    alt="Vista de un taller organizado con vehículos y equipos de reparación"
-    hidden
-  />
-
-  <img
-    class="imagen-carrusel"
-    src="img/Imagen 3.png"
-    alt="Mecánico trabajando con herramientas en el motor de un vehículo"
-    hidden
-  />
- <figcaption class="controles-carrusel">
-  <button
-    type="button"
-    id="foto-anterior"
-    aria-label="Imagen anterior"
-  >
-    ‹
-  </button>
-
-  <button
-    type="button"
-    id="pausar-carrusel"
-    aria-label="Pausar carrusel"
-  >
-    ⏸
-  </button>
-
-  <button
-    type="button"
-    id="foto-siguiente"
-    aria-label="Imagen siguiente"
-  >
-    ›
-  </button>
-    <div class="indicadores-carrusel" aria-label="Indicadores del carrusel">
-    <button type="button" class="indicador activo" aria-label="Ir a la imagen 1"></button>
-    <button type="button" class="indicador" aria-label="Ir a la imagen 2"></button>
-    <button type="button" class="indicador" aria-label="Ir a la imagen 3"></button>
-  </div>
-</figcaption>
-</figure>
-    </section>
-
-    <section id="problema" aria-labelledby="titulo-problema">
-  <div class="contenedor-problema">
-
-    <div class="intro-problema">
-      <p class="etiqueta-problema">
-        El problema
-      </p>
-
-      <h2 id="titulo-problema">
-        Administrar un taller no debería depender de procesos manuales
-      </h2>
-
-      <p class="descripcion-problema">
-        La gestión manual tiene límites que se hacen evidentes
-        cuando el volumen de trabajo crece.
-      </p>
-    </div>
-
-    <div class="lista-problemas">
-
-      <article class="item-problema">
-        <div class="icono-problema" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-            <polyline points="14 2 14 8 20 8"/>
-            <line x1="8" y1="13" x2="16" y2="13"/>
-            <line x1="8" y1="17" x2="16" y2="17"/>
-          </svg>
-        </div>
-
-        <div class="contenido-problema">
-          <h3>Información dispersa</h3>
-          <p>
-            Los registros manuales dificultan consultar rápidamente
-            la información de clientes y vehículos.
-          </p>
-        </div>
-      </article>
-
-      <article class="item-problema">
-        <div class="icono-problema" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
-            <line x1="12" y1="22.08" x2="12" y2="12"/>
-          </svg>
-        </div>
-
-        <div class="contenido-problema">
-          <h3>Repuestos sin control</h3>
-          <p>
-            Es difícil llevar seguimiento de las piezas utilizadas
-            en cada servicio.
-          </p>
-        </div>
-      </article>
-
-      <article class="item-problema">
-        <div class="icono-problema" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="9"/>
-            <polyline points="12 7 12 12 15 14"/>
-          </svg>
-        </div>
-
-        <div class="contenido-problema">
-          <h3>Poco control sobre las horas trabajadas</h3>
-          <p>
-            El registro manual dificulta conocer cuánto tiempo requiere cada servicio.
-          </p>
-        </div>
-      </article>
-
-      <article class="item-problema">
-        <div class="icono-problema" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <path d="M10.3 3.6 2.5 17a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.6a2 2 0 0 0-3.4 0z"/>
-            <line x1="12" y1="9" x2="12" y2="13"/>
-            <line x1="12" y1="17" x2="12.01" y2="17"/>
-          </svg>
-        </div>
-
-        <div class="contenido-problema">
-          <h3>Errores en facturación</h3>
-          <p>
-            Los cálculos manuales aumentan el riesgo de inconsistencias.
-          </p>
-        </div>
-      </article>
-
-    </div>
-
-  </div>
-</section>
-
-    <section id="servicios" aria-labelledby="titulo-servicios">
-      <h2 id="titulo-servicios">Nuestros servicios</h2>
-
-      <p>
-        Services Mechanic permite administrar las principales áreas operativas
-        de un taller mecánico.
-      </p>
-
-      <article aria-labelledby="titulo-clientes-vehiculos">
-        <h3 id="titulo-clientes-vehiculos">
-          Gestión de clientes y vehículos
-        </h3>
-
-        <p>
-          Mantén en un solo lugar la informacion de tus clientes y vehiculos para consultar rapidamente cuando lo necesites.
-        </p>
-      </article>
-
-      <article aria-labelledby="titulo-empleados">
-        <h3 id="titulo-empleados">Gestión de empleados</h3>
-
-        <p>
-          Organiza la información de tu equipo y facilita el control del personal que participa en los servicios del taller.
-        </p>
-      </article>
-
-      <article aria-labelledby="titulo-repuestos">
-        <h3 id="titulo-repuestos">Gestión de repuestos</h3>
-
-        <p>
-          Registra los repuestos utilizados en cada servicio y lleva un mejor control de las piezas empleadas.
-        </p>
-      </article>
-
-      <article aria-labelledby="titulo-horas">
-        <h3 id="titulo-horas">Control de horas trabajadas</h3>
-
-        <p>
-          Registra cuánto tiempo dedica cada empleado a un servicio y mejora el seguimiento del trabajo realizado.
-        </p>
-      </article>
-
-      <article aria-labelledby="titulo-facturacion">
-        <h3 id="titulo-facturacion">Facturación</h3>
-
-        <p>
-        Calcula y organiza repuestos, horas trabajadas e IVA para obtener una facturación más clara y precisa.
-        </p>
-      </article>
-    </section>
-
-   <section id="beneficios" aria-labelledby="titulo-beneficios">
-      <header class="encabezado-beneficios">
-        <p class="etiqueta-beneficios">Beneficios</p>
-        <h2 id="titulo-beneficios">¿Qué mejora <span>Services Mechanic</span>?</h2>
-        <p class="descripcion-beneficios">
-          La propuesta busca que el taller tenga una administración más clara
-          y que sus procesos cotidianos sean más fáciles de controlar.
-        </p>
-      </header>
-
-      <div class="beneficios-grid">
-        <article class="tarjeta-beneficio">
-          <span class="numero-beneficio">01</span>
-          <h3>Mejor organización</h3>
-          <p>
-            La información del taller se mantiene organizada para facilitar
-            su consulta y seguimiento.
-          </p>
-        </article>
-
-        <article class="tarjeta-beneficio">
-          <span class="numero-beneficio">02</span>
-          <h3>Ahorro de tiempo</h3>
-          <p>
-            La gestión digital permite realizar consultas y registrar
-            información de una manera más práctica.
-          </p>
-        </article>
-
-        <article class="tarjeta-beneficio">
-          <span class="numero-beneficio">03</span>
-          <h3>Mayor control</h3>
-          <p>
-            El taller puede llevar un mejor seguimiento de empleados,
-            vehículos, repuestos, horas y facturación.
-          </p>
-        </article>
-
-        <article class="tarjeta-beneficio">
-          <span class="numero-beneficio">04</span>
-          <h3>Mejor atención</h3>
-          <p>
-            Una información más organizada facilita la atención y
-            comunicación con los clientes.
-          </p>
-        </article>
-      </div>
-    </section>
-
-<!-- Equipo -->
-
-<section id="equipo" class="seccion-equipo" aria-labelledby="titulo-equipo">
-
-  <div class="encabezado-equipo">
-    <p class="etiqueta-equipo">Equipo</p>
-
-    <h2 id="titulo-equipo">
-      Personas detrás de <span>Services Mechanic</span>
-    </h2>
-  </div>
-
-  <div class="grid-equipo">
-
-    <article class="tarjeta-equipo">
-      <div class="burbuja-equipo" aria-hidden="true">👨‍💻</div>
-      <h3>Liceth Torres</h3>
-      <p class="rol-equipo">Frontend Architect</p>
-    </article>
-
-    <article class="tarjeta-equipo">
-      <div class="burbuja-equipo" aria-hidden="true">👨‍💻</div>
-      <h3>Sebastián Herrera</h3>
-      <p class="rol-equipo">Accessibility Lead</p>
-    </article>
-
-    <article class="tarjeta-equipo">
-      <div class="burbuja-equipo" aria-hidden="true">👨‍💻</div>
-      <h3>Santiago Aguilar</h3>
-      <p class="rol-equipo">QA &amp; Forms Engineer</p>
-    </article>
-
-  </div>
-
-</section>
-    <!-- Nosotros -->
-         
-    <section id="nosotros" aria-labelledby="titulo-nosotros">
-
-   <div class="encabezado-nosotros">
-    <div class="intro-nosotros">
-
-      <p class="etiqueta-nosotros">
-        Quiénes somos
-      </p>
-
-      <h2 id="titulo-nosotros">
-        Nosotros
-      </h2>
-
-      <p>
-        Services Mechanic surge al identificar que muchos talleres gestionan
-        la información de sus clientes, vehículos, empleados, repuestos,
-        servicios y facturación mediante papeles y registros separados.
-      </p>
-
-    </div>
-
-  </div>
-
-
-  <div class="mision-vision">
-
-    <article class="tarjeta-mv">
-      <h3>Misión</h3>
-
-      <p>
-        Simplificar la administración de los talleres mecánicos mediante
-        una solución digital que centralice clientes, vehículos, empleados,
-        repuestos y facturación, reduciendo errores y facilitando el control
-        de cada proceso.
-      </p>
-    </article>
-
-    <article class="tarjeta-mv">
-      <h3>Visión</h3>
-
-      <p>
-        Para 2030, consolidarnos como una solución de gestión digital para
-        talleres mecánicos en Colombia, reconocida por su facilidad de uso
-        y por contribuir a una administración más organizada y eficiente.
-      </p>
-    </article>
-
-  </div>
-
-
-  <h3 class="titulo-valores">
-    Nuestros valores
-  </h3>
-
-<div class="valores-grid">
-
-  <article class="tarjeta-valor">
-    <span class="icono-valor" aria-hidden="true">
-      <svg viewBox="0 0 24 24">
-        <path d="M9 18h6M10 22h4M8.5 15.5C7 14.4 6 12.6 6 10.5a6 6 0 1 1 12 0c0 2.1-1 3.9-2.5 5-1 .8-1.5 1.5-1.5 2.5h-4c0-1-.5-1.7-1.5-2.5Z"/>
-      </svg>
-    </span>
-
-    <h4>Innovación útil</h4>
-
-    <p>
-      Tecnología que resuelve problemas reales del taller.
-    </p>
-  </article>
-
-
-  <article class="tarjeta-valor">
-    <span class="icono-valor" aria-hidden="true">
-      <svg viewBox="0 0 24 24">
-        <rect x="9" y="3" width="6" height="4" rx="1"/>
-        <rect x="3" y="17" width="6" height="4" rx="1"/>
-        <rect x="15" y="17" width="6" height="4" rx="1"/>
-        <path d="M12 7v5M6 17v-3h12v3"/>
-      </svg>
-    </span>
-
-    <h4>Organización</h4>
-
-    <p>
-      Claridad y estructura en cada proceso del negocio.
-    </p>
-  </article>
-
-
-  <article class="tarjeta-valor">
-    <span class="icono-valor" aria-hidden="true">
-      <svg viewBox="0 0 24 24">
-        <path d="M12 3 20 6v5c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6l8-3Z"/>
-        <path d="m9 12 2 2 4-4"/>
-      </svg>
-    </span>
-
-    <h4>Confianza</h4>
-
-    <p>
-      Compromiso con el manejo responsable de la información.
-    </p>
-  </article>
-
-
-  <article class="tarjeta-valor">
-    <span class="icono-valor" aria-hidden="true">
-      <svg viewBox="0 0 24 24">
-        <circle cx="9" cy="8" r="3"/>
-        <circle cx="17" cy="9" r="2.5"/>
-        <path d="M3 20c0-4 2.5-6 6-6s6 2 6 6M15 15c3 0 5 1.7 5 5"/>
-      </svg>
-    </span>
-
-    <h4>Cercanía</h4>
-
-    <p>
-      Escuchamos las necesidades de los talleres para desarrollar
-      soluciones fáciles de utilizar.
-    </p>
-  </article>
-
-
-  <article class="tarjeta-valor">
-    <span class="icono-valor" aria-hidden="true">
-      <svg viewBox="0 0 24 24">
-        <path d="M4 19V5"/>
-        <path d="M4 19h16"/>
-        <path d="m7 15 4-4 3 2 5-6"/>
-        <path d="M16 7h3v3"/>
-      </svg>
-    </span>
-
-    <h4>Mejora continua</h4>
-
-    <p>
-      Evolucionamos junto con las necesidades del sector.
-    </p>
-  </article>
-
-</div>
-
-</section>
-
-<!-- Experiencias -->
-
-<section id="experiencias" class="seccion-experiencias" aria-labelledby="titulo-experiencias">
-
-  <div class="encabezado-experiencias">
-
-    <p class="etiqueta-experiencias">
-      Experiencias
-    </p>
-
-    <h2 id="titulo-experiencias">
-      Una solución pensada para <span>el trabajo diario</span>
-    </h2>
-
-    <p class="descripcion-experiencias">
-      Opiniones de personas que probaron Services Mechanic y conocieron
-      una forma más organizada de gestionar un taller.
-    </p>
-
-  </div>
-
-<div class="grid-experiencias">
-
-  <article class="tarjeta-experiencia">
-
-    <img
-      src="img/experiencia-1.png"
-      alt="Retrato simulado de Valentina Castro"
-      class="foto-experiencia"
-    />
-
-    <div class="estrellas-experiencia" aria-label="5 estrellas">
-      ★★★★★
-    </div>
-
-    <p class="opinion-experiencia">
-      “Tener la información organizada facilita mucho la consulta
-      de los vehículos y servicios que se han realizado.”
-    </p>
-
-    <p class="nombre-experiencia">
-      — Valentina Castro
-    </p>
-
-  </article>
-
-
-  <article class="tarjeta-experiencia">
-
-    <img
-      src="img/experiencia-2.png"
-      alt="Retrato simulado de Laura Rodríguez"
-      class="foto-experiencia"
-    />
-
-    <div class="estrellas-experiencia" aria-label="5 estrellas">
-      ★★★★★
-    </div>
-
-    <p class="opinion-experiencia">
-      “La gestión digital permite llevar un mejor control de las
-      actividades y evita depender únicamente de registros en papel.”
-    </p>
-
-    <p class="nombre-experiencia">
-      — Laura Rodríguez
-    </p>
-
-  </article>
-
-
-  <article class="tarjeta-experiencia">
-
-    <img
-      src="img/experiencia-3.png"
-      alt="Retrato simulado de Andrés Gómez"
-      class="foto-experiencia"
-    />
-
-    <div class="estrellas-experiencia" aria-label="5 estrellas">
-      ★★★★★
-    </div>
-
-    <p class="opinion-experiencia">
-      “Una herramienta sencilla puede ayudar a que las tareas
-      administrativas del taller sean más ordenadas.”
-    </p>
-
-    <p class="nombre-experiencia">
-      — Andrés Gómez
-    </p>
-
-  </article>
-
-</div>
-</section>
-
-    <section id="solicitud-servicio" aria-labelledby="titulo-solicitud-servicio">
-      <div class="contenedor-solicitud">
-
-  <div class="contenido-solicitud">
-    <p class="etiqueta-solicitud">Empieza hoy</p>
-
-    <h2 id="titulo-solicitud-servicio">
-      Lleva la gestión de tu taller al <span>siguiente nivel</span>
-    </h2>
-
-    <p class="descripcion-solicitud">
-      Solicita información y conoce cómo Services Mechanic puede ayudarte
-      a organizar mejor la operación de tu taller.
-    </p>
-
-    <ul class="checklist-solicitud">
-      <li><span class="check-solicitud" aria-hidden="true">✓</span> Respuesta personalizada</li>
-      <li><span class="check-solicitud" aria-hidden="true">✓</span> Sin compromisos</li>
-      <li><span class="check-solicitud" aria-hidden="true">✓</span> Orientado a tus necesidades</li>
-    </ul>
-
-
-    <div class="burbujas-solicitud" aria-hidden="true">
-      <span class="burbuja burbuja-1"></span>
-      <span class="burbuja burbuja-2"></span>
-      <span class="burbuja burbuja-3"></span>
-      <span class="burbuja burbuja-4"></span>
-    </div>
-
-  </div>
-  <form id="form-solicitud" action="#" method="post" novalidate
-    data-form-type="solicitud-informacion"
-     data-business-area="software-talleres">
-
-    <p>
-      <label for="nombre">Nombre de contacto</label>
-      <input id="nombre" name="nombre" type="text" required minlength="3" maxlength="80"
-        data-field-purpose="identificacion-cliente" />
-      <span class="mensaje-error" id="error-nombre" aria-live="polite"></span>
-    </p>
-
-    <p>
-      <label for="taller">Nombre del taller</label>
-      <input id="taller" name="taller" type="text" required minlength="3" maxlength="100"
-        data-field-purpose="identificacion-taller" />
-      <span class="mensaje-error" id="error-taller" aria-live="polite"></span>
-    </p>
-
-    <p>
-      <label for="correo">Correo</label>
-      <input id="correo" name="correo" type="email" required data-field-purpose="contacto-cliente" />
-      <span class="mensaje-error" id="error-correo" aria-live="polite"></span>
-    </p>
-
-    <p>
-      <label for="telefono">Teléfono</label>
-      <input id="telefono" name="telefono" type="tel" required pattern="[0-9+() -]{7,20}"
-        data-field-purpose="contacto-telefonico" />
-      <span class="mensaje-error" id="error-telefono" aria-live="polite"></span>
-    </p>
-
-    <p>
-      <label for="num-empleados">Número de empleados del taller</label>
-      <input id="num-empleados" name="num-empleados" type="number" min="1" max="500"
-        data-field-purpose="tamano-taller" />
-      <span class="mensaje-error" id="error-num-empleados" aria-live="polite"></span>
-    </p>
-
-    <p>
-      <label for="plan-interes">Plan de interés</label>
-      <select id="plan-interes" name="plan-interes" required data-field-purpose="clasificacion-lead">
-        <option value="">Seleccione una opción</option>
-        <option value="basico" data-service-category="plan-basico">Plan Básico</option>
-        <option value="profesional" data-service-category="plan-profesional">Plan Profesional</option>
-        <option value="info" data-service-category="solo-informacion">Solo quiero más información</option>
-      </select>
-      <span class="mensaje-error" id="error-plan-interes" aria-live="polite"></span>
-    </p>
-
-    <p>
-      <label for="mensaje">Mensaje</label>
-      <textarea id="mensaje" name="mensaje" required minlength="10" maxlength="500"
-        data-field-purpose="detalle-solicitud"></textarea>
-      <span class="mensaje-error" id="error-mensaje" aria-live="polite"></span>
-    </p>
-
-    <p>
-      <button type="submit" data-action="enviar-solicitud">
-        Solicitar información
-      </button>
-    </p>
-  </form>
-</div>
-    </section>
-     
-    <!-- Login -->
-    <section id="login" class="login-page" aria-labelledby="titulo-login" hidden>
-
-    <div class="login-card">
-
-        <div class="login-brand">
-            <h2>Services Mechanic</h2>
-            <p>Gestión inteligente para talleres mecánicos</p>
-        </div>
-
-        <div class="login-content">
-
-            <h2 id="titulo-login">Iniciar sesión</h2>
-
-            <p class="login-text">
-                Ingresa tus datos para acceder.
-            </p>
-
-            <form>
-
-                <div class="campo-login">
-                    <label for="correo-login">Correo electrónico</label>
-                    <input
-                        type="email"
-                        id="correo-login"
-                        name="correo-login"
-                    >
-                </div>
-
-                <div class="campo-login">
-                    <label for="contrasena-login">Contraseña</label>
-                    <input
-                        type="password"
-                        id="contrasena-login"
-                        name="contrasena-login"
-                        placeholder="Ingresa tu contraseña"
-                    >
-                </div>
-
-                <button type="button" class="btn-login">
-                    Iniciar sesión
-                </button>
-
-            </form>
-
-        </div>
-
-    </div>
-
-</section>
-<!-- Sistema / Dashboard -->
-<section id="sistema" class="sistema" hidden>
-
-  <!-- Inicio -->
-  <aside class="sidebar-sistema">
-
-    <div class="logo-sistema">
-      <img src="img/LOGO SERVICE MECHANIC.png" alt="Logo de Services Mechanic">
-
-      <div>
-        <h2>Services Mechanic</h2>
-        <p>Gestión de Taller</p>
-      </div>
-    </div>
-
-    <nav class="menu-sistema" aria-label="Menú del sistema">
-
-      <a href="#dashboard" class="activo">
-        Inicio
-      </a>
-      <a href="#clientes">
-        Clientes
-      </a>
-    </nav>
-
-  </aside>
-
-
-  <!-- Área principal -->
-  <div class="contenido-sistema">
-
-    <header class="topbar-sistema">
-
-      <div>
-        <h2>Inicio</h2>
-        <p>Panel principal</p>
-      </div>
-
-      <div class="usuario-sistema">
-        <span class="avatar-sistema">U</span>
-        <span>Usuario</span>
-      </div>
-
-    </header>
-
-
-    <section id="dashboard" class="dashboard-sistema">
-
-      <h2>Bienvenido a Services Mechanic</h2>
-
-      <p>
-        Selecciona una opción del menú para gestionar la información del taller.
-      </p>
-
-    </section>
-
-  </div>
-
-</section>
-
-<p id="estado-sistema" role="status" aria-live="polite"></p>
-</main>
-
-
-  <footer id="contacto" aria-labelledby="titulo-contacto">
-  <div class="contenedor-footer">
-
-    <div class="bloque-footer bloque-footer--marca">
-      <h2 id="titulo-contacto">Services Mechanic</h2>
-      <p>
-        Caso de estudio académico orientado a la organización de talleres
-        mecánicos.
-      </p>
-    </div>
-
-    <div class="bloque-footer">
-      <h3>Contacto</h3>
-      <address>
-        <p>
-          <a href="mailto:contacto@servicesmechanic.com">
-            contacto@servicesmechanic.com
-          </a>
-        </p>
-        <p>
-          <a href="tel:+573001234567">+57 300 123 4567</a>
-        </p>
-        <p>Cra 9 # 22-39, Tunja, Boyacá</p>
-                <div class="mapa-footer">
-          <iframe
-            src="https://www.google.com/maps?q=Carrera+9+%2322-39,+Tunja,+Boyac%C3%A1,+Colombia&output=embed"
-            width="100%"
-            height="180"
-            style="border:0;"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            title="Ubicación de Services Mechanic en Tunja">
-          </iframe>
-        </div>
-      </address>
-      <a class="enlace-whatsapp" href="https://wa.me/573001234567" target="_blank" rel="noopener">
-        Escríbenos por WhatsApp
-      </a>
-    </div>
-
-    <div class="bloque-footer">
-      <h3>Navegación</h3>
-      <nav aria-label="Navegación secundaria">
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+
+  <body>
+    <header>
+      <img
+        src="img/LOGO SERVICE MECHANIC.png"
+        alt="Logo de Services Mechanic"
+        width="150"
+      />
+
+      <h1>Services Mechanic</h1>
+
+      <nav aria-label="Navegación principal">
         <ul>
           <li><a href="#inicio">Inicio</a></li>
-          <li><a href="#servicios">Servicios</a></li>
+          <li><a href="#servicios">Nuestros servicios</a></li>
+          <li><a href="#beneficios">Beneficios</a></li>
           <li><a href="#nosotros">Nosotros</a></li>
-          <li><a href="#solicitud-servicio">Solicitar servicio</a></li>
+          <li><a href="#solicitud-servicio">Contacto</a></li>
         </ul>
       </nav>
-    </div>
 
-    <div class="bloque-footer">
-      <h3>Legal</h3>
-      <nav aria-label="Enlaces legales">
-        <ul>
-          <li><a href="#">Política de privacidad</a></li>
-          <li><a href="#">Términos y condiciones</a></li>
-          <li><a href="#">Aviso de protección de datos</a></li>
-        </ul>
-      </nav>
-      <h3>Síguenos</h3>
-      <nav aria-label="Redes sociales">
-        <ul class="redes-sociales">
-          <li><a href="#" aria-label="Facebook">Facebook</a></li>
-          <li><a href="#" aria-label="Instagram">Instagram</a></li>
-        </ul>
-      </nav>
-    </div>
+      <div class="acciones-header">
+        <a href="#solicitud-servicio">Solicitar información</a>
+        <a href="#login" class="btn-login-header">Iniciar sesión</a>
+      </div>
+    </header>
 
-  </div>
+    <main>
+      <section id="inicio" aria-labelledby="titulo-inicio">
+        <div class="contenido-inicio">
+          <p class="etiqueta-inicio">
+            Software de gestión para talleres mecánicos
+          </p>
 
-  <p class="derechos-footer">&copy; 2026 Services Mechanic. Todos los derechos reservados.</p>
-</footer>
-  <script src="js/script.js"></script>
-</body>
+          <h2 id="titulo-inicio">
+            OPTIMIZA TU <span>TALLER</span><br />
+            <span>Controlando</span> cada servicio
+          </h2>
+
+          <p class="descripcion-inicio">
+            Services Mechanic facilita la gestión de clientes, vehículos,
+            empleados, repuestos, servicios y facturación de un taller mecánico.
+          </p>
+
+          <p class="acciones-inicio">
+            <a class="enlace-servicios" href="#servicios">
+              Ver nuestros servicios →
+            </a>
+          </p>
+          <div class="resumen-inicio" aria-label="Características principales">
+            <div class="item-resumen">
+              <span class="check-resumen" aria-hidden="true">✓</span>
+              <span>Información<br />organizada</span>
+            </div>
+
+            <div class="item-resumen">
+              <span class="check-resumen" aria-hidden="true">✓</span>
+              <span>Mayor control<br />operativo</span>
+            </div>
+
+            <div class="item-resumen">
+              <span class="check-resumen" aria-hidden="true">✓</span>
+              <span>Gestión<br />centralizada</span>
+            </div>
+          </div>
+        </div>
+
+        <figure class="carrusel-inicio" aria-label="Imágenes del taller">
+          <img
+            class="imagen-carrusel"
+            src="img/Imagen 1.png"
+            alt="Mecánico utilizando una tableta junto a un vehículo en el taller"
+          />
+
+          <img
+            class="imagen-carrusel"
+            src="img/Imagen 2.png"
+            alt="Vista de un taller organizado con vehículos y equipos de reparación"
+            hidden
+          />
+
+          <img
+            class="imagen-carrusel"
+            src="img/Imagen 3.png"
+            alt="Mecánico trabajando con herramientas en el motor de un vehículo"
+            hidden
+          />
+          <figcaption class="controles-carrusel">
+            <button
+              type="button"
+              id="foto-anterior"
+              aria-label="Imagen anterior"
+            >
+              ‹
+            </button>
+
+            <button
+              type="button"
+              id="pausar-carrusel"
+              aria-label="Pausar carrusel"
+            >
+              ⏸
+            </button>
+
+            <button
+              type="button"
+              id="foto-siguiente"
+              aria-label="Imagen siguiente"
+            >
+              ›
+            </button>
+            <div
+              class="indicadores-carrusel"
+              aria-label="Indicadores del carrusel"
+            >
+              <button
+                type="button"
+                class="indicador activo"
+                aria-label="Ir a la imagen 1"
+              ></button>
+              <button
+                type="button"
+                class="indicador"
+                aria-label="Ir a la imagen 2"
+              ></button>
+              <button
+                type="button"
+                class="indicador"
+                aria-label="Ir a la imagen 3"
+              ></button>
+            </div>
+          </figcaption>
+        </figure>
+      </section>
+
+      <section id="problema" aria-labelledby="titulo-problema">
+        <div class="contenedor-problema">
+          <div class="intro-problema">
+            <p class="etiqueta-problema">El problema</p>
+
+            <h2 id="titulo-problema">
+              Administrar un taller no debería depender de procesos manuales
+            </h2>
+
+            <p class="descripcion-problema">
+              La gestión manual tiene límites que se hacen evidentes cuando el
+              volumen de trabajo crece.
+            </p>
+          </div>
+
+          <div class="lista-problemas">
+            <article class="item-problema">
+              <div class="icono-problema" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                  />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="8" y1="13" x2="16" y2="13" />
+                  <line x1="8" y1="17" x2="16" y2="17" />
+                </svg>
+              </div>
+
+              <div class="contenido-problema">
+                <h3>Información dispersa</h3>
+                <p>
+                  Los registros manuales dificultan consultar rápidamente la
+                  información de clientes y vehículos.
+                </p>
+              </div>
+            </article>
+
+            <article class="item-problema">
+              <div class="icono-problema" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
+                  />
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                  <line x1="12" y1="22.08" x2="12" y2="12" />
+                </svg>
+              </div>
+
+              <div class="contenido-problema">
+                <h3>Repuestos sin control</h3>
+                <p>
+                  Es difícil llevar seguimiento de las piezas utilizadas en cada
+                  servicio.
+                </p>
+              </div>
+            </article>
+
+            <article class="item-problema">
+              <div class="icono-problema" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="9" />
+                  <polyline points="12 7 12 12 15 14" />
+                </svg>
+              </div>
+
+              <div class="contenido-problema">
+                <h3>Poco control sobre las horas trabajadas</h3>
+                <p>
+                  El registro manual dificulta conocer cuánto tiempo requiere
+                  cada servicio.
+                </p>
+              </div>
+            </article>
+
+            <article class="item-problema">
+              <div class="icono-problema" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M10.3 3.6 2.5 17a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.6a2 2 0 0 0-3.4 0z"
+                  />
+                  <line x1="12" y1="9" x2="12" y2="13" />
+                  <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+              </div>
+
+              <div class="contenido-problema">
+                <h3>Errores en facturación</h3>
+                <p>
+                  Los cálculos manuales aumentan el riesgo de inconsistencias.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="servicios" aria-labelledby="titulo-servicios">
+        <h2 id="titulo-servicios">Nuestros servicios</h2>
+
+        <p>
+          Services Mechanic permite administrar las principales áreas operativas
+          de un taller mecánico.
+        </p>
+
+        <article aria-labelledby="titulo-clientes-vehiculos">
+          <h3 id="titulo-clientes-vehiculos">
+            Gestión de clientes y vehículos
+          </h3>
+
+          <p>
+            Mantén en un solo lugar la informacion de tus clientes y vehiculos
+            para consultar rapidamente cuando lo necesites.
+          </p>
+        </article>
+
+        <article aria-labelledby="titulo-empleados">
+          <h3 id="titulo-empleados">Gestión de empleados</h3>
+
+          <p>
+            Organiza la información de tu equipo y facilita el control del
+            personal que participa en los servicios del taller.
+          </p>
+        </article>
+
+        <article aria-labelledby="titulo-repuestos">
+          <h3 id="titulo-repuestos">Gestión de repuestos</h3>
+
+          <p>
+            Registra los repuestos utilizados en cada servicio y lleva un mejor
+            control de las piezas empleadas.
+          </p>
+        </article>
+
+        <article aria-labelledby="titulo-horas">
+          <h3 id="titulo-horas">Control de horas trabajadas</h3>
+
+          <p>
+            Registra cuánto tiempo dedica cada empleado a un servicio y mejora
+            el seguimiento del trabajo realizado.
+          </p>
+        </article>
+
+        <article aria-labelledby="titulo-facturacion">
+          <h3 id="titulo-facturacion">Facturación</h3>
+
+          <p>
+            Calcula y organiza repuestos, horas trabajadas e IVA para obtener
+            una facturación más clara y precisa.
+          </p>
+        </article>
+      </section>
+
+      <section id="beneficios" aria-labelledby="titulo-beneficios">
+        <header class="encabezado-beneficios">
+          <p class="etiqueta-beneficios">Beneficios</p>
+          <h2 id="titulo-beneficios">
+            ¿Qué mejora <span>Services Mechanic</span>?
+          </h2>
+          <p class="descripcion-beneficios">
+            La propuesta busca que el taller tenga una administración más clara
+            y que sus procesos cotidianos sean más fáciles de controlar.
+          </p>
+        </header>
+
+        <div class="beneficios-grid">
+          <article class="tarjeta-beneficio">
+            <span class="numero-beneficio">01</span>
+            <h3>Mejor organización</h3>
+            <p>
+              La información del taller se mantiene organizada para facilitar su
+              consulta y seguimiento.
+            </p>
+          </article>
+
+          <article class="tarjeta-beneficio">
+            <span class="numero-beneficio">02</span>
+            <h3>Ahorro de tiempo</h3>
+            <p>
+              La gestión digital permite realizar consultas y registrar
+              información de una manera más práctica.
+            </p>
+          </article>
+
+          <article class="tarjeta-beneficio">
+            <span class="numero-beneficio">03</span>
+            <h3>Mayor control</h3>
+            <p>
+              El taller puede llevar un mejor seguimiento de empleados,
+              vehículos, repuestos, horas y facturación.
+            </p>
+          </article>
+
+          <article class="tarjeta-beneficio">
+            <span class="numero-beneficio">04</span>
+            <h3>Mejor atención</h3>
+            <p>
+              Una información más organizada facilita la atención y comunicación
+              con los clientes.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Equipo -->
+
+      <section
+        id="equipo"
+        class="seccion-equipo"
+        aria-labelledby="titulo-equipo"
+      >
+        <div class="encabezado-equipo">
+          <p class="etiqueta-equipo">Equipo</p>
+
+          <h2 id="titulo-equipo">
+            Personas detrás de <span>Services Mechanic</span>
+          </h2>
+        </div>
+
+        <div class="grid-equipo">
+          <article class="tarjeta-equipo">
+            <div class="burbuja-equipo" aria-hidden="true">👨‍💻</div>
+            <h3>Liceth Torres</h3>
+            <p class="rol-equipo">Frontend Architect</p>
+          </article>
+
+          <article class="tarjeta-equipo">
+            <div class="burbuja-equipo" aria-hidden="true">👨‍💻</div>
+            <h3>Sebastián Herrera</h3>
+            <p class="rol-equipo">Accessibility Lead</p>
+          </article>
+
+          <article class="tarjeta-equipo">
+            <div class="burbuja-equipo" aria-hidden="true">👨‍💻</div>
+            <h3>Santiago Aguilar</h3>
+            <p class="rol-equipo">QA &amp; Forms Engineer</p>
+          </article>
+        </div>
+      </section>
+      <!-- Nosotros -->
+
+      <section id="nosotros" aria-labelledby="titulo-nosotros">
+        <div class="encabezado-nosotros">
+          <div class="intro-nosotros">
+            <p class="etiqueta-nosotros">Quiénes somos</p>
+
+            <h2 id="titulo-nosotros">Nosotros</h2>
+
+            <p>
+              Services Mechanic surge al identificar que muchos talleres
+              gestionan la información de sus clientes, vehículos, empleados,
+              repuestos, servicios y facturación mediante papeles y registros
+              separados.
+            </p>
+          </div>
+        </div>
+
+        <div class="mision-vision">
+          <article class="tarjeta-mv">
+            <h3>Misión</h3>
+
+            <p>
+              Simplificar la administración de los talleres mecánicos mediante
+              una solución digital que centralice clientes, vehículos,
+              empleados, repuestos y facturación, reduciendo errores y
+              facilitando el control de cada proceso.
+            </p>
+          </article>
+
+          <article class="tarjeta-mv">
+            <h3>Visión</h3>
+
+            <p>
+              Para 2030, consolidarnos como una solución de gestión digital para
+              talleres mecánicos en Colombia, reconocida por su facilidad de uso
+              y por contribuir a una administración más organizada y eficiente.
+            </p>
+          </article>
+        </div>
+
+        <h3 class="titulo-valores">Nuestros valores</h3>
+
+        <div class="valores-grid">
+          <article class="tarjeta-valor">
+            <span class="icono-valor" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M9 18h6M10 22h4M8.5 15.5C7 14.4 6 12.6 6 10.5a6 6 0 1 1 12 0c0 2.1-1 3.9-2.5 5-1 .8-1.5 1.5-1.5 2.5h-4c0-1-.5-1.7-1.5-2.5Z"
+                />
+              </svg>
+            </span>
+
+            <h4>Innovación útil</h4>
+
+            <p>Tecnología que resuelve problemas reales del taller.</p>
+          </article>
+
+          <article class="tarjeta-valor">
+            <span class="icono-valor" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="9" y="3" width="6" height="4" rx="1" />
+                <rect x="3" y="17" width="6" height="4" rx="1" />
+                <rect x="15" y="17" width="6" height="4" rx="1" />
+                <path d="M12 7v5M6 17v-3h12v3" />
+              </svg>
+            </span>
+
+            <h4>Organización</h4>
+
+            <p>Claridad y estructura en cada proceso del negocio.</p>
+          </article>
+
+          <article class="tarjeta-valor">
+            <span class="icono-valor" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12 3 20 6v5c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6l8-3Z"
+                />
+                <path d="m9 12 2 2 4-4" />
+              </svg>
+            </span>
+
+            <h4>Confianza</h4>
+
+            <p>Compromiso con el manejo responsable de la información.</p>
+          </article>
+
+          <article class="tarjeta-valor">
+            <span class="icono-valor" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <circle cx="9" cy="8" r="3" />
+                <circle cx="17" cy="9" r="2.5" />
+                <path d="M3 20c0-4 2.5-6 6-6s6 2 6 6M15 15c3 0 5 1.7 5 5" />
+              </svg>
+            </span>
+
+            <h4>Cercanía</h4>
+
+            <p>
+              Escuchamos las necesidades de los talleres para desarrollar
+              soluciones fáciles de utilizar.
+            </p>
+          </article>
+
+          <article class="tarjeta-valor">
+            <span class="icono-valor" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M4 19V5" />
+                <path d="M4 19h16" />
+                <path d="m7 15 4-4 3 2 5-6" />
+                <path d="M16 7h3v3" />
+              </svg>
+            </span>
+
+            <h4>Mejora continua</h4>
+
+            <p>Evolucionamos junto con las necesidades del sector.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Experiencias -->
+
+      <section
+        id="experiencias"
+        class="seccion-experiencias"
+        aria-labelledby="titulo-experiencias"
+      >
+        <div class="encabezado-experiencias">
+          <p class="etiqueta-experiencias">Experiencias</p>
+
+          <h2 id="titulo-experiencias">
+            Una solución pensada para <span>el trabajo diario</span>
+          </h2>
+
+          <p class="descripcion-experiencias">
+            Opiniones de personas que probaron Services Mechanic y conocieron
+            una forma más organizada de gestionar un taller.
+          </p>
+        </div>
+
+        <div class="grid-experiencias">
+          <article class="tarjeta-experiencia">
+            <img
+              src="img/experiencia-1.png"
+              alt="Retrato simulado de Valentina Castro"
+              class="foto-experiencia"
+            />
+
+            <div class="estrellas-experiencia" aria-label="5 estrellas">
+              ★★★★★
+            </div>
+
+            <p class="opinion-experiencia">
+              “Tener la información organizada facilita mucho la consulta de los
+              vehículos y servicios que se han realizado.”
+            </p>
+
+            <p class="nombre-experiencia">— Valentina Castro</p>
+          </article>
+
+          <article class="tarjeta-experiencia">
+            <img
+              src="img/experiencia-2.png"
+              alt="Retrato simulado de Laura Rodríguez"
+              class="foto-experiencia"
+            />
+
+            <div class="estrellas-experiencia" aria-label="5 estrellas">
+              ★★★★★
+            </div>
+
+            <p class="opinion-experiencia">
+              “La gestión digital permite llevar un mejor control de las
+              actividades y evita depender únicamente de registros en papel.”
+            </p>
+
+            <p class="nombre-experiencia">— Laura Rodríguez</p>
+          </article>
+
+          <article class="tarjeta-experiencia">
+            <img
+              src="img/experiencia-3.png"
+              alt="Retrato simulado de Andrés Gómez"
+              class="foto-experiencia"
+            />
+
+            <div class="estrellas-experiencia" aria-label="5 estrellas">
+              ★★★★★
+            </div>
+
+            <p class="opinion-experiencia">
+              “Una herramienta sencilla puede ayudar a que las tareas
+              administrativas del taller sean más ordenadas.”
+            </p>
+
+            <p class="nombre-experiencia">— Andrés Gómez</p>
+          </article>
+        </div>
+      </section>
+
+      <section
+        id="solicitud-servicio"
+        aria-labelledby="titulo-solicitud-servicio"
+      >
+        <div class="contenedor-solicitud">
+          <div class="contenido-solicitud">
+            <p class="etiqueta-solicitud">Empieza hoy</p>
+
+            <h2 id="titulo-solicitud-servicio">
+              Lleva la gestión de tu taller al <span>siguiente nivel</span>
+            </h2>
+
+            <p class="descripcion-solicitud">
+              Solicita información y conoce cómo Services Mechanic puede
+              ayudarte a organizar mejor la operación de tu taller.
+            </p>
+
+            <ul class="checklist-solicitud">
+              <li>
+                <span class="check-solicitud" aria-hidden="true">✓</span>
+                Respuesta personalizada
+              </li>
+              <li>
+                <span class="check-solicitud" aria-hidden="true">✓</span> Sin
+                compromisos
+              </li>
+              <li>
+                <span class="check-solicitud" aria-hidden="true">✓</span>
+                Orientado a tus necesidades
+              </li>
+            </ul>
+
+            <div class="burbujas-solicitud" aria-hidden="true">
+              <span class="burbuja burbuja-1"></span>
+              <span class="burbuja burbuja-2"></span>
+              <span class="burbuja burbuja-3"></span>
+              <span class="burbuja burbuja-4"></span>
+            </div>
+          </div>
+          <form
+            id="form-solicitud"
+            action="#"
+            method="post"
+            novalidate
+            data-form-type="solicitud-informacion"
+            data-business-area="software-talleres"
+          >
+            <p>
+              <label for="nombre">Nombre de contacto</label>
+              <input
+                id="nombre"
+                name="nombre"
+                type="text"
+                required
+                minlength="3"
+                maxlength="80"
+                data-field-purpose="identificacion-cliente"
+              />
+              <span
+                class="mensaje-error"
+                id="error-nombre"
+                aria-live="polite"
+              ></span>
+            </p>
+
+            <p>
+              <label for="taller">Nombre del taller</label>
+              <input
+                id="taller"
+                name="taller"
+                type="text"
+                required
+                minlength="3"
+                maxlength="100"
+                data-field-purpose="identificacion-taller"
+              />
+              <span
+                class="mensaje-error"
+                id="error-taller"
+                aria-live="polite"
+              ></span>
+            </p>
+
+            <p>
+              <label for="correo">Correo</label>
+              <input
+                id="correo"
+                name="correo"
+                type="email"
+                required
+                data-field-purpose="contacto-cliente"
+              />
+              <span
+                class="mensaje-error"
+                id="error-correo"
+                aria-live="polite"
+              ></span>
+            </p>
+
+            <p>
+              <label for="telefono">Teléfono</label>
+              <input
+                id="telefono"
+                name="telefono"
+                type="tel"
+                required
+                pattern="[0-9+() -]{7,20}"
+                data-field-purpose="contacto-telefonico"
+              />
+              <span
+                class="mensaje-error"
+                id="error-telefono"
+                aria-live="polite"
+              ></span>
+            </p>
+
+            <p>
+              <label for="num-empleados">Número de empleados del taller</label>
+              <input
+                id="num-empleados"
+                name="num-empleados"
+                type="number"
+                min="1"
+                max="500"
+                data-field-purpose="tamano-taller"
+              />
+              <span
+                class="mensaje-error"
+                id="error-num-empleados"
+                aria-live="polite"
+              ></span>
+            </p>
+
+            <p>
+              <label for="plan-interes">Plan de interés</label>
+              <select
+                id="plan-interes"
+                name="plan-interes"
+                required
+                data-field-purpose="clasificacion-lead"
+              >
+                <option value="">Seleccione una opción</option>
+                <option value="basico" data-service-category="plan-basico">
+                  Plan Básico
+                </option>
+                <option
+                  value="profesional"
+                  data-service-category="plan-profesional"
+                >
+                  Plan Profesional
+                </option>
+                <option value="info" data-service-category="solo-informacion">
+                  Solo quiero más información
+                </option>
+              </select>
+              <span
+                class="mensaje-error"
+                id="error-plan-interes"
+                aria-live="polite"
+              ></span>
+            </p>
+
+            <p>
+              <label for="mensaje">Mensaje</label>
+              <textarea
+                id="mensaje"
+                name="mensaje"
+                required
+                minlength="10"
+                maxlength="500"
+                data-field-purpose="detalle-solicitud"
+              ></textarea>
+              <span
+                class="mensaje-error"
+                id="error-mensaje"
+                aria-live="polite"
+              ></span>
+            </p>
+
+            <p>
+              <button type="submit" data-action="enviar-solicitud">
+                Solicitar información
+              </button>
+            </p>
+          </form>
+        </div>
+      </section>
+
+      <!-- Login -->
+      <section
+        id="login"
+        class="login-page"
+        aria-labelledby="titulo-login"
+        hidden
+      >
+        <div class="login-card">
+          <div class="login-brand">
+            <h2>Services Mechanic</h2>
+            <p>Gestión inteligente para talleres mecánicos</p>
+          </div>
+
+          <div class="login-content">
+            <h2 id="titulo-login">Iniciar sesión</h2>
+
+            <p class="login-text">Ingresa tus datos para acceder.</p>
+
+            <form>
+              <div class="campo-login">
+                <label for="correo-login">Correo electrónico</label>
+                <input type="email" id="correo-login" name="correo-login" />
+              </div>
+
+              <div class="campo-login">
+                <label for="contrasena-login">Contraseña</label>
+                <input
+                  type="password"
+                  id="contrasena-login"
+                  name="contrasena-login"
+                  placeholder="Ingresa tu contraseña"
+                />
+              </div>
+
+              <button type="button" class="btn-login">Iniciar sesión</button>
+            </form>
+          </div>
+        </div>
+      </section>
+      <!-- Sistema / Dashboard -->
+      <section id="sistema" class="sistema" hidden>
+        <!-- Inicio -->
+        <aside class="sidebar-sistema">
+          <div class="logo-sistema">
+            <img
+              src="img/LOGO SERVICE MECHANIC.png"
+              alt="Logo de Services Mechanic"
+            />
+
+            <div>
+              <h2>Services Mechanic</h2>
+              <p>Gestión de Taller</p>
+            </div>
+          </div>
+
+          <nav class="menu-sistema" aria-label="Menú del sistema">
+            <a href="#dashboard" class="activo"> Inicio </a>
+            <a href="#clientes"> Clientes </a>
+          </nav>
+        </aside>
+
+        <!-- Área principal -->
+        <div class="contenido-sistema">
+          <header class="topbar-sistema">
+            <div>
+              <h2>Inicio</h2>
+              <p>Panel principal</p>
+            </div>
+
+            <div class="usuario-sistema">
+              <span class="avatar-sistema">U</span>
+              <span>Usuario</span>
+            </div>
+          </header>
+
+          <section id="dashboard" class="dashboard-sistema">
+            <h2>Bienvenido a Services Mechanic</h2>
+
+            <p>
+              Selecciona una opción del menú para gestionar la información del
+              taller.
+            </p>
+          </section>
+
+          <!-- Clientes -->
+          <section id="clientes" class="clientes-sistema" hidden>
+            <div class="encabezado-clientes">
+              <div>
+                <h2>Clientes registrados</h2>
+                <p>0 clientes</p>
+              </div>
+
+              <button type="button" class="btn-nuevo-cliente">
+                + Registrar cliente
+              </button>
+            </div>
+
+            <div class="busqueda-clientes">
+              <input
+                type="search"
+                id="buscar-cliente"
+                placeholder="Buscar por cédula, nombres o apellidos..."
+              />
+            </div>
+
+            <div class="tabla-clientes">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Cédula</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>Teléfono</th>
+                    <th>Dirección</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+
+                <tbody id="lista-clientes"></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <p id="estado-sistema" role="status" aria-live="polite"></p>
+    </main>
+
+    <footer id="contacto" aria-labelledby="titulo-contacto">
+      <div class="contenedor-footer">
+        <div class="bloque-footer bloque-footer--marca">
+          <h2 id="titulo-contacto">Services Mechanic</h2>
+          <p>
+            Caso de estudio académico orientado a la organización de talleres
+            mecánicos.
+          </p>
+        </div>
+
+        <div class="bloque-footer">
+          <h3>Contacto</h3>
+          <address>
+            <p>
+              <a href="mailto:contacto@servicesmechanic.com">
+                contacto@servicesmechanic.com
+              </a>
+            </p>
+            <p>
+              <a href="tel:+573001234567">+57 300 123 4567</a>
+            </p>
+            <p>Cra 9 # 22-39, Tunja, Boyacá</p>
+            <div class="mapa-footer">
+              <iframe
+                src="https://www.google.com/maps?q=Carrera+9+%2322-39,+Tunja,+Boyac%C3%A1,+Colombia&output=embed"
+                width="100%"
+                height="180"
+                style="border: 0"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Ubicación de Services Mechanic en Tunja"
+              >
+              </iframe>
+            </div>
+          </address>
+          <a
+            class="enlace-whatsapp"
+            href="https://wa.me/573001234567"
+            target="_blank"
+            rel="noopener"
+          >
+            Escríbenos por WhatsApp
+          </a>
+        </div>
+
+        <div class="bloque-footer">
+          <h3>Navegación</h3>
+          <nav aria-label="Navegación secundaria">
+            <ul>
+              <li><a href="#inicio">Inicio</a></li>
+              <li><a href="#servicios">Servicios</a></li>
+              <li><a href="#nosotros">Nosotros</a></li>
+              <li><a href="#solicitud-servicio">Solicitar servicio</a></li>
+            </ul>
+          </nav>
+        </div>
+
+        <div class="bloque-footer">
+          <h3>Legal</h3>
+          <nav aria-label="Enlaces legales">
+            <ul>
+              <li><a href="#">Política de privacidad</a></li>
+              <li><a href="#">Términos y condiciones</a></li>
+              <li><a href="#">Aviso de protección de datos</a></li>
+            </ul>
+          </nav>
+          <h3>Síguenos</h3>
+          <nav aria-label="Redes sociales">
+            <ul class="redes-sociales">
+              <li><a href="#" aria-label="Facebook">Facebook</a></li>
+              <li><a href="#" aria-label="Instagram">Instagram</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <p class="derechos-footer">
+        &copy; 2026 Services Mechanic. Todos los derechos reservados.
+      </p>
+    </footer>
+    <script src="js/script.js"></script>
+  </body>
 </html>

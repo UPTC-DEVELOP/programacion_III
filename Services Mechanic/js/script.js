@@ -308,3 +308,41 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 });
+// NAVEGACIÓN CLIENTES
+
+document.addEventListener("DOMContentLoaded", () => {
+  const enlaceInicio = document.querySelector(
+    '.menu-sistema a[href="#dashboard"]'
+  );
+
+  const enlaceClientes = document.querySelector(
+    '.menu-sistema a[href="#clientes"]'
+  );
+
+  const dashboard = document.getElementById("dashboard");
+  const clientes = document.getElementById("clientes");
+
+  if (enlaceInicio && enlaceClientes && dashboard && clientes) {
+
+    enlaceInicio.addEventListener("click", (evento) => {
+      evento.preventDefault();
+
+      dashboard.hidden = false;
+      clientes.hidden = true;
+
+      enlaceInicio.classList.add("activo");
+      enlaceClientes.classList.remove("activo");
+    });
+
+    enlaceClientes.addEventListener("click", (evento) => {
+      evento.preventDefault();
+
+      dashboard.hidden = true;
+      clientes.hidden = false;
+
+      enlaceClientes.classList.add("activo");
+      enlaceInicio.classList.remove("activo");
+    });
+
+  }
+});
