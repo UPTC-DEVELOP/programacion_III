@@ -7,72 +7,55 @@
 
   <title>LJA MOTORS | Catálogo</title>
 
+  <!-- FUENTE -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<<<<<<< HEAD:Taller_Mecanico/Catalogo.html
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet">
+    rel="stylesheet"
+  >
 
   <!-- ESTILOS -->
-  <link rel="stylesheet" href="Css/style.css">
-  <link rel="stylesheet" href="Css/Catalogo.css">
-=======
-  <!-- Hojas de estilo unificadas: primero el estilo general de la marca y luego el catálogo -->
-  <link rel="stylesheet" href="../Css/style.css">
-  <link rel="stylesheet" href="../Css/Catalogo.css">
->>>>>>> 7654a034d87c26f7c169c747499b45cae192a775:Taller_Mecanico/Html/Catalogo.html
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/Catalogo.css">
+
 </head>
+
 
 <body>
 
-  <!-- 
-       ENCABEZADO -->
+
+  <!-- =====================================================
+       BARRA SUPERIOR
+       ===================================================== -->
 
   <header class="navbar">
 
-<<<<<<< HEAD:Taller_Mecanico/Catalogo.html
     <a
       class="logo"
-      href="index.html"
-      style="display:flex; align-items:center; text-decoration:none;"
+      href="../index.html"
     >
 
       <img
-        src="Css/IMG/LOGO.png"
-        alt="LJA Taller Mecanico Logo"
+        src="../css/IMG/LOGO.png"
+        alt="LJA Taller Mecánico Logo"
         width="65"
         height="65"
-        style="object-fit:contain;"
       >
 
-=======
-    <!-- Solo el logotipo más grande y sin textos adicionales -->
-    <a class="logo" href="../index.html" style="display: flex; align-items: center; text-decoration: none;">
-      <img src="../css/IMG/LOGO.png" alt="LJA Taller Mecanico Logo" width="65" height="65" style="object-fit: contain;">
->>>>>>> 7654a034d87c26f7c169c747499b45cae192a775:Taller_Mecanico/Html/Catalogo.html
     </a>
 
 
-    <nav style="display:flex; align-items:center; gap:1.5rem;">
+    <nav>
 
       <a href="#catalogo">
         Catálogo
       </a>
 
       <a
-        href="index.html"
+        href="../index.html"
         class="btn-primario"
-        style="
-          padding:0.5rem 1rem;
-          background-color:var(--primary-blue);
-          color:white;
-          border-radius:6px;
-          font-weight:600;
-          text-decoration:none;
-          font-size:0.9rem;
-        "
       >
         Volver al Inicio
       </a>
@@ -82,41 +65,35 @@
   </header>
 
 
-  <!-- 
-       CONTENIDO PRINCIPAL -->
+  <!-- =====================================================
+       CONTENIDO
+       ===================================================== -->
 
   <main>
-
-    <!-- 
-         CATÁLOGO
-     -->
 
     <section
       class="catalog-section"
       id="catalogo"
-      style="background:#18324A;"
     >
 
-      <!-- ENCABEZADO DEL CATÁLOGO -->
+
+      <!-- =================================================
+           ENCABEZADO
+           ================================================= -->
 
       <div class="section-heading">
 
         <div>
 
-          <span
-            class="eyebrow dark"
-            style="color:#BFD3E2;"
-          >
+          <span class="eyebrow dark">
             NUESTRO CATÁLOGO
           </span>
 
-
-          <h1 style="color:#FFFFFF;">
+          <h1>
             Productos para tu vehículo
           </h1>
 
-
-          <p style="color:#D4E0E9;">
+          <p>
             Encuentra repuestos, accesorios y productos para el mantenimiento
             de tu vehículo.
           </p>
@@ -142,9 +119,9 @@
       </div>
 
 
-      <!-- 
+      <!-- =================================================
            FILTROS
-       -->
+           ================================================= -->
 
       <div class="filters">
 
@@ -155,14 +132,12 @@
           Todos
         </button>
 
-
         <button
           class="filter"
           data-category="Lubricantes"
         >
           Lubricantes
         </button>
-
 
         <button
           class="filter"
@@ -171,14 +146,12 @@
           Frenos
         </button>
 
-
         <button
           class="filter"
           data-category="Filtros"
         >
           Filtros
         </button>
-
 
         <button
           class="filter"
@@ -187,7 +160,6 @@
           Motor
         </button>
 
-
         <button
           class="filter"
           data-category="Electricidad"
@@ -195,14 +167,12 @@
           Electricidad
         </button>
 
-
         <button
           class="filter"
           data-category="Suspensión"
         >
           Suspensión
         </button>
-
 
         <button
           class="filter"
@@ -214,20 +184,17 @@
       </div>
 
 
-      <!-- 
+      <!-- =================================================
            PRODUCTOS
-       -->
+           ================================================= -->
 
       <div
         class="product-grid"
         id="productGrid"
-      >
-      </div>
+      ></div>
 
 
-      <!-- 
-           MENSAJE SIN PRODUCTOS
-       -->
+      <!-- SIN RESULTADOS -->
 
       <p
         class="empty"
@@ -236,169 +203,153 @@
         No se encontraron productos.
       </p>
 
+
     </section>
 
   </main>
 
 
   <!-- =====================================================
-       FOOTER
-       MISMA INFORMACIÓN DE LA PÁGINA PRINCIPAL
-  ====================================================== -->
+       PIE DE PÁGINA
+       ===================================================== -->
 
-  <footer>
+  <footer class="main-footer">
 
-    <!-- INFORMACIÓN DE LA EMPRESA -->
-
-    <div>
-
-      <img
-        src="Css/IMG/LOGO.png"
-        alt="logo de la empresa"
-        width="100"
-        height="100"
-      >
+    <div class="footer-container">
 
 
-      <p>
-        Tu taller de confianza con más de 10 años de experiencia
-        en mecánica automotriz. Calidad, precisión y garantía
-        en cada trabajo.
-      </p>
+      <!-- =========================
+           LJA
+           ========================= -->
+
+      <div class="footer-column footer-brand">
+
+        <a
+          href="../index.html"
+          class="footer-logo"
+        >
+
+          <img
+            src="../css/IMG/LOGO.png"
+            alt="LJA Taller Mecánico"
+          >
+
+        </a>
 
 
-      <p>
-        © 2026 LJA Taller Mecánico.Derechos de autor para el grupo 2
-      </p>
-
-    </div>
-
-
-    <!-- SERVICIOS -->
-
-    <div>
-
-      <h3>
-        SERVICIOS
-      </h3>
+        <p>
+          Tu taller de confianza con más de 10 años de experiencia
+          en mecánica automotriz. Calidad, precisión y garantía
+          en cada trabajo.
+        </p>
 
 
-      <ul>
+        <span class="copyright">
+          © 2026 LJA Taller Mecánico. Derechos de autor para el grupo 2
+        </span>
 
-        <li>
+      </div>
+
+
+      <!-- =========================
+           SERVICIOS
+           ========================= -->
+
+      <div class="footer-column">
+
+        <h3>
+          SERVICIOS
+        </h3>
+
+        <a href="../index.html#servicios">
           Cambio de aceite
-        </li>
+        </a>
 
-        <li>
+        <a href="../index.html#servicios">
           Frenos
-        </li>
+        </a>
 
-        <li>
+        <a href="../index.html#servicios">
           Alineación
-        </li>
+        </a>
 
-        <li>
+        <a href="../index.html#servicios">
           Diagnóstico
-        </li>
+        </a>
 
-        <li>
+        <a href="../index.html#servicios">
           Otro
-        </li>
+        </a>
 
-      </ul>
-
-    </div>
+      </div>
 
 
-    <!-- CONTACTO -->
+      <!-- =========================
+           CONTACTO
+           ========================= -->
 
-    <div>
+      <div class="footer-column">
 
-      <h3>
-        CONTACTO
-      </h3>
+        <h3>
+          CONTACTO
+        </h3>
 
-
-      <ul>
-
-        <li>
+        <a href="tel:+573000000000">
           +57 300 000 0000
-        </li>
+        </a>
 
-        <li>
+        <a href="mailto:contacto@lja-taller.com">
           contacto@lja-taller.com
-        </li>
+        </a>
 
-        <li>
-          <a
-            href="https://maps.app.goo.gl/CFy2htvujREwz8wy6"
-            target="_blank"
-          >
-            Ubicación
-          </a>
-        </li>
+        <a href="#">
+          Ubicación
+        </a>
 
-        <li>
-          <a
-            href="https://www.instagram.com/?hl=es"
-            target="_blank"
-          >
-            Instagram
-          </a>
-        </li>
+        <a href="#">
+          Instagram
+        </a>
 
-      </ul>
-
-    </div>
+      </div>
 
 
-    <!-- INFORMACIÓN -->
+      <!-- =========================
+           INFORMACIÓN
+           ========================= -->
 
-    <div>
+      <div class="footer-column">
 
-      <h3>
-        INFORMACIÓN
-      </h3>
+        <h3>
+          INFORMACIÓN
+        </h3>
 
+        <a href="#">
+          Privacidad
+        </a>
 
-      <ul>
+        <a href="#">
+          Términos
+        </a>
 
-        <li>
-          <a href="#">
-            Privacidad
-          </a>
-        </li>
+        <a href="#">
+          Protección de datos
+        </a>
 
-        <li>
-          <a href="#">
-            Términos
-          </a>
-        </li>
+      </div>
 
-        <li>
-          <a href="#">
-            Protección de datos
-          </a>
-        </li>
-
-      </ul>
 
     </div>
 
   </footer>
 
 
-<<<<<<< HEAD:Taller_Mecanico/Catalogo.html
-  <!-- 
-       JAVASCRIPT DEL CATÁLOGO
-   -->
+  <!-- =====================================================
+       JAVASCRIPT
+       ===================================================== -->
 
-  <script src="JS/catalogo.js"></script>
-=======
-  <!-- JAVASCRIPT (Ruta corregida sin el ../ para que cargue los productos correctamente) -->
-  <script src="../JS/catalogo.js"></script>
->>>>>>> 7654a034d87c26f7c169c747499b45cae192a775:Taller_Mecanico/Html/Catalogo.html
+  <script src="../js/catalogo.js"></script>
 
 </body>
 
 </html>
+
