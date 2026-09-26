@@ -1,0 +1,801 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script>document.documentElement.classList.add('js')</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Torque — Auto Repair Shop &amp; Mechanic Website Template</title>
+  <meta name="description" content="Torque is a rugged, trustworthy Bootstrap 5 website template for auto repair shops and mechanics: quick-quote booking, service pricing, ASE trust badges, specials, and a service booking page.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="tq-skip" href="#main">Skip to content</a>
+
+  <!-- ============ TOP BAR ============ -->
+  <div class="tq-topbar">
+    <div class="container">
+      <ul class="tq-topbar-list">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="tel:+15552487100">(555) 248-7100</a>
+        </li>
+        <li class="tq-topbar-hide">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          Mon–Fri 7:30–6:00 · Sat 8:00–3:00
+        </li>
+      </ul>
+      <span class="tq-sameday"><span class="dot" aria-hidden="true"></span> Same-day appointments available</span>
+    </div>
+  </div>
+
+  <!-- ============ NAVBAR ============ -->
+  <header>
+    <nav class="tq-nav" aria-label="Primary">
+      <div class="container">
+        <a class="tq-brand" href="index.html" aria-label="Torque Auto Repair — home">
+          <span class="tq-brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.3 2.3-2-2 2.3-2.3z"/></svg>
+          </span>
+          Tor<b>que</b>
+        </a>
+
+        <ul class="tq-nav-links tq-nav-desktop" role="list">
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#team">Our Team</a></li>
+          <li><a href="services.html">Book Online</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+
+        <div class="tq-nav-cta tq-nav-desktop">
+          <a href="tel:+15552487100" class="tq-btn tq-btn--ghost tq-btn--sm">(555) 248-7100</a>
+          <a href="#quote" class="tq-btn tq-btn--accent tq-btn--sm">Book a Service</a>
+        </div>
+
+        <button class="tq-burger" aria-label="Open menu" aria-expanded="false" aria-controls="tqMobile">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <div class="tq-overlay" aria-hidden="true"></div>
+  <nav class="tq-mobile" id="tqMobile" aria-label="Mobile">
+    <button class="tq-mobile-close" aria-label="Close menu">&times;</button>
+    <a href="index.html">Home</a>
+    <a href="#services">Services</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#team">Our Team</a>
+    <a href="services.html">Book Online</a>
+    <a href="#faq">FAQ</a>
+    <a href="#quote" class="tq-btn tq-btn--accent tq-btn--block">Book a Service</a>
+    <a href="tel:+15552487100" class="tq-btn tq-btn--ghost tq-btn--block">(555) 248-7100</a>
+  </nav>
+
+  <main id="main">
+
+    <!-- ============ HERO ============ -->
+    <section class="tq-hero" id="quote">
+      <div class="tq-hero-bg">
+        <img src="img/hero-garage.jpg" alt="Mechanic in overalls working under a car raised on a hydraulic lift in a busy auto repair garage" width="1600" height="1100" fetchpriority="high">
+      </div>
+      <div class="container">
+        <div class="tq-hero-grid">
+          <div>
+            <span class="tq-hero-flag">ASE-Certified · Family-Owned Since 2004</span>
+            <h1>Honest repairs.<br><span class="u">Straight</span> answers.</h1>
+            <p class="tq-hero-sub">From a quick oil change to a full engine rebuild, Torque keeps your car safe on the road — with upfront quotes, certified techs, and a 24-month warranty on every repair.</p>
+            <div class="tq-hero-actions">
+              <a href="services.html" class="tq-btn tq-btn--accent tq-btn--lg">Book an appointment</a>
+              <a href="#pricing" class="tq-btn tq-btn--ghost tq-btn--lg">See our pricing</a>
+            </div>
+            <div class="tq-hero-phone">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              Prefer to talk? Call <a href="tel:+15552487100" style="color:#fff;text-decoration:underline;text-decoration-color:var(--tq-orange);">(555) 248-7100</a>
+            </div>
+          </div>
+
+          <!-- Quick-quote mini form -->
+          <div class="tq-quote">
+            <div class="tq-quote-head">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg>
+              <div>
+                <h3>Get a free quote</h3>
+                <span>Reply within one business hour</span>
+              </div>
+            </div>
+            <div class="tq-quote-body">
+              <form data-validate aria-label="Quick quote request">
+                <div class="tq-field">
+                  <label for="q-service">What do you need?</label>
+                  <select id="q-service" name="service" required>
+                    <option value="">Choose a service…</option>
+                    <option>Oil change</option>
+                    <option>Brakes</option>
+                    <option>Engine diagnostics</option>
+                    <option>Tires &amp; alignment</option>
+                    <option>AC &amp; heating</option>
+                    <option>Transmission</option>
+                    <option>Battery</option>
+                    <option>State inspection</option>
+                    <option>Not sure — please advise</option>
+                  </select>
+                  <span class="err">Please pick a service.</span>
+                </div>
+                <div class="tq-field-row">
+                  <div class="tq-field">
+                    <label for="q-make">Vehicle make</label>
+                    <input id="q-make" name="make" type="text" placeholder="e.g. Toyota" required>
+                    <span class="err">Enter your make.</span>
+                  </div>
+                  <div class="tq-field">
+                    <label for="q-year">Year</label>
+                    <input id="q-year" name="year" type="text" inputmode="numeric" placeholder="e.g. 2018" required>
+                    <span class="err">Enter the year.</span>
+                  </div>
+                </div>
+                <div class="tq-field">
+                  <label for="q-name">Your name</label>
+                  <input id="q-name" name="name" type="text" placeholder="Full name" required>
+                  <span class="err">Please enter your name.</span>
+                </div>
+                <div class="tq-field">
+                  <label for="q-phone">Phone number</label>
+                  <input id="q-phone" name="phone" type="tel" placeholder="(555) 000-0000" required>
+                  <span class="err">Enter a valid phone number.</span>
+                </div>
+                <button type="submit" class="tq-btn tq-btn--accent tq-btn--block">Request my quote</button>
+                <p class="tq-form-note">No obligation. We'll confirm pricing before any work begins.</p>
+                <div class="tq-form-success">Thanks — your request is in! A service advisor will call you shortly to confirm your quote and appointment.</div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trust badges -->
+        <div class="tq-trust" style="margin-bottom:-2.5rem;">
+          <div class="tq-trust-item">
+            <div class="tq-trust-num">ASE</div>
+            <div class="tq-trust-label">Certified technicians</div>
+          </div>
+          <div class="tq-trust-item">
+            <div class="tq-trust-num">22<span class="u">yrs</span></div>
+            <div class="tq-trust-label">In business locally</div>
+          </div>
+          <div class="tq-trust-item">
+            <div class="tq-trust-num">48k<span class="u">+</span></div>
+            <div class="tq-trust-label">Cars serviced</div>
+          </div>
+          <div class="tq-trust-item">
+            <div class="tq-trust-num">24<span class="u">mo</span></div>
+            <div class="tq-trust-label">Warranty on repairs</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="tq-hazard-thin" role="presentation"></div>
+
+    <!-- ============ SERVICES GRID ============ -->
+    <section class="tq-section tq-light" id="services" style="padding-top:6.5rem;">
+      <div class="container">
+        <div class="tq-shead tq-shead--center tq-reveal" style="margin-bottom:3rem;">
+          <span class="tq-eyebrow tq-eyebrow--center">What we fix</span>
+          <h2 class="tq-h2">Full-service auto repair, under one roof</h2>
+          <p class="tq-lead" style="margin-inline:auto;">Bumper-to-bumper care from routine maintenance to major mechanical work. Every job starts with a written estimate — no surprises on the invoice.</p>
+        </div>
+
+        <div class="tq-services-grid">
+          <!-- Oil Change -->
+          <article class="tq-service tq-reveal">
+            <div class="tq-service-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h13l2 3h3v4H3z"/><path d="M6 17a2 2 0 1 0 4 0M15 17a2 2 0 1 0 4 0"/><path d="M9 10V6h4l3 4"/></svg></div>
+            <h3>Oil &amp; Filter Change</h3>
+            <p>Full-synthetic and conventional oil changes with a new filter and a free multi-point inspection.</p>
+            <div class="tq-service-foot">
+              <div class="tq-price-from"><span>From</span><b>$49</b></div>
+              <a href="services.html" class="tq-service-link">Book <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </article>
+          <!-- Brakes -->
+          <article class="tq-service tq-reveal d1">
+            <div class="tq-service-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.2"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></div>
+            <h3>Brake Service</h3>
+            <p>Pads, rotors, calipers and brake fluid — inspected and replaced to factory spec for safe stops.</p>
+            <div class="tq-service-foot">
+              <div class="tq-price-from"><span>From</span><b>$149</b></div>
+              <a href="services.html" class="tq-service-link">Book <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </article>
+          <!-- Diagnostics -->
+          <article class="tq-service tq-reveal d2">
+            <div class="tq-service-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg></div>
+            <h3>Engine Diagnostics</h3>
+            <p>Check-engine light on? We run OBD-II scans and pinpoint the real fault before quoting a fix.</p>
+            <div class="tq-service-foot">
+              <div class="tq-price-from"><span>From</span><b>$89</b></div>
+              <a href="services.html" class="tq-service-link">Book <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </article>
+          <!-- Tires -->
+          <article class="tq-service tq-reveal d3">
+            <div class="tq-service-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="M12 3.5v5M12 15.5v5M3.5 12h5M15.5 12h5"/></svg></div>
+            <h3>Tires &amp; Alignment</h3>
+            <p>Mount, balance and rotate, plus computerized four-wheel alignment to stop uneven wear.</p>
+            <div class="tq-service-foot">
+              <div class="tq-price-from"><span>From</span><b>$120</b></div>
+              <a href="services.html" class="tq-service-link">Book <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </article>
+          <!-- AC -->
+          <article class="tq-service tq-reveal">
+            <div class="tq-service-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M12 6l4-3M12 6L8 3M12 18l4 3M12 18l-4 3M4.9 7l14.2 8M4.9 7l1 4.5M4.9 7l4.4-1M19.1 17l-1-4.5M19.1 17l-4.4 1"/></svg></div>
+            <h3>AC &amp; Heating</h3>
+            <p>Recharge, leak detection and blend-door repair so your climate control blows cold and hot again.</p>
+            <div class="tq-service-foot">
+              <div class="tq-price-from"><span>From</span><b>$110</b></div>
+              <a href="services.html" class="tq-service-link">Book <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </article>
+          <!-- Transmission -->
+          <article class="tq-service tq-reveal d1">
+            <div class="tq-service-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><path d="M6 8.5v7M18 8.5V13a3 3 0 0 1-3 3H8.5"/></svg></div>
+            <h3>Transmission</h3>
+            <p>Fluid flushes, clutch work and full rebuilds for automatic and manual gearboxes that slip or shudder.</p>
+            <div class="tq-service-foot">
+              <div class="tq-price-from"><span>From</span><b>$180</b></div>
+              <a href="services.html" class="tq-service-link">Book <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </article>
+          <!-- Batteries -->
+          <article class="tq-service tq-reveal d2">
+            <div class="tq-service-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="11" rx="1.5"/><path d="M7 8V6h3v2M14 8V6h3v2M7 13h3M15.5 11.5v3M14 13h3"/></svg></div>
+            <h3>Batteries &amp; Charging</h3>
+            <p>Free battery test, replacement, alternator and starter service so you're never stranded at a cold start.</p>
+            <div class="tq-service-foot">
+              <div class="tq-price-from"><span>From</span><b>$139</b></div>
+              <a href="services.html" class="tq-service-link">Book <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </article>
+          <!-- Inspection -->
+          <article class="tq-service tq-reveal d3">
+            <div class="tq-service-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l2 2 4-4"/><path d="M12 3l7 3v5c0 4.5-3 8.3-7 9.5C8 20.3 5 16.5 5 12V6z"/></svg></div>
+            <h3>Safety Inspection</h3>
+            <p>State inspection, emissions and pre-purchase checks with a clear pass/fail report you can trust.</p>
+            <div class="tq-service-foot">
+              <div class="tq-price-from"><span>From</span><b>$39</b></div>
+              <a href="services.html" class="tq-service-link">Book <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </article>
+        </div>
+
+        <div class="text-center" style="margin-top:2.5rem;">
+          <a href="services.html" class="tq-btn tq-btn--dark tq-btn--lg">View all services &amp; book online</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WHY CHOOSE US ============ -->
+    <section class="tq-section tq-dark tq-carbon">
+      <div class="container">
+        <div class="tq-why-grid">
+          <div class="tq-why-media tq-reveal">
+            <img src="img/why-shop.jpg" alt="Interior of a clean, modern auto repair shop with cars on hydraulic lifts and organized tool chests" width="1000" height="1200" loading="lazy">
+            <div class="tq-why-badge">
+              <b>4.9<span aria-hidden="true">★</span></b>
+              <span>1,900+ Google reviews</span>
+            </div>
+          </div>
+          <div>
+            <span class="tq-eyebrow">Why drivers choose Torque</span>
+            <h2 class="tq-h2">A garage that treats you like a neighbor, not a number</h2>
+            <p class="tq-lead">We built Torque on a simple promise: fix it right the first time, charge a fair price, and explain everything in plain English. That's why families in our town have trusted us with three generations of cars.</p>
+            <ul class="tq-why-list">
+              <li class="tq-why-item tq-reveal">
+                <span class="tq-why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l7 3v6c0 4.5-3 8.3-7 9.5C8 19.3 5 15.5 5 11V5z"/><path d="M9 12l2 2 4-4"/></svg></span>
+                <div><h4>ASE-certified technicians</h4><p>Every repair is handled by a certified tech, not a trainee. We invest in ongoing training so we can service the latest hybrids and turbo engines.</p></div>
+              </li>
+              <li class="tq-why-item tq-reveal d1">
+                <span class="tq-why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></span>
+                <div><h4>Upfront, written quotes</h4><p>You approve the price before we touch a wrench. No mystery fees, no upselling parts your car doesn't need.</p></div>
+              </li>
+              <li class="tq-why-item tq-reveal d2">
+                <span class="tq-why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 15.4 7.2 17l.9-5.4L4.2 7.7l5.4-.8z"/></svg></span>
+                <div><h4>24-month warranty on repairs</h4><p>Parts and labor are covered nationwide for two years or 24,000 miles — because we stand behind the work.</p></div>
+              </li>
+              <li class="tq-why-item tq-reveal d3">
+                <span class="tq-why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+                <div><h4>Fast turnaround</h4><p>Most maintenance is done same-day. Need a ride? We offer a free local shuttle and loaner cars for bigger jobs.</p></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PRICE LIST ============ -->
+    <section class="tq-section tq-light" id="pricing">
+      <div class="container">
+        <div class="tq-shead tq-reveal" style="margin-bottom:2.5rem;">
+          <span class="tq-eyebrow">Transparent pricing</span>
+          <h2 class="tq-h2">Common service prices, posted right here</h2>
+          <p class="tq-lead">Starting prices for our most-requested jobs on most makes and models. Your written estimate confirms the exact figure before any work begins.</p>
+        </div>
+
+        <div class="tq-pricelist-grid tq-reveal">
+          <div class="tq-price-row">
+            <span class="tq-price-name">Conventional oil change<small>Up to 5 qt, new filter</small></span>
+            <span class="tq-price-leader" aria-hidden="true"></span>
+            <span class="tq-price-val">$49</span>
+          </div>
+          <div class="tq-price-row">
+            <span class="tq-price-name">Full-synthetic oil change<small>Up to 5 qt, new filter</small></span>
+            <span class="tq-price-leader" aria-hidden="true"></span>
+            <span class="tq-price-val">$79</span>
+          </div>
+          <div class="tq-price-row">
+            <span class="tq-price-name">Front brake pads &amp; rotors<small>Per axle, installed</small></span>
+            <span class="tq-price-leader" aria-hidden="true"></span>
+            <span class="tq-price-val">$149</span>
+          </div>
+          <div class="tq-price-row">
+            <span class="tq-price-name">Check-engine diagnostic<small>Waived if we do the repair</small></span>
+            <span class="tq-price-leader" aria-hidden="true"></span>
+            <span class="tq-price-val">$89</span>
+          </div>
+          <div class="tq-price-row">
+            <span class="tq-price-name">Tire rotation &amp; balance<small>Four wheels</small></span>
+            <span class="tq-price-leader" aria-hidden="true"></span>
+            <span class="tq-price-val">$45</span>
+          </div>
+          <div class="tq-price-row">
+            <span class="tq-price-name">Four-wheel alignment<small>Computerized</small></span>
+            <span class="tq-price-leader" aria-hidden="true"></span>
+            <span class="tq-price-val">$99</span>
+          </div>
+          <div class="tq-price-row">
+            <span class="tq-price-name">AC recharge &amp; leak test<small>R-134a / R-1234yf</small></span>
+            <span class="tq-price-leader" aria-hidden="true"></span>
+            <span class="tq-price-val">$110</span>
+          </div>
+          <div class="tq-price-row">
+            <span class="tq-price-name">Battery test &amp; replacement<small>Installed, tested</small></span>
+            <span class="tq-price-leader" aria-hidden="true"></span>
+            <span class="tq-price-val">$139</span>
+          </div>
+          <div class="tq-price-row">
+            <span class="tq-price-name">Coolant flush<small>Drain, fill, bleed</small></span>
+            <span class="tq-price-leader" aria-hidden="true"></span>
+            <span class="tq-price-val">$119</span>
+          </div>
+          <div class="tq-price-row">
+            <span class="tq-price-name">State safety inspection<small>Pass/fail report</small></span>
+            <span class="tq-price-leader" aria-hidden="true"></span>
+            <span class="tq-price-val">$39</span>
+          </div>
+        </div>
+
+        <div class="tq-pricelist-note tq-reveal">
+          <strong>Not sure what your car needs?</strong> Bring it in for a free multi-point inspection and we'll build a prioritized plan — the safety items first, the rest when your budget allows.
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ HOW IT WORKS ============ -->
+    <section class="tq-section tq-dark tq-carbon">
+      <div class="container">
+        <div class="tq-shead tq-shead--center tq-reveal" style="margin-bottom:3rem;">
+          <span class="tq-eyebrow tq-eyebrow--center">Simple from start to finish</span>
+          <h2 class="tq-h2">Three steps to a fixed car</h2>
+        </div>
+        <div class="tq-steps">
+          <div class="tq-step tq-reveal">
+            <div class="tq-step-num">01</div>
+            <div class="tq-step-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 10h18M8 15h3"/></svg></div>
+            <h3>Book your visit</h3>
+            <p>Grab an appointment online or over the phone in under a minute. Same-day slots are usually available for maintenance.</p>
+          </div>
+          <div class="tq-step tq-reveal d1">
+            <div class="tq-step-num">02</div>
+            <div class="tq-step-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v3l2 1"/></svg></div>
+            <h3>We diagnose &amp; quote</h3>
+            <p>Our techs inspect the vehicle, show you what they find, and send a written estimate for your approval — no work without your OK.</p>
+          </div>
+          <div class="tq-step tq-reveal d2">
+            <div class="tq-step-num">03</div>
+            <div class="tq-step-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.3 2.3-2-2 2.3-2.3z"/></svg></div>
+            <h3>We fix it right</h3>
+            <p>Certified techs complete the repair with quality parts, then road-test it and hand you the keys — backed by our 24-month warranty.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ STATS COUNT-UP ============ -->
+    <section class="tq-section--tight" style="background:var(--tq-ink);">
+      <div class="tq-hazard-thin" role="presentation" style="margin-bottom:3rem;"></div>
+      <div class="container">
+        <div class="tq-stats">
+          <div class="tq-stat tq-reveal">
+            <div class="tq-stat-num"><span data-count="22">22</span></div>
+            <div class="tq-stat-label">Years in business</div>
+          </div>
+          <div class="tq-stat tq-reveal d1">
+            <div class="tq-stat-num"><span data-count="48000" data-suffix="+">48,000+</span></div>
+            <div class="tq-stat-label">Cars serviced</div>
+          </div>
+          <div class="tq-stat tq-reveal d2">
+            <div class="tq-stat-num"><span data-count="14">14</span></div>
+            <div class="tq-stat-label">Certified technicians</div>
+          </div>
+          <div class="tq-stat tq-reveal d3">
+            <div class="tq-stat-num"><span class="u"><span data-count="4.9">4.9</span></span></div>
+            <div class="tq-stat-label">Average review rating</div>
+          </div>
+        </div>
+      </div>
+      <div class="tq-hazard-thin" role="presentation" style="margin-top:3rem;"></div>
+    </section>
+
+    <!-- ============ MEET THE MECHANICS ============ -->
+    <section class="tq-section tq-light" id="team">
+      <div class="container">
+        <div class="tq-shead tq-shead--center tq-reveal" style="margin-bottom:3rem;">
+          <span class="tq-eyebrow tq-eyebrow--center">The crew under the hood</span>
+          <h2 class="tq-h2">Meet the mechanics</h2>
+          <p class="tq-lead" style="margin-inline:auto;">Real people who'll know your car — and your name. Most of our team has been with Torque for over a decade.</p>
+        </div>
+        <div class="tq-team-grid">
+          <article class="tq-mechanic tq-reveal">
+            <div class="tq-mechanic-photo">
+              <span class="tq-mechanic-cert">ASE Master</span>
+              <img src="img/team-1.jpg" alt="Portrait of Marcus Delgado, male master technician in work uniform" width="600" height="600" loading="lazy">
+            </div>
+            <h4>Marcus Delgado</h4>
+            <div class="tq-mechanic-role">Master Tech &amp; Foreman</div>
+            <p>ASE Master certified with 24 years on the tools. If it's electrical or driveline, it lands on his bench.</p>
+          </article>
+          <article class="tq-mechanic tq-reveal d1">
+            <div class="tq-mechanic-photo">
+              <span class="tq-mechanic-cert">Service Mgr</span>
+              <img src="img/team-2.jpg" alt="Portrait of Rachel Nguyen, female service advisor smiling in the workshop" width="600" height="600" loading="lazy">
+            </div>
+            <h4>Rachel Nguyen</h4>
+            <div class="tq-mechanic-role">Service Manager</div>
+            <p>Your point of contact from check-in to keys. She'll translate the tech talk and keep your quote honest.</p>
+          </article>
+          <article class="tq-mechanic tq-reveal d2">
+            <div class="tq-mechanic-photo">
+              <span class="tq-mechanic-cert">Brakes</span>
+              <img src="img/team-3.jpg" alt="Portrait of Danny Okafor, male brakes and suspension technician with a beard in the garage" width="600" height="600" loading="lazy">
+            </div>
+            <h4>Danny Okafor</h4>
+            <div class="tq-mechanic-role">Brakes &amp; Suspension</div>
+            <p>Our go-to for stopping power and smooth rides — brakes, struts, alignments and steering.</p>
+          </article>
+          <article class="tq-mechanic tq-reveal d3">
+            <div class="tq-mechanic-photo">
+              <span class="tq-mechanic-cert">Diagnostics</span>
+              <img src="img/team-4.jpg" alt="Portrait of Tyler Brooks, young male diagnostics technician holding a wrench" width="600" height="600" loading="lazy">
+            </div>
+            <h4>Tyler Brooks</h4>
+            <div class="tq-mechanic-role">Diagnostics &amp; Electrical</div>
+            <p>Chases down check-engine gremlins and modern sensor faults that stump other shops.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TESTIMONIALS ============ -->
+    <section class="tq-section tq-dark tq-carbon">
+      <div class="container">
+        <div class="tq-shead tq-shead--center tq-reveal" style="margin-bottom:3rem;">
+          <span class="tq-eyebrow tq-eyebrow--center">Straight from the driveway</span>
+          <h2 class="tq-h2">What our customers say</h2>
+        </div>
+
+        <div class="tq-testi" data-testi>
+          <div class="tq-testi-viewport">
+            <div class="tq-testi-track">
+              <div class="tq-testi-slide">
+                <div class="tq-testi-card">
+                  <div class="tq-testi-stars" aria-label="Rated 5 out of 5">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 15.4 7.2 17l.9-5.4L4.2 7.7l5.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 15.4 7.2 17l.9-5.4L4.2 7.7l5.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 15.4 7.2 17l.9-5.4L4.2 7.7l5.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 15.4 7.2 17l.9-5.4L4.2 7.7l5.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 15.4 7.2 17l.9-5.4L4.2 7.7l5.4-.8z"/></svg>
+                  </div>
+                  <p class="tq-testi-quote">"Dealer quoted me $1,200 for 'engine work.' Torque diagnosed a bad coil pack, fixed it for a fraction, and showed me the old part. I'm never going anywhere else."</p>
+                  <div class="tq-testi-who">
+                    <img src="img/cust-1.jpg" alt="Photo of customer James P." width="52" height="52" loading="lazy">
+                    <div><b>James P.</b><span>Ford F-150 owner</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="tq-testi-slide">
+                <div class="tq-testi-card">
+                  <div class="tq-testi-stars" aria-label="Rated 5 out of 5">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 15.4 7.2 17l.9-5.4L4.2 7.7l5.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 15.4 7.2 17l.9-5.4L4.2 7.7l5.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 15.4 7.2 17l.9-5.4L4.2 7.7l5.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 15.4 7.2 17l.9-5.4L4.2 7.7l5.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 15.4 7.2 17l.9-5.4L4.2 7.7l5.4-.8z"/></svg>
+                  </div>
+                  <p class="tq-testi-quote">"Rachel had my brakes done and me back on the road before lunch. Fair price, clean waiting area, and they actually explained what was worn. Highly recommend."</p>
+                  <div class="tq-testi-who">
+                    <img src="img/cust-2.jpg" alt="Photo of customer Sofia R." width="52" height="52" loading="lazy">
+                    <div><b>Sofia R.</b><span>Honda CR-V owner</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="tq-testi-slide">
+                <div class="tq-testi-card">
+                  <div class="tq-testi-stars" aria-label="Rated 5 out of 5">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 15.4 7.2 17l.9-5.4L4.2 7.7l5.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 15.4 7.2 17l.9-5.4L4.2 7.7l5.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 15.4 7.2 17l.9-5.4L4.2 7.7l5.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 15.4 7.2 17l.9-5.4L4.2 7.7l5.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 15.4 7.2 17l.9-5.4L4.2 7.7l5.4-.8z"/></svg>
+                  </div>
+                  <p class="tq-testi-quote">"Been bringing our whole family's cars here for 12 years. Honest guys who never sell you what you don't need. The warranty gives me real peace of mind."</p>
+                  <div class="tq-testi-who">
+                    <img src="img/cust-3.jpg" alt="Photo of customer Ahmed K." width="52" height="52" loading="lazy">
+                    <div><b>Ahmed K.</b><span>Toyota Camry owner</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="tq-testi-slide">
+                <div class="tq-testi-card">
+                  <div class="tq-testi-stars" aria-label="Rated 5 out of 5">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 15.4 7.2 17l.9-5.4L4.2 7.7l5.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 15.4 7.2 17l.9-5.4L4.2 7.7l5.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 15.4 7.2 17l.9-5.4L4.2 7.7l5.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 15.4 7.2 17l.9-5.4L4.2 7.7l5.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 15.4 7.2 17l.9-5.4L4.2 7.7l5.4-.8z"/></svg>
+                  </div>
+                  <p class="tq-testi-quote">"My AC died in a July heatwave and they squeezed me in the same day. Cold air by 3pm and the price was exactly what they quoted. Lifesavers."</p>
+                  <div class="tq-testi-who">
+                    <img src="img/cust-1.jpg" alt="Photo of customer Derek M." width="52" height="52" loading="lazy">
+                    <div><b>Derek M.</b><span>Jeep Grand Cherokee owner</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tq-testi-nav">
+            <button class="tq-testi-btn" data-testi-prev aria-label="Previous testimonial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+            <button class="tq-testi-btn" data-testi-next aria-label="Next testimonial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BRANDS WE SERVICE ============ -->
+    <section class="tq-section--tight tq-light">
+      <div class="container">
+        <p class="text-center tq-reveal" style="font-family:var(--tq-display);text-transform:uppercase;letter-spacing:.1em;color:var(--tq-steel);font-weight:600;margin-bottom:1.4rem;">Domestic, import &amp; hybrid — we service the makes you drive</p>
+        <div class="tq-brands tq-reveal">
+          <span class="tq-brand-chip">Toyota</span>
+          <span class="tq-brand-chip">Honda</span>
+          <span class="tq-brand-chip">Ford</span>
+          <span class="tq-brand-chip">Chevrolet</span>
+          <span class="tq-brand-chip">Nissan</span>
+          <span class="tq-brand-chip">Subaru</span>
+          <span class="tq-brand-chip">BMW</span>
+          <span class="tq-brand-chip">Jeep</span>
+          <span class="tq-brand-chip">Hyundai</span>
+          <span class="tq-brand-chip">Ram</span>
+          <span class="tq-brand-chip">Volkswagen</span>
+          <span class="tq-brand-chip">Mazda</span>
+          <span class="tq-brand-chip">GMC</span>
+          <span class="tq-brand-chip">Kia</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ COUPONS / SPECIALS ============ -->
+    <section class="tq-section" style="background:var(--tq-ink);">
+      <div class="container">
+        <div class="tq-shead tq-shead--center tq-reveal" style="margin-bottom:3rem;">
+          <span class="tq-eyebrow tq-eyebrow--center">This month's specials</span>
+          <h2 class="tq-h2" style="color:#fff;">Coupons worth the drive</h2>
+          <p class="tq-lead" style="margin-inline:auto;color:var(--tq-steel-2);">Mention or show these when you book. One coupon per visit — click a code to copy it.</p>
+        </div>
+        <div class="tq-coupons">
+          <div class="tq-coupon tq-reveal">
+            <div class="tq-coupon-tag">$25 OFF</div>
+            <h3>Full-Synthetic Oil Change</h3>
+            <p>Premium synthetic oil, a new filter and a free multi-point inspection — now $54.</p>
+            <span class="tq-coupon-code" data-copy="TORQUE25">Code <b>TORQUE25</b></span>
+            <small>Valid on most vehicles. Cannot be combined with other offers.</small>
+          </div>
+          <div class="tq-coupon tq-reveal d1">
+            <div class="tq-coupon-tag">FREE</div>
+            <h3>Brake Inspection</h3>
+            <p>Full pad, rotor and fluid check with a written wear report — no purchase necessary.</p>
+            <span class="tq-coupon-code" data-copy="STOPSAFE">Code <b>STOPSAFE</b></span>
+            <small>By appointment. Repairs quoted separately for approval.</small>
+          </div>
+          <div class="tq-coupon tq-reveal d2">
+            <div class="tq-coupon-tag">10% OFF</div>
+            <h3>AC Service &amp; Recharge</h3>
+            <p>Beat the heat — save on recharge, leak detection and repair, up to $60 off.</p>
+            <span class="tq-coupon-code" data-copy="COOLDOWN">Code <b>COOLDOWN</b></span>
+            <small>Max discount $60. Valid through the summer season.</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="tq-section tq-light" id="faq">
+      <div class="container">
+        <div class="tq-shead tq-shead--center tq-reveal" style="margin-bottom:2.5rem;">
+          <span class="tq-eyebrow tq-eyebrow--center">Good to know</span>
+          <h2 class="tq-h2">Frequently asked questions</h2>
+        </div>
+        <div class="tq-faq">
+          <details class="tq-reveal" open>
+            <summary>Do I need an appointment, or can I just drop in?<span class="tq-faq-ico" aria-hidden="true"></span></summary>
+            <div class="tq-faq-body"><p>Both work. We keep same-day slots open for oil changes, inspections and quick diagnostics, so walk-ins are welcome. For bigger jobs like brakes or transmission work, booking ahead guarantees a bay and the fastest turnaround.</p></div>
+          </details>
+          <details class="tq-reveal">
+            <summary>Will you tell me the price before you start?<span class="tq-faq-ico" aria-hidden="true"></span></summary>
+            <div class="tq-faq-body"><p>Always. After we inspect your vehicle we send a written estimate covering parts and labor, and we don't touch a wrench until you approve it. If we spot something extra mid-repair, we stop and call you first — never a surprise on the final bill.</p></div>
+          </details>
+          <details class="tq-reveal">
+            <summary>What warranty comes with your repairs?<span class="tq-faq-ico" aria-hidden="true"></span></summary>
+            <div class="tq-faq-body"><p>Most repairs are backed by our nationwide 24-month / 24,000-mile warranty on parts and labor. That means if a covered part fails, we make it right at no cost, and the coverage travels with you even if you're out of town.</p></div>
+          </details>
+          <details class="tq-reveal">
+            <summary>Do you work on my make and model?<span class="tq-faq-ico" aria-hidden="true"></span></summary>
+            <div class="tq-faq-body"><p>Very likely. Our techs service domestic, import, and hybrid vehicles — Toyota, Honda, Ford, Chevy, Subaru, BMW and many more. We invest in dealer-level scan tools and factory information, so we can handle modern electronics as well as classic mechanical work.</p></div>
+          </details>
+          <details class="tq-reveal">
+            <summary>Can I get a ride while my car is being serviced?<span class="tq-faq-ico" aria-hidden="true"></span></summary>
+            <div class="tq-faq-body"><p>Yes. We offer a free local shuttle within a few miles of the shop, plus loaner cars for larger jobs that keep your vehicle overnight. Just let us know when you book so we can have it ready.</p></div>
+          </details>
+          <details class="tq-reveal">
+            <summary>How do payments and financing work?<span class="tq-faq-ico" aria-hidden="true"></span></summary>
+            <div class="tq-faq-body"><p>We accept all major cards, debit, and cash, and we offer interest-free financing on repairs over $250 through our service-credit partner. Ask a service advisor and we'll walk you through the options before work begins.</p></div>
+          </details>
+          <details class="tq-reveal">
+            <summary>My check-engine light is on — is it safe to drive?<span class="tq-faq-ico" aria-hidden="true"></span></summary>
+            <div class="tq-faq-body"><p>A steady light usually means it's safe to drive to us soon, but a flashing light signals a serious misfire — pull over and call us. Either way, book a diagnostic so we can read the codes and fix the real cause before it turns into a bigger repair.</p></div>
+          </details>
+          <details class="tq-reveal">
+            <summary>Do you offer discounts or specials?<span class="tq-faq-ico" aria-hidden="true"></span></summary>
+            <div class="tq-faq-body"><p>We do. Check the specials section above for current coupons, and ask about our fleet, senior, and first-responder discounts. Sign up for text reminders and you'll get seasonal service deals before anyone else.</p></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA BAND ============ -->
+    <section class="tq-cta tq-hazard">
+      <div style="position:absolute;inset:0;background:linear-gradient(rgba(18,20,23,.93),rgba(18,20,23,.93));z-index:1;"></div>
+      <div class="container">
+        <span class="tq-eyebrow tq-eyebrow--center">Ready when you are</span>
+        <h2>Book your service today</h2>
+        <p>Same-day appointments, upfront quotes, and a warranty you can count on. Let's get your car running its best.</p>
+        <div class="tq-cta-actions">
+          <a href="services.html" class="tq-btn tq-btn--accent tq-btn--lg">Book an appointment</a>
+          <a href="tel:+15552487100" class="tq-btn tq-btn--ghost tq-btn--lg">Call (555) 248-7100</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ HOURS & LOCATION ============ -->
+    <section class="tq-section tq-light" id="visit">
+      <div class="container">
+        <div class="tq-visit-grid">
+          <div class="tq-reveal">
+            <span class="tq-eyebrow">Find us · Hours</span>
+            <h2 class="tq-h2">Stop by the shop</h2>
+            <p class="tq-lead">We're on Ironside Avenue with plenty of parking and a comfortable, coffee-stocked waiting room. Early-bird and after-hours key drop available.</p>
+
+            <ul class="tq-hours-table">
+              <li data-day="1"><span class="day">Monday</span><span class="hrs">7:30 AM – 6:00 PM</span></li>
+              <li data-day="2"><span class="day">Tuesday</span><span class="hrs">7:30 AM – 6:00 PM</span></li>
+              <li data-day="3"><span class="day">Wednesday</span><span class="hrs">7:30 AM – 6:00 PM</span></li>
+              <li data-day="4"><span class="day">Thursday</span><span class="hrs">7:30 AM – 6:00 PM</span></li>
+              <li data-day="5"><span class="day">Friday</span><span class="hrs">7:30 AM – 6:00 PM</span></li>
+              <li data-day="6"><span class="day">Saturday</span><span class="hrs">8:00 AM – 3:00 PM</span></li>
+              <li data-day="0"><span class="day">Sunday</span><span class="hrs closed">Closed</span></li>
+            </ul>
+
+            <div class="tq-visit-contact">
+              <div class="tq-visit-line">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <div><b>Address</b>2140 Ironside Avenue, Riverton, CA 90210</div>
+              </div>
+              <div class="tq-visit-line">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <div><b>Phone</b><a href="tel:+15552487100">(555) 248-7100</a></div>
+              </div>
+              <div class="tq-visit-line">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+                <div><b>Email</b><a href="mailto:service@torqueauto.example">service@torqueauto.example</a></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tq-map tq-reveal d1" role="img" aria-label="Map showing Torque Auto Repair at 2140 Ironside Avenue">
+            <div class="tq-map-diag" aria-hidden="true"></div>
+            <div class="tq-map-pin">
+              <div class="tq-map-pin-dot" aria-hidden="true"></div>
+              <div class="tq-map-addr">2140 Ironside Ave</div>
+              <a class="tq-btn tq-btn--accent" href="https://maps.google.com/?q=2140+Ironside+Avenue" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 20l-6 2V6l6-2 6 2 6-2v16l-6 2-6-2z"/><path d="M9 4v16M15 6v16"/></svg>
+                Get directions
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <div class="tq-hazard-thin" role="presentation"></div>
+  <footer class="tq-footer">
+    <div class="container">
+      <div class="tq-footer-grid">
+        <div>
+          <a class="tq-brand" href="index.html" aria-label="Torque Auto Repair — home">
+            <span class="tq-brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.3 2.3-2-2 2.3-2.3z"/></svg>
+            </span>
+            Tor<b>que</b>
+          </a>
+          <p class="tq-footer-about">Family-owned, ASE-certified auto repair you can trust. Honest quotes, quality parts, and a 24-month warranty on every job.</p>
+          <div class="tq-footer-social">
+            <a href="#" aria-label="Torque on Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H7v3h3v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1z"/></svg></a>
+            <a href="#" aria-label="Torque on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+            <a href="#" aria-label="Torque on YouTube"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.8-1.8C19.3 5 12 5 12 5s-7.3 0-8.8.5A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.8 1.8C4.7 19 12 19 12 19s7.3 0 8.8-.5a2.5 2.5 0 0 0 1.8-1.8C23 15.2 23 12 23 12zM10 15V9l5 3z"/></svg></a>
+          </div>
+        </div>
+
+        <div>
+          <h5>Services</h5>
+          <ul class="tq-footer-links">
+            <li><a href="services.html">Oil &amp; Filter Change</a></li>
+            <li><a href="services.html">Brake Service</a></li>
+            <li><a href="services.html">Engine Diagnostics</a></li>
+            <li><a href="services.html">Tires &amp; Alignment</a></li>
+            <li><a href="services.html">AC &amp; Heating</a></li>
+            <li><a href="services.html">Transmission</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h5>Shop</h5>
+          <ul class="tq-footer-links">
+            <li><a href="#services">All Services</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#team">Our Team</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="services.html">Book Online</a></li>
+            <li><a href="#visit">Hours &amp; Location</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h5>Visit us</h5>
+          <ul class="tq-footer-contact">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>2140 Ironside Avenue<br>Riverton, CA 90210</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <span><a href="tel:+15552487100">(555) 248-7100</a></span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              <span>Mon–Fri 7:30–6 · Sat 8–3<br>Sun closed</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tq-footer-bottom">
+        <p style="margin:0;">&copy; 2026 Torque Auto Repair. All rights reserved.</p>
+        <p style="margin:0;">Built with Bootstrap 5 · <a href="#main">Back to top</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/vendor/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

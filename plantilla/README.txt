@@ -1,0 +1,4 @@
+Torque — Free Bootstrap 5 Auto Repair & Mechanic Website Template by uiCookies
+https://uicookies.com/
+
+Torque is a free, rugged two-page website template for auto repair shops, garages, and independent mechanics, built on Bootstrap 5 with no jQuery and no plugin dependencies. It includes a home page (hero quick-quote form, services grid with from-pricing, transparent price list, how-it-works, count-up stats, team, testimonials slider, specials, FAQ, hours & location) and a services + booking page (filterable service menu, instant cost estimator, and an appointment form). Every interaction — mobile menu, slider, count-up, service filter, estimator, coupon copy, and accessible form validation — is plain vanilla JavaScript that respects reduced-motion, and all content stays visible with JavaScript disabled. Free for personal and commercial use; see https://uicookies.com/license/. Swap the demo photos for your own optimized images before going live.
