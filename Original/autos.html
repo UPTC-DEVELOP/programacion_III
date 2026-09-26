@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang ="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+  <title>TallerMax | Gestión de Autos</title>
+  <link rel="stylesheet" href="/Original/css/estilosAutos.css">
+</head>
+
+<body>
+    <header class="encabezado">
+        <div class="encabezado__marca">
+            <span class="encabezado__icono" aria-hidden="true">🚗</span>
+            <div>
+                <h1>Taller Max</h1>
+                <p>Módulo: Gestión de Autos</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="contenedor">
+        
+        <div id="mensaje" class="mensaje mensaje--oculto" role="status"></div>
+
+        <!-- SECCIÓN 1: FORMULARIO -->
+        <section class="tajeta">
+            <h2 id="tituloFormulario"> Registro de auto</h2>
+
+            <form id="formAuto" novalidate>
+
+                <!--Campo: placa-->
+                <div class="campo">
+                    <label for="placa">Placa</label>
+                    <input type="text" id="placa" name="placa" maxlenght="6" placeholder="Ej: ABC123" autocomplete="off">
+                    <small class="ayuda">Formato: 3 letras + 3 números (Ej: ABC123). Debe ser única.</small>
+                    <span class="error" id="errorPlaca"></span>
+                </div>
+
+
+                <!--Campo: modelo-->
+                <div class="campo">
+                    <label for="modelo">Modelo (año)</label>
+                    <input type="text" id="modelo" name="modelo" maxlenght="4" inputmode="numeric" placeholder="Ej: ABC123" autocomplete="off">
+                    <small class="ayuda">Año del vehículo, 4 dígitos.</small>
+                    <span class="error" id="errorModelo"></span>
+                </div>
+
+                <!-- Campo: color -->
+                <div class="campo">
+                    <label for="color">Color</label>
+                    <input type="text" id="color" name="color" maxlength="30" placeholder="Ej: Rojo" autocomplete="off">
+                    <small class="ayuda">Máximo 30 caracteres.</small>
+                    <span class="error" id="errorColor"></span>
+                </div>
+
+                <!-- Campo: cédula del dueño -->
+                <div class="campo">
+                     <label for="cedulaDueno">Cédula del dueño</label>
+                    <input type="text" id="cedulaDueno" name="cedulaDueno" maxlength="10" inputmode="numeric placeholder="Ej: 1015896321" autocomplete="off">
+                    <small class="ayuda">Debe corresponder a un cliente ya registrado.</small>
+                    <span class="error" id="errorCedulaDueno"></span>
+                </div>
+
+                <!-- Campo: fecha de ingreso -->
+                <div class="campo">
+                    <label for="fechaIngreso">Fecha de ingreso</label>
+                    <input type="date" id="fechaIngreso" name="fechaIngreso">
+                    <small class="ayuda">Día en que el auto ingresa al taller.</small>
+                    <span class="error" id="errorFechaIngreso"></span>
+                </div>
+
+                <!-- Campo: hora de ingreso -->
+                <div class="campo">
+                    <label for="horaIngreso">Hora de ingreso</label>
+                    <input type="time" id="horaIngreso" name="horaIngreso">
+                    <small class="ayuda">Hora en que el auto ingresa al taller.</small>
+                    <span class="error" id="errorHoraIngreso"></span>
+                </div>
+
+                <!-- Campo oculto: guarda la placa original cuando estamos actualizando -->
+                <input type="hidden" id="placaOriginal" value="">
+
+                <div class="botones">
+                    <button type="submit" id="btnGuardar" class="boton boton--primario">
+                    <span class="boton__texto">Registrar auto</span>
+                    </button>
+                    <button type="button" id="btnCancelar" class="boton boton--secundario oculto">Cancelar edición</button>
+                    <button type="reset" class="boton boton--fantasma">Limpiar</button>
+                </div>
+
+            </form>
+        </section>
+
+        <!--  SECCIÓN 2: BÚSQUEDA  -->
+        <section class="tarjeta">
+            <h2> Consultar auto</h2>
+            <div class="busqueda">
+                <input type="text" id="buscar" placeholder="Buscar por placa o cédula del dueño" autocomplete="off">
+                <button type="button" id="btnBuscar" class="boton boton--primario">Buscar</button>
+                <button type="button" id="btnLimpiarBusqueda" class="boton boton--fantasma">Ver todos</button>
+            </div>
+        </section>
+
+        <!--  SECCIÓN 3: LISTADO  -->
+        <section class="tarjeta">
+            <h2>Autos Registrados</h2>
+            <div class="tabla-envoltorio">
+                <table id="tablaAutos">
+                    <thead>
+                        <tr>
+                            <th>Placa</th>
+                            <th>Modelo</th>
+                            <th>Color</th>
+                            <th>Dueño (cédula)</th>
+                            <th>Ingreso</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoTabla"></tbody>
+                </table>
+                <p id="sinResultados" class="sin-resultados oculto">No hay autos para mostrar.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="pie">
+     <p>TallerMax · Gestión de Autos</p>
+    </footer>
+
+    <script src="/Original/js/scriptAutos.js"></script>
+
+</body>
+</html>
