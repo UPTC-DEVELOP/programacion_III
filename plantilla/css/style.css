@@ -25,9 +25,9 @@
   --tq-heading:    #16191D;   /* headings on light */
 
   /* Accent — safety orange (committed) */
-  --tq-orange:     #FF6A1A;
-  --tq-orange-600: #EA5A0B;
-  --tq-orange-700: #C94A05;
+  --tq-orange:     #e3262e;
+  --tq-orange-600: #e3262e;
+  --tq-orange-700: #b91d24;
   --tq-orange-soft:#FFE7D6;
 
   --tq-green:      #2FBF71;   /* checks / open */
