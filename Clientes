@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD de Clientes - UPTC</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #89f7fe, #66a6ff);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px 15px;
+            box-sizing: border-box;
+        }
+
+        header h1 {
+            color: #fff;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        /* Formulario Estilizado */
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            width: 380px;
+            max-width: 100%;
+            transition: transform 0.3s ease;
+            box-sizing: border-box;
+            flex-shrink: 0;
+        }
+
+        form:hover {
+            transform: scale(1.01);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 0;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        input, textarea, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: #66a6ff;
+            box-shadow: 0 0 8px rgba(102,166,255,0.6);
+            outline: none;
+        }
+
+        button {
+            background: #66a6ff;
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background: #5596f5;
+        }
+
+        button[type="button"] {
+            background: #e0e0e0;
+            color: #333;
+            margin-top: 5px;
+        }
+
+        button[type="button"]:hover {
+            background: #d0d0d0;
+        }
+
+        /* Errores y Confirmación */
+        .error {
+            color: red;
+            font-size: 0.85em;
+            margin-top: 4px;
+            display: block;
+            animation: fadeIn 0.3s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .success {
+            border: 2px solid green !important;
+        }
+
+        #mensaje-exito {
+            display: none;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-align: center;
+            font-weight: bold;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        /* Tabla y Lista de Clientes */
+        .tabla-contenedor {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            flex: 1;
+            min-width: 320px;
+            box-sizing: border-box;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .acciones-btns {
+            display: flex;
+            gap: 5px;
+        }
+
+        .btn-editar {
+            background: #ffc107;
+            color: #333;
+            padding: 5px 10px;
+            margin: 0;
+            font-size: 0.8rem;
+        }
+
+        .btn-editar:hover { background: #e0a800; }
+
+        .btn-eliminar {
+            background: #dc3545;
+            color: white;
+            padding: 5px 10px;
+            margin: 0;
+            font-size: 0.8rem;
+        }
+
+        .btn-eliminar:hover { background: #c82333; }
+
+        footer p {
+            color: #fff;
+            text-align: center;
+            margin-top: 25px;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .container { flex-direction: column; }
+            form { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Gestión de Clientes (CRUD)</h1>
+    </header>
+
+    <main class="container">
+        <!-- Formulario -->
+        <section>
+            <form id="contactoForm">
+                <h2 id="formTitulo">Registrar Cliente</h2>
+                
+                <!-- Campo Oculto para ID durante edición -->
+                <input type="hidden" id="clienteId">
+
+                <label for="nombre">Nombre completo:</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Escribe tu nombre">
+
+                <label for="email">Correo electrónico:</label>
+                <input type="email" id="email" name="email" placeholder="ejemplo@correo.com">
+
+                <label for="edad">Edad:</label>
+                <input type="number" id="edad" name="edad">
+
+                <label for="pass">Contraseña:</label>
+                <input type="password" id="pass" name="pass" placeholder="Contraseña">
+
+                <label for="confirmPass">Confirmar contraseña:</label>
+                <input type="password" id="confirmPass" name="confirmPass" placeholder="Repite contraseña">
+
+                <label for="mensaje">Mensaje:</label>
+                <textarea id="mensaje" name="mensaje" rows="3" placeholder="Escribe tu mensaje aquí!"></textarea>
+
+                <label for="opcion">¿Cómo nos conociste?</label>
+                <select id="opcion" name="opcion">
+                    <option value="Internet">Internet</option>
+                    <option value="Amigos">Amigos</option>
+                    <option value="Redes Sociales">Redes Sociales</option>
+                </select>
+
+                <label style="display: flex; align-items: center; gap: 8px;">
+                    <input type="checkbox" id="suscripcion" name="suscripcion" style="width: auto; margin-top: 0;"> Deseo recibir noticias
+                </label>
+
+                <button type="submit" id="btnGuardar">Guardar Cliente</button>
+                <button type="button" id="btnLimpiar">Limpiar / Cancelar</button>
+
+                <div id="mensaje-exito">¡Cliente guardado con éxito!</div>
+            </form>
+        </section>
+
+        <!-- Tabla de Datos -->
+        <section class="tabla-contenedor">
+            <h2>Lista de Clientes</h2>
+            <input type="text" id="buscarInput" placeholder="Buscar por nombre o correo..." style="margin-bottom: 15px;">
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Edad</th>
+                        <th>Origen</th>
+                        <th>Noticias</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaClientes">
+                    <!-- Los datos se generan dinámicamente -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 UPTC | Todos los derechos reservados</p>
+    </footer>
+
+    <script>
+        // Referencias a los elementos del DOM
+        const form = document.getElementById("contactoForm");
+        const clienteIdInput = document.getElementById("clienteId");
+        const inputNombre = document.getElementById("nombre");
+        const inputEmail = document.getElementById("email");
+        const inputEdad = document.getElementById("edad");
+        const pass1 = document.getElementById("pass");
+        const pass2 = document.getElementById("confirmPass");
+        const inputMensaje = document.getElementById("mensaje");
+        const selectOpcion = document.getElementById("opcion");
+        const checkSuscripcion = document.getElementById("suscripcion");
+        const btnGuardar = document.getElementById("btnGuardar");
+        const btnLimpiar = document.getElementById("btnLimpiar");
+        const tablaClientes = document.getElementById("tablaClientes");
+        const buscarInput = document.getElementById("buscarInput");
+        const formTitulo = document.getElementById("formTitulo");
+
+        // Array local para almacenar clientes
+        let clientes = JSON.parse(localStorage.getItem("clientesDB")) || [];
+
+        // 1. FUNCIONES DE VALIDACIÓN (Heredadas de tu código original)
+        function validarCampo(campo, condicion, mensaje) {
+            let errorSpan = campo.nextElementSibling;
+
+            if (!errorSpan || !errorSpan.classList.contains("error")) {
+                errorSpan = document.createElement("span");
+                errorSpan.classList.add("error");
+                campo.insertAdjacentElement("afterend", errorSpan);
+            }
+
+            if (condicion) {
+                errorSpan.textContent = "";
+                campo.classList.add("success");
+                return true;
+            } else {
+                errorSpan.textContent = mensaje;
+                campo.classList.remove("success");
+                return false;
+            }
+        }
+
+        // Eventos de validación en tiempo real
+        inputNombre.addEventListener("input", function() {
+            validarCampo(this, this.value.trim().length >= 3, "El nombre debe tener al menos 3 caracteres");
+        });
+
+        inputEmail.addEventListener("input", function() {
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            validarCampo(this, regex.test(this.value.trim()), "Correo Inválido");
+        });
+
+        inputEdad.addEventListener("input", function() {
+            validarCampo(this, parseInt(this.value, 10) >= 18, "Debes ser mayor de 18 años");
+        });
+
+        pass1.addEventListener("input", function() {
+            // Si estamos editando y se deja en blanco la clave, no exigir validación fuerte
+            if (clienteIdInput.value && this.value === "") {
+                validarCampo(this, true, "");
+                return;
+            }
+            validarCampo(this, this.value.length >= 6, "La contraseña debe tener al menos 6 caracteres");
+            if (pass2.value !== "") {
+                validarCampo(pass2, pass2.value === pass1.value, "Las contraseñas no coinciden");
+            }
+        });
+
+        pass2.addEventListener("input", function() {
+            if (clienteIdInput.value && pass1.value === "" && this.value === "") {
+                validarCampo(this, true, "");
+                return;
+            }
+            validarCampo(this, this.value === pass1.value && this.value !== "", "Las contraseñas no coinciden");
+        });
+
+        // 2. FUNCIONES DEL CRUD
+
+        // Renderizar/Mostrar clientes
+        function renderizarClientes(filtro = "") {
+            tablaClientes.innerHTML = "";
+
+            const clientesFiltrados = clientes.filter(c => 
+                c.nombre.toLowerCase().includes(filtro.toLowerCase()) || 
+                c.email.toLowerCase().includes(filtro.toLowerCase())
+            );
+
+            if (clientesFiltrados.length === 0) {
+                tablaClientes.innerHTML = `<tr><td colspan="6" style="text-align:center;">No hay clientes registrados.</td></tr>`;
+                return;
+            }
+
+            clientesFiltrados.forEach((cliente) => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${cliente.nombre}</td>
+                    <td>${cliente.email}</td>
+                    <td>${cliente.edad}</td>
+                    <td>${cliente.opcion}</td>
+                    <td>${cliente.suscripcion ? "Sí" : "No"}</td>
+                    <td class="acciones-btns">
+                        <button class="btn-editar" onclick="cargarParaEditar('${cliente.id}')">Editar</button>
+                        <button class="btn-eliminar" onclick="eliminarCliente('${cliente.id}')">Eliminar</button>
+                    </td>
+                `;
+                tablaClientes.appendChild(tr);
+            });
+        }
+
+        // Guardar o Actualizar Cliente
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const esEditando = clienteIdInput.value !== "";
+
+            // Validar campos
+            const esNombreValido = validarCampo(inputNombre, inputNombre.value.trim().length >= 3, "El nombre debe tener al menos 3 caracteres");
+            const esEmailValido = validarCampo(inputEmail, regexEmail.test(inputEmail.value.trim()), "Correo Inválido");
+            const esEdadValida = validarCampo(inputEdad, parseInt(inputEdad.value, 10) >= 18, "Debes ser mayor de 18 años");
+
+            // Para contraseñas: obligatorias en creación, opcionales en edición si no se quieren cambiar
+            let esPassValida = true;
+            let esConfirmPassValida = true;
+
+            if (!esEditando || pass1.value !== "") {
+                esPassValida = validarCampo(pass1, pass1.value.length >= 6, "La contraseña debe tener al menos 6 caracteres");
+                esConfirmPassValida = validarCampo(pass2, pass2.value === pass1.value && pass2.value !== "", "Las contraseñas no coinciden");
+            }
+
+            if (esNombreValido && esEmailValido && esEdadValida && esPassValida && esConfirmPassValida) {
+                if (esEditando) {
+                    // Actualizar
+                    const index = clientes.findIndex(c => c.id === clienteIdInput.value);
+                    if (index !== -1) {
+                        clientes[index].nombre = inputNombre.value.trim();
+                        clientes[index].email = inputEmail.value.trim();
+                        clientes[index].edad = inputEdad.value;
+                        if (pass1.value !== "") clientes[index].pass = pass1.value;
+                        clientes[index].mensaje = inputMensaje.value;
+                        clientes[index].opcion = selectOpcion.value;
+                        clientes[index].suscripcion = checkSuscripcion.checked;
+                    }
+                } else {
+                    // Crear Nuevo
+                    const nuevoCliente = {
+                        id: Date.now().toString(),
+                        nombre: inputNombre.value.trim(),
+                        email: inputEmail.value.trim(),
+                        edad: inputEdad.value,
+                        pass: pass1.value,
+                        mensaje: inputMensaje.value,
+                        opcion: selectOpcion.value,
+                        suscripcion: checkSuscripcion.checked
+                    };
+                    clientes.push(nuevoCliente);
+                }
+
+                // Guardar en LocalStorage y refrescar vista
+                localStorage.setItem("clientesDB", JSON.stringify(clientes));
+                renderizarClientes();
+
+                // Feedback visual
+                const mensajeExito = document.getElementById("mensaje-exito");
+                mensajeExito.textContent = esEditando ? "¡Cliente actualizado con éxito!" : "¡Cliente registrado con éxito!";
+                mensajeExito.style.display = "block";
+
+                setTimeout(() => {
+                    mensajeExito.style.display = "none";
+                }, 3000);
+
+                limpiarFormulario();
+            }
+        });
+
+        // Cargar datos en el formulario para editar
+        window.cargarParaEditar = function(id) {
+            const cliente = clientes.find(c => c.id === id);
+            if (cliente) {
+                clienteIdInput.value = cliente.id;
+                inputNombre.value = cliente.nombre;
+                inputEmail.value = cliente.email;
+                inputEdad.value = cliente.edad;
+                inputMensaje.value = cliente.mensaje;
+                selectOpcion.value = cliente.opcion;
+                checkSuscripcion.checked = cliente.suscripcion;
+
+                pass1.value = "";
+                pass2.value = "";
+
+                formTitulo.textContent = "Editar Cliente";
+                btnGuardar.textContent = "Actualizar Cliente";
+                
+                // Limpiar clases de validación previa
+                document.querySelectorAll(".success").forEach(el => el.classList.remove("success"));
+                document.querySelectorAll(".error").forEach(el => el.textContent = "");
+            }
+        };
+
+        // Eliminar un cliente
+        window.eliminarCliente = function(id) {
+            if (confirm("¿Estás seguro de que deseas eliminar este cliente?")) {
+                clientes = clientes.filter(c => c.id !== id);
+                localStorage.setItem("clientesDB", JSON.stringify(clientes));
+                renderizarClientes();
+                if (clienteIdInput.value === id) {
+                    limpiarFormulario();
+                }
+            }
+        };
+
+        // Limpiar formulario
+        function limpiarFormulario() {
+            form.reset();
+            clienteIdInput.value = "";
+            formTitulo.textContent = "Registrar Cliente";
+            btnGuardar.textContent = "Guardar Cliente";
+            document.querySelectorAll(".success").forEach(el => el.classList.remove("success"));
+            document.querySelectorAll(".error").forEach(el => el.textContent = "");
+        }
+
+        btnLimpiar.addEventListener("click", limpiarFormulario);
+
+        // Filtro de Búsqueda
+        buscarInput.addEventListener("input", function() {
+            renderizarClientes(this.value);
+        });
+
+        // Carga inicial
+        renderizarClientes();
+    </script>
+</body>
+</html>
