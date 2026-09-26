@@ -1,0 +1,473 @@
+/* =========================================================
+   TallerMax — Gestión de Empleados
+   
+   ========================================================= */
+
+:root {
+  --gris-fondo: #1f2530;
+  --gris-tarjeta: #262d3a;
+  --gris-borde: #384156;
+  --gris-texto-suave: #a7b0c0;
+  --blanco: #f4f6fa;
+  --naranja: #ff7a30;
+  --naranja-oscuro: #e0621b;
+  --verde-ok: #3fb872;
+  --rojo-error: #ff5c5c;
+  --fuente: "Segoe UI", Roboto, Arial, sans-serif;
+
+  /* variables,radios y duraciones */
+  --radio: 8px;
+  --radio-chico: 5px;
+  --sombra: 0 4px 14px rgba(0, 0, 0, 0.35);
+  --dur-rapida: 0.2s;
+  --dur-media: 0.4s;
+  --funcion-tiempo: ease-in-out;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fuente);
+  background-color: var(--gris-fondo);
+  color: var(--blanco);
+  line-height: 1.5;
+  font-size: 1rem; /* base para que rem sea predecible en toda la página */
+}
+
+/* ===== Encabezado tipo "placa de taller" ===== */
+.encabezado {
+  /* Gradiente en vez de un color plano (Guía CSS - Tipografía y Colores) */
+  background: linear-gradient(135deg, #171b23 0%, #1f2530 100%);
+  border-bottom: 4px solid var(--naranja);
+  padding: 1.1rem 1.5rem;
+}
+
+.encabezado__marca {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.encabezado__icono {
+  font-size: 2rem;
+  /* Pequeño balanceo continuo: un detalle vivo pero discreto */
+  animation: balanceo 3s var(--funcion-tiempo) infinite;
+  transform-origin: 70% 70%;
+}
+
+.encabezado h1 {
+  margin: 0;
+  font-size: 1.4rem;
+  letter-spacing: 0.5px;
+  color: var(--naranja);
+}
+
+.encabezado p {
+  margin: 2px 0 0;
+  font-size: 0.9rem;
+  color: var(--gris-texto-suave);
+}
+
+/* ===== Contenedor general ===== */
+.contenedor {
+  max-width: 900px;
+  margin: 1.5rem auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* ===== Tarjetas (sección del CRUD) ===== */
+.tarjeta {
+  background-color: var(--gris-tarjeta);
+  border: 1px solid var(--gris-borde);
+  border-radius: var(--radio);
+  padding: 1.25rem;
+  box-shadow: var(--sombra);
+  /* Transición explícita: propiedad, duración, función y retraso  */
+  transition: border-color var(--dur-media) var(--funcion-tiempo) 0s;
+}
+
+.tarjeta:hover {
+  border-color: #46536e;
+}
+
+.tarjeta h2 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  color: var(--naranja);
+  border-left: 4px solid var(--naranja);
+  padding-left: 10px;
+}
+
+/* ===== Formulario ===== */
+.campo {
+  margin-bottom: 0.9rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.campo label {
+  font-weight: 600;
+  margin-bottom: 4px;
+  font-size: 0.95rem;
+}
+
+.campo input,
+.campo select {
+  padding: 0.55rem 0.6rem;
+  border-radius: var(--radio-chico);
+  border: 1px solid var(--gris-borde);
+  background-color: #1a1f28;
+  color: var(--blanco);
+  font-size: 0.95rem;
+  transition:
+    border-color var(--dur-rapida) var(--funcion-tiempo) 0s,
+    box-shadow var(--dur-rapida) var(--funcion-tiempo) 0s;
+}
+
+.campo input:focus,
+.campo select:focus {
+  outline: none;
+  border-color: var(--naranja);
+  box-shadow: 0 0 0 3px rgba(255, 122, 48, 0.25);
+}
+
+/* Cuando un campo tiene error: borde rojo + una pequeña sacudida
+   ("las animaciones pueden indicar cambios de estado") */
+.campo input.invalido,
+.campo select.invalido {
+  border-color: var(--rojo-error);
+  animation: sacudir 0.35s var(--funcion-tiempo);
+}
+
+.ayuda {
+  color: var(--gris-texto-suave);
+  font-size: 0.78rem;
+  margin-top: 3px;
+}
+
+.error {
+  color: var(--rojo-error);
+  font-size: 0.8rem;
+  min-height: 1em;
+  margin-top: 3px;
+}
+
+/* ===== Botones ===== */
+.botones {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.boton {
+  border: none;
+  border-radius: var(--radio-chico);
+  padding: 0.6rem 1.1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  transition:
+    transform var(--dur-rapida) var(--funcion-tiempo) 0s,
+    box-shadow var(--dur-rapida) var(--funcion-tiempo) 0s,
+    background-color var(--dur-rapida) var(--funcion-tiempo) 0s;
+}
+
+.boton:hover {
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+}
+
+.boton:active {
+  transform: scale(0.97);
+}
+
+.boton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.boton--primario {
+  /* Gradiente en el botón principal en vez de un naranja plano */
+  background: linear-gradient(135deg, var(--naranja), var(--naranja-oscuro));
+  color: #1a1108;
+}
+
+.boton--primario:hover {
+  background: linear-gradient(135deg, #ff8a49, var(--naranja));
+}
+
+.boton--secundario {
+  background-color: #3d4a63;
+  color: var(--blanco);
+}
+
+.boton--secundario:hover {
+  background-color: #4b5a78;
+}
+
+.boton--fantasma {
+  background-color: transparent;
+  color: var(--gris-texto-suave);
+  border: 1px solid var(--gris-borde);
+}
+
+.boton--fantasma:hover {
+  border-color: var(--naranja);
+  color: var(--naranja);
+}
+
+.boton--peligro {
+  background-color: var(--rojo-error);
+  color: #2a0000;
+}
+
+.boton--peligro:hover {
+  background-color: #e04141;
+}
+
+/* Estado "cargando" del botón guardar: feedback visual mientras se procesa
+   el registro ("Feedback y Respuesta Visual") */
+.boton--cargando .boton__texto {
+  visibility: hidden;
+}
+
+.boton--cargando::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #1a1108;
+  border-radius: 50%;
+  animation: girar 0.6s linear infinite;
+}
+
+/* ===== Búsqueda ===== */
+.busqueda {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.busqueda input {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.55rem 0.6rem;
+  border-radius: var(--radio-chico);
+  border: 1px solid var(--gris-borde);
+  background-color: #1a1f28;
+  color: var(--blanco);
+  transition: border-color var(--dur-rapida) var(--funcion-tiempo) 0s;
+}
+
+.busqueda input:focus {
+  outline: none;
+  border-color: var(--naranja);
+}
+
+/* ===== Tabla de empleados ===== */
+.tabla-envoltorio {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.6rem;
+}
+
+thead th {
+  text-align: left;
+  background-color: #1a1f28;
+  color: var(--naranja);
+  padding: 0.6rem;
+  font-size: 0.85rem;
+  border-bottom: 2px solid var(--gris-borde);
+}
+
+tbody td {
+  padding: 0.6rem;
+  border-bottom: 1px solid var(--gris-borde);
+  font-size: 0.9rem;
+}
+
+tbody tr {
+  transition: background-color var(--dur-rapida) var(--funcion-tiempo) 0s;
+}
+
+tbody tr:hover {
+  background-color: #2c3444;
+}
+
+/* Fila recién creada o editada: un resplandor naranja que se desvanece,
+   así el usuario ve claramente cuál fue el cambio  */
+.fila-resaltada {
+  animation: resaltar 1.4s ease-out;
+}
+
+.acciones-fila {
+  display: flex;
+  gap: 6px;
+}
+
+.acciones-fila button {
+  padding: 0.4rem 0.65rem;
+  font-size: 0.78rem;
+}
+
+.sin-resultados {
+  text-align: center;
+  color: var(--gris-texto-suave);
+  padding: 1rem 0;
+}
+
+/* ===== Mensajes de aviso (éxito / error general) ===== */
+.mensaje {
+  padding: 0.75rem 1rem;
+  border-radius: var(--radio-chico);
+  font-size: 0.9rem;
+  font-weight: 600;
+  animation: aparecer var(--dur-media) ease-out;
+}
+
+.mensaje--exito {
+  background-color: rgba(63, 184, 114, 0.15);
+  border: 1px solid var(--verde-ok);
+  color: var(--verde-ok);
+}
+
+.mensaje--error {
+  background-color: rgba(255, 92, 92, 0.15);
+  border: 1px solid var(--rojo-error);
+  color: var(--rojo-error);
+}
+
+.mensaje--oculto,
+.oculto {
+  display: none;
+}
+
+/* ===== Pie de página ===== */
+.pie {
+  text-align: center;
+  color: var(--gris-texto-suave);
+  font-size: 0.78rem;
+  padding: 1.25rem 0 1.9rem;
+}
+
+/* =========================================================
+   @keyframes  "Creación de Animaciones con CSS"
+   ========================================================= */
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sacudir {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@keyframes girar {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes balanceo {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-8deg); }
+}
+
+@keyframes resaltar {
+  from { background-color: rgba(255, 122, 48, 0.35); }
+  to { background-color: transparent; }
+}
+
+/* =========================================================
+   Accesibilidad en animaciones :
+   si la persona pidió "reducir movimiento" en su sistema,
+   apagamos animaciones y transiciones.
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* =========================================================
+   Responsive Web Design 
+   ========================================================= */
+
+/* Pantallas medianas: botones apilados */
+@media (max-width: 37.5em) { /* 600px en rem, unidad relativa */
+  .botones {
+    flex-direction: column;
+  }
+  .boton {
+    width: 100%;
+  }
+}
+
+/* Pantallas chicas: la tabla se convierte en tarjetas apiladas.
+   Cada <td> muestra su etiqueta gracias a data-etiqueta + ::before */
+@media (max-width: 40em) { /* 640px */
+  #tablaEmpleados thead {
+    display: none;
+  }
+  #tablaEmpleados,
+  #tablaEmpleados tbody,
+  #tablaEmpleados tr,
+  #tablaEmpleados td {
+    display: block;
+    width: 100%;
+  }
+  #tablaEmpleados tr {
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--gris-borde);
+    border-radius: var(--radio);
+    padding: 0.5rem 0.75rem;
+  }
+  #tablaEmpleados td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.6rem;
+    border-bottom: 1px dashed var(--gris-borde);
+    padding: 0.4rem 0.1rem;
+  }
+  #tablaEmpleados td:last-child {
+    border-bottom: none;
+  }
+  #tablaEmpleados td::before {
+    content: attr(data-etiqueta);
+    font-weight: 600;
+    color: var(--gris-texto-suave);
+    font-size: 0.78rem;
+  }
+  .acciones-fila {
+    justify-content: flex-end;
+    width: 100%;
+  }
+}

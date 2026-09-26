@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+  <title>TallerMax | Gestión de Empleados</title>
+  <link rel="stylesheet" href="css/estilosEmpleado.css">
+</head>
+
+<body>
+
+  <!-- ===== ENCABEZADO ===== -->
+  <header class="encabezado">
+    <div class="encabezado__marca">
+      <span class="encabezado__icono" aria-hidden="true">🔧</span>
+      <div>
+        <h1>TallerMax</h1>
+        <p>Módulo: Gestión de Empleados</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="contenedor">
+
+    <!-- ===== MENSAJES DE AVISO (éxito / error) ===== -->
+    <!-- role="status" avisa a lectores de pantalla cuando aparece un mensaje -->
+    <div id="mensaje" class="mensaje mensaje--oculto" role="status"></div>
+
+    <!-- ===== SECCIÓN 1: FORMULARIO ===== -->
+    <section class="tarjeta">
+      <h2 id="tituloFormulario">Registro empleado</h2>
+
+      <form id="formEmpleado" novalidate>
+
+        <!-- Campo: cédula -->
+        <div class="campo">
+          <label for="cedula">Cédula</label>
+          <input type="text" id="cedula" name="cedula" maxlength="10" inputmode="numeric" placeholder="Ej: 1015896321"
+            autocomplete="off">
+          <small class="ayuda">Debe ser numérica, de 10 dígitos y única.</small>
+          <span class="error" id="errorCedula"></span>
+        </div>
+
+        <!-- Campo: nombres -->
+        <div class="campo">
+          <label for="nombres">Nombres</label>
+          <input type="text" id="nombres" name="nombres" maxlength="60" placeholder="Ej: Juan Camilo"
+            autocomplete="off">
+          <small class="ayuda">Máximo 60 caracteres.</small>
+          <span class="error" id="errorNombres"></span>
+        </div>
+
+        <!-- Campo: apellidos -->
+        <div class="campo">
+          <label for="apellidos">Apellidos</label>
+          <input type="text" id="apellidos" name="apellidos" maxlength="60" placeholder="Ej: Rodríguez Peña"
+            autocomplete="off">
+          <small class="ayuda">Máximo 60 caracteres.</small>
+          <span class="error" id="errorApellidos"></span>
+        </div>
+
+        <!-- Campo: cargo -->
+        <div class="campo">
+          <label for="cargo">Cargo</label>
+          <select id="cargo" name="cargo">
+            <option value="">-- Seleccione un cargo --</option>
+            <option value="Mecánico">Mecánico</option>
+            <option value="Electricista automotriz">Electricista automotriz</option>
+            <option value="Recepcionista">Recepcionista</option>
+            <option value="Administrador">Administrador</option>
+            <option value="Ayudante de taller">Ayudante de taller</option>
+          </select>
+          <small class="ayuda">Debe ser un cargo válido definido por el taller.</small>
+          <span class="error" id="errorCargo"></span>
+        </div>
+
+        <!-- Campo oculto: guarda la cédula original cuando estamos actualizando -->
+        <input type="hidden" id="cedulaOriginal" value="">
+
+        <div class="botones">
+          <button type="submit" id="btnGuardar" class="boton boton--primario">
+            <span class="boton__texto">Registrar empleado</span>
+          </button>
+          <button type="button" id="btnCancelar" class="boton boton--secundario oculto">Cancelar edición</button>
+          <button type="reset" class="boton boton--fantasma">Limpiar</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ===== SECCIÓN 2: BÚSQUEDA  ===== -->
+    <section class="tarjeta">
+      <h2>Consultar empleado</h2>
+      <div class="busqueda">
+        <input type="text" id="buscar" placeholder="Buscar por cédula o nombre..." autocomplete="off">
+        <button type="button" id="btnBuscar" class="boton boton--primario">Buscar</button>
+        <button type="button" id="btnLimpiarBusqueda" class="boton boton--fantasma">Ver todos</button>
+      </div>
+    </section>
+
+    <!-- ===== SECCIÓN 3: LISTADO  ===== -->
+    <section class="tarjeta">
+      <h2>Empleados registrados</h2>
+      <div class="tabla-envoltorio">
+        <table id="tablaEmpleados">
+          <thead>
+            <tr>
+              <th>Cédula</th>
+              <th>Nombres</th>
+              <th>Apellidos</th>
+              <th>Cargo</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <!-- Las filas se generan por JavaScript. Cada <td> lleva un
+               atributo data-etiqueta: en pantallas pequeñas el CSS lo usa
+               para mostrar la tabla como tarjetas apiladas (ver estilos.css) -->
+          <tbody id="cuerpoTabla"></tbody>
+        </table>
+        <p id="sinResultados" class="sin-resultados oculto">No hay empleados para mostrar.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="pie">
+    <p>TallerMax · Gestión de Empleados</p>
+  </footer>
+
+  <script src="js/scriptEmpleado.js"></script>
+</body>
+
+</html>
