@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TallerPro | Empleados</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      background-color: #87CEEB;
+      font-family: Arial, sans-serif;
+    }
+    .tarjeta {
+      background: white;
+      max-width: 500px;
+      margin: 30px auto;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 25px;
+    }
+    .campo {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #444;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .btn-enviar {
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .btn-enviar:hover {
+      transform: scale(1.03);
+      background-color: #0056b3;
+    }
+    .tabla-container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+    .btn-Actualizar {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      margin-right: 5px;
+      cursor: pointer;
+    }
+    .btn-eliminar {
+      background: #ef4444;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .btn-cancelar {
+      background: #6c757d;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    .botones-form {
+      display: flex;
+      margin-top: 20px;
+    }
+    .buscador {
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- FORMULARIO DE EMPLEADOS -->
+  <div class="tarjeta">
+    <h2 id="tituloForm">Registro de Empleado</h2>
+    <form id="formEmpleado">
+      <div class="campo">
+        <label>ID Empleado:</label>
+        <input type="text" id="idEmpleado" disabled value="(automático)">
+      </div>
+      <div class="campo">
+        <label>Cédula:</label>
+        <input type="text" id="cedula" required placeholder="Número de documento">
+      </div>
+      <div class="campo">
+        <label>Nombres:</label>
+        <input type="text" id="nombres" required placeholder="Nombres completos">
+      </div>
+      <div class="campo">
+        <label>Apellidos:</label>
+        <input type="text" id="apellidos" required placeholder="Apellidos completos">
+      </div>
+      <div class="campo">
+        <label>Cargo:</label>
+        <select id="cargo" required>
+          <option value="">Seleccione...</option>
+          <option>Mecánico</option>
+          <option>Jefe de Taller</option>
+          <option>Recepcionista</option>
+          <option>Administrativo</option>
+          <option>Ayudante</option>
+        </select>
+      </div>
+      <div class="campo">
+        <label>Teléfono:</label>
+        <input type="tel" id="telefono" required placeholder="Número de contacto">
+      </div>
+      <div class="campo">
+        <label>Dirección:</label>
+        <input type="text" id="direccion" placeholder="Dirección de residencia">
+      </div>
+      <div class="campo">
+        <label>Correo:</label>
+        <input type="email" id="correo" placeholder="correo@ejemplo.com">
+      </div>
+      <div class="campo">
+        <label>Fecha de ingreso:</label>
+        <input type="date" id="fechaIngreso">
+      </div>
+      <div class="botones-form">
+        <button type="button" class="btn-cancelar" id="btnCancelar" style="display:none;">Cancelar</button>
+        <button type="submit" class="btn-enviar">Guardar Empleado</button>
+      </div>
+      <p id="mensaje" style="margin-top:15px; text-align:center;"></p>
+    </form>
+  </div>
+
+  <!-- TABLA DE EMPLEADOS -->
+  <div class="tabla-container">
+    <h3>Lista de Empleados</h3>
+    <div class="buscador">
+      <input type="text" id="buscarEmpleado" placeholder="Buscar por nombre, cédula o cargo..." style="max-width:450px;">
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Cédula</th>
+          <th>Nombre Completo</th>
+          <th>Cargo</th>
+          <th>Teléfono</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="tablaEmpleados"></tbody>
+    </table>
+  </div>
+
+  <script>
+    let empleados = [];
+    let idSiguiente = 1;
+    let indiceEdicion = null;
+
+    cargarEmpleados();
+
+    // Enviar formulario
+    $("#formEmpleado").submit(function(e) {
+      e.preventDefault();
+
+      const datos = {
+        id: indiceEdicion !== null ? empleados[indiceEdicion].id : idSiguiente++,
+        cedula: $("#cedula").val().trim(),
+        nombres: $("#nombres").val().trim(),
+        apellidos: $("#apellidos").val().trim(),
+        cargo: $("#cargo").val(),
+        telefono: $("#telefono").val().trim(),
+        direccion: $("#direccion").val().trim(),
+        correo: $("#correo").val().trim(),
+        fechaIngreso: $("#fechaIngreso").val()
+      };
+
+      if (indiceEdicion === null) {
+        // CREAR
+        empleados.push(datos);
+        $("#mensaje").text("✅ Empleado registrado correctamente").css("color", "green");
+      } else {
+        // EDITAR
+        empleados[indiceEdicion] = datos;
+        indiceEdicion = null;
+        $("#tituloForm").text("Registro de Empleado");
+        $("#btnCancelar").hide();
+        $("#mensaje").text("✅ Empleado actualizado correctamente").css("color", "green");
+      }
+
+      guardarEmpleados();
+      actualizarTabla();
+      $("#formEmpleado")[0].reset();
+      $("#idEmpleado").val("(automático)");
+    });
+
+    // Buscador
+    $("#buscarEmpleado").on("input", actualizarTabla);
+
+    function actualizarTabla() {
+      $("#tablaEmpleados").empty();
+      const texto = $("#buscarEmpleado").val().toLowerCase().trim();
+
+      const filtro = empleados.filter(emp => {
+        if (!texto) return true;
+        return emp.nombres.toLowerCase().includes(texto) ||
+               emp.apellidos.toLowerCase().includes(texto) ||
+               emp.cedula.includes(texto) ||
+               emp.cargo.toLowerCase().includes(texto);
+      });
+
+      filtro.forEach(emp => {
+        const indiceReal = empleados.indexOf(emp);
+        $("#tablaEmpleados").append(`
+          <tr>
+            <td>${emp.id}</td>
+            <td>${emp.cedula}</td>
+            <td>${emp.nombres} ${emp.apellidos}</td>
+            <td>${emp.cargo}</td>
+            <td>${emp.telefono}</td>
+            <td>
+              <button class="btn-Actualizar" onclick="editarEmpleado(${indiceReal})">Actualizar</button>
+              <button class="btn-eliminar" onclick="eliminarEmpleado(${indiceReal})">Eliminar</button>
+            </td>
+          </tr>
+        `);
+      });
+    }
+
+    // EDITAR
+    function editarEmpleado(indice) {
+      const emp = empleados[indice];
+      $("#idEmpleado").val(emp.id);
+      $("#cedula").val(emp.cedula);
+      $("#nombres").val(emp.nombres);
+      $("#apellidos").val(emp.apellidos);
+      $("#cargo").val(emp.cargo);
+      $("#telefono").val(emp.telefono);
+      $("#direccion").val(emp.direccion || "");
+      $("#correo").val(emp.correo || "");
+      $("#fechaIngreso").val(emp.fechaIngreso || "");
+      
+      indiceEdicion = indice;
+      $("#tituloForm").text("Editar Empleado");
+      $("#btnCancelar").show();
+      $("#mensaje").text("");
+    }
+
+    // ELIMINAR
+    function eliminarEmpleado(indice) {
+      if (confirm("¿Seguro que quieres eliminar este empleado?")) {
+        empleados.splice(indice, 1);
+        guardarEmpleados();
+        actualizarTabla();
+      }
+    }
+
+    // CANCELAR
+    $("#btnCancelar").click(function() {
+      indiceEdicion = null;
+      $("#tituloForm").text("Registro de Empleado");
+      $(this).hide();
+      $("#formEmpleado")[0].reset();
+      $("#idEmpleado").val("(automático)");
+      $("#mensaje").text("");
+    });
+
+    // Guardar y cargar
+    function guardarEmpleados() {
+      localStorage.setItem("empleadosTallerPro", JSON.stringify(empleados));
+      localStorage.setItem("idSiguienteEmpleado", idSiguiente);
+    }
+
+    function cargarEmpleados() {
+      const guardados = localStorage.getItem("empleadosTallerPro");
+      if (guardados) {
+        empleados = JSON.parse(guardados);
+        idSiguiente = parseInt(localStorage.getItem("idSiguienteEmpleado")) || 1;
+        actualizarTabla();
+      }
+    }
+  </script>
+
+</body>
+</html>
