@@ -392,8 +392,30 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+  // MODAL CLIENTES
+
 document.addEventListener("DOMContentLoaded", () => {
+  const btnNuevoCliente = document.querySelector(".btn-nuevo-cliente");
+  const modalCliente = document.getElementById("modal-cliente");
+  const btnCerrarCliente = document.querySelector(".cerrar-modal-cliente");
+  const btnCancelarCliente = document.querySelector(".btn-cancelar-cliente");
+
+  btnNuevoCliente.addEventListener("click", () => {
+    modalCliente.hidden = false;
+  });
+
+  btnCerrarCliente.addEventListener("click", () => {
+    modalCliente.hidden = true;
+  });
+
+  btnCancelarCliente.addEventListener("click", () => {
+    modalCliente.hidden = true;
+  });
+});
+
   // CRUD EMPLEADOS
+    document.addEventListener("DOMContentLoaded", () => {
     const empleados = [];
     
     const seccionEmpleados = document.getElementById("empleados");

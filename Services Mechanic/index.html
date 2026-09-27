@@ -900,14 +900,104 @@
               </table>
             </div>
           </section>
-      <section id="empleados" class="seccion-empleados" hidden>
+          <div id="modal-cliente" class="modal-cliente" hidden>
+  <div class="contenido-modal-cliente">
 
-    <div class="encabezado-pagina-empleados">
-        <div>
-            <h1>Empleados</h1>
-            <p>Registro y consulta de empleados</p>
-        </div>
+    <div class="cabecera-modal-cliente">
+      <div>
+        <h2>Registrar cliente</h2>
+        <p>Ingresa la información del nuevo cliente.</p>
+      </div>
+
+      <button type="button" class="cerrar-modal-cliente" aria-label="Cerrar formulario">
+        ×
+      </button>
     </div>
+
+    <form id="formulario-cliente">
+      <div class="grupo-formulario-cliente">
+  <label for="id-cliente">ID Cliente</label>
+  <input
+    type="text"
+    id="id-cliente"
+    name="id-cliente"
+    readonly
+  >
+</div>
+
+      <div class="grupo-formulario-cliente">
+        <label for="cedula-cliente">Cédula</label>
+        <input
+          type="text"
+          id="cedula-cliente"
+          name="cedula"
+          maxlength="10"
+          inputmode="numeric"
+          required
+        >
+      </div>
+
+      <div class="grupo-formulario-cliente">
+        <label for="nombres-cliente">Nombres</label>
+        <input
+          type="text"
+          id="nombres-cliente"
+          name="nombres"
+          maxlength="40"
+          required
+        >
+      </div>
+
+      <div class="grupo-formulario-cliente">
+        <label for="apellidos-cliente">Apellidos</label>
+        <input
+          type="text"
+          id="apellidos-cliente"
+          name="apellidos"
+          maxlength="40"
+          required
+        >
+      </div>
+
+      <div class="grupo-formulario-cliente">
+        <label for="telefono-cliente">Teléfono</label>
+        <input
+          type="text"
+          id="telefono-cliente"
+          name="telefono"
+          maxlength="10"
+          inputmode="numeric"
+          required
+        >
+      </div>
+
+      <div class="grupo-formulario-cliente">
+        <label for="direccion-cliente">Dirección</label>
+        <input
+          type="text"
+          id="direccion-cliente"
+          name="direccion"
+          maxlength="80"
+          required
+        >
+      </div>
+
+      <div class="botones-formulario-cliente">
+        <button type="button" class="btn-cancelar-cliente">
+          Cancelar
+        </button>
+
+        <button type="submit" class="btn-guardar-cliente">
+          Guardar cliente
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+          <!-- Empleados -->
+      <section id="empleados" class="seccion-empleados" hidden>
 
     <div class="contenedor-empleados">
 
