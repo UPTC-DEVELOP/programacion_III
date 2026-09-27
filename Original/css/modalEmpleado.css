@@ -1,0 +1,534 @@
+/* =========================================================
+   TallerMax — Modal "Registrar empleado"
+   ========================================================= */
+
+/* ===== Fondo oscuro (overlay) ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(6, 6, 8, 0.72);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.modal-overlay[hidden] {
+  display: none;
+}
+
+.modal-overlay--visible {
+  opacity: 1;
+}
+
+/* ===== Ventana modal: grid de 2 columnas ===== */
+.modal-registro {
+  position: relative;
+  width: 100%;
+  max-width: 980px;
+  max-height: 90vh;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 30px 70px -20px rgba(0, 0, 0, 0.75);
+  overflow: hidden;
+  transform: translateY(18px) scale(0.98);
+  opacity: 0;
+  transition: transform 0.28s ease, opacity 0.28s ease;
+}
+
+.modal-overlay--visible .modal-registro {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.modal-registro__cerrar {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: rgba(10, 10, 10, 0.55);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.modal-registro__cerrar:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: rotate(90deg);
+}
+
+/* ===== Columna izquierda: marca ===== */
+.modal-registro__marca {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 40px 28px;
+  background:
+    radial-gradient(420px 260px at 20% 0%, rgba(232, 100, 31, 0.16), transparent 60%),
+    var(--bg-alt);
+  border-right: 1px solid var(--border);
+}
+
+.modal-registro__logo {
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  object-fit: cover;
+  margin-bottom: 6px;
+}
+
+.modal-registro__nombre {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--text);
+}
+
+.modal-registro__eslogan {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+}
+
+.modal-registro__lista {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-registro__lista li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 13.5px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.modal-registro__lista li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* ===== Columna derecha: contenido con scroll propio ===== */
+.modal-registro__contenido {
+  padding: 32px 30px;
+  overflow-y: auto;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+/* =========================================================
+   Formulario, búsqueda y tabla (contenido tomado de
+   empleados.html)
+   ========================================================= */
+
+.tm-modal-empleado {
+  --tm-borde: var(--border);
+  --tm-superficie: var(--bg-alt);
+  --tm-texto-suave: var(--text-muted);
+  --tm-naranja: var(--accent);
+  --tm-naranja-oscuro: var(--accent-dark);
+  --tm-verde-ok: #3fb872;
+  --tm-rojo-error: #ff5c5c;
+  font-family: var(--font-body);
+}
+
+.tm-modal-empleado .tarjeta {
+  background-color: var(--tm-superficie);
+  border: 1px solid var(--tm-borde);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem;
+  transition: border-color 0.3s ease;
+}
+
+.tm-modal-empleado .tarjeta:hover {
+  border-color: #46536e;
+}
+
+.tm-modal-empleado .tarjeta h2 {
+  margin-top: 0;
+  font-size: 1rem;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--tm-naranja);
+  border-left: 3px solid var(--tm-naranja);
+  padding-left: 10px;
+}
+
+.tm-modal-empleado .campo {
+  margin-bottom: 0.9rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.tm-modal-empleado .campo label {
+  font-weight: 600;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+}
+
+.tm-modal-empleado .campo input,
+.tm-modal-empleado .campo select,
+.tm-modal-empleado .busqueda input {
+  padding: 0.55rem 0.6rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--tm-borde);
+  background-color: var(--bg);
+  color: var(--text);
+  font-size: 0.95rem;
+  font-family: var(--font-body);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tm-modal-empleado .campo input:focus,
+.tm-modal-empleado .campo select:focus,
+.tm-modal-empleado .busqueda input:focus {
+  outline: none;
+  border-color: var(--tm-naranja);
+  box-shadow: 0 0 0 3px rgba(232, 100, 31, 0.22);
+}
+
+.tm-modal-empleado .campo input.invalido,
+.tm-modal-empleado .campo select.invalido {
+  border-color: var(--tm-rojo-error);
+  animation: sacudir 0.35s ease-in-out;
+}
+
+.tm-modal-empleado .ayuda {
+  color: var(--tm-texto-suave);
+  font-size: 0.76rem;
+  margin-top: 3px;
+}
+
+.tm-modal-empleado .error {
+  color: var(--tm-rojo-error);
+  font-size: 0.78rem;
+  min-height: 1em;
+  margin-top: 3px;
+}
+
+.tm-modal-empleado .botones {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.tm-modal-empleado .boton {
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 1.1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  font-family: var(--font-body);
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.tm-modal-empleado .boton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+}
+
+.tm-modal-empleado .boton:active {
+  transform: scale(0.97);
+}
+
+.tm-modal-empleado .boton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.tm-modal-empleado .boton--primario {
+  background: linear-gradient(135deg, var(--tm-naranja), var(--tm-naranja-oscuro));
+  color: #1a1108;
+}
+
+.tm-modal-empleado .boton--primario:hover {
+  background: linear-gradient(135deg, #ff8a49, var(--tm-naranja));
+}
+
+.tm-modal-empleado .boton--secundario {
+  background-color: #3d4a63;
+  color: var(--text);
+}
+
+.tm-modal-empleado .boton--secundario:hover {
+  background-color: #4b5a78;
+}
+
+.tm-modal-empleado .boton--fantasma {
+  background-color: transparent;
+  color: var(--tm-texto-suave);
+  border: 1px solid var(--tm-borde);
+}
+
+.tm-modal-empleado .boton--fantasma:hover {
+  border-color: var(--tm-naranja);
+  color: var(--tm-naranja);
+}
+
+.tm-modal-empleado .boton--peligro {
+  background-color: var(--tm-rojo-error);
+  color: #2a0000;
+}
+
+.tm-modal-empleado .boton--peligro:hover {
+  background-color: #e04141;
+}
+
+.tm-modal-empleado .boton--cargando .boton__texto {
+  visibility: hidden;
+}
+
+.tm-modal-empleado .boton--cargando::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #1a1108;
+  border-radius: 50%;
+  animation: girar 0.6s linear infinite;
+}
+
+.tm-modal-empleado .busqueda {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.tm-modal-empleado .busqueda input {
+  flex: 1;
+  min-width: 180px;
+}
+
+.tm-modal-empleado .tabla-envoltorio {
+  overflow-x: auto;
+}
+
+.tm-modal-empleado table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.6rem;
+}
+
+.tm-modal-empleado thead th {
+  text-align: left;
+  background-color: var(--bg);
+  color: var(--tm-naranja);
+  padding: 0.6rem;
+  font-size: 0.82rem;
+  border-bottom: 2px solid var(--tm-borde);
+}
+
+.tm-modal-empleado tbody td {
+  padding: 0.6rem;
+  border-bottom: 1px solid var(--tm-borde);
+  font-size: 0.88rem;
+}
+
+.tm-modal-empleado tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.tm-modal-empleado tbody tr:hover {
+  background-color: #1c1c1e;
+}
+
+.tm-modal-empleado .fila-resaltada {
+  animation: resaltar 1.4s ease-out;
+}
+
+.tm-modal-empleado .acciones-fila {
+  display: flex;
+  gap: 6px;
+}
+
+.tm-modal-empleado .acciones-fila button {
+  padding: 0.4rem 0.65rem;
+  font-size: 0.76rem;
+}
+
+.tm-modal-empleado .sin-resultados {
+  text-align: center;
+  color: var(--tm-texto-suave);
+  padding: 1rem 0;
+}
+
+.tm-modal-empleado .mensaje {
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  font-weight: 600;
+  animation: aparecer 0.4s ease-out;
+}
+
+.tm-modal-empleado .mensaje--exito {
+  background-color: rgba(63, 184, 114, 0.15);
+  border: 1px solid var(--tm-verde-ok);
+  color: var(--tm-verde-ok);
+}
+
+.tm-modal-empleado .mensaje--error {
+  background-color: rgba(255, 92, 92, 0.15);
+  border: 1px solid var(--tm-rojo-error);
+  color: var(--tm-rojo-error);
+}
+
+.tm-modal-empleado .mensaje--oculto,
+.tm-modal-empleado .oculto {
+  display: none;
+}
+
+/* ===== Animaciones ===== */
+@keyframes sacudir {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@keyframes girar {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes resaltar {
+  from { background-color: rgba(232, 100, 31, 0.35); }
+  to { background-color: transparent; }
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-overlay,
+  .modal-registro,
+  .tm-modal-empleado *,
+  .tm-modal-empleado *::before,
+  .tm-modal-empleado *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ===== Responsive ===== */
+
+/* Tabla en pantallas chicas: se convierte en tarjetas apiladas */
+@media (max-width: 640px) {
+  .tm-modal-empleado #tablaEmpleados thead {
+    display: none;
+  }
+  .tm-modal-empleado #tablaEmpleados,
+  .tm-modal-empleado #tablaEmpleados tbody,
+  .tm-modal-empleado #tablaEmpleados tr,
+  .tm-modal-empleado #tablaEmpleados td {
+    display: block;
+    width: 100%;
+  }
+  .tm-modal-empleado #tablaEmpleados tr {
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.5rem 0.75rem;
+  }
+  .tm-modal-empleado #tablaEmpleados td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.6rem;
+    border-bottom: 1px dashed var(--border);
+    padding: 0.4rem 0.1rem;
+  }
+  .tm-modal-empleado #tablaEmpleados td:last-child {
+    border-bottom: none;
+  }
+  .tm-modal-empleado #tablaEmpleados td::before {
+    content: attr(data-etiqueta);
+    font-weight: 600;
+    color: var(--text-muted);
+    font-size: 0.76rem;
+  }
+  .tm-modal-empleado .acciones-fila {
+    justify-content: flex-end;
+    width: 100%;
+  }
+  .tm-modal-empleado .botones {
+    flex-direction: column;
+  }
+  .tm-modal-empleado .boton {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Modal: de 2 columnas a 1 columna en pantallas medianas/chicas */
+@media (max-width: 760px) {
+  .modal-overlay {
+    padding: 0;
+  }
+  .modal-registro {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    max-height: 100vh;
+    height: 100%;
+    border-radius: 0;
+  }
+  .modal-registro__marca {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 18px 54px 18px 20px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .modal-registro__logo {
+    width: 38px;
+    height: 38px;
+    margin-bottom: 0;
+  }
+  .modal-registro__nombre {
+    font-size: 18px;
+  }
+  .modal-registro__eslogan {
+    width: 100%;
+    margin-bottom: 0;
+  }
+  .modal-registro__lista {
+    display: none;
+  }
+  .modal-registro__contenido {
+    max-height: none;
+  }
+}

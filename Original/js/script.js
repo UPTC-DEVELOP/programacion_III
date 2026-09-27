@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initFormValidation();
   initToggleDetalleServicio(); // mostrar/ocultar detalle por servicio
   initToggleMenuRegistro();    // desplegable de registro (autos, clientes, empleados)
+  initModalRegistroEmpleado(); // modal "Registrar empleado" (sin cambiar de página)
 });
 
 
@@ -210,6 +211,81 @@ function initToggleMenuRegistro() {
     if (!clicDentroDelMenu && boton.getAttribute('aria-expanded') === 'true') {
       boton.setAttribute('aria-expanded', 'false');
       lista.hidden = true;
+    }
+  });
+}
+
+
+// Modal "Registrar empleado"
+// Al hacer clic en el enlace del menú de Registro, en vez de navegar a
+// empleados.html, se abre el mismo formulario dentro de un contenedor
+// superpuesto (overlay) de 2 columnas, sin recargar ni cambiar de página.
+function initModalRegistroEmpleado() {
+  const enlace = document.getElementById('enlaceRegistrarEmpleado');
+  const overlay = document.getElementById('overlayModalEmpleado');
+  const btnCerrar = document.getElementById('btnCerrarModalEmpleado');
+  const botonMenuRegistro = document.getElementById('botonRegistro');
+  const listaRegistro = document.getElementById('listaRegistro');
+
+  if (!enlace || !overlay || !btnCerrar) return;
+
+  const DURACION_CIERRE = 250; // ms, debe coincidir con la transición del CSS
+  let temporizadorCierre = null;
+
+  function abrirModal(event) {
+    event.preventDefault(); // evita la navegación a empleados.html
+
+    // Cierra el menú desplegable "Registro" si estaba abierto
+    if (botonMenuRegistro && listaRegistro) {
+      botonMenuRegistro.setAttribute('aria-expanded', 'false');
+      listaRegistro.hidden = true;
+    }
+
+    if (temporizadorCierre) {
+      clearTimeout(temporizadorCierre);
+      temporizadorCierre = null;
+    }
+
+    overlay.hidden = false;
+    document.body.style.overflow = 'hidden'; // evita el scroll de fondo
+
+    // Doble rAF para asegurar que la transición se dispare
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        overlay.classList.add('modal-overlay--visible');
+      });
+    });
+
+    btnCerrar.focus();
+  }
+
+  function cerrarModal() {
+    if (overlay.hidden) return;
+
+    overlay.classList.remove('modal-overlay--visible');
+    document.body.style.overflow = '';
+
+    temporizadorCierre = setTimeout(() => {
+      overlay.hidden = true;
+    }, DURACION_CIERRE);
+
+    enlace.focus();
+  }
+
+  enlace.addEventListener('click', abrirModal);
+  btnCerrar.addEventListener('click', cerrarModal);
+
+  // Clic en el fondo oscuro (fuera del contenedor) cierra el modal
+  overlay.addEventListener('click', (event) => {
+    if (event.target === overlay) {
+      cerrarModal();
+    }
+  });
+
+  // Tecla Escape cierra el modal
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !overlay.hidden) {
+      cerrarModal();
     }
   });
 }
