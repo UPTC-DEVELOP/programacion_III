@@ -834,7 +834,6 @@
             <a href="#dashboard" class="activo"> Inicio </a>
             <a href="#clientes"> Clientes </a>
             <a href="#empleados"> Empleados </a>
-
           </nav>
         </aside>
 
@@ -866,7 +865,7 @@
             <div class="encabezado-clientes">
               <div>
                 <h2>Clientes registrados</h2>
-                <p>0 clientes</p>
+                <p id="cantidad-clientes">0 clientes</p>
               </div>
 
               <button type="button" class="btn-nuevo-cliente">
@@ -895,307 +894,269 @@
                     <th>Acciones</th>
                   </tr>
                 </thead>
-
                 <tbody id="lista-clientes"></tbody>
               </table>
             </div>
           </section>
           <div id="modal-cliente" class="modal-cliente" hidden>
-  <div class="contenido-modal-cliente">
-
-    <div class="cabecera-modal-cliente">
-      <div>
-        <h2>Registrar cliente</h2>
-        <p>Ingresa la información del nuevo cliente.</p>
-      </div>
-
-      <button type="button" class="cerrar-modal-cliente" aria-label="Cerrar formulario">
-        ×
-      </button>
-    </div>
-
-    <form id="formulario-cliente">
-      <div class="grupo-formulario-cliente">
-  <label for="id-cliente">ID Cliente</label>
-  <input
-    type="text"
-    id="id-cliente"
-    name="id-cliente"
-    readonly
-  >
-</div>
-
-      <div class="grupo-formulario-cliente">
-        <label for="cedula-cliente">Cédula</label>
-        <input
-          type="text"
-          id="cedula-cliente"
-          name="cedula"
-          maxlength="10"
-          inputmode="numeric"
-          required
-        >
-      </div>
-
-      <div class="grupo-formulario-cliente">
-        <label for="nombres-cliente">Nombres</label>
-        <input
-          type="text"
-          id="nombres-cliente"
-          name="nombres"
-          maxlength="40"
-          required
-        >
-      </div>
-
-      <div class="grupo-formulario-cliente">
-        <label for="apellidos-cliente">Apellidos</label>
-        <input
-          type="text"
-          id="apellidos-cliente"
-          name="apellidos"
-          maxlength="40"
-          required
-        >
-      </div>
-
-      <div class="grupo-formulario-cliente">
-        <label for="telefono-cliente">Teléfono</label>
-        <input
-          type="text"
-          id="telefono-cliente"
-          name="telefono"
-          maxlength="10"
-          inputmode="numeric"
-          required
-        >
-      </div>
-
-      <div class="grupo-formulario-cliente">
-        <label for="direccion-cliente">Dirección</label>
-        <input
-          type="text"
-          id="direccion-cliente"
-          name="direccion"
-          maxlength="80"
-          required
-        >
-      </div>
-
-      <div class="botones-formulario-cliente">
-        <button type="button" class="btn-cancelar-cliente">
-          Cancelar
-        </button>
-
-        <button type="submit" class="btn-guardar-cliente">
-          Guardar cliente
-        </button>
-      </div>
-
-    </form>
-
-  </div>
-</div>
-          <!-- Empleados -->
-      <section id="empleados" class="seccion-empleados" hidden>
-
-    <div class="contenedor-empleados">
-
-        <div class="cabecera-empleados">
-
-            <div>
-                <h2>Empleados registrados</h2>
-                <p id="cantidad-empleados">0 empleados</p>
-            </div>
-
-            <button type="button" id="btn-registrar-empleado">
-                + Registrar empleado
-            </button>
-
-        </div>
-
-        <div class="buscador-empleados">
-
-            <input
-                type="text"
-                id="buscar-empleado"
-                placeholder="Buscar por cédula, nombres o apellidos..."
-            >
-
-        </div>
-
-        <div class="tabla-empleados-contenedor">
-
-            <table class="tabla-empleados">
-
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Cédula</th>
-                        <th>Nombres</th>
-                        <th>Apellidos</th>
-                        <th>Teléfono</th>
-                        <th>Cargo</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-
-                <tbody id="tabla-empleados-body">
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<div id="modal-empleado" class="modal-empleado">
-
-    <div class="contenido-modal-empleado">
-
-        <div class="cabecera-modal-empleado">
-
-            <h2 id="titulo-modal-empleado">
-                Registrar empleado
-            </h2>
-
-            <button
-                type="button"
-                id="cerrar-modal-empleado"
-                class="cerrar-modal-empleado"
-            >
-                ×
-            </button>
-
-        </div>
-
-        <form id="formulario-empleado">
-
-            <input
-                type="hidden"
-                id="empleado-id"
-            >
-
-            <div class="grupo-formulario-empleado">
-
-                <label for="empleado-cedula">
-                    Cédula
-                </label>
-
-                <input
-                    type="text"
-                    id="empleado-cedula"
-                    required
-                >
-
-            </div>
-
-            <div class="grupo-formulario-empleado">
-
-                <label for="empleado-nombres">
-                    Nombres
-                </label>
-
-                <input
-                    type="text"
-                    id="empleado-nombres"
-                    required
-                >
-
-            </div>
-
-            <div class="grupo-formulario-empleado">
-
-                <label for="empleado-apellidos">
-                    Apellidos
-                </label>
-
-                <input
-                    type="text"
-                    id="empleado-apellidos"
-                    required
-                >
-
-            </div>
-
-            <div class="grupo-formulario-empleado">
-
-                <label for="empleado-telefono">
-                    Teléfono
-                </label>
-
-                <input
-                    type="text"
-                    id="empleado-telefono"
-                    required
-                >
-
-            </div>
-
-            <div class="grupo-formulario-empleado">
-
-                <label for="empleado-cargo">
-                    Cargo
-                </label>
-
-                <select
-                    id="empleado-cargo"
-                    required
-                >
-                    <option value="">
-                        Seleccionar cargo
-                    </option>
-
-                    <option value="Mecánico">
-                        Mecánico
-                    </option>
-
-                    <option value="Recepcionista">
-                        Recepcionista
-                    </option>
-
-                    <option value="Administrador">
-                        Administrador
-                    </option>
-
-                    <option value="Auxiliar">
-                        Auxiliar
-                    </option>
-
-                </select>
-
-            </div>
-
-            <div class="botones-formulario-empleado">
+            <div class="contenido-modal-cliente">
+              <div class="cabecera-modal-cliente">
+                <div>
+                  <h2 id="titulo-modal-cliente">Registrar cliente</h2>
+                  <p id="descripcion-modal-cliente">
+                    Ingresa la información del nuevo cliente.
+                  </p>
+                </div>
 
                 <button
+                  type="button"
+                  class="cerrar-modal-cliente"
+                  aria-label="Cerrar formulario"
+                >
+                  ×
+                </button>
+              </div>
+
+              <form id="formulario-cliente">
+                <div class="grupo-formulario-cliente">
+                  <label for="id-cliente">ID Cliente</label>
+                  <input
+                    type="text"
+                    id="id-cliente"
+                    name="id-cliente"
+                    readonly
+                  />
+                </div>
+
+                <div class="grupo-formulario-cliente">
+                  <label for="cedula-cliente">Cédula</label>
+                  <input
+                    type="text"
+                    id="cedula-cliente"
+                    name="cedula"
+                    maxlength="10"
+                    inputmode="numeric"
+                    required
+                  />
+                </div>
+
+                <div class="grupo-formulario-cliente">
+                  <label for="nombres-cliente">Nombres</label>
+                  <input
+                    type="text"
+                    id="nombres-cliente"
+                    name="nombres"
+                    maxlength="40"
+                    required
+                  />
+                </div>
+
+                <div class="grupo-formulario-cliente">
+                  <label for="apellidos-cliente">Apellidos</label>
+                  <input
+                    type="text"
+                    id="apellidos-cliente"
+                    name="apellidos"
+                    maxlength="40"
+                    required
+                  />
+                </div>
+
+                <div class="grupo-formulario-cliente">
+                  <label for="telefono-cliente">Teléfono</label>
+                  <input
+                    type="text"
+                    id="telefono-cliente"
+                    name="telefono"
+                    maxlength="10"
+                    inputmode="numeric"
+                    required
+                  />
+                </div>
+
+                <div class="grupo-formulario-cliente">
+                  <label for="direccion-cliente">Dirección</label>
+                  <input
+                    type="text"
+                    id="direccion-cliente"
+                    name="direccion"
+                    maxlength="80"
+                    required
+                  />
+                </div>
+
+                <div class="botones-formulario-cliente">
+                  <button type="button" class="btn-cancelar-cliente">
+                    Cancelar
+                  </button>
+                  <button
+                    type="submit"
+                    class="btn-guardar-cliente"
+                    id="guardar-cliente"
+                  >
+                    Guardar cliente
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <!-- Modal eliminar cliente -->
+          <div
+            id="modal-eliminar-cliente"
+            class="modal-eliminar-cliente"
+            hidden
+          >
+            <div class="contenido-modal-eliminar-cliente">
+              <h2>¿Eliminar cliente?</h2>
+
+              <p>Esta acción no se puede deshacer.</p>
+
+              <div class="datos-cliente-eliminar">
+                <p>
+                  <strong>ID:</strong>
+                  <span id="eliminar-id-cliente"></span>
+                </p>
+
+                <p>
+                  <strong>Cédula:</strong>
+                  <span id="eliminar-cedula-cliente"></span>
+                </p>
+
+                <p>
+                  <strong>Nombre:</strong>
+                  <span id="eliminar-nombre-cliente"></span>
+                </p>
+              </div>
+
+              <div class="botones-eliminar-cliente">
+                <button type="button" id="cancelar-eliminar-cliente">
+                  Cancelar
+                </button>
+
+                <button type="button" id="confirmar-eliminar-cliente">
+                  Sí, eliminar
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Empleados -->
+          <section id="empleados" class="seccion-empleados" hidden>
+            <div class="contenedor-empleados">
+              <div class="cabecera-empleados">
+                <div>
+                  <h2>Empleados registrados</h2>
+                  <p id="cantidad-empleados">0 empleados</p>
+                </div>
+
+                <button type="button" id="btn-registrar-empleado">
+                  + Registrar empleado
+                </button>
+              </div>
+
+              <div class="buscador-empleados">
+                <input
+                  type="text"
+                  id="buscar-empleado"
+                  placeholder="Buscar por cédula, nombres o apellidos..."
+                />
+              </div>
+
+              <div class="tabla-empleados-contenedor">
+                <table class="tabla-empleados">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Cédula</th>
+                      <th>Nombres</th>
+                      <th>Apellidos</th>
+                      <th>Teléfono</th>
+                      <th>Cargo</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+
+                  <tbody id="tabla-empleados-body"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <div id="modal-empleado" class="modal-empleado">
+            <div class="contenido-modal-empleado">
+              <div class="cabecera-modal-empleado">
+                <h2 id="titulo-modal-empleado">Registrar empleado</h2>
+
+                <button
+                  type="button"
+                  id="cerrar-modal-empleado"
+                  class="cerrar-modal-empleado"
+                >
+                  ×
+                </button>
+              </div>
+
+              <form id="formulario-empleado">
+                <input type="hidden" id="empleado-id" />
+
+                <div class="grupo-formulario-empleado">
+                  <label for="empleado-cedula"> Cédula </label>
+
+                  <input type="text" id="empleado-cedula" required />
+                </div>
+
+                <div class="grupo-formulario-empleado">
+                  <label for="empleado-nombres"> Nombres </label>
+
+                  <input type="text" id="empleado-nombres" required />
+                </div>
+
+                <div class="grupo-formulario-empleado">
+                  <label for="empleado-apellidos"> Apellidos </label>
+
+                  <input type="text" id="empleado-apellidos" required />
+                </div>
+
+                <div class="grupo-formulario-empleado">
+                  <label for="empleado-telefono"> Teléfono </label>
+
+                  <input type="text" id="empleado-telefono" required />
+                </div>
+
+                <div class="grupo-formulario-empleado">
+                  <label for="empleado-cargo"> Cargo </label>
+
+                  <select id="empleado-cargo" required>
+                    <option value="">Seleccionar cargo</option>
+
+                    <option value="Mecánico">Mecánico</option>
+
+                    <option value="Recepcionista">Recepcionista</option>
+
+                    <option value="Administrador">Administrador</option>
+
+                    <option value="Auxiliar">Auxiliar</option>
+                  </select>
+                </div>
+
+                <div class="botones-formulario-empleado">
+                  <button
                     type="button"
                     id="btn-cancelar-empleado"
                     class="btn-cancelar-empleado"
-                >
+                  >
                     Cancelar
-                </button>
+                  </button>
 
-                <button
-                    type="submit"
-                    class="btn-guardar-empleado"
-                >
+                  <button type="submit" class="btn-guardar-empleado">
                     Guardar empleado
-                </button>
-
+                  </button>
+                </div>
+              </form>
             </div>
-
-        </form>
-
-    </div>
-
-</div>
-</div>
-</section>
-
+          </div>
+        </div>
+      </section>
 
       <p id="estado-sistema" role="status" aria-live="polite"></p>
     </main>

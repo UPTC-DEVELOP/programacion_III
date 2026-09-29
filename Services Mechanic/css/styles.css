@@ -2751,6 +2751,118 @@ footer#contacto .mapa-footer iframe {
   background-color: #fbc515;
   border: none;
 }
+.btn-editar-cliente,
+.btn-eliminar-cliente {
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-editar-cliente {
+  background-color: #ffffff;
+  border: 1px solid #d8dde3;
+  color: #111315;
+}
+
+.btn-editar-cliente:hover {
+  background-color: #f4f4f4;
+}
+
+.btn-eliminar-cliente {
+  background-color: #fde2e2;
+  border: none;
+  color: #d93025;
+  margin-left: 6px;
+}
+
+.btn-eliminar-cliente:hover {
+  background-color: #f8cccc;
+}
+
+/* MODAL ELIMINAR CLIENTE */
+
+.modal-eliminar-cliente {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.contenido-modal-eliminar-cliente {
+  width: 430px;
+  max-width: calc(100% - 30px);
+  background-color: #ffffff;
+  border-radius: 14px;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+.contenido-modal-eliminar-cliente h2 {
+  margin: 0 0 10px;
+  color: #111111;
+  font-size: 20px;
+}
+
+.contenido-modal-eliminar-cliente > p {
+  margin: 0 0 22px;
+  color: #6b7075;
+  font-size: 14px;
+}
+
+.datos-cliente-eliminar {
+  background-color: #f7f7f5;
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-bottom: 24px;
+}
+
+.datos-cliente-eliminar p {
+  margin: 6px 0;
+  color: #202124;
+  font-size: 14px;
+}
+
+.botones-eliminar-cliente {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+#cancelar-eliminar-cliente,
+#confirmar-eliminar-cliente {
+  padding: 11px 17px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#cancelar-eliminar-cliente {
+  background-color: #ffffff;
+  border: 1px solid #d5d9df;
+  color: #222222;
+}
+
+#cancelar-eliminar-cliente:hover {
+  background-color: #f4f4f4;
+}
+
+#confirmar-eliminar-cliente {
+  background-color: #e52424;
+  border: none;
+  color: #ffffff;
+}
+
+#confirmar-eliminar-cliente:hover {
+  background-color: #c91f1f;
+}
 
 
 /* CRUD EMPLEADOS */

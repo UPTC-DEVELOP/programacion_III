@@ -393,27 +393,251 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-  // MODAL CLIENTES
+ // CRUD CLIENTES - CREATE
 
 document.addEventListener("DOMContentLoaded", () => {
+  const clientes = [];
+
   const btnNuevoCliente = document.querySelector(".btn-nuevo-cliente");
   const modalCliente = document.getElementById("modal-cliente");
   const btnCerrarCliente = document.querySelector(".cerrar-modal-cliente");
   const btnCancelarCliente = document.querySelector(".btn-cancelar-cliente");
 
-  btnNuevoCliente.addEventListener("click", () => {
-    modalCliente.hidden = false;
+  const formularioCliente = document.getElementById("formulario-cliente");
+  const tablaClientes = document.getElementById("lista-clientes");
+  const cantidadClientes = document.getElementById("cantidad-clientes");
+  const buscarCliente = document.getElementById("buscar-cliente");
+
+  const modalEliminarCliente = document.getElementById("modal-eliminar-cliente");
+  const cancelarEliminarCliente = document.getElementById("cancelar-eliminar-cliente");
+  const confirmarEliminarCliente = document.getElementById("confirmar-eliminar-cliente");
+
+  const eliminarIdCliente = document.getElementById("eliminar-id-cliente");
+  const eliminarCedulaCliente = document.getElementById("eliminar-cedula-cliente");
+  const eliminarNombreCliente = document.getElementById("eliminar-nombre-cliente");
+
+let idClienteEliminar = null;
+
+  const idCliente = document.getElementById("id-cliente");
+  const cedulaCliente = document.getElementById("cedula-cliente");
+  const nombresCliente = document.getElementById("nombres-cliente");
+  const apellidosCliente = document.getElementById("apellidos-cliente");
+  const telefonoCliente = document.getElementById("telefono-cliente");
+  const direccionCliente = document.getElementById("direccion-cliente");
+  const tituloModalCliente =
+  document.getElementById("titulo-modal-cliente");
+
+const descripcionModalCliente =
+  document.getElementById("descripcion-modal-cliente");
+
+const guardarCliente =
+  document.getElementById("guardar-cliente");
+
+  
+  function generarIdCliente() {
+  if (clientes.length === 0) {
+    return "0001";
+  }
+
+  const mayorId = Math.max(
+    ...clientes.map((cliente) => Number(cliente.id))
+  );
+
+  return String(mayorId + 1).padStart(4, "0");
+}
+
+  function mostrarClientes(lista = clientes) {
+  tablaClientes.innerHTML = "";
+
+  lista.forEach((cliente) => {
+    const fila = document.createElement("tr");
+
+    fila.innerHTML = `
+      <td>${cliente.id}</td>
+      <td>${cliente.cedula}</td>
+      <td>${cliente.nombres}</td>
+      <td>${cliente.apellidos}</td>
+      <td>${cliente.telefono}</td>
+      <td>${cliente.direccion}</td>
+      <td>
+        <button
+          type="button"
+          class="btn-editar-cliente"
+          data-id="${cliente.id}"
+        >
+          Editar
+        </button>
+
+        <button
+          type="button"
+          class="btn-eliminar-cliente"
+          data-id="${cliente.id}"
+        >
+          Eliminar
+        </button>
+      </td>
+    `;
+
+    tablaClientes.appendChild(fila);
   });
 
+  cantidadClientes.textContent =
+    `${lista.length} ${lista.length === 1 ? "cliente" : "clientes"}`;
+}
+
+ buscarCliente.addEventListener("input", () => {
+  const texto = buscarCliente.value.toLowerCase().trim();
+
+  const resultados = clientes.filter((cliente) => {
+    return (
+      cliente.cedula.toLowerCase().includes(texto) ||
+      cliente.nombres.toLowerCase().includes(texto) ||
+      cliente.apellidos.toLowerCase().includes(texto)
+    );
+  });
+
+  mostrarClientes(resultados);
+});
+
+
+  function abrirModalEditar(id) {
+  const cliente = clientes.find((item) => item.id === id);
+
+  if (!cliente) {
+    return;
+  }
+
+  idCliente.value = cliente.id;
+  cedulaCliente.value = cliente.cedula;
+  nombresCliente.value = cliente.nombres;
+  apellidosCliente.value = cliente.apellidos;
+  telefonoCliente.value = cliente.telefono;
+  direccionCliente.value = cliente.direccion;
+
+  tituloModalCliente.textContent = "Editar cliente";
+  descripcionModalCliente.textContent =
+    "Modifica la información del cliente.";
+  guardarCliente.textContent = "Actualizar cliente";
+
+  modalCliente.hidden = false;
+
+  cedulaCliente.focus();
+}
+  btnNuevoCliente.addEventListener("click", () => {
+  formularioCliente.reset();
+
+  idCliente.value = generarIdCliente();
+
+  tituloModalCliente.textContent = "Registrar cliente";
+  descripcionModalCliente.textContent =
+    "Ingresa la información del nuevo cliente.";
+  guardarCliente.textContent = "Guardar cliente";
+
+  modalCliente.hidden = false;
+
+  cedulaCliente.focus();
+});
+
+  tablaClientes.addEventListener("click", (evento) => {
+  const botonEditar = evento.target.closest(".btn-editar-cliente");
+  const botonEliminar = evento.target.closest(".btn-eliminar-cliente");
+
+  if (botonEditar) {
+    abrirModalEditar(botonEditar.dataset.id);
+    return;
+  }
+ if (botonEliminar) {
+  const id = botonEliminar.dataset.id;
+
+  const cliente = clientes.find(
+    (cliente) => cliente.id === id
+  );
+
+  if (!cliente) {
+    return;
+  }
+
+  idClienteEliminar = cliente.id;
+
+  eliminarIdCliente.textContent = cliente.id;
+  eliminarCedulaCliente.textContent = cliente.cedula;
+  eliminarNombreCliente.textContent =
+    `${cliente.nombres} ${cliente.apellidos}`;
+
+  modalEliminarCliente.hidden = false;
+}
+});
+
+cancelarEliminarCliente.addEventListener("click", () => {
+  modalEliminarCliente.hidden = true;
+  idClienteEliminar = null;
+});
+
+confirmarEliminarCliente.addEventListener("click", () => {
+  const posicion = clientes.findIndex(
+    (cliente) => cliente.id === idClienteEliminar
+  );
+
+  if (posicion === -1) {
+    return;
+  }
+
+  clientes.splice(posicion, 1);
+
+  mostrarClientes();
+
+  modalEliminarCliente.hidden = true;
+  idClienteEliminar = null;
+
+  alert("Cliente eliminado correctamente.");
+});
+
+ formularioCliente.addEventListener("submit", (evento) => {
+  evento.preventDefault();
+
+  const clienteExistente = clientes.find(
+    (cliente) => cliente.id === idCliente.value
+  );
+
+  if (clienteExistente) {
+    clienteExistente.cedula = cedulaCliente.value.trim();
+    clienteExistente.nombres = nombresCliente.value.trim();
+    clienteExistente.apellidos = apellidosCliente.value.trim();
+    clienteExistente.telefono = telefonoCliente.value.trim();
+    clienteExistente.direccion = direccionCliente.value.trim();
+
+    alert("Cliente actualizado correctamente.");
+  } else {
+    const nuevoCliente = {
+      id: idCliente.value,
+      cedula: cedulaCliente.value.trim(),
+      nombres: nombresCliente.value.trim(),
+      apellidos: apellidosCliente.value.trim(),
+      telefono: telefonoCliente.value.trim(),
+      direccion: direccionCliente.value.trim()
+    };
+
+    clientes.push(nuevoCliente);
+
+    alert("Cliente registrado correctamente.");
+  }
+
+  mostrarClientes();
+
+  formularioCliente.reset();
+
+  modalCliente.hidden = true;
+});
   btnCerrarCliente.addEventListener("click", () => {
+    formularioCliente.reset();
     modalCliente.hidden = true;
   });
 
   btnCancelarCliente.addEventListener("click", () => {
+    formularioCliente.reset();
     modalCliente.hidden = true;
   });
 });
-
   // CRUD EMPLEADOS
     document.addEventListener("DOMContentLoaded", () => {
     const empleados = [];
