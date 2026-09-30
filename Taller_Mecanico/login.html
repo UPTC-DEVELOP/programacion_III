@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LJA Taller Mecánico - Login</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+
+    <main class="login-container">
+        
+   
+        <section class="columna-izquierda">
+            <div class="header-interno">
+                <img src="css/IMG/LOGO.png" alt="Logo mini" class="logo-mini" >
+                <p>SISTEMA DE GESTIÓN</p>
+            </div>
+
+            <div class="contenido-centro">
+                <img src="css/IMG/LOGO.png" alt="Logo Grande" class="logo-grande">
+                <h1>LJA Taller <br><span>Mecánico</span></h1>
+                <p class="subtitulo">Administración inteligente para tu taller mecánico.</p>
+      
+               
+            </div>
+        </section>
+
+
+        <section class="columna-derecha">
+            <div class="formulario-wrapper">
+                <h2>Iniciar sesión</h2>
+                <p class="bajada">Ingresa tus credenciales para continuar</p>
+                
+                <form action="Enviar" method="POST" class="formulario-login">
+                    <div class="input-group">
+                        <label for="correo">Correo electrónico</label>
+                        <input type="email" id="correo" name="correo" placeholder="Ingresa tu correo" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="contrasena">Contraseña</label>
+                        <input type="password" id="contrasena" name="contrasena" placeholder="ingresa contraseña" required>
+                    </div>
+
+                    <div class="opciones-formulario">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="recordarme"> Recordarme
+                        </label>
+                    </div>
+
+                    <button type="submit" class="button_login">Ingresar al sistema</button>
+                </form>
+            </div>
+
+            <footer class="footer-login">
+                <p>LJA Taller Mecánico — Sistema de Gestión</p>
+                <p>© 2024 Todos los derechos reservados Grupo 2</p>
+            </footer>
+        </section>
+
+    </main>
+</body>
+</html>
