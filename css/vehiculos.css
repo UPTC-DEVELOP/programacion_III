@@ -57,7 +57,7 @@ body {
 .barra-nav a:hover { color: var(--texto); }
 .barra-nav a.activo { color: var(--texto); border-bottom-color: var(--rojo); }
 
-.barra-nav a.btn-salir {
+.barra-nav a.btn-volver {
     background: var(--rojo);
     color: #fff;
     padding: 9px 22px;
@@ -66,7 +66,7 @@ body {
     letter-spacing: .06em;
     text-transform: uppercase;
 }
-.barra-nav a.btn-salir:hover { background: var(--rojo-oscuro); }
+.barra-nav a.btn-volver:hover { background: var(--rojo-oscuro); }
 
 /* ---------- Contenedor y encabezado ---------- */
 .contenedor { max-width: 1180px; margin: 0 auto; padding: 44px 24px 72px; }
