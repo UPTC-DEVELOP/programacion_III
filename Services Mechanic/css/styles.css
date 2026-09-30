@@ -3111,3 +3111,226 @@ footer#contacto .mapa-footer iframe {
     background: #fbc515;
     border: none;
 }
+
+/* TALLER SEMANAS 6 Y 7 */
+
+
+/* MÓVIL - HASTA 480PX */
+
+@media (max-width: 480px) {
+
+    body {
+        font-size: 14px;
+    }
+
+    body > header {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 18px;
+    }
+
+    body > header > img {
+        width: 75px;
+        margin: 0 auto;
+    }
+
+    body > header > h1 {
+        text-align: center;
+    }
+
+    body > header > nav {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    body > header nav ul {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    body > header nav a {
+        display: block;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .acciones-header {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .acciones-header > a {
+        width: 100%;
+        text-align: center;
+        padding: 14px 18px;
+    }
+
+    #inicio {
+        padding: 40px 20px;
+        grid-template-columns: 1fr;
+    }
+
+    #inicio h2 {
+        font-size: 30px;
+    }
+
+    #inicio .descripcion-inicio {
+        font-size: 16px;
+    }
+
+    #inicio .resumen-inicio {
+        grid-template-columns: 1fr;
+    }
+
+    #servicios {
+        grid-template-columns: 1fr;
+    }
+
+    #beneficios .beneficios-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #nosotros .mision-vision {
+        grid-template-columns: 1fr;
+    }
+
+    #nosotros .valores-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .grid-equipo {
+        grid-template-columns: 1fr;
+    }
+
+    .grid-experiencias {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+    }
+
+    #solicitud-servicio .contenedor-solicitud {
+        grid-template-columns: 1fr;
+    }
+
+    #solicitud-servicio form {
+        grid-template-columns: 1fr;
+        padding: 22px;
+    }
+
+    #solicitud-servicio form p:has(textarea),
+    #solicitud-servicio form p:last-child {
+        grid-column: auto;
+    }
+
+    #solicitud-servicio button {
+        min-height: 48px;
+        font-size: 16px;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+
+/* TABLET - 481PX A 768PX */
+   
+@media (min-width: 481px) and (max-width: 768px) {
+
+    body > header {
+        flex-wrap: wrap;
+    }
+
+    body > header > nav {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    body > header nav ul {
+        justify-content: center;
+    }
+
+    #inicio {
+        grid-template-columns: 1fr;
+    }
+
+    #servicios {
+        grid-template-columns: 1fr;
+    }
+
+    #beneficios .beneficios-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #nosotros .mision-vision {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #nosotros .valores-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-equipo {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-experiencias {
+        grid-template-columns: 1fr;
+        max-width: 600px;
+    }
+
+    #solicitud-servicio .contenedor-solicitud {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ESCRITORIO - DESDE 1024PX */
+
+@media (min-width: 1024px) {
+
+    #inicio {
+        grid-template-columns:
+            minmax(0, 1fr)
+            minmax(0, 1fr);
+    }
+
+    #problema .contenedor-problema {
+        grid-template-columns:
+            minmax(320px, 5fr)
+            minmax(440px, 7fr);
+    }
+
+    #servicios {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    #beneficios .beneficios-grid {
+        grid-template-columns:
+            repeat(4, minmax(0, 1fr));
+    }
+
+    #nosotros .mision-vision {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-equipo {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+
+    .grid-experiencias {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+
+    #solicitud-servicio .contenedor-solicitud {
+        grid-template-columns:
+            minmax(0, 1fr)
+            minmax(0, 1fr);
+    }
+} 
+
