@@ -1,0 +1,250 @@
+/* =========================================
+Pagina login
+   ========================================= */
+/* ==========================================================================
+   Configuración General Basada en tus Variables
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif; /* Cambia por tu fuente corporativa */
+}
+
+body {
+    background-color: #000000; /* El fondo general derecho es negro puro */
+    color: #ffffff;
+    overflow: hidden; /* Evita scrolls raros en pantallas completas */
+}
+
+/* CONTENEDOR PADRE: Ocupa toda la pantalla y divide 50% y 50% */
+.login-container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* ==========================================================================
+   COLUMNA IZQUIERDA (Estilo del Bloque 3 original tuyo)
+   ========================================================================== */
+.columna-izquierda {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Separa el encabezado del contenido principal */
+    padding: 3rem 4rem;
+    position: relative;
+    
+    /* Tu fondo original adaptado */
+    background-image: 
+        linear-gradient(to right, rgba(7, 11, 25, 0.98) 50%, rgba(7, 11, 25, 0.85) 100%),
+        url('../assets/Mechanical_engineer_scanning_car…_2K_20260912132231.jpeg'); 
+    background-size: cover;
+    background-position: center;
+}
+
+/* Tu efecto de resplandor LED azul de fondo */
+.columna-izquierda::before {
+    content: '';
+    position: absolute;
+    top: 30%;
+    left: 10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, transparent 70%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.header-interno {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    z-index: 2;
+}
+
+.logo-mini {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+.header-interno p {
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    color: var(--text-muted, #8892b0);
+}
+
+.contenido-centro {
+    z-index: 2;
+    margin-bottom: auto;
+    margin-top: auto; /* Centra verticalmente el bloque de texto */
+}
+
+.logo-grande {
+    width: 140px;
+    height: auto;
+    margin-bottom: 2rem;
+}
+
+.columna-izquierda h1 {
+    font-size: 3rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    color: var(--text-main, #ffffff);
+}
+
+.columna-izquierda h1 span {
+    color: var(--primary-blue, #2563eb) !important;
+}
+
+.subtitulo {
+    color: var(--text-muted, #8892b0);
+    font-size: 1.1rem;
+    max-width: 400px;
+    margin-bottom: 3rem;
+}
+
+/* Bloque de estadísticas de la parte inferior izquierda */
+.estadisticas {
+    display: flex;
+    gap: 3rem;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-item strong {
+    font-size: 1.8rem;
+    color: var(--primary-blue, #2563eb);
+}
+
+.stat-item span {
+    font-size: 0.85rem;
+    color: var(--text-muted, #8892b0);
+}
+
+/* ==========================================================================
+   COLUMNA DERECHA (Formulario de Login)
+   ========================================================================== */
+.columna-derecha {
+    flex: 1;
+    background-color: #0b0f19; /* Fondo oscuro idéntico a la imagen */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 4rem;
+}
+
+.formulario-wrapper {
+    width: 100%;
+    max-width: 420px; /* Evita que el formulario se estire demasiado */
+}
+
+.columna-derecha h2 {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.bajada {
+    color: var(--text-muted, #8892b0);
+    margin-bottom: 2.5rem;
+}
+
+.formulario-login {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.input-group label {
+    font-size: 0.9rem;
+    color: #ffffff;
+}
+
+.input-group input {
+    background-color: #161b26;
+    border: 1px solid var(--border-color, #232d3f);
+    padding: 1rem;
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 1rem;
+    outline: none;
+}
+
+.input-group input:focus {
+    border-color: var(--primary-blue, #2563eb);
+}
+
+/* Línea de "Recordarme" y "Olvidaste tu contraseña" */
+.opciones-formulario {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.olvido-pass {
+    color: var(--primary-blue, #2563eb);
+    text-decoration: none;
+}
+
+.button_login {
+    background-color: var(--primary-blue, #2563eb);
+    color: white;
+    padding: 1rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background 0.3s;
+}
+
+.button_login:hover {
+    background-color: #1d4ed8;
+}
+
+/* Footer integrado abajo a la derecha */
+.footer-login {
+    position: absolute;
+    bottom: 2rem;
+    text-align: center;
+    width: 100%;
+    font-size: 0.8rem;
+    color: #4b5563;
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   RESPONSIVE: Celulares y Tablets
+   ========================================================================== */
+@media (max-width: 900px) {
+    .login-container {
+        flex-direction: column; /* Apila uno encima de otro en móviles */
+    }
+    .columna-izquierda {
+        display: none; /* Oculta la parte izquierda en pantallas chicas para priorizar el login */
+    }
+    .columna-derecha {
+        height: 100vh;
+    }
+}
