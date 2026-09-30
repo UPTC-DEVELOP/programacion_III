@@ -57,7 +57,7 @@ body {
 
 mark {
 	background-color: transparent;
-	color: inherit;
+	color: blue;
 }
 
 input::-moz-focus-inner {
@@ -120,7 +120,7 @@ input, select, textarea {
 /* Type */
 
 	body {
-		background-color: #935d8c;
+		background-color: #494891;
 		color: rgba(255, 255, 255, 0.65);
 	}
 
@@ -303,19 +303,19 @@ input, select, textarea {
 	}
 
 	input, select, textarea {
-		color: #ffffff;
+		color: #2e4aa8;
 	}
 
 	a:hover {
-		color: #ffffff;
+		color: #322792;
 	}
 
 	strong, b {
-		color: #ffffff;
+		color: #452985;
 	}
 
 	h1, h2, h3, h4, h5, h6 {
-		color: #ffffff;
+		color: #3e2c8d;
 	}
 
 	blockquote {
