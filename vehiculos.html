@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehículos | AutoGestión ERP</title>
+    <link rel="stylesheet" href="css/vehiculos.css">
+</head>
+<body>
+
+    <!-- BARRA DE NAVEGACIÓN -->
+    <header class="barra">
+        <a href="modulos.html" class="barra-logo">
+            <img src="img/logo.jpeg" alt="AutoGestión ERP">
+        </a>
+
+        <nav class="barra-nav" aria-label="Módulos">
+            <a href="index.html">Inicio</a>
+            <a href="empleados.html">Empleados</a>
+            <a href="clientes.html">Clientes</a>
+            <a href="vehiculos.html" class="activo" aria-current="page">Vehículos</a>
+            <a href="productos.html">Productos</a>
+            <a href="proveedores.html">Proveedores</a>
+            <a href="index.html" class="btn-salir">Salir</a>
+        </nav>
+    </header>
+
+    <main class="contenedor">
+
+        <header class="pagina-encabezado">
+            <p class="etiqueta">GESTIÓN DE VEHÍCULOS</p>
+            <h1>VEHÍCULOS</h1>
+        </header>
+
+        <!-- BUSCADOR Y BOTÓN NUEVO -->
+        <section class="barra-herramientas" aria-label="Búsqueda">
+            <input type="search" id="buscador" placeholder="Buscar por placa, marca o modelo..." aria-label="Buscar vehículo">
+            <button type="button" class="btn btn-primario" id="btnNuevo">NUEVO VEHÍCULO</button>
+        </section>
+
+        <!-- TABLA -->
+        <section class="tabla-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>PLACA</th>
+                        <th>MARCA</th>
+                        <th>MODELO</th>
+                        <th>AÑO</th>
+                        <th>COLOR</th>
+                        <th>KILOMETRAJE</th>
+                        <th>PROPIETARIO</th>
+                        <th>ACCIONES</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaVehiculos"></tbody>
+            </table>
+            <p id="vacio" class="vacio" hidden></p>
+        </section>
+
+    </main>
+
+    <!-- MODAL CREAR / EDITAR -->
+    <dialog id="modalForm">
+        <header class="modal-encabezado">
+            <h2 id="modalTitulo">NUEVO VEHÍCULO</h2>
+            <button type="button" class="btn-cerrar" data-cerrar aria-label="Cerrar">×</button>
+        </header>
+
+        <form id="formVehiculo" novalidate>
+            <p class="modal-info">Todos los campos marcados con * son obligatorios.</p>
+
+            <input type="hidden" id="idVehiculo">
+
+            <div class="form-grid">
+                <div class="campo">
+                    <label for="placa">Placa *</label>
+                    <input type="text" id="placa" maxlength="6" placeholder="ABC123" autocomplete="off">
+                    <small class="error" data-error="placa"></small>
+                </div>
+
+                <div class="campo">
+                    <label for="propietario">Propietario *</label>
+                    <select id="propietario"></select>
+                    <small class="error" data-error="propietario"></small>
+                </div>
+
+                <div class="campo">
+                    <label for="marca">Marca *</label>
+                    <input type="text" id="marca" placeholder="Toyota">
+                    <small class="error" data-error="marca"></small>
+                </div>
+
+                <div class="campo">
+                    <label for="modelo">Modelo *</label>
+                    <input type="text" id="modelo" placeholder="Corolla">
+                    <small class="error" data-error="modelo"></small>
+                </div>
+
+                <div class="campo">
+                    <label for="anio">Año *</label>
+                    <input type="number" id="anio" placeholder="2022">
+                    <small class="error" data-error="anio"></small>
+                </div>
+
+                <div class="campo">
+                    <label for="color">Color</label>
+                    <input type="text" id="color" placeholder="Gris">
+                </div>
+
+                <div class="campo">
+                    <label for="kilometraje">Kilometraje</label>
+                    <input type="number" id="kilometraje" min="0" placeholder="35000">
+                    <small class="error" data-error="kilometraje"></small>
+                </div>
+            </div>
+
+            <footer class="modal-pie">
+                <button type="button" class="btn btn-secundario" data-cerrar>CANCELAR</button>
+                <button type="submit" class="btn btn-primario" id="btnGuardar">GUARDAR</button>
+            </footer>
+        </form>
+    </dialog>
+
+    <!-- MODAL CONFIRMAR ELIMINACIÓN -->
+    <dialog id="modalEliminar" class="modal-chico">
+        <header class="modal-encabezado">
+            <h2>ELIMINAR VEHÍCULO</h2>
+            <button type="button" class="btn-cerrar" data-cerrar aria-label="Cerrar">×</button>
+        </header>
+        <p id="textoEliminar" class="modal-info"></p>
+        <footer class="modal-pie">
+            <button type="button" class="btn btn-secundario" data-cerrar>CANCELAR</button>
+            <button type="button" class="btn btn-primario" id="btnConfirmarEliminar">ELIMINAR</button>
+        </footer>
+    </dialog>
+
+    <div id="aviso" class="aviso" role="status" aria-live="polite"></div>
+
+    <script src="js/vehiculos.js"></script>
+</body>
+</html>

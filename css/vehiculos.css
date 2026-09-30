@@ -1,0 +1,266 @@
+/* ==========================================================
+   Vehículos — AutoGestión ERP (tema negro + rojo)
+   Si tu estilo.css ya define estos colores, reemplaza los
+   valores de :root por los tuyos.
+   ========================================================== */
+:root {
+    --fondo: #0a0a0b;
+    --superficie: #131316;
+    --superficie-2: #1b1c20;
+    --borde: #2a2b31;
+    --texto: #f1f1f3;
+    --texto-suave: #8e919b;
+    --rojo: #e3212f;
+    --rojo-oscuro: #b8161f;
+    --ok: #3fb97a;
+    --fuente: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: var(--fuente);
+    background: var(--fondo);
+    color: var(--texto);
+    line-height: 1.5;
+    min-height: 100vh;
+}
+
+/* ---------- Barra de navegación ---------- */
+.barra {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 40px;
+    background: var(--fondo);
+    border-bottom: 1px solid var(--borde);
+}
+.barra-logo img { height: 46px; display: block; border-radius: 50%; }
+
+.barra-nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+.barra-nav a {
+    color: var(--texto-suave);
+    text-decoration: none;
+    font-size: .85rem;
+    font-weight: 600;
+    padding: 4px 0;
+    border-bottom: 2px solid transparent;
+    transition: color .15s;
+}
+.barra-nav a:hover { color: var(--texto); }
+.barra-nav a.activo { color: var(--texto); border-bottom-color: var(--rojo); }
+
+.barra-nav a.btn-salir {
+    background: var(--rojo);
+    color: #fff;
+    padding: 9px 22px;
+    border-radius: 3px;
+    border-bottom: none;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+.barra-nav a.btn-salir:hover { background: var(--rojo-oscuro); }
+
+/* ---------- Contenedor y encabezado ---------- */
+.contenedor { max-width: 1180px; margin: 0 auto; padding: 44px 24px 72px; }
+
+.pagina-encabezado { margin-bottom: 26px; }
+.etiqueta {
+    color: var(--rojo);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .22em;
+    margin-bottom: 6px;
+}
+.pagina-encabezado h1 {
+    font-size: clamp(2.2rem, 6vw, 3.6rem);
+    line-height: 1;
+    letter-spacing: -.01em;
+    font-weight: 800;
+}
+
+/* ---------- Buscador + botón ---------- */
+.barra-herramientas {
+    display: flex;
+    gap: 14px;
+    align-items: stretch;
+    margin-bottom: 18px;
+}
+.barra-herramientas input { flex: 1; }
+
+/* ---------- Campos ---------- */
+.campo { display: flex; flex-direction: column; gap: 6px; }
+.campo label { font-size: .75rem; font-weight: 700; color: var(--texto); }
+
+input, select {
+    font: inherit;
+    font-size: .9rem;
+    color: var(--texto);
+    background: var(--superficie-2);
+    border: 1px solid var(--borde);
+    border-radius: 3px;
+    padding: 11px 12px;
+    width: 100%;
+}
+input::placeholder { color: #5d6069; }
+select { cursor: pointer; }
+
+input:focus-visible, select:focus-visible {
+    outline: none;
+    border-color: var(--rojo);
+    box-shadow: 0 0 0 1px var(--rojo);
+}
+.btn:focus-visible, .btn-cerrar:focus-visible, .btn-tabla:focus-visible,
+.barra-nav a:focus-visible {
+    outline: 2px solid var(--rojo);
+    outline-offset: 2px;
+}
+.campo.invalido input,
+.campo.invalido select { border-color: var(--rojo); }
+.error { color: #ff6b75; font-size: .75rem; min-height: 1em; }
+
+/* ---------- Botones ---------- */
+.btn {
+    font: inherit;
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    padding: 11px 22px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .15s, border-color .15s;
+}
+.btn-primario { background: var(--rojo); color: #fff; }
+.btn-primario:hover { background: var(--rojo-oscuro); }
+.btn-secundario { background: transparent; color: var(--texto); border-color: #4a4c55; }
+.btn-secundario:hover { border-color: var(--texto); }
+
+.btn-tabla {
+    font: inherit;
+    font-size: .75rem;
+    background: transparent;
+    color: var(--texto-suave);
+    border: 1px solid var(--borde);
+    border-radius: 3px;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: color .15s, border-color .15s;
+}
+.btn-tabla:hover { color: var(--texto); border-color: var(--texto-suave); }
+.btn-tabla.eliminar { color: var(--rojo); border-color: #6b1a20; }
+.btn-tabla.eliminar:hover { border-color: var(--rojo); }
+
+/* ---------- Tabla ---------- */
+.tabla-wrap {
+    background: var(--superficie);
+    border: 1px solid var(--borde);
+    border-radius: 3px;
+    overflow-x: auto;
+}
+table { width: 100%; border-collapse: collapse; min-width: 860px; }
+th, td { text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--borde); font-size: .9rem; }
+th {
+    color: var(--rojo);
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: rgba(255, 255, 255, .025); }
+td.placa { font-weight: 700; letter-spacing: .04em; }
+td.acciones-celda { white-space: nowrap; }
+.acciones { display: flex; gap: 8px; }
+
+.vacio { padding: 44px 16px; text-align: center; color: var(--texto-suave); font-size: .9rem; }
+
+/* ---------- Modales ---------- */
+dialog {
+    margin: auto;
+    width: min(540px, 94vw);
+    max-height: 92vh;
+    overflow-y: auto;
+    color: var(--texto);
+    background: var(--superficie);
+    border: 1px solid var(--borde);
+    border-left: 3px solid var(--rojo);
+    border-radius: 3px;
+    padding: 0;
+}
+dialog.modal-chico { width: min(440px, 94vw); }
+dialog::backdrop { background: rgba(0, 0, 0, .72); }
+
+.modal-encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 26px;
+    border-bottom: 1px solid var(--borde);
+}
+.modal-encabezado h2 { font-size: 1.1rem; font-weight: 800; letter-spacing: .02em; }
+.btn-cerrar {
+    background: none;
+    border: none;
+    color: var(--texto-suave);
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+}
+.btn-cerrar:hover { color: var(--texto); }
+
+.modal-info { color: var(--texto-suave); font-size: .78rem; padding: 16px 26px 0; }
+form .modal-info { padding: 0 0 16px; }
+dialog form { padding: 18px 26px 24px; }
+dialog > .modal-info { padding-bottom: 6px; font-size: .9rem; }
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px 18px;
+}
+.modal-pie {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}
+dialog > .modal-pie { padding: 0 26px 24px; }
+
+/* ---------- Aviso ---------- */
+.aviso {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    background: var(--superficie-2);
+    border: 1px solid var(--borde);
+    border-left: 3px solid var(--ok);
+    border-radius: 3px;
+    padding: 12px 18px;
+    font-size: .88rem;
+    transform: translateY(16px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s, transform .2s;
+}
+.aviso.visible { opacity: 1; transform: translateY(0); }
+.aviso.error-aviso { border-left-color: var(--rojo); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 760px) {
+    .barra { padding: 12px 16px; flex-direction: column; align-items: flex-start; }
+    .barra-nav { gap: 16px; justify-content: flex-start; }
+    .contenedor { padding: 28px 14px 56px; }
+    .barra-herramientas { flex-direction: column; }
+    .form-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+}
