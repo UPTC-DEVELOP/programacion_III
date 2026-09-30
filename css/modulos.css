@@ -1,0 +1,101 @@
+.panel {
+    min-height: calc(100vh - 80px);
+    padding: 70px 11%;
+    background-color: #111216;
+    background-image: repeating-linear-gradient(
+        135deg,
+        transparent 0,
+        transparent 75px,
+        rgba(196, 30, 30, 0.18) 76px,
+        transparent 77px
+    );
+}
+
+.panel-encabezado {
+    max-width: 800px;
+    margin: 0 auto 45px;
+}
+
+.panel-encabezado p {
+    margin: 0 0 15px;
+    color: #e3262e;
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    letter-spacing: 4px;
+    font-weight: bold;
+}
+
+.panel-encabezado h1 {
+    margin: 0;
+    font-family: "Arial Narrow", Arial, sans-serif;
+    font-size: 52px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+}
+
+.panel-encabezado h1 span {
+    color: #e3262e;
+}
+
+.lista-crud {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.lista-crud a {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    padding: 25px 30px;
+    background-color: #1a1b20;
+    border: 1px solid #33353a;
+    color: #ffffff;
+    text-decoration: none;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.lista-crud a:hover {
+    border-color: #e3262e;
+    transform: translateX(8px);
+}
+
+.crud-numero {
+    color: #e3262e;
+    font-family: "Courier New", monospace;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.crud-texto {
+    flex: 1;
+}
+
+.crud-texto h2 {
+    margin: 0 0 6px;
+    font-family: "Arial Narrow", Arial, sans-serif;
+    font-size: 24px;
+    text-transform: uppercase;
+}
+
+.crud-texto p {
+    margin: 0;
+    color: #9ba2ad;
+    font-size: 14px;
+}
+
+.crud-flecha {
+    color: #e3262e;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+@media (max-width: 600px) {
+    .panel { padding: 50px 5%; }
+    .panel-encabezado h1 { font-size: 36px; }
+}

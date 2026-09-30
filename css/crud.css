@@ -1,0 +1,227 @@
+.crud {
+    min-height: calc(100vh - 80px);
+    padding: 60px 8%;
+    background-color: #111216;
+}
+
+.crud-encabezado {
+    margin-bottom: 35px;
+}
+
+.crud-encabezado p {
+    margin: 0 0 12px;
+    color: #e3262e;
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    letter-spacing: 4px;
+    font-weight: bold;
+}
+
+.crud-encabezado h1 {
+    margin: 0;
+    font-family: "Arial Narrow", Arial, sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+}
+
+.crud-encabezado h1 span {
+    color: #e3262e;
+}
+
+/* Cajas */
+.crud-caja {
+    background-color: #1a1b20;
+    border: 1px solid #33353a;
+    padding: 28px;
+    margin-bottom: 30px;
+}
+
+.crud-caja h2 {
+    margin: 0 0 22px;
+    color: #f2f2f2;
+    font-family: "Arial Narrow", Arial, sans-serif;
+    font-size: 22px;
+    text-transform: uppercase;
+}
+
+/* Formulario */
+.crud-campos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 22px;
+}
+
+.campo select {
+    width: 100%;
+    height: 45px;
+    background-color: #202226;
+    color: #ffffff;
+    border: 1px solid #33353a;
+    padding: 0 13px;
+    font-size: 15px;
+    outline: none;
+}
+
+.campo select:focus {
+    border-color: #e3262e;
+}
+
+.crud-botones {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.btn-cancelar {
+    background-color: transparent;
+    color: #ffffff;
+    border: 1px solid #666666;
+    border-radius: 6px;
+    padding: 12px 24px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-cancelar:hover {
+    border-color: #e3262e;
+    color: #e3262e;
+}
+
+.mensaje-confirmacion {
+    margin: 18px 0 0;
+    min-height: 20px;
+}
+
+.mensaje-confirmacion.error {
+    color: #ff6b6b;
+}
+
+.oculto {
+    display: none;
+}
+
+/* Tabla */
+.tabla-encabezado {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.tabla-encabezado h2 {
+    margin: 0;
+}
+
+.tabla-encabezado input {
+    width: 320px;
+    max-width: 100%;
+    height: 42px;
+    background-color: #202226;
+    color: #ffffff;
+    border: 1px solid #33353a;
+    padding: 0 13px;
+    outline: none;
+}
+
+.tabla-encabezado input:focus {
+    border-color: #e3262e;
+}
+
+.tabla-scroll {
+    overflow-x: auto;
+}
+
+.tabla-crud {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.tabla-crud th {
+    text-align: left;
+    padding: 12px;
+    color: #e3262e;
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-bottom: 2px solid #e3262e;
+    white-space: nowrap;
+}
+
+.tabla-crud td {
+    padding: 14px 12px;
+    color: #c8c8c8;
+    border-bottom: 1px solid #33353a;
+}
+
+.tabla-crud tbody tr:hover {
+    background-color: #202226;
+}
+
+.tabla-vacia {
+    text-align: center;
+    color: #777777 !important;
+    padding: 30px !important;
+}
+
+.estado {
+    padding: 4px 10px;
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+    border: 1px solid;
+}
+
+.estado.activo {
+    color: #4cd07d;
+    border-color: #4cd07d;
+}
+
+.estado.inactivo {
+    color: #9ba2ad;
+    border-color: #9ba2ad;
+}
+
+.acciones {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-editar,
+.btn-eliminar {
+    background: transparent;
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-editar {
+    color: #ffffff;
+    border: 1px solid #666666;
+}
+
+.btn-editar:hover {
+    border-color: #ffffff;
+}
+
+.btn-eliminar {
+    color: #e3262e;
+    border: 1px solid #e3262e;
+}
+
+.btn-eliminar:hover {
+    background-color: #e3262e;
+    color: #ffffff;
+}
+
+@media (max-width: 600px) {
+    .crud { padding: 40px 5%; }
+    .crud-encabezado h1 { font-size: 34px; }
+}
