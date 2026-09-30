@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#111315" />
+    <title>Panel | SERVI-AUTO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/sistema.css" />
+    <script src="js/sistema.js" defer></script>
+</head>
+
+<body>
+    <div id="sistema" class="sistema">
+        <aside class="sidebar-sistema">
+            <a class="logo-sistema" href="#dashboard" aria-label="Inicio del sistema">
+                <img src="https://cdn-icons-png.flaticon.com/512/1995/1995470.png" alt="" class="logo-icon-svg" />
+                <span>
+                    <strong>SERVI-AUTO</strong>
+                    <small>Taller Mecanicon</small>
+                </span>
+            </a>
+
+            <nav class="menu-sistema" aria-label="Menú del sistema">
+                <a href="#dashboard" class="activo" aria-current="page">Inicio</a>
+                <a href="#clientes">Clientes</a>
+                <a href="#vehiculo">Vehículos</a>
+
+            </nav>
+
+            <footer>
+                <a class="salir-sistema" href="Login.html">Volver al sitio</a>
+            </footer>
+        </aside>
+
+        <main class="contenido-sistema">
+            <header class="topbar-sistema">
+                <div>
+                    <p class="eyebrow-sistema">Panel de control</p>
+                    <h1>Inicio</h1>
+                    <p class="subtitulo-sistema">Panel principal</p>
+                </div>
+                <div class="usuario-sistema">
+                    <span class="avatar-sistema" aria-hidden="true">AD</span>
+                    <span>Administrador</span>
+                </div>
+            </header>
+
+            <section id="dashboard" class="dashboard-sistema" aria-labelledby="titulo-dashboard">
+                <p class="eyebrow-sistema">Resumen del taller</p>
+                <h2 id="titulo-dashboard">Bienvenido a SERVI-AUTO</h2>
+                <p>Selecciona una opción del menu para poder acceder a las diferentes funcionalidades de sistema.</p>
+                <nav class="resumen-dashboard" aria-label="Módulos disponibles">
+                    <button type="button" data-ir-a="clientes">
+                        <span>01</span><strong>Clientes</strong><small>Consulta y registro</small>
+                    </button>
+                    <button type="button" data-ir-a="vehiculo">
+                        <span>02</span><strong>Vehículos</strong><small>Consulta y registro de servicios</small>
+                    </button>
+                </nav>
+            </section>
+
+            <section id="clientes" class="modulo-sistema" aria-labelledby="titulo-clientes" hidden>
+                <header class="encabezado-modulo">
+                    <div>
+                        <p class="eyebrow-sistema">Directorio</p>
+                        <h2 id="titulo-clientes">Clientes registrados</h2>
+                        <p id="cantidad-clientes" class="contador-sistema">0 clientes</p>
+                    </div>
+                    <button type="button" class="boton-principal btn-nuevo-cliente"> Registrar cliente</button>
+                </header>
+                <search class="campo-busqueda">
+                    <label for="buscar-cliente">Buscar clientes</label>
+                    <input type="search" id="buscar-cliente" maxlength="40"
+                        placeholder="nombre de cliente, numero de identificación" />
+                </search>
+                <div class="tabla-contenedor">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Tipo de identificación</th>
+                                <th>Número de identificación</th>
+                                <th>Teléfono</th>
+                                <th>Dirección</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-clientes"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="vehiculo" class="modulo-sistema" aria-labelledby="titulo-vehiculos" hidden>
+                <header class="encabezado-modulo">
+                    <div>
+                        <p class="eyebrow-sistema">Vehículos</p>
+                        <h2 id="titulo-vehiculos">Vehículos registrados</h2>
+                        <p id="cantidad-vehiculos" class="contador-sistema">0 vehículos</p>
+                    </div>
+                    <button type="button" id="btn-registrar-vehiculo" class="boton-principal"> Registrar
+                        vehículo</button>
+                </header>
+                <search class="campo-busqueda">
+                    <label for="buscar-vehiculo">Buscar vehículos</label>
+                    <input type="search" id="buscar-vehiculo" placeholder="Placa, modelo o propietario" />
+                </search>
+                <div class="tabla-contenedor">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Placa</th>
+                                <th>Modelo</th>
+                                <th>Color</th>
+                                <th>Propietario</th>
+                                <th>Fecha de ingreso</th>
+                                <th>Hora de ingreso</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-vehiculos-body"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <dialog id="modal-cliente" class="modal-sistema">
+        <form id="formulario-cliente" novalidate>
+            <header class="cabecera-modal">
+                <div>
+                    <p class="eyebrow-sistema">Directorio</p>
+                    <h2 id="titulo-modal-cliente">Registrar cliente</h2>
+                    <p id="descripcion-modal-cliente">Ingresa la información del nuevo cliente.</p>
+                </div>
+                <button type="button" class="boton-cerrar cerrar-modal-cliente"
+                    aria-label="Cerrar formulario">×</button>
+            </header>
+            <label class="campo-formulario" for="id-cliente">ID
+                <input type="text" id="id-cliente" readonly />
+            </label>
+            <label class="campo-formulario" for="nombres-cliente">Nombres
+                <input type="text" id="nombres-cliente" maxlength="40" required />
+                <small class="error-campo" id="error-nombres-cliente"></small>
+            </label>
+            <label class="campo-formulario" for="apellidos-cliente">Apellidos
+                <input type="text" id="apellidos-cliente" maxlength="40" required />
+                <small class="error-campo" id="error-apellidos-cliente"></small>
+            </label>
+            <label class="campo-formulario" for="tipo-identificacion-cliente">Tipo de identificación
+                <select id="tipo-identificacion-cliente" data-prop="tipoIdentificacion" required>
+                    <option value="">Seleccionar tipo</option>
+                    <option value="Cédula de ciudadanía">Cédula de ciudadanía</option>
+                    <option value="Cédula de extranjería">Cédula de extranjería</option>
+                    <option value="Pasaporte">Pasaporte</option>
+                    <option value="NIT">NIT de empresa</option>
+                </select>
+                <small class="error-campo" id="error-tipo-identificacion-cliente"></small>
+            </label>
+            <label class="campo-formulario" for="numero-identificacion-cliente">Número de identificación
+                <input type="text" id="numero-identificacion-cliente" data-prop="numeroIdentificacion" maxlength="20"
+                    required />
+                <small class="error-campo" id="error-numero-identificacion-cliente"></small>
+            </label>
+            <label class="campo-formulario" for="telefono-cliente">Teléfono
+                <input type="tel" id="telefono-cliente" data-prop="telefono" maxlength="10" inputmode="numeric"
+                    required />
+                <small class="error-campo" id="error-telefono-cliente"></small>
+            </label>
+            <label class="campo-formulario" for="direccion-cliente">Dirección
+                <input type="text" id="direccion-cliente" data-prop="direccion" maxlength="80" required />
+                <small class="error-campo" id="error-direccion-cliente"></small>
+            </label>
+            <footer class="acciones-modal">
+                <button type="button" class="boton-secundario btn-cancelar-cliente">Cancelar</button>
+                <button type="submit" class="boton-principal" id="guardar-cliente">Guardar cliente</button>
+            </footer>
+        </form>
+    </dialog>
+
+    <dialog id="modal-vehiculo" class="modal-sistema">
+        <form id="formulario-vehiculo" novalidate>
+            <header class="cabecera-modal">
+                <div>
+                    <p class="eyebrow-sistema">Vehículos</p>
+                    <h2 id="titulo-modal-vehiculo">Registrar vehículo</h2>
+                </div>
+                <button type="button" id="cerrar-modal-vehiculo" class="boton-cerrar"
+                    aria-label="Cerrar formulario">×</button>
+            </header>
+            <input type="hidden" id="vehiculo-id" />
+            <label class="campo-formulario" for="vehiculo-placa">Placa
+                <input type="text" id="vehiculo-placa" data-prop="placa" maxlength="10" required />
+                <small class="error-campo" id="error-vehiculo-placa"></small>
+            </label>
+            <label class="campo-formulario" for="vehiculo-modelo">Modelo
+                <input type="text" id="vehiculo-modelo" data-prop="modelo" maxlength="40" required />
+                <small class="error-campo" id="error-vehiculo-modelo"></small>
+            </label>
+            <label class="campo-formulario" for="vehiculo-color">Color
+                <input type="text" id="vehiculo-color" data-prop="color" maxlength="30" required />
+                <small class="error-campo" id="error-vehiculo-color"></small>
+            </label>
+            <label class="campo-formulario" for="vehiculo-propietario">Propietario
+                <select id="vehiculo-propietario" data-prop="propietarioId" required>
+                    <option value="">Seleccionar propietario</option>
+                </select>
+                <small class="error-campo" id="error-vehiculo-propietario"></small>
+            </label>
+            <label class="campo-formulario" for="vehiculo-fecha-ingreso">Fecha de ingreso
+                <input type="date" id="vehiculo-fecha-ingreso" data-prop="fechaIngreso" required />
+                <small class="error-campo" id="error-vehiculo-fecha-ingreso"></small>
+            </label>
+            <label class="campo-formulario" for="vehiculo-hora-ingreso">Hora de ingreso
+                <input type="time" id="vehiculo-hora-ingreso" data-prop="horaIngreso" required />
+                <small class="error-campo" id="error-vehiculo-hora-ingreso"></small>
+            </label>
+            <footer class="acciones-modal">
+                <button type="button" id="btn-cancelar-vehiculo" class="boton-secundario">Cancelar</button>
+                <button type="submit" class="boton-principal">Guardar vehículo</button>
+            </footer>
+        </form>
+    </dialog>
+
+    <p id="estado-sistema" class="sr-only" role="status" aria-live="polite"></p>
+</body>
+
+</html>
