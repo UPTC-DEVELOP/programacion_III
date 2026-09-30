@@ -1156,23 +1156,21 @@ section.cta-final .btn-secundario:hover {
 /* =========================================
 Pagina login
    ========================================= */
-/* ==========================================================================
-   Configuración General Basada en tus Variables
-   ========================================================================== */
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: sans-serif; /* Cambia por tu fuente corporativa */
+    font-family: sans-serif; 
 }
 
 body {
-    background-color: #000000; /* El fondo general derecho es negro puro */
+    background-color: #000000; 
     color: #ffffff;
-    overflow: hidden; /* Evita scrolls raros en pantallas completas */
+    overflow: hidden; 
 }
 
-/* CONTENEDOR PADRE: Ocupa toda la pantalla y divide 50% y 50% */
+
 .login-container {
     display: flex;
     width: 100vw;
@@ -1180,17 +1178,17 @@ body {
 }
 
 /* ==========================================================================
-   COLUMNA IZQUIERDA (Estilo del Bloque 3 original tuyo)
+   COLUMNA IZQUIERDA 
    ========================================================================== */
 .columna-izquierda {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Separa el encabezado del contenido principal */
+    justify-content: space-between; 
     padding: 3rem 4rem;
     position: relative;
     
-    /* Tu fondo original adaptado */
+  
     background-image: 
         linear-gradient(to right, rgba(7, 11, 25, 0.98) 50%, rgba(7, 11, 25, 0.85) 100%),
         url('../assets/Mechanical_engineer_scanning_car…_2K_20260912132231.jpeg'); 
@@ -1198,7 +1196,7 @@ body {
     background-position: center;
 }
 
-/* Tu efecto de resplandor LED azul de fondo */
+
 .columna-izquierda::before {
     content: '';
     position: absolute;
@@ -1233,7 +1231,7 @@ body {
 .contenido-centro {
     z-index: 2;
     margin-bottom: auto;
-    margin-top: auto; /* Centra verticalmente el bloque de texto */
+    margin-top: auto; 
 }
 
 .logo-grande {
@@ -1260,7 +1258,7 @@ body {
     margin-bottom: 3rem;
 }
 
-/* Bloque de estadísticas de la parte inferior izquierda */
+
 .estadisticas {
     display: flex;
     gap: 3rem;
@@ -1286,7 +1284,7 @@ body {
    ========================================================================== */
 .columna-derecha {
     flex: 1;
-    background-color: #0b0f19; /* Fondo oscuro idéntico a la imagen */
+    background-color: #0b0f19;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1297,7 +1295,7 @@ body {
 
 .formulario-wrapper {
     width: 100%;
-    max-width: 420px; /* Evita que el formulario se estire demasiado */
+    max-width: 420px; 
 }
 
 .columna-derecha h2 {
@@ -1341,7 +1339,7 @@ body {
     border-color: var(--primary-blue, #2563eb);
 }
 
-/* Línea de "Recordarme" y "Olvidaste tu contraseña" */
+
 .opciones-formulario {
     display: flex;
     justify-content: space-between;
@@ -1378,7 +1376,7 @@ body {
     background-color: #1d4ed8;
 }
 
-/* Footer integrado abajo a la derecha */
+
 .footer-login {
     position: absolute;
     bottom: 2rem;
@@ -1394,10 +1392,10 @@ body {
    ========================================================================== */
 @media (max-width: 900px) {
     .login-container {
-        flex-direction: column; /* Apila uno encima de otro en móviles */
+        flex-direction: column; 
     }
     .columna-izquierda {
-        display: none; /* Oculta la parte izquierda en pantallas chicas para priorizar el login */
+        display: none; 
     }
     .columna-derecha {
         height: 100vh;
