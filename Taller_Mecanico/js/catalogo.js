@@ -29,7 +29,7 @@ function renderProducts(){
   grid.innerHTML = filtered.map(p => `
     <article class="product">
       <div class="product-image">
-        <img src="../Css/IMG/${p.image}" alt="${p.name}" loading="lazy">
+        <img src="assets/imagenes/${p.image}" alt="${p.name}" loading="lazy">
         <span class="badge">${p.badge}</span>
       </div>
       <div class="product-info">
