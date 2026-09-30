@@ -33,24 +33,51 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Archivo JS o etiqueta <script>
 document.addEventListener("DOMContentLoaded", () => {
-    const elementos = document.querySelectorAll(".product, .catalog-section, .cta-final");
+    // 1. Inicializar iconos (Lucide)
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
 
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.transition = "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)";
-                entry.target.style.opacity = "1";
-                entry.target.style.transform = "translateY(0)";
-                observer.unobserve(entry.target);
-            }
+    // 2. Efecto de linterna azul (Corregido para detectar el movimiento en TODO el footer)
+    const footerElement = document.querySelector(".lja-footer-pro"); 
+    const svgElement = document.getElementById("text-hover-svg");
+    const revealMask = document.getElementById("revealMask");
+    const coloredText = document.getElementById("hover-colored-text");
+
+    if (footerElement && svgElement && revealMask && coloredText) {
+        let isHovered = false;
+
+        // Escuchamos el mouse sobre todo el footer, evitando el "escudo invisible"
+        footerElement.addEventListener("mousemove", (e) => {
+            if (!isHovered) return;
+            
+            requestAnimationFrame(() => {
+                const svgRect = svgElement.getBoundingClientRect();
+                const cxPercentage = ((e.clientX - svgRect.left) / svgRect.width) * 100;
+                const cyPercentage = ((e.clientY - svgRect.top) / svgRect.height) * 100;
+                
+                revealMask.setAttribute("cx", `${cxPercentage}%`);
+                revealMask.setAttribute("cy", `${cyPercentage}%`);
+            });
         });
-    }, { threshold: 0.15 });
 
-    elementos.forEach(el => {
-        el.style.opacity = "0";
-        el.style.transform = "translateY(30px)";
-        observer.observe(el);
-    });
+        footerElement.addEventListener("mouseenter", () => {
+            isHovered = true;
+            coloredText.style.opacity = "1";
+        });
+
+        footerElement.addEventListener("mouseleave", () => {
+            isHovered = false;
+            coloredText.style.opacity = "0";
+            
+            setTimeout(() => {
+                if (!isHovered) {
+                    revealMask.setAttribute("cx", "50%");
+                    revealMask.setAttribute("cy", "50%");
+                }
+            }, 800); 
+        });
+    }
 });
 
 function mostrarNotificacion(mensaje) {
@@ -88,4 +115,39 @@ document.querySelectorAll(".consult-btn").forEach(btn => {
     btn.addEventListener("click", () => {
         mostrarNotificacion("¡Consulta enviada al taller! Nos comunicaremos contigo.");
     });
+});
+
+// Footer 
+
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. Inicializar iconos (Lucide)
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+
+    // 2. Efecto de linterna azul siguiendo el cursor sobre el texto gigante
+    const svgElement = document.getElementById("text-hover-svg");
+    const revealMask = document.getElementById("revealMask");
+    const coloredText = document.getElementById("hover-colored-text");
+
+    if (svgElement && revealMask && coloredText) {
+        svgElement.addEventListener("mousemove", (e) => {
+            const svgRect = svgElement.getBoundingClientRect();
+            const cxPercentage = ((e.clientX - svgRect.left) / svgRect.width) * 100;
+            const cyPercentage = ((e.clientY - svgRect.top) / svgRect.height) * 100;
+            
+            revealMask.setAttribute("cx", `${cxPercentage}%`);
+            revealMask.setAttribute("cy", `${cyPercentage}%`);
+        });
+
+        svgElement.addEventListener("mouseenter", () => {
+            coloredText.style.opacity = "1";
+        });
+
+        svgElement.addEventListener("mouseleave", () => {
+            coloredText.style.opacity = "0";
+            revealMask.setAttribute("cx", "50%");
+            revealMask.setAttribute("cy", "50%");
+        });
+    }
 });

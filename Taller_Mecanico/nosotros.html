@@ -143,29 +143,114 @@
     </main>
 
     <!-- FOOTER -->
-    <footer>
-        <div>
-            <img src="../Css/IMG/LOGO.png" alt="logo de la empresa" width="70" height="70">
-            <p>Tu taller de confianza con más de 10 años de experiencia en mecánica automotriz.</p>
-            <p>© 2026 LJA Taller Mecánico.</p>
+    <footer class="lja-footer-pro">
+  <!-- Destello azul superior -->
+  <div class="lja-top-glow"></div>
+
+  <div class="lja-footer-content">
+    <div class="lja-footer-grid">
+      
+      <!-- 1. Marca -->
+      <div class="lja-col-brand">
+        <div class="lja-brand-header">
+          <div class="lja-icon-box">
+            <i data-lucide="wrench"></i>
+          </div>
+          <span class="lja-brand-name">LJA <span class="text-blue">Taller</span></span>
         </div>
-        <div>
-            <h3>SERVICIOS</h3>
-            <ul>
-                <li>Cambio de aceite</li>
-                <li>Frenos</li>
-                <li>Alineación</li>
-                <li>Diagnóstico</li>
-            </ul>
-        </div>
-        <div>
-            <h3>Contacto</h3>
-            <ul>
-                <li>+57 (601) 234-5678</li>
-                <li>contacto@lja-taller.com</li>
-                <li>Lun–Sáb 7am–6pm</li>
-            </ul>
-        </div>
-    </footer>
+        <p class="lja-brand-text">
+          Tu taller de confianza con más de 10 años de experiencia en mecánica automotriz. Calidad, precisión y garantía en cada trabajo.
+        </p>
+      </div>
+
+      <!-- 2. Servicios -->
+      <div class="lja-col-links">
+        <h4>Servicios</h4>
+        <ul>
+          <li><a href="#"><i data-lucide="chevron-right" class="link-arrow"></i> Cambio de aceite</a></li>
+          <li><a href="#"><i data-lucide="chevron-right" class="link-arrow"></i> Frenos</a></li>
+          <li><a href="#"><i data-lucide="chevron-right" class="link-arrow"></i> Alineación</a></li>
+          <li><a href="#"><i data-lucide="chevron-right" class="link-arrow"></i> Diagnóstico</a></li>
+          <li><a href="#"><i data-lucide="chevron-right" class="link-arrow"></i> Otro</a></li>
+        </ul>
+      </div>
+
+      <!-- 3. Información -->
+      <div class="lja-col-links">
+        <h4>Información</h4>
+        <ul>
+          <li><a href="#"><i data-lucide="chevron-right" class="link-arrow"></i> Privacidad</a></li>
+          <li><a href="#"><i data-lucide="chevron-right" class="link-arrow"></i> Términos</a></li>
+          <li><a href="#"><i data-lucide="chevron-right" class="link-arrow"></i> Protección de datos</a></li>
+        </ul>
+      </div>
+
+      <!-- 4. Contacto -->
+      <div class="lja-col-contact">
+        <h4>Contacto</h4>
+        <ul>
+          <li>
+            <div class="contact-icon"><i data-lucide="phone"></i></div>
+            <a href="tel:+573000000000">+57 300 000 0000</a>
+          </li>
+          <li>
+            <div class="contact-icon"><i data-lucide="mail"></i></div>
+            <a href="mailto:contacto@lja-taller.com">contacto@lja-taller.com</a>
+          </li>
+          <li>
+            <div class="contact-icon"><i data-lucide="map-pin"></i></div>
+            <a href="https://maps.app.goo.gl/CFy2htvujREwz8wy6" target="_blank">Ubicación del taller</a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Divisor -->
+    <hr class="lja-divider" />
+
+    <!-- Parte Inferior -->
+    <div class="lja-footer-bottom">
+      <div class="lja-social-links">
+        <a href="https://www.instagram.com/?hl=es" target="_blank" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+</svg>
+        <a href="#" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+</svg>
+      </div>
+      
+      <p class="lja-copyright">
+        &copy; 2026 LJA Taller Mecánico. Derechos de autor para el grupo 2.
+      </p>
+    </div>
+  </div>
+
+  <!-- Efecto de Texto Gigante Interactivo (Azul Botón) -->
+  <!-- Efecto de Texto Gigante Interactivo (Limpio y Centrado) -->
+<div class="lja-giant-text-container">
+  <svg id="text-hover-svg" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="revealMask" r="15%" cx="50%" cy="50%">
+        <stop offset="0%" stop-color="white" />
+        <stop offset="50%" stop-color="rgba(255,255,255,0.4)" />
+        <stop offset="100%" stop-color="black" />
+      </radialGradient>
+      <mask id="textMask">
+        <rect x="0" y="0" width="100%" height="100%" fill="url(#revealMask)" />
+      </mask>
+    </defs>
+    
+    <!-- Texto base apagado (Centrado perfecto) -->
+    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" class="lja-svg-text-base">LJA</text>
+    <!-- Texto iluminado por la linterna (Centrado perfecto) -->
+    <text id="hover-colored-text" x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" mask="url(#textMask)" class="lja-svg-text-glow">LJA</text>
+  </svg>
+</div>
+</footer>
+ <script src="https://unpkg.com/lucide@latest"></script>
+<script src="js/main.js"></script>
 </body>
 </html>
