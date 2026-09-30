@@ -1,0 +1,228 @@
+* {
+    margin: o;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: segoe ui, roboto, helvetica, arial, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background-color: #000;
+}
+
+/*Contenedor Pricipal*/
+.login-container {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/*SECCION IZQUIERDA*/
+.info-section {
+    flex: 6;
+    background: linear-gradient(rgba(17, 24, 39, 0.85), rgba(17, 24, 39, 0.9)), url('../Imagenes/taller_visitanos_1788976590606.jpg') center/cover no-repeat;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10%;
+}
+
+.info-content {
+    max-width: 650px;
+}
+
+.logo-figure img {
+    height: 90px;
+    margin-bottom: 20px;
+}
+
+.info-content h1 {
+    font-size: 2.2rem;
+    margin-bottom: 5px;
+}
+
+.info-content h2 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.info-content hr {
+    border: none;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin-bottom: 20px;
+}
+
+.info-content p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #e2e8f0;
+}
+
+.form-section {
+    flex: 4;
+    background-color: #f9fafb;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5% 8%;
+    min-width: 400px;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.form-header h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 8rem;
+}
+
+.form-header p {
+    font-size: 1rem;
+    color: #6b7280;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 6px;
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.input-wrapper input {
+    flex: 1;
+    border: none;
+    padding: 10px 12px;
+    outline: none;
+    font-size: 0.9rem;
+}
+
+.domain-suffix {
+    padding: 0 12px;
+    color: #6b7280;
+    background-color: #f9fafb;
+    font-size: 0.9rem;
+    border-left: 1px solid #d1d5db;
+}
+
+.toggle-password {
+    background: transparent;
+    border: none;
+    padding: 0 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #4b5563;
+}
+
+.forgot-password {
+    color: #eab308;
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+.btn-primary {
+    background-color: #ea3508;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: #ca0404;
+}
+
+/* Divisor de inicio de sesión social */
+.divider {
+    text-align: center;
+    margin: 1.5rem 0;
+    position: relative;
+}
+
+.divider::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: #e5e7eb;
+    z-index: 1;
+}
+
+.divider span {
+    background-color: #fcfaef;
+    padding: 0 10px;
+    color: #9ca3af;
+    font-size: 0.8rem;
+    position: relative;
+    z-index: 2;
+}
+
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+    }
+
+    .info-section {
+        flex: none;
+        width: 100%;
+        padding: 5%;
+        text-align: center;
+    }
+
+    .form-section {
+        flex: none;
+        width: 100%;
+        padding: 5%;
+    }
+}
