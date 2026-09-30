@@ -26,20 +26,26 @@
     </div>
     <div class="page">
       <!-- Page Header-->
-      <header class="section page-header">
+     <header class="section page-header">
   <div class="rd-navbar-wrap rd-navbar-absolute">
-    <nav class="rd-navbar rd-navbar-creative" ...>
+    <nav class="rd-navbar rd-navbar-creative" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static" data-lg-device-layout="rd-navbar-static" data-xl-layout="rd-navbar-static" data-xl-device-layout="rd-navbar-static" data-lg-stick-up-offset="20px" data-xl-stick-up-offset="20px" data-xxl-stick-up-offset="20px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
       <div class="rd-navbar-main-outer">
         <div class="rd-navbar-main">
+          
+          <!-- Panel: Logo y toggle -->
           <div class="rd-navbar-panel">
-            <button class="rd-navbar-toggle" ...><span></span></button>
+            <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
             <div class="rd-navbar-brand">
               <a class="brand" href="index.html">
                 <img src="images/Logo.jpeg" alt="AutoTech - Sistema de Gestión para Talleres" width="151" height="22"/>
               </a>
             </div>
           </div>
+          
+          <!-- Elementos: Navegación, Auth, Búsqueda -->
           <div class="rd-navbar-main-element">
+            
+            <!-- Navegación -->
             <div class="rd-navbar-nav-wrap">
               <ul class="rd-navbar-nav">
                 <li class="rd-nav-item active"><a class="rd-nav-link" href="index.html">Inicio</a></li>
@@ -48,18 +54,8 @@
                 <li class="rd-nav-item"><a class="rd-nav-link" href="#contacto">Contacto</a></li>
               </ul>
             </div>
-             <div class="rd-navbar-auth" style="display: flex; align-items: center; gap: 15px; margin-left: 20px;">
-    <a href="#" class="btn-login" style="color: #EE2524; font-weight: 600; text-decoration: none;">Login</a>
-    <a href="#" class="btn-signup" style="background-color: #EE2524; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600;">Sign up</a>
-  </div>
-  
-  <div class="rd-navbar-search">
-    <button class="rd-navbar-search-toggle rd-navbar-fixed-element-1" data-rd-navbar-toggle=".rd-navbar-search"><span></span></button>
-    <form class="rd-search" action="#" method="GET">
-      ...
-    </form>
-  </div>
-</div>
+            
+            <!-- Búsqueda -->
             <div class="rd-navbar-search">
               <button class="rd-navbar-search-toggle rd-navbar-fixed-element-1" data-rd-navbar-toggle=".rd-navbar-search"><span></span></button>
               <form class="rd-search" action="#" method="GET">
@@ -71,6 +67,15 @@
                 <button class="rd-search-form-submit mdi mdi-magnify" type="submit"></button>
               </form>
             </div>
+            
+            
+            <!-- Botones Login y Sign Up -->
+            <div class="rd-navbar-auth" style="display: flex; align-items: center; gap: 15px; margin-left: 20px;">
+              <a href="#" class="btn-login" style="color: #EE2524; font-weight: 600; text-decoration: none;">Login</a>
+              <a href="#" class="btn-signup" style="background-color: #EE2524; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600;">Sign up</a>
+            </div>
+            
+            
           </div>
         </div>
       </div>
@@ -79,31 +84,36 @@
 </header>
 
 <!-- Seccion Hero-->
-      <section class="section swiper-container swiper-slider swiper-slider-2" data-loop="false" data-autoplay="false" data-simulate-touch="false" data-slide-effect="fade" id="hero">
+   <section class="section swiper-container swiper-slider swiper-slider-2" ... id="hero">
   <div class="swiper-wrapper">
-    <div class="swiper-slide context-dark" data-slide-bg="images/img-fondo.jpg">
+    <div class="swiper-slide" style="background: #F8F9FA;">
       <div class="swiper-slide-caption">
         <div class="container">
-          <div class="row justify-content-lg-left">
-            <div class="col-md-12 col-xl-10">
-              <h1 data-caption-animate="fadeInUp" data-caption-delay="100">
+          <div class="row align-items-center">
+            
+            <!-- Columna izquierda: Texto -->
+            <div class="col-md-6">
+              <h1 style="font-size: 3rem; font-weight: 700; line-height: 1.2; color: #223239; margin-bottom: 20px;">
                 Transparencia y rapidez: <br>
-                <span style="color: #F99B9B;">la fórmula para modernizar tu taller.</span>
+                <span style="color: #EE2524;">la fórmula para modernizar tu taller.</span>
               </h1>
-              <p data-caption-animate="fadeInUp" data-caption-delay="300" style="font-size: 1.2rem; margin: 20px 0; color: #ffffff;">
+              <p style="font-size: 1.2rem; color: #4A5568; line-height: 1.6; margin-bottom: 30px;">
                 La plataforma integral para digitalizar la recepción, inventario, órdenes de servicio y facturación de tu taller mecánico.
               </p>
-              <a class="button button-lg button-primary" href="#contacto" data-caption-animate="fadeInUp" data-caption-delay="450">🚀 Probar ahora</a>
+              <a class="button button-lg button-primary" href="#contacto">
+                🚀 Probar ahora
+              </a>
             </div>
+            
+            <!-- Columna derecha: Imagen -->
+            <div class="col-md-6 text-center">
+              <img src="images/Img-2.png" alt="Panel de control de AutoTech" style="max-width: 100%; height: auto;">
+            </div>
+            
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="swiper-meta">
-    <ul class="links">
-      <li><a class="icon icon-meta mdi mdi-instagram" href="https://www.instagram.com/e__autotech_a/" target="_blank" rel="noopener" aria-label="Instagram"></a></li>
-    </ul>
   </div>
 </section>
   
