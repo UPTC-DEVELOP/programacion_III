@@ -393,7 +393,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
- // CRUD CLIENTES - CREATE
+ // CRUD CLIENTES 
 
 document.addEventListener("DOMContentLoaded", () => {
   const clientes = [];
@@ -449,43 +449,65 @@ const guardarCliente =
   function mostrarClientes(lista = clientes) {
   tablaClientes.innerHTML = "";
 
+  if (lista.length === 0) {
+  const fila = document.createElement("tr");
+  const celda = document.createElement("td");
+
+  celda.colSpan = 7;
+  celda.textContent =
+    clientes.length === 0
+      ? "Todavía no existen clientes registrados."
+      : "No se encontraron clientes.";
+
+  fila.appendChild(celda);
+  tablaClientes.appendChild(fila);
+}
+
   lista.forEach((cliente) => {
     const fila = document.createElement("tr");
 
-    fila.innerHTML = `
-      <td>${cliente.id}</td>
-      <td>${cliente.cedula}</td>
-      <td>${cliente.nombres}</td>
-      <td>${cliente.apellidos}</td>
-      <td>${cliente.telefono}</td>
-      <td>${cliente.direccion}</td>
-      <td>
-        <button
-          type="button"
-          class="btn-editar-cliente"
-          data-id="${cliente.id}"
-        >
-          Editar
-        </button>
+    const datosCliente = [
+  cliente.id,
+  cliente.cedula,
+  cliente.nombres,
+  cliente.apellidos,
+  cliente.telefono,
+  cliente.direccion
+];
 
-        <button
-          type="button"
-          class="btn-eliminar-cliente"
-          data-id="${cliente.id}"
-        >
-          Eliminar
-        </button>
-      </td>
-    `;
+datosCliente.forEach((dato) => {
+  const celda = document.createElement("td");
+  celda.textContent = dato;
+  fila.appendChild(celda);
+});
 
-    tablaClientes.appendChild(fila);
+const celdaAcciones = document.createElement("td");
+
+const botonEditar = document.createElement("button");
+botonEditar.type = "button";
+botonEditar.className = "btn-editar-cliente";
+botonEditar.dataset.id = cliente.id;
+botonEditar.textContent = "Editar";
+
+const botonEliminar = document.createElement("button");
+botonEliminar.type = "button";
+botonEliminar.className = "btn-eliminar-cliente";
+botonEliminar.dataset.id = cliente.id;
+botonEliminar.textContent = "Eliminar";
+
+celdaAcciones.appendChild(botonEditar);
+celdaAcciones.appendChild(botonEliminar);
+
+fila.appendChild(celdaAcciones);
+
+tablaClientes.appendChild(fila);
   });
 
   cantidadClientes.textContent =
     `${lista.length} ${lista.length === 1 ? "cliente" : "clientes"}`;
 }
 
- buscarCliente.addEventListener("input", () => {
+  function aplicarFiltroClientes() {
   const texto = buscarCliente.value.toLowerCase().trim();
 
   const resultados = clientes.filter((cliente) => {
@@ -497,7 +519,9 @@ const guardarCliente =
   });
 
   mostrarClientes(resultados);
-});
+}
+
+buscarCliente.addEventListener("input", aplicarFiltroClientes);
 
 
   function abrirModalEditar(id) {
@@ -506,6 +530,8 @@ const guardarCliente =
   if (!cliente) {
     return;
   }
+
+  modoEdicionCliente = true;
 
   idCliente.value = cliente.id;
   cedulaCliente.value = cliente.cedula;
@@ -525,6 +551,8 @@ const guardarCliente =
 }
   btnNuevoCliente.addEventListener("click", () => {
   formularioCliente.reset();
+
+   modoEdicionCliente = false;
 
   idCliente.value = generarIdCliente();
 
@@ -571,6 +599,8 @@ const guardarCliente =
 cancelarEliminarCliente.addEventListener("click", () => {
   modalEliminarCliente.hidden = true;
   idClienteEliminar = null;
+
+  alert("Eliminación cancelada. El cliente se conserva.");
 });
 
 confirmarEliminarCliente.addEventListener("click", () => {
@@ -579,25 +609,100 @@ confirmarEliminarCliente.addEventListener("click", () => {
   );
 
   if (posicion === -1) {
-    return;
-  }
-
-  clientes.splice(posicion, 1);
-
-  mostrarClientes();
-
+  alert("El cliente seleccionado ya no existe.");
   modalEliminarCliente.hidden = true;
+  idClienteEliminar = null;
+  return;
+}
+
+ clientes.splice(posicion, 1);
+
+ aplicarFiltroClientes();
+
+ modalEliminarCliente.hidden = true;
   idClienteEliminar = null;
 
   alert("Cliente eliminado correctamente.");
 });
+ function validarDatosCliente() {
+  const cedula = cedulaCliente.value.trim();
+  const nombres = nombresCliente.value.trim();
+  const apellidos = apellidosCliente.value.trim();
+  const telefono = telefonoCliente.value.trim();
+  const direccion = direccionCliente.value.trim();
 
- formularioCliente.addEventListener("submit", (evento) => {
+  if (!cedula || !nombres || !apellidos || !telefono || !direccion) {
+    alert("Todos los campos son obligatorios.");
+    return false;
+  }
+
+  if (!/^\d+$/.test(cedula)) {
+    alert("La cédula debe contener únicamente números.");
+    cedulaCliente.focus();
+    return false;
+  }
+
+  if (cedula.length > 10) {
+    alert("La cédula debe tener máximo 10 dígitos.");
+    cedulaCliente.focus();
+    return false;
+  }
+
+  const cedulaDuplicada = clientes.some(
+  (cliente) =>
+    cliente.cedula === cedula &&
+    cliente.id !== idCliente.value
+);
+
+  if (cedulaDuplicada) {
+  alert("La cédula ya está registrada.");
+  cedulaCliente.focus();
+  return false;
+}
+  if (nombres.length > 40) {
+  alert("Los nombres deben tener máximo 40 caracteres.");
+  nombresCliente.focus();
+  return false;
+}
+
+if (apellidos.length > 40) {
+  alert("Los apellidos deben tener máximo 40 caracteres.");
+  apellidosCliente.focus();
+  return false;
+}
+
+if (direccion.length > 80) {
+  alert("La dirección debe tener máximo 80 caracteres.");
+  direccionCliente.focus();
+  return false;
+}
+ 
+
+  if (!/^\d{10}$/.test(telefono)) {
+    alert("El teléfono debe contener exactamente 10 dígitos.");
+    telefonoCliente.focus();
+    return false;
+  }
+
+  return true;
+}
+ 
+  let modoEdicionCliente = false;
+
+  formularioCliente.addEventListener("submit", (evento) => {
   evento.preventDefault();
+
+  if (!validarDatosCliente()) {
+  return;
+}
 
   const clienteExistente = clientes.find(
     (cliente) => cliente.id === idCliente.value
   );
+  if (modoEdicionCliente && !clienteExistente) {
+  alert("El cliente seleccionado ya no existe.");
+  return;
+}
 
   if (clienteExistente) {
     clienteExistente.cedula = cedulaCliente.value.trim();
@@ -622,7 +727,7 @@ confirmarEliminarCliente.addEventListener("click", () => {
     alert("Cliente registrado correctamente.");
   }
 
-  mostrarClientes();
+  aplicarFiltroClientes();
 
   formularioCliente.reset();
 
@@ -637,6 +742,8 @@ confirmarEliminarCliente.addEventListener("click", () => {
     formularioCliente.reset();
     modalCliente.hidden = true;
   });
+
+    mostrarClientes();
 });
   // CRUD EMPLEADOS
     document.addEventListener("DOMContentLoaded", () => {
@@ -720,34 +827,32 @@ confirmarEliminarCliente.addEventListener("click", () => {
     }
 
     function abrirModalRegistrar() {
+    formulario.reset();
 
-        formulario.reset();
+    idEmpleado.value = "";
 
-        idEmpleado.value = "";
+    tituloModal.textContent = "Registrar empleado";
 
-        tituloModal.textContent = "Registrar empleado";
+    modal.style.display = "flex";
 
-        modal.style.display = "flex";
+    cedula.focus();
+}
 
-        cedula.focus();
-    }
+  function abrirModalEditar(id) {
+  const empleado = empleados.find(
+    (item) => item.id === id
+  );
 
-    function abrirModalEditar(id) {
+  if (!empleado) {
+    return;
+  }
 
-        const empleado = empleados.find(
-            (item) => item.id === id
-        );
-
-        if (!empleado) {
-            return;
-        }
-
-        idEmpleado.value = empleado.id;
-        cedula.value = empleado.cedula;
-        nombres.value = empleado.nombres;
-        apellidos.value = empleado.apellidos;
-        telefono.value = empleado.telefono;
-        cargo.value = empleado.cargo;
+  idEmpleado.value = empleado.id;
+  cedula.value = empleado.cedula;
+  nombres.value = empleado.nombres;
+  apellidos.value = empleado.apellidos;
+  telefono.value = empleado.telefono;
+  cargo.value = empleado.cargo;
 
         tituloModal.textContent = "Editar empleado";
 
