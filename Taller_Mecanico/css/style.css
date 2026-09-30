@@ -96,7 +96,7 @@ header .Acces:hover {
     /* Imagen de fondo con degradado oscuro profesional */
     background-image: 
         linear-gradient(to right, rgba(7, 11, 25, 0.95) 40%, rgba(7, 11, 25, 0.75) 100%),
-        url('../assets/Mechanical_engineer_scanning_car…_2K_20260912132231.jpeg'); 
+        url('../assets/imagenes/Mechanical_engineer_scanning_car…_2K_20260912132231.jpeg'); 
     background-size: cover;
     background-position: center;
     border-bottom: 1px solid var(--border-color);
@@ -506,7 +506,7 @@ footer a {
     /* Fondo con imagen de alta calidad, degradado oscuro y efecto Parallax */
     background-image: 
         linear-gradient(to right, rgba(7, 11, 25, 0.92) 20%, rgba(7, 11, 25, 0.6) 100%),
-        url('IMG/13.png'); 
+        url('../assets/imagenes/13.png'); 
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -684,7 +684,7 @@ footer a {
     align-items: center;
     justify-content: center;
     text-align: center;
-    background-image: linear-gradient(rgba(7, 11, 25, 0.85), rgba(7, 11, 25, 0.95)), url('../assets/Mechanical_engineer_scanning_car…_2K_20260912132231.jpeg');
+    background-image: linear-gradient(rgba(7, 11, 25, 0.85), rgba(7, 11, 25, 0.95)), url('../assets/imagenes/Mechanical_engineer_scanning_car…_2K_20260912132231.jpeg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -1046,7 +1046,7 @@ section.cta-final {
     position: relative;
     background-image: 
         linear-gradient(135deg, rgba(7, 11, 25, 0.95) 0%, rgba(13, 21, 39, 0.90) 100%),
-        url('IMG/scanner.jpeg'); /* Asegúrate de que apunte bien a tu imagen en la carpeta IMG */
+        url('../assets/imagenes/scanner.jpeg'); /* Asegúrate de que apunte bien a tu imagen en la carpeta IMG */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
