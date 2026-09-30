@@ -6,13 +6,14 @@
 -->
 <html>
 	<head>
-		<title>No Sidebar - TXT by HTML5 UP</title>
+		<title>AutoFix Pro - Gestión de Clientes</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		
 		<!-- Bootstrap 5 CSS y Animate.css -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 	</head>
 	<body class="is-preload">
 		<div id="page-wrapper">
@@ -21,8 +22,8 @@
 				<header id="header">
 					<div class="logo container">
 						<div>
-							<h1><a href="index.html" id="logo">TXT</a></h1>
-							<p>A responsive site template by HTML5 UP</p>
+							<h1><a href="index.html" id="logo">AutoFix Pro</a></h1>
+							<p>Sistema de Gestión de Taller Mecánico</p>
 						</div>
 					</div>
 				</header>
@@ -30,27 +31,10 @@
 			<!-- Nav -->
 				<nav id="nav">
 					<ul>
-						<li><a href="index.html">Home</a></li>
-						<li>
-							<a href="#">Dropdown</a>
-							<ul>
-								<li><a href="#">Lorem ipsum dolor</a></li>
-								<li><a href="#">Magna phasellus</a></li>
-								<li>
-									<a href="#">Phasellus consequat</a>
-									<ul>
-										<li><a href="#">Lorem ipsum dolor</a></li>
-										<li><a href="#">Phasellus consequat</a></li>
-										<li><a href="#">Magna phasellus</a></li>
-										<li><a href="#">Etiam dolore nisl</a></li>
-									</ul>
-								</li>
-								<li><a href="#">Veroeros feugiat</a></li>
-							</ul>
-						</li>
-						<li><a href="left-sidebar.html">Left Sidebar</a></li>
-						<li><a href="right-sidebar.html">Right Sidebar</a></li>
-						<li class="current"><a href="no-sidebar.html">No Sidebar</a></li>
+						<li><a href="index.html">Inicio</a></li>
+						<li><a href="left-sidebar.html">Vehículos</a></li>
+						<li><a href="right-sidebar.html">Servicios</a></li>
+						<li class="current"><a href="no-sidebar.html">Clientes (CRUD)</a></li>
 					</ul>
 				</nav>
 
@@ -61,138 +45,118 @@
 							<div class="col-12">
 								<div class="content">
 
-									<!-- Content -->
+									<!-- Content principal con semántica HTML5 -->
+									<article class="box page-content">
 
-										<article class="box page-content">
+										<!-- NAV: ACCESO RÁPIDO A LOGIN -->
+										<nav class="text-end mb-4" aria-label="Navegación de usuario">
+											<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
+												🔑 Iniciar Sesión / Login
+											</button>
+										</nav>
 
+										<!-- ASIDE: MODAL DE LOGIN -->
+										<aside class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true" role="dialog">
+											<section class="modal-dialog modal-dialog-centered">
+												<article class="modal-content">
+													<header class="modal-header bg-primary text-white">
+														<h3 class="modal-title h5">Acceso al Sistema - AutoFix Pro</h3>
+														<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+													</header>
+													<main class="modal-body">
+														<form id="formLogin" class="needs-validation" novalidate>
+															<fieldset class="mb-3">
+																<label for="loginUser" class="form-label text-dark">Correo / Usuario</label>
+																<input type="email" id="loginUser" class="form-control" placeholder="admin@autofix.com" required>
+																<p class="invalid-feedback">Ingresa un correo válido.</p>
+															</fieldset>
+															<fieldset class="mb-3">
+																<label for="loginPass" class="form-label text-dark">Contraseña</label>
+																<input type="password" id="loginPass" class="form-control" required>
+																<p class="invalid-feedback">La contraseña es requerida.</p>
+															</fieldset>
+															<button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
+														</form>
+													</main>
+												</article>
+											</section>
+										</aside>
+
+										<!-- SECTION: MÓDULO PRINCIPAL CRUD CLIENTES -->
+										<section class="container mt-2" id="modulo-clientes">
 											<header>
-												<h2>No Sidebar</h2>
-												<p>Semper amet scelerisque metus faucibus morbi congue mattis</p>
-												<ul class="meta">
-													<li class="icon fa-clock">5 days ago</li>
-													<li class="icon fa-comments"><a href="#">1,024</a></li>
-												</ul>
+												<h2 class="h3 mb-4 text-primary">Gestión de Clientes</h2>
+												<p class="text-muted">Módulo de registro, consulta, modificación y eliminación de clientes de AutoFix Pro.</p>
 											</header>
+											
+											<!-- Alerta dinámica -->
+											<output id="alertaCliente" class="alert alert-success d-none animate__animated animate__fadeIn d-block mb-3" role="alert">
+												¡Operación realizada correctamente!
+											</output>
 
+											<!-- Formulario CRUD -->
+											<form id="formCliente" class="row g-3 needs-validation" novalidate>
+												<input type="hidden" id="clienteId">
+												
+												<fieldset class="col-md-6">
+													<label for="nombreCliente" class="form-label text-dark fw-bold">Nombres y Apellidos</label>
+													<input type="text" class="form-control" id="nombreCliente" placeholder="Ej. Pedro Pérez" required>
+													<p class="invalid-feedback">Ingresa el nombre completo.</p>
+												</fieldset>
+
+												<fieldset class="col-md-6">
+													<label for="cedulaCliente" class="form-label text-dark fw-bold">Cédula / NIT</label>
+													<input type="text" class="form-control" id="cedulaCliente" placeholder="Ej. 1012345678" required>
+													<p class="invalid-feedback">Cédula inválida (solo números, 7 a 10 dígitos).</p>
+												</fieldset>
+
+												<fieldset class="col-md-6">
+													<label for="correoCliente" class="form-label text-dark fw-bold">Correo Electrónico</label>
+													<input type="email" class="form-control" id="correoCliente" placeholder="cliente@correo.com" required>
+													<p class="invalid-feedback">Ingrese un correo válido (ejemplo@dominio.com).</p>
+												</fieldset>
+
+												<fieldset class="col-md-6">
+													<label for="telefonoCliente" class="form-label text-dark fw-bold">Teléfono de Contacto</label>
+													<input type="text" class="form-control" id="telefonoCliente" placeholder="3001234567" required>
+													<p class="invalid-feedback">Teléfono inválido (10 dígitos).</p>
+												</fieldset>
+
+												<footer class="col-12 text-end mt-4">
+													<button type="button" class="btn btn-secondary me-2" onclick="limpiarFormulario()">Limpiar</button>
+													<button type="submit" class="btn btn-success" id="btnGuardar">Registrar Cliente</button>
+												</footer>
+											</form>
+
+											<hr class="my-5">
+
+											<!-- Tabla Dinámica para listar registros -->
 											<section>
-												<span class="image featured"><img src="images/pic05.jpg" alt="" /></span>
-												<p>
-													Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus.
-													Praesent semper mod quis eget mi. Etiam eu ante risus. Aliquam erat volutpat.
-													Aliquam luctus et mattis lectus sit amet pulvinar. Nam turpis nisi
-													consequat etiam lorem ipsum dolor sit amet nullam.
-												</p>
+												<header>
+													<h3 class="h4 mb-3 text-dark">Listado de Clientes Registrados</h3>
+												</header>
+												<figure class="table-responsive">
+													<table class="table table-hover table-striped align-middle">
+														<thead class="table-dark">
+															<tr>
+																<th scope="col">Cédula</th>
+																<th scope="col">Nombre</th>
+																<th scope="col">Correo</th>
+																<th scope="col">Teléfono</th>
+																<th scope="col">Acciones</th>
+															</tr>
+														</thead>
+														<tbody id="tablaClientes">
+															<!-- Se llena dinámicamente mediante script.js -->
+														</tbody>
+													</table>
+												</figure>
 											</section>
+										</section>
 
-											<section>
-												<h3>More intriguing information</h3>
-												<p>
-													Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac quam risus, at tempus
-													justo. Sed dictum rutrum massa eu volutpat. Quisque vitae hendrerit sem. Pellentesque lorem felis,
-													ultricies a bibendum id, bibendum sit amet nisl. Mauris et lorem quam. Maecenas rutrum imperdiet
-													vulputate. Nulla quis nibh ipsum, sed egestas justo. Morbi ut ante mattis orci convallis tempor.
-													Etiam a lacus a lacus pharetra porttitor quis accumsan odio. Sed vel euismod nisi. Etiam convallis
-													rhoncus dui quis euismod. Maecenas lorem tellus, congue et condimentum ac, ullamcorper non sapien
-													vulputate. Nulla quis nibh ipsum, sed egestas justo. Morbi ut ante mattis orci convallis tempor.
-													Etiam a lacus a lacus pharetra porttitor quis accumsan odio. Sed vel euismod nisi. Etiam convallis
-													rhoncus dui quis euismod. Maecenas lorem tellus, congue et condimentum ac, ullamcorper non sapien.
-													Donec sagittis massa et leo semper a scelerisque metus faucibus. Morbi congue mattis mi.
-													Phasellus sed nisl vitae risus tristique volutpat. Cras rutrum commodo luctus.
-												</p>
-											</section>
-
-											<section>
-												<h3>So in conclusion ...</h3>
-												<p>
-													Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac quam risus, at tempus
-													justo. Sed dictum rutrum massa eu volutpat. Quisque vitae hendrerit sem. Pellentesque lorem felis,
-													ultricies a bibendum id, bibendum sit amet nisl. Mauris et lorem quam. Maecenas rutrum imperdiet
-													vulputate. Nulla quis nibh ipsum, sed egestas justo. Morbi ut ante mattis orci convallis tempor.
-													Etiam a lacus a lacus pharetra porttitor quis accumsan odio. Sed vel euismod nisi. Etiam convallis
-													rhoncus dui quis euismod. Maecenas lorem tellus, congue et condimentum ac, ullamcorper non sapien.
-													Donec sagittis massa et leo semper a scelerisque metus faucibus. Morbi congue mattis mi.
-													Phasellus sed nisl vitae.
-												</p>
-												<p>
-													Suspendisse laoreet metus ut metus imperdiet interdum aliquam justo tincidunt. Mauris dolor urna,
-													fringilla vel malesuada ac, dignissim eu mi. Praesent mollis massa ac nulla pretium pretium.
-													Maecenas tortor mauris, consectetur pellentesque dapibus eget, tincidunt vitae arcu.
-												</p>
-											</section>
-
-										</article>
+									</article>
 
 								</div>
-							</div>
-							<div class="col-12">
-
-								<!-- Features -->
-									<section class="box features">
-										<h2 class="major"><span>A Major Heading</span></h2>
-										<div>
-											<div class="row">
-												<div class="col-3 col-6-medium col-12-small">
-
-													<!-- Feature -->
-														<section class="box feature">
-															<a href="#" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
-															<h3><a href="#">A Subheading</a></h3>
-															<p>
-																Phasellus quam turpis, feugiat sit amet ornare in, a hendrerit in
-																lectus dolore. Praesent semper mod quis eget sed etiam eu ante risus.
-															</p>
-														</section>
-
-												</div>
-												<div class="col-3 col-6-medium col-12-small">
-
-													<!-- Feature -->
-														<section class="box feature">
-															<a href="#" class="image featured"><img src="images/pic02.jpg" alt="" /></a>
-															<h3><a href="#">Another Subheading</a></h3>
-															<p>
-																Phasellus quam turpis, feugiat sit amet ornare in, a hendrerit in
-																lectus dolore. Praesent semper mod quis eget sed etiam eu ante risus.
-															</p>
-														</section>
-
-												</div>
-												<div class="col-3 col-6-medium col-12-small">
-
-													<!-- Feature -->
-														<section class="box feature">
-															<a href="#" class="image featured"><img src="images/pic03.jpg" alt="" /></a>
-															<h3><a href="#">And Another</a></h3>
-															<p>
-																Phasellus quam turpis, feugiat sit amet ornare in, a hendrerit in
-																lectus dolore. Praesent semper mod quis eget sed etiam eu ante risus.
-															</p>
-														</section>
-
-												</div>
-												<div class="col-3 col-6-medium col-12-small">
-
-													<!-- Feature -->
-														<section class="box feature">
-															<a href="#" class="image featured"><img src="images/pic04.jpg" alt="" /></a>
-															<h3><a href="#">And One More</a></h3>
-															<p>
-																Phasellus quam turpis, feugiat sit amet ornare in, a hendrerit in
-																lectus dolore. Praesent semper mod quis eget sed etiam eu ante risus.
-															</p>
-														</section>
-
-												</div>
-												<div class="col-12">
-													<ul class="actions">
-														<li><a href="#" class="button large">Do Something</a></li>
-														<li><a href="#" class="button alt large">Think About It</a></li>
-													</ul>
-												</div>
-											</div>
-										</div>
-									</section>
-
 							</div>
 						</div>
 					</div>
@@ -203,57 +167,37 @@
 					<div class="container">
 						<div class="row gtr-200">
 							<div class="col-12">
-
-								<!-- About -->
-									<section>
-										<h2 class="major"><span>What's this about?</span></h2>
-										<p>
-											This is <strong>TXT</strong>, yet another free responsive site template designed by
-											<a href="http://twitter.com/ajlkn">AJ</a> for <a href="http://html5up.net">HTML5 UP</a>. It's released under the
-											<a href="http://html5up.net/license/">Creative Commons Attribution</a> license so feel free to use it for
-											whatever you're working on (personal or commercial), just be sure to give us credit for the design.
-											That's basically it :)
-										</p>
-									</section>
-
-							</div>
-							<div class="col-12">
-
-								<!-- Contact -->
-									<section>
-										<h2 class="major"><span>Get in touch</span></h2>
-										<ul class="contact">
-											<li><a class="icon brands fa-facebook-f" href="#"><span class="label">Facebook</span></a></li>
-											<li><a class="icon brands fa-twitter" href="#"><span class="label">Twitter</span></a></li>
-											<li><a class="icon brands fa-instagram" href="#"><span class="label">Instagram</span></a></li>
-											<li><a class="icon brands fa-dribbble" href="#"><span class="label">Dribbble</span></a></li>
-											<li><a class="icon brands fa-linkedin-in" href="#"><span class="label">LinkedIn</span></a></li>
-										</ul>
-									</section>
-
+								<section>
+									<h2 class="major"><span>AutoFix Pro</span></h2>
+									<p>Sistema Web para la administración integral de talleres mecánicos. Desarrollo para Programación III - UPTC.</p>
+								</section>
 							</div>
 						</div>
 
-						<!-- Copyright -->
-							<div id="copyright">
-								<ul class="menu">
-									<li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-								</ul>
-							</div>
-
+						<div id="copyright">
+							<ul class="menu">
+								<li>&copy; AutoFix Pro. Todos los derechos reservados.</li><li>Diseño base: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
 					</div>
 				</footer>
 
 		</div>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+		<!-- Scripts de la plantilla -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.dropotron.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+
+		<!-- Bootstrap 5 JS -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+		<!-- Lógica del CRUD en JavaScript -->
+		<script src="../script.js"></script>
 
 	</body>
 </html>
