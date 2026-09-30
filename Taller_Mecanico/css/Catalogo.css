@@ -5,14 +5,13 @@
 }
 
 :root {
-  --basalto: #18324A;
-  --basalto-2: #102536;
-  --basalto-3: #244C6C;
-  --white: #FFFFFF;
-  --text: #17212B;
-  --muted: #697887;
-  --line: #DCE4EA;
-  --accent: #2D6B96;
+  --bg-dark: #070B19;
+  --bg-card: #0F172A;
+  --primary-blue: #2563EB;
+  --text-main: #F8FAFC;
+  --text-muted: #94A3B8;
+  --border-color: #1E293B;
+  --font-main: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 html {
@@ -20,9 +19,9 @@ html {
 }
 
 body {
-  font-family: Inter, Arial, sans-serif;
-  color: var(--text);
-  background: #FFFFFF;
+  font-family: var(--font-main);
+  color: var(--text-main);
+  background: var(--bg-dark);
 }
 
 a {
@@ -35,10 +34,9 @@ input {
   font: inherit;
 }
 
-
-/* 
+/* =========================
    BARRA SUPERIOR
- */
+========================= */
 
 .navbar {
   height: 78px;
@@ -46,8 +44,8 @@ input {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #FFFFFF;
-  border-bottom: 1px solid var(--line);
+  background: var(--bg-dark);
+  border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
   z-index: 20;
@@ -61,28 +59,10 @@ input {
   letter-spacing: 1px;
 }
 
-.logo-mark {
-  color: #FFFFFF;
-  background: var(--basalto);
-  border-radius: 8px;
-  padding: 8px 9px;
-  font-size: 15px;
-}
-
-.logo-text {
-  color: var(--basalto);
-  font-size: 16px;
-}
-
-
-/* 
-   MENÚ
-           */
-
 .navbar nav {
   display: flex;
   gap: 34px;
-  color: #516170;
+  color: var(--text-muted);
   font-size: 14px;
   font-weight: 600;
 }
@@ -92,22 +72,20 @@ input {
 }
 
 .navbar nav a:hover {
-  color: var(--basalto);
+  color: var(--text-main);
 }
 
-
-/*
-   SECCIÓN CATÁLOGO
- */
+/* =========================
+   CATÁLOGO
+========================= */
 
 .catalog-section {
   min-height: calc(100vh - 78px);
-  padding: 80px 7%;
-  background: var(--basalto);
+  padding: 90px 7%;
+  background: var(--bg-dark);
 }
 
-
-/* Parte de encabezado */
+/* ENCABEZADO */
 
 .section-heading {
   display: flex;
@@ -120,33 +98,34 @@ input {
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 2px;
-  color: #BFD3E2;
+  color: var(--primary-blue);
 }
 
 .eyebrow.dark {
-  color: #BFD3E2;
+  color: var(--primary-blue);
 }
 
 .section-heading h1 {
-  color: #FFFFFF;
+  color: var(--text-main);
   font-size: clamp(34px, 4vw, 52px);
   line-height: 1.15;
   margin: 10px 0;
 }
 
 .section-heading p {
-  color: #D4E0E9;
+  color: var(--text-muted);
   line-height: 1.6;
   font-size: 15px;
 }
 
-
-/* Buscador */
+/* =========================
+   BUSCADOR
+========================= */
 
 .search-box {
   width: 290px;
-  background: #FFFFFF;
-  border: 1px solid var(--line);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
   border-radius: 9px;
   padding: 11px 14px;
   display: flex;
@@ -157,24 +136,25 @@ input {
 
 .search-box span {
   font-size: 24px;
-  color: var(--muted);
+  color: var(--text-muted);
 }
 
 .search-box input {
   border: 0;
   outline: 0;
   width: 100%;
-  color: var(--text);
+  color: var(--text-main);
   background: transparent;
   font-size: 14px;
 }
 
 .search-box input::placeholder {
-  color: #8A98A5;
+  color: var(--text-muted);
 }
 
-
-
+/* =========================
+   FILTROS
+========================= */
 
 .filters {
   display: flex;
@@ -184,9 +164,9 @@ input {
 }
 
 .filter {
-  border: 1px solid var(--line);
-  background: #FFFFFF;
-  color: #516170;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-muted);
   padding: 10px 15px;
   border-radius: 100px;
   cursor: pointer;
@@ -196,19 +176,20 @@ input {
 }
 
 .filter:hover {
-  background: var(--basalto-3);
-  border-color: var(--basalto-3);
+  background: var(--primary-blue);
+  border-color: var(--primary-blue);
   color: #FFFFFF;
 }
 
 .filter.active {
-  background: var(--basalto-2);
-  border-color: var(--basalto-2);
+  background: var(--primary-blue);
+  border-color: var(--primary-blue);
   color: #FFFFFF;
 }
 
-
-
+/* =========================
+   PRODUCTOS
+========================= */
 
 .product-grid {
   display: grid;
@@ -216,12 +197,9 @@ input {
   gap: 18px;
 }
 
-
-
-
 .product {
-  background: #FFFFFF;
-  border: 1px solid var(--line);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
   border-radius: 13px;
   overflow: hidden;
   transition: 0.25s;
@@ -230,15 +208,12 @@ input {
 
 .product:hover {
   transform: translateY(-5px);
-  box-shadow: 0 14px 35px rgba(20, 45, 65, 0.20);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.35);
 }
-
-
-/* Imagen */
 
 .product-image {
   height: 210px;
-  background: #EEEEEE;
+  background: var(--border-color);
   overflow: hidden;
   position: relative;
 }
@@ -255,14 +230,13 @@ input {
   transform: scale(1.04);
 }
 
-
-/* Etiqueta */
+/* ETIQUETA */
 
 .badge {
   position: absolute;
   top: 12px;
   left: 12px;
-  background: var(--basalto);
+  background: var(--primary-blue);
   color: #FFFFFF;
   padding: 6px 9px;
   border-radius: 5px;
@@ -271,10 +245,7 @@ input {
   letter-spacing: 0.6px;
 }
 
-
-/* 
-   Informacion de cada producto 
-   */
+/* INFORMACIÓN */
 
 .product-info {
   padding: 17px;
@@ -282,7 +253,7 @@ input {
 
 .product-category {
   font-size: 10px;
-  color: var(--accent);
+  color: var(--primary-blue);
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -292,17 +263,15 @@ input {
   font-size: 16px;
   margin: 7px 0 8px;
   line-height: 1.35;
+  color: var(--text-main);
 }
 
 .product p {
   font-size: 12px;
-  color: var(--muted);
+  color: var(--text-muted);
   line-height: 1.5;
   min-height: 36px;
 }
-
-
-
 
 .product-bottom {
   display: flex;
@@ -315,13 +284,15 @@ input {
 .price {
   font-size: 14px;
   font-weight: 800;
-  color: var(--basalto);
+  color: var(--text-main);
 }
+
+/* BOTÓN CONSULTAR */
 
 .consult-btn {
   border: 0;
-  background: #E9F0F5;
-  color: var(--basalto);
+  background: rgba(37, 99, 235, 0.15);
+  color: var(--primary-blue);
   padding: 8px 10px;
   border-radius: 6px;
   font-size: 11px;
@@ -331,55 +302,56 @@ input {
 }
 
 .consult-btn:hover {
-  background: var(--basalto);
+  background: var(--primary-blue);
   color: #FFFFFF;
 }
 
-
-
+/* SIN RESULTADOS */
 
 .empty {
   text-align: center;
-  color: #D4E0E9;
+  color: var(--text-muted);
   padding: 45px;
   display: none;
 }
 
-
-
+/* =========================
+   FOOTER
+========================= */
 
 footer {
-  background: #0B1B28;
-  color: #AAB9C4;
-  padding: 25px 7%;
+  background: var(--bg-card);
+  color: var(--text-muted);
+  padding: 30px 7%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-size: 12px;
+  border-top: 1px solid var(--border-color);
+}
+
+footer .logo {
+  color: var(--text-main);
 }
 
 footer .logo-text {
-  color: #FFFFFF;
+  color: var(--text-main);
 }
 
 footer .logo-mark {
-  background: #FFFFFF;
-  color: var(--basalto);
+  background: var(--primary-blue);
+  color: #FFFFFF;
 }
 
-
-
+/* =========================
+   RESPONSIVE
+========================= */
 
 @media (max-width: 1000px) {
-
   .product-grid {
     grid-template-columns: repeat(3, 1fr);
   }
-
 }
-
-
-
 
 @media (max-width: 760px) {
 
@@ -413,11 +385,7 @@ footer .logo-mark {
     gap: 15px;
     text-align: center;
   }
-
 }
-
-
-
 
 @media (max-width: 480px) {
 
@@ -445,5 +413,5 @@ footer .logo-mark {
   .product-image {
     height: 230px;
   }
-
 }
+
