@@ -1,0 +1,160 @@
+<!DOCTYPE HTML>
+<!--
+	TXT by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html lang="es">
+	<head>
+		<title>Taller Mecánico - Gestión de Inventario</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+	</head>
+	<body class="is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<header id="header">
+					<div class="logo container">
+						<div>
+							<h1><a href="index.html" id="logo">Olimac Riders Store</a></h1>
+							<p>Sistema de Gestión de Taller Mecánico</p>
+						</div>
+					</div>
+				</header>
+
+			<!-- Nav -->
+				<nav id="nav">
+					<ul>
+						<li><a href="index.html">Inicio</a></li>
+						<li>
+							<a href="index.html#servicios">El taller</a>
+							<ul>
+								<li><a href="index.html#servicios">Módulos</a></li>
+								<li><a href="index.html#nosotros">Nosotros</a></li>
+								<li><a href="index.html#contacto">Contacto</a></li>
+							</ul>
+						</li>
+						<li><a href="no-sidebar.html">Clientes</a></li>
+						<li><a href="left-sidebar.html">Vehículos</a></li>
+						<li><a href="orden-servicio.html">Servicios</a></li>
+						<li><a href="right-sidebar.html">Empleados</a></li>
+						<li><a href="repuestos.html">Repuestos</a></li>
+						<li class="current"><a href="inventario.html">Inventario</a></li>
+					</ul>
+				</nav>
+
+			<!-- Main -->
+				<section id="main">
+					<div class="container">
+						<div class="row">
+							<div class="col-12">
+								<div class="content">
+									<article class="box page-content">
+										<section class="container mt-2" id="modulo-inventario">
+											<header>
+												<h2 class="h3 mb-4 text-primary">Gestión de Inventario</h2>
+												<p class="text-muted">La referencia debe existir primero en el catálogo de repuestos. El texto en rojo indica stock bajo el mínimo.</p>
+											</header>
+
+											<output id="alertaInventario" class="alert alert-success d-none animate__animated animate__fadeIn d-block mb-3" role="alert"></output>
+
+											<form id="formInventario" class="row g-3 needs-validation" novalidate>
+												<input type="hidden" id="inventarioId">
+
+												<fieldset class="col-md-6">
+													<label for="referenciaInventario" class="form-label text-dark fw-bold">Referencia</label>
+													<select class="form-select" id="referenciaInventario" required></select>
+													<p class="invalid-feedback">Debe elegir una referencia del catálogo de repuestos.</p>
+												</fieldset>
+
+												<fieldset class="col-md-6">
+													<label for="descripcionInventario" class="form-label text-dark fw-bold">Descripción</label>
+													<input type="text" class="form-control" id="descripcionInventario" readonly placeholder="Se completa al elegir la referencia">
+												</fieldset>
+
+												<fieldset class="col-md-6">
+													<label for="stockInventario" class="form-label text-dark fw-bold">Stock</label>
+													<input type="text" class="form-control" id="stockInventario" placeholder="Ej. 15" required>
+													<p class="invalid-feedback">El stock debe ser un número entero mayor o igual a 0.</p>
+												</fieldset>
+
+												<fieldset class="col-md-6">
+													<label for="stockMinimoInventario" class="form-label text-dark fw-bold">Stock mínimo</label>
+													<input type="text" class="form-control" id="stockMinimoInventario" placeholder="Ej. 5" required>
+													<p class="invalid-feedback">El stock mínimo debe ser un número entero mayor o igual a 0.</p>
+												</fieldset>
+
+												<footer class="col-12 text-end mt-4">
+													<button type="button" class="btn btn-secondary me-2" onclick="limpiarFormularioInventario()">Limpiar</button>
+													<button type="submit" class="btn btn-success" id="btnGuardarInventario">Registrar en Inventario</button>
+												</footer>
+											</form>
+
+											<hr class="my-5">
+
+											<section>
+												<header>
+													<h3 class="h4 mb-3 text-dark">Listado de Inventario</h3>
+												</header>
+												<figure class="table-responsive">
+													<table class="table table-hover table-striped align-middle">
+														<thead class="table-dark">
+															<tr>
+																<th scope="col">Referencia</th>
+																<th scope="col">Descripción</th>
+																<th scope="col">Stock</th>
+																<th scope="col">Stock mínimo</th>
+																<th scope="col">Acciones</th>
+															</tr>
+														</thead>
+														<tbody id="tablaInventario"></tbody>
+													</table>
+												</figure>
+											</section>
+										</section>
+									</article>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+			<!-- Footer -->
+				<footer id="footer">
+					<div class="container">
+						<div class="row gtr-200">
+							<div class="col-12">
+								<section>
+									<h2 class="major"><span>Olimac Riders Store</span></h2>
+									<p>Sistema Web para la administración integral de talleres mecánicos. Desarrollo para Programación III - UPTC.</p>
+								</section>
+							</div>
+						</div>
+						<div id="copyright">
+							<ul class="menu">
+								<li>&copy; Olimac Riders Store. Todos los derechos reservados.</li>
+								<li>Diseño base: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</div>
+				</footer>
+
+		</div>
+
+		<!-- Scripts de la plantilla -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.dropotron.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="assets/js/datos-taller.js"></script>
+		<script src="assets/js/crud-inventario.js"></script>
+	</body>
+</html>
