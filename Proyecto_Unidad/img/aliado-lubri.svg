@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="146" height="44" viewBox="0 0 146 44" fill="none" role="img" aria-label="Lubri">
+  <rect x="2" y="2" width="40" height="40" rx="12" fill="#0E9F8A"/>
+  <path d="M22 9.2c4.8 5.6 8 9.2 8 13.4a8 8 0 0 1-16 0c0-4.2 3.2-7.8 8-13.4z" fill="#fff"/>
+  <path d="M19.2 22.4a3.4 3.4 0 0 0 3.2 4.6" stroke="#0E9F8A" stroke-width="1.6" stroke-linecap="round"/>
+  <text x="52" y="28" fill="#223239" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="0.8">LUBRI</text>
+</svg>

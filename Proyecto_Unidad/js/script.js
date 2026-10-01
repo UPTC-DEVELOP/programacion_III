@@ -47,6 +47,45 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     });
 
+// Reseña destacada: al elegir una tarjeta se actualiza la cita grande
+document.addEventListener('DOMContentLoaded', function () {
+    const tarjetas = document.querySelectorAll('#reseñas .reseña-card');
+    const cita = document.querySelector('#reseña-destacada p');
+    const autor = document.querySelector('#reseña-destacada cite');
+    const avatar = document.querySelector('#reseña-destacada .reseña-avatar');
+
+    if (!tarjetas.length || !cita || !autor) return;
+
+    function destacar(tarjeta) {
+        tarjetas.forEach(function (item) {
+            const activa = item === tarjeta;
+            item.classList.toggle('is-activa', activa);
+            item.setAttribute('aria-pressed', activa ? 'true' : 'false');
+        });
+
+        const nombre = tarjeta.querySelector('h3').textContent;
+        const rol = tarjeta.querySelector('.reseña-rol').textContent;
+        const texto = tarjeta.querySelector('p:last-of-type').textContent;
+        const foto = tarjeta.querySelector('.reseña-avatar').getAttribute('src');
+
+        cita.textContent = '“' + texto + '”';
+        autor.textContent = nombre + ' · ' + rol;
+        if (avatar && foto) avatar.setAttribute('src', foto);
+    }
+
+    tarjetas.forEach(function (tarjeta) {
+        tarjeta.addEventListener('click', function () {
+            destacar(tarjeta);
+        });
+        tarjeta.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                destacar(tarjeta);
+            }
+        });
+    });
+});
+
 // Lógica para el formulario de contacto
 document.addEventListener('DOMContentLoaded', () => {
     const formContacto = document.getElementById('form-contacto');

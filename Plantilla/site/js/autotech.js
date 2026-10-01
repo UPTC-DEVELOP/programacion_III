@@ -1,3 +1,42 @@
+// Reseña destacada: al elegir una tarjeta se actualiza la cita grande
+document.addEventListener('DOMContentLoaded', function () {
+    const tarjetas = document.querySelectorAll('#resenas .resena-card');
+    const cita = document.querySelector('#resena-destacada p');
+    const autor = document.querySelector('#resena-destacada cite');
+    const avatar = document.querySelector('#resena-destacada .resena-avatar');
+
+    if (!tarjetas.length || !cita || !autor) return;
+
+    function destacar(tarjeta) {
+        tarjetas.forEach(function (item) {
+            const activa = item === tarjeta;
+            item.classList.toggle('is-activa', activa);
+            item.setAttribute('aria-pressed', activa ? 'true' : 'false');
+        });
+
+        const nombre = tarjeta.querySelector('.title').textContent;
+        const rol = tarjeta.querySelector('.resena-rol').textContent;
+        const texto = tarjeta.querySelector('.exeption').textContent;
+        const foto = tarjeta.querySelector('.resena-avatar');
+
+        cita.textContent = '“' + texto + '”';
+        autor.textContent = nombre + ' · ' + rol;
+        if (avatar && foto) avatar.src = foto.src;
+    }
+
+    tarjetas.forEach(function (tarjeta) {
+        tarjeta.addEventListener('click', function () {
+            destacar(tarjeta);
+        });
+        tarjeta.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                destacar(tarjeta);
+            }
+        });
+    });
+});
+
 // Validación del formulario de contacto de AutoTech
 document.addEventListener('DOMContentLoaded', function () {
     const formContacto = document.getElementById('form-contacto');

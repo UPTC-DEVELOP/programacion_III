@@ -600,99 +600,256 @@ footer {
 }
 /* --- Reseñas y aliados --- */
 #reseñas {
-    background-color: #FFFFFF;
+    background:
+        radial-gradient(ellipse at top, rgba(249, 155, 155, 0.45), transparent 58%),
+        #FFFFFF;
     text-align: center;
-    padding: 70px 0;
+    padding: 70px 0 50px;
     border-bottom: none;
 }
 
+.reseñas-kicker {
+    color: var(--color-primary);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
 #reseñas h2 {
-    font-size: 2.1rem;
-    color: #4A5568;
-    margin-bottom: 40px;
+    font-size: 2.4rem;
+    color: var(--color-text-dark);
+    margin-bottom: 12px;
+}
+
+#reseñas h2 span {
+    color: var(--color-primary);
+}
+
+.reseñas-lead {
+    max-width: 520px;
+    margin: 0 auto 28px;
+    color: var(--color-gray);
+    font-size: 1rem;
+}
+
+.reseñas-resumen {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: #FFFFFF;
+    border: 1px solid #f3d2d2;
+    border-radius: 999px;
+    padding: 8px 18px;
+    margin-bottom: 36px;
+    box-shadow: var(--shadow);
+}
+
+.reseñas-resumen img {
+    width: 72px;
+    height: auto;
+}
+
+.reseñas-resumen strong {
+    font-size: 1.4rem;
+    color: var(--color-primary);
+}
+
+.reseñas-resumen span {
+    color: var(--color-gray);
+    font-size: 0.9rem;
 }
 
 .reseñas-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
+    gap: 22px;
     max-width: 1250px;
-    margin: 0 auto 45px auto;
+    margin: 0 auto 28px auto;
+    padding: 0 8px;
 }
 
 .reseña-card {
     background: #FFFFFF;
     border: 1px solid #f0f0f0;
+    border-top: 4px solid transparent;
     border-radius: var(--radius);
-    padding: 30px 25px;
+    padding: 28px 20px 24px;
     box-shadow: var(--shadow);
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.reseña-card:hover,
+.reseña-card:focus-visible {
+    transform: translateY(-8px);
+    border-top-color: var(--color-primary);
+    box-shadow: 0 14px 30px rgba(238, 37, 36, 0.12);
+    outline: none;
+}
+
+.reseña-card.is-activa {
+    border-top-color: var(--color-primary);
+    background: linear-gradient(#fff, #fff7f7);
+    box-shadow: 0 14px 30px rgba(238, 37, 36, 0.14);
 }
 
 .reseña-avatar {
-    width: 64px;
-    height: 64px;
+    width: 72px;
+    height: 72px;
     object-fit: contain;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
+    transition: transform 0.25s ease;
+}
+
+.reseña-card:hover .reseña-avatar,
+.reseña-card.is-activa .reseña-avatar {
+    transform: scale(1.08);
 }
 
 .reseña-card h3 {
     font-size: 1.15rem;
     font-weight: 700;
     color: var(--color-text-dark);
-    margin-bottom: 12px;
+    margin-bottom: 2px;
+}
+
+.reseña-rol {
+    font-size: 0.78rem;
+    color: var(--color-primary);
+    font-weight: 600;
+    margin-bottom: 10px;
 }
 
 .reseña-estrellas {
-    width: 55px;
+    width: 70px;
     height: auto;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
 }
 
-.reseña-card p {
-    font-size: 0.85rem;
+.reseña-card > p:last-child {
+    font-size: 0.88rem;
     color: var(--color-gray);
-    line-height: 1.6;
+    line-height: 1.55;
     max-width: 24ch;
     margin: 0 auto;
+}
+
+.reseña-destacada {
+    max-width: 760px;
+    margin: 0 auto 48px;
+    padding: 22px 28px;
+    background: #FFFFFF;
+    border-left: 5px solid var(--color-primary);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    text-align: left;
+}
+
+.reseña-destacada .reseña-avatar {
+    width: 64px;
+    height: 64px;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.reseña-destacada p {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-text-dark);
+    line-height: 1.45;
+    margin-bottom: 6px;
+}
+
+.reseña-destacada cite {
+    font-style: normal;
+    font-size: 0.9rem;
+    color: var(--color-gray);
+}
+
+.aliados-titulo {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--color-gray);
+    margin-bottom: 18px;
+}
+
+.aliados-carril {
+    overflow: hidden;
+    display: flex;
+    max-width: 1100px;
+    margin: 0 auto;
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
 }
 
 .aliados-logos {
     list-style: none;
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 25px;
-    flex-wrap: wrap;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0;
+    gap: 22px;
+    margin: 0;
+    padding: 8px 11px;
+    flex-shrink: 0;
+    animation: aliados-scroll 22s linear infinite;
+}
+
+.aliados-carril:hover .aliados-logos {
+    animation-play-state: paused;
 }
 
 .aliados-logos li {
-    background-color: var(--color-bg-light);
-    border-radius: 8px;
-    padding: 10px 14px;
+    background-color: #FFFFFF;
+    border: 1px solid #f0f0f0;
+    border-radius: 14px;
+    padding: 10px 16px;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: var(--shadow);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 .aliados-logos img {
-    height: 26px;
+    height: 40px;
     width: auto;
     object-fit: contain;
-    filter: grayscale(100%);
-    opacity: 0.75;
-    transition: filter 0.3s ease, opacity 0.3s ease;
+    transition: transform 0.25s ease;
 }
 
-.aliados-logos img:hover {
-    filter: grayscale(0%);
-    opacity: 1;
+.aliados-logos li:hover {
+    transform: translateY(-6px);
+}
+
+.aliados-logos li:hover img {
+    transform: scale(1.04);
+}
+
+.aliado-torque:hover { border-color: #EE2524; box-shadow: 0 12px 24px rgba(238, 37, 36, 0.18); }
+.aliado-nitro:hover { border-color: #FF8A00; box-shadow: 0 12px 24px rgba(255, 138, 0, 0.2); }
+.aliado-voltix:hover { border-color: #2F6BFF; box-shadow: 0 12px 24px rgba(47, 107, 255, 0.18); }
+.aliado-pista:hover { border-color: #223239; box-shadow: 0 12px 24px rgba(34, 50, 57, 0.16); }
+.aliado-freno:hover { border-color: #EE2524; box-shadow: 0 12px 24px rgba(30, 42, 50, 0.18); }
+.aliado-lubri:hover { border-color: #0E9F8A; box-shadow: 0 12px 24px rgba(14, 159, 138, 0.2); }
+
+@keyframes aliados-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .aliados-logos {
+        animation: none;
+    }
 }
 
 /* --- Contacto --- */
@@ -974,6 +1131,21 @@ footer {
 @media (max-width: 600px) {
     .reseñas-grid {
         grid-template-columns: 1fr;
+    }
+
+    .reseña-destacada {
+        flex-direction: column;
+        text-align: center;
+        margin-left: 16px;
+        margin-right: 16px;
+    }
+
+    .reseñas-resumen {
+        flex-wrap: wrap;
+        justify-content: center;
+        border-radius: var(--radius);
+        margin-left: 16px;
+        margin-right: 16px;
     }
     
     .contacto-accion {

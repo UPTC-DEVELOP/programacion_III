@@ -8,6 +8,28 @@
     scroll-margin-top: 90px;
 }
 
+/* En el tope el fondo es claro: letras oscuras.
+   Al bajar, la plantilla muestra la barra negra y el texto vuelve a blanco. */
+.rd-navbar-creative.rd-navbar-static:not(.rd-navbar--is-stuck):not(.rd-navbar--is-clone) .rd-nav-link,
+.rd-navbar-creative.rd-navbar-static:not(.rd-navbar--is-stuck):not(.rd-navbar--is-clone) .rd-nav-item.active .rd-nav-link,
+.rd-navbar-creative.rd-navbar-static:not(.rd-navbar--is-stuck):not(.rd-navbar--is-clone) .rd-navbar-search-toggle {
+    color: #223239;
+}
+
+.rd-navbar-creative.rd-navbar-static:not(.rd-navbar--is-stuck):not(.rd-navbar--is-clone) .rd-nav-item.active .rd-nav-link,
+.rd-navbar-creative.rd-navbar-static:not(.rd-navbar--is-stuck):not(.rd-navbar--is-clone) .rd-nav-link:hover {
+    border-bottom-color: #223239;
+}
+
+.rd-navbar-creative.rd-navbar-static.rd-navbar--is-stuck .rd-nav-link,
+.rd-navbar-creative.rd-navbar-static.rd-navbar--is-clone .rd-nav-link,
+.rd-navbar-creative.rd-navbar-static.rd-navbar--is-stuck .rd-nav-item.active .rd-nav-link,
+.rd-navbar-creative.rd-navbar-static.rd-navbar--is-clone .rd-nav-item.active .rd-nav-link,
+.rd-navbar-creative.rd-navbar-static.rd-navbar--is-stuck .rd-navbar-search-toggle,
+.rd-navbar-creative.rd-navbar-static.rd-navbar--is-clone .rd-navbar-search-toggle {
+    color: #ffffff;
+}
+
 :root {
     --at-primary: #ff4a5a;
     --at-secondary: #F99B9B;
@@ -18,78 +40,279 @@
 }
 
 /* --- Reseñas --- */
-.resena-card {
-    background: #FFFFFF;
-    border: 1px solid #f0f0f0;
-    border-radius: var(--at-radius);
-    box-shadow: var(--at-shadow);
-    padding: 30px 25px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+#resenas {
+    background:
+        radial-gradient(ellipse at top, rgba(255, 74, 90, 0.16), transparent 58%),
+        #FFFFFF;
 }
 
-.resena-avatar {
-    width: 64px;
-    height: 64px;
-    object-fit: contain;
-    margin-bottom: 14px;
+.resenas-kicker {
+    color: var(--at-primary);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
 }
 
-.resena-card .title {
+#resenas .resenas-titulo {
     color: var(--at-text-dark);
     margin-bottom: 12px;
 }
 
-.resena-estrellas {
-    width: 55px;
+#resenas .resenas-titulo span {
+    color: var(--at-primary);
+}
+
+.resenas-lead {
+    max-width: 520px;
+    margin: 0 auto 28px;
+    color: var(--at-gray);
+}
+
+.resenas-resumen {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: #FFFFFF;
+    border: 1px solid #f3d2d2;
+    border-radius: 999px;
+    padding: 8px 18px;
+    margin-bottom: 36px;
+    box-shadow: var(--at-shadow);
+}
+
+.resenas-resumen img {
+    width: 72px;
     height: auto;
-    margin-bottom: 16px;
+}
+
+.resenas-resumen strong {
+    font-size: 22px;
+    color: var(--at-primary);
+}
+
+.resenas-resumen span {
+    color: var(--at-gray);
+    font-size: 14px;
+}
+
+.resena-card {
+    position: relative;
+    overflow: hidden;
+    background: #FFFFFF;
+    border: 1px solid #f0f0f0;
+    border-left: 4px solid transparent;
+    border-radius: var(--at-radius);
+    box-shadow: var(--at-shadow);
+    padding: 22px 20px 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.resena-card::after {
+    content: "\201C";
+    position: absolute;
+    top: -6px;
+    right: 14px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 72px;
+    line-height: 1;
+    color: rgba(255, 74, 90, 0.16);
+    pointer-events: none;
+}
+
+.resena-card:hover,
+.resena-card:focus-visible {
+    transform: translateY(-8px);
+    border-left-color: var(--at-primary);
+    box-shadow: 0 14px 30px rgba(255, 74, 90, 0.16);
+    outline: none;
+}
+
+.resena-card.is-activa {
+    border-left-color: var(--at-primary);
+    background: linear-gradient(#fff, #fff7f7);
+    box-shadow: 0 14px 30px rgba(255, 74, 90, 0.16);
+}
+
+.resena-cabeza {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    position: relative;
+    z-index: 1;
+}
+
+.resena-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    object-fit: cover;
+    margin: 0;
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+}
+
+.resena-card:hover .resena-avatar,
+.resena-card.is-activa .resena-avatar {
+    transform: scale(1.06);
+}
+
+.resena-card .title {
+    color: var(--at-text-dark);
+    margin: 0 0 2px;
+    text-align: left;
+}
+
+.resena-rol {
+    color: var(--at-primary);
+    font-size: 13px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.resena-estrellas {
+    width: 70px;
+    height: auto;
+    margin: 0 0 12px;
+    position: relative;
+    z-index: 1;
 }
 
 .resena-card .exeption {
     font-size: 14px;
     color: var(--at-gray);
-    max-width: 24ch;
-    margin: 0 auto;
+    line-height: 1.5;
+    margin: 0;
+    text-align: left;
+    position: relative;
+    z-index: 1;
 }
 
-/* --- Logos de aliados --- */
+.resena-destacada {
+    max-width: 760px;
+    margin: 36px auto 48px;
+    padding: 22px 28px;
+    background: #FFFFFF;
+    border-left: 5px solid var(--at-primary);
+    border-radius: var(--at-radius);
+    box-shadow: var(--at-shadow);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    text-align: left;
+}
+
+.resena-destacada .resena-avatar {
+    width: 64px;
+    height: 64px;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.resena-destacada p {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--at-text-dark);
+    line-height: 1.45;
+    margin-bottom: 6px;
+}
+
+.resena-destacada cite {
+    font-style: normal;
+    font-size: 14px;
+    color: var(--at-gray);
+}
+
+.aliados-titulo {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--at-gray);
+    margin-bottom: 18px;
+}
+
+.aliados-carril {
+    overflow: hidden;
+    display: flex;
+    max-width: 1100px;
+    margin: 0 auto;
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
 .aliados-logos {
     list-style: none;
     display: flex;
-    justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 25px;
-    max-width: 1000px;
-    margin: 50px auto 0;
-    padding: 0;
+    gap: 22px;
+    margin: 0;
+    padding: 8px 11px;
+    flex-shrink: 0;
+    animation: aliados-scroll 22s linear infinite;
+}
+
+.aliados-carril:hover .aliados-logos {
+    animation-play-state: paused;
 }
 
 .aliados-logos li {
-    background-color: #F8F9FA;
-    border-radius: 8px;
-    padding: 10px 14px;
+    background-color: #FFFFFF;
+    border: 1px solid #f0f0f0;
+    border-radius: 14px;
+    padding: 10px 16px;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: var(--at-shadow);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 .aliados-logos img {
-    height: 26px;
+    height: 40px;
     width: auto;
     object-fit: contain;
-    filter: grayscale(100%);
-    opacity: 0.75;
-    transition: filter 0.3s ease, opacity 0.3s ease;
+    transition: transform 0.25s ease;
 }
 
-.aliados-logos img:hover {
-    filter: grayscale(0%);
-    opacity: 1;
+.aliados-logos li:hover {
+    transform: translateY(-6px);
+}
+
+.aliados-logos li:hover img {
+    transform: scale(1.04);
+}
+
+.aliado-torque:hover { border-color: #EE2524; box-shadow: 0 12px 24px rgba(238, 37, 36, 0.18); }
+.aliado-nitro:hover { border-color: #FF8A00; box-shadow: 0 12px 24px rgba(255, 138, 0, 0.2); }
+.aliado-voltix:hover { border-color: #2F6BFF; box-shadow: 0 12px 24px rgba(47, 107, 255, 0.18); }
+.aliado-pista:hover { border-color: #223239; box-shadow: 0 12px 24px rgba(34, 50, 57, 0.16); }
+.aliado-freno:hover { border-color: #EE2524; box-shadow: 0 12px 24px rgba(30, 42, 50, 0.18); }
+.aliado-lubri:hover { border-color: #0E9F8A; box-shadow: 0 12px 24px rgba(14, 159, 138, 0.2); }
+
+@keyframes aliados-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .aliados-logos {
+        animation: none;
+    }
+}
+
+@media (max-width: 575px) {
+    .resena-destacada {
+        flex-direction: column;
+        text-align: center;
+    }
 }
 
 /* --- Contacto --- */
@@ -197,6 +420,28 @@
     border-radius: var(--at-radius);
     box-shadow: var(--at-shadow);
     padding: 35px 30px;
+    animation: formulario-vibra 4.2s ease-in-out infinite;
+}
+
+.formulario-card:hover,
+.formulario-card:focus-within {
+    animation-play-state: paused;
+}
+
+@keyframes formulario-vibra {
+    0%, 70%, 100% { transform: translateX(0); }
+    74% { transform: translateX(-5px) rotate(-0.6deg); }
+    78% { transform: translateX(5px) rotate(0.6deg); }
+    82% { transform: translateX(-4px); }
+    86% { transform: translateX(4px); }
+    90% { transform: translateX(-2px); }
+    94% { transform: translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .formulario-card {
+        animation: none;
+    }
 }
 
 .formulario-header {

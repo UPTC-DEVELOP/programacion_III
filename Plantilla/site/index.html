@@ -331,47 +331,71 @@
 </section>
 
       <!-- Reseñas y aliados -->
-<section class="section section-lg bg-default" id="resenas">
+<section class="section section-lg" id="resenas">
   <div class="container text-center">
-    <h2 style="color: #ff4a5a;">Reseñas y aliados</h2>
+    <p class="resenas-kicker">Historias reales de talleres</p>
+    <h2 class="resenas-titulo">Reseñas <span>y aliados</span></h2>
+    <p class="resenas-lead">Cuatro talleres ya digitalizaron su operación con AutoTech. Elige una reseña para destacarla.</p>
 
-    <div class="row row-40 justify-content-center mt-5">
+    <div class="resenas-resumen">
+      <img src="images/imgEstrellas.svg" alt="Calificación promedio: 5 de 5 estrellas">
+      <strong>5.0</strong>
+      <span>promedio entre 4 talleres aliados</span>
+    </div>
 
-      <!-- Reseña 1 -->
+    <div class="row row-40 justify-content-center">
+
       <div class="col-sm-6 col-lg-3 wow fadeInUp">
-        <article class="resena-card">
-          <img src="images/imgAliado.png" alt="" class="resena-avatar">
-          <h5 class="title">Roberto Carlos</h5>
+        <article class="resena-card is-activa" tabindex="0" aria-pressed="true">
+          <header class="resena-cabeza">
+            <img src="images/avatar-roberto.svg" alt="" class="resena-avatar">
+            <div>
+              <h5 class="title">Roberto Carlos</h5>
+              <p class="resena-rol">Dueño de taller</p>
+            </div>
+          </header>
           <img src="images/imgEstrellas.svg" alt="Calificación: 5 de 5 estrellas" class="resena-estrellas">
           <p class="exeption">Gracias a AutoTech, mi taller creció un 50% en solo 6 meses</p>
         </article>
       </div>
 
-      <!-- Reseña 2 -->
       <div class="col-sm-6 col-lg-3 wow fadeInUp" data-wow-delay="0.1s">
-        <article class="resena-card">
-          <img src="images/imgAliado.png" alt="" class="resena-avatar">
-          <h5 class="title">Ronaldo Nazario</h5>
+        <article class="resena-card" tabindex="0" aria-pressed="false">
+          <header class="resena-cabeza">
+            <img src="images/avatar-ronaldo.svg" alt="" class="resena-avatar">
+            <div>
+              <h5 class="title">Ronaldo Nazario</h5>
+              <p class="resena-rol">Dueño de taller</p>
+            </div>
+          </header>
           <img src="images/imgEstrellas.svg" alt="Calificación: 5 de 5 estrellas" class="resena-estrellas">
           <p class="exeption">Gracias a AutoTech, mi taller creció un 50% en solo 6 meses</p>
         </article>
       </div>
 
-      <!-- Reseña 3 -->
       <div class="col-sm-6 col-lg-3 wow fadeInUp" data-wow-delay="0.2s">
-        <article class="resena-card">
-          <img src="images/imgAliado.png" alt="" class="resena-avatar">
-          <h5 class="title">Juan Cardenas</h5>
+        <article class="resena-card" tabindex="0" aria-pressed="false">
+          <header class="resena-cabeza">
+            <img src="images/avatar-juan.svg" alt="" class="resena-avatar">
+            <div>
+              <h5 class="title">Juan Cardenas</h5>
+              <p class="resena-rol">Dueño de taller</p>
+            </div>
+          </header>
           <img src="images/imgEstrellas.svg" alt="Calificación: 5 de 5 estrellas" class="resena-estrellas">
           <p class="exeption">Gracias a AutoTech, mi taller creció un 50% en solo 6 meses</p>
         </article>
       </div>
 
-      <!-- Reseña 4 -->
       <div class="col-sm-6 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-        <article class="resena-card">
-          <img src="images/imgAliado.png" alt="" class="resena-avatar">
-          <h5 class="title">Messi</h5>
+        <article class="resena-card" tabindex="0" aria-pressed="false">
+          <header class="resena-cabeza">
+            <img src="images/avatar-messi.svg" alt="" class="resena-avatar">
+            <div>
+              <h5 class="title">Messi</h5>
+              <p class="resena-rol">Dueño de taller</p>
+            </div>
+          </header>
           <img src="images/imgEstrellas.svg" alt="Calificación: 5 de 5 estrellas" class="resena-estrellas">
           <p class="exeption">Gracias a AutoTech, mi taller creció un 50% en solo 6 meses</p>
         </article>
@@ -379,14 +403,33 @@
 
     </div>
 
-    <!-- Logos de aliados -->
-    <ul class="aliados-logos" aria-label="Aliados comerciales">
-      <li><img src="images/imgGPT.svg" alt="OpenAI"></li>
-      <li><img src="images/imgMcDonals.svg" alt="McDonald's"></li>
-      <li><img src="images/imgWindows.svg" alt="Windows"></li>
-      <li><img src="images/imgLogoAliado.png" alt="WiFi"></li>
-      <li><img src="images/imgLogoAliado.png" alt="Meta"></li>
-    </ul>
+    <blockquote class="resena-destacada" id="resena-destacada">
+      <img src="images/avatar-roberto.svg" alt="" class="resena-avatar">
+      <div>
+        <p>“Gracias a AutoTech, mi taller creció un 50% en solo 6 meses”</p>
+        <cite>Roberto Carlos · Dueño de taller</cite>
+      </div>
+    </blockquote>
+
+    <p class="aliados-titulo">Aliados que confían en AutoTech</p>
+    <div class="aliados-carril">
+      <ul class="aliados-logos">
+        <li class="aliado-torque"><img src="images/aliado-torque.svg" alt="Torque"></li>
+        <li class="aliado-nitro"><img src="images/aliado-nitro.svg" alt="Nitro"></li>
+        <li class="aliado-voltix"><img src="images/aliado-voltix.svg" alt="Voltix"></li>
+        <li class="aliado-pista"><img src="images/aliado-pista.svg" alt="Pista"></li>
+        <li class="aliado-freno"><img src="images/aliado-freno.svg" alt="Freno"></li>
+        <li class="aliado-lubri"><img src="images/aliado-lubri.svg" alt="Lubri"></li>
+      </ul>
+      <ul class="aliados-logos" aria-hidden="true">
+        <li class="aliado-torque"><img src="images/aliado-torque.svg" alt=""></li>
+        <li class="aliado-nitro"><img src="images/aliado-nitro.svg" alt=""></li>
+        <li class="aliado-voltix"><img src="images/aliado-voltix.svg" alt=""></li>
+        <li class="aliado-pista"><img src="images/aliado-pista.svg" alt=""></li>
+        <li class="aliado-freno"><img src="images/aliado-freno.svg" alt=""></li>
+        <li class="aliado-lubri"><img src="images/aliado-lubri.svg" alt=""></li>
+      </ul>
+    </div>
   </div>
 </section>
 
@@ -454,7 +497,7 @@
 
       <!-- Columna derecha: formulario -->
       <div class="col-lg-4">
-        <div class="formulario-card">
+        <div class="formulario-card" id="formulario">
           <div class="formulario-header">
             <h3 class="formulario-titulo">Formulario</h3>
             <span class="icon-menu">☰</span>

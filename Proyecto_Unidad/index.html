@@ -198,42 +198,74 @@
 
         <!-- Reseñas y aliados -->
         <section id="reseñas" aria-labelledby="reseñas-titulo">
-            <h2 id="reseñas-titulo">Reseñas y aliados</h2>
+            <p class="reseñas-kicker">Historias reales de talleres</p>
+            <h2 id="reseñas-titulo">Reseñas <span>y aliados</span></h2>
+            <p class="reseñas-lead">Cuatro talleres ya digitalizaron su operación con AutoTech. Elige una reseña para destacarla.</p>
+
+            <div class="reseñas-resumen">
+                <img src="img/imgEstrellas.svg" alt="Calificación promedio: 5 de 5 estrellas">
+                <strong>5.0</strong>
+                <span>promedio entre 4 talleres aliados</span>
+            </div>
 
             <div class="reseñas-grid">
-                <article class="reseña-card">
+                <article class="reseña-card is-activa" tabindex="0" aria-pressed="true">
                     <img src="img/imgAliado.png" alt="" class="reseña-avatar">
                     <h3>Roberto Carlos</h3>
+                    <p class="reseña-rol">Dueño de taller</p>
                     <img src="img/imgEstrellas.svg" alt="Calificación: 5 de 5 estrellas" class="reseña-estrellas">
                     <p>Gracias a AutoTech, mi taller creció un 50% en solo 6 meses</p>
                 </article>
-                <article class="reseña-card">
+                <article class="reseña-card" tabindex="0" aria-pressed="false">
                     <img src="img/imgAliado.png" alt="" class="reseña-avatar">
                     <h3>Ronaldo Nazario</h3>
+                    <p class="reseña-rol">Dueño de taller</p>
                     <img src="img/imgEstrellas.svg" alt="Calificación: 5 de 5 estrellas" class="reseña-estrellas">
                     <p>Gracias a AutoTech, mi taller creció un 50% en solo 6 meses</p>
                 </article>
-                <article class="reseña-card">
+                <article class="reseña-card" tabindex="0" aria-pressed="false">
                     <img src="img/imgAliado.png" alt="" class="reseña-avatar">
                     <h3>Juan Cardenas</h3>
+                    <p class="reseña-rol">Dueño de taller</p>
                     <img src="img/imgEstrellas.svg" alt="Calificación: 5 de 5 estrellas" class="reseña-estrellas">
                     <p>Gracias a AutoTech, mi taller creció un 50% en solo 6 meses</p>
                 </article>
-                <article class="reseña-card">
+                <article class="reseña-card" tabindex="0" aria-pressed="false">
                     <img src="img/imgAliado.png" alt="" class="reseña-avatar">
                     <h3>Messi</h3>
+                    <p class="reseña-rol">Dueño de taller</p>
                     <img src="img/imgEstrellas.svg" alt="Calificación: 5 de 5 estrellas" class="reseña-estrellas">
                     <p>Gracias a AutoTech, mi taller creció un 50% en solo 6 meses</p>
                 </article>
             </div>
 
-            <ul class="aliados-logos" aria-label="Aliados comerciales">
-                <li><img src="img/imgGPT.svg" alt="OpenAI"></li>
-                <li><img src="img/imgMcDonals.svg" alt="McDonald's"></li>
-                <li><img src="img/imgWindows.svg" alt="Windows"></li>
-                <li><img src="img/imgLogoAliado.png" alt="WiFi"></li>
-                <li><img src="img/imgLogoAliado.png" alt="Meta"></li>
-            </ul>
+            <blockquote class="reseña-destacada" id="reseña-destacada">
+                <img src="img/imgAliado.png" alt="" class="reseña-avatar">
+                <div>
+                    <p>“Gracias a AutoTech, mi taller creció un 50% en solo 6 meses”</p>
+                    <cite>Roberto Carlos · Dueño de taller</cite>
+                </div>
+            </blockquote>
+
+            <p class="aliados-titulo">Aliados que confían en AutoTech</p>
+            <div class="aliados-carril">
+                <ul class="aliados-logos">
+                    <li class="aliado-torque"><img src="img/aliado-torque.svg" alt="Torque"></li>
+                    <li class="aliado-nitro"><img src="img/aliado-nitro.svg" alt="Nitro"></li>
+                    <li class="aliado-voltix"><img src="img/aliado-voltix.svg" alt="Voltix"></li>
+                    <li class="aliado-pista"><img src="img/aliado-pista.svg" alt="Pista"></li>
+                    <li class="aliado-freno"><img src="img/aliado-freno.svg" alt="Freno"></li>
+                    <li class="aliado-lubri"><img src="img/aliado-lubri.svg" alt="Lubri"></li>
+                </ul>
+                <ul class="aliados-logos" aria-hidden="true">
+                    <li class="aliado-torque"><img src="img/aliado-torque.svg" alt=""></li>
+                    <li class="aliado-nitro"><img src="img/aliado-nitro.svg" alt=""></li>
+                    <li class="aliado-voltix"><img src="img/aliado-voltix.svg" alt=""></li>
+                    <li class="aliado-pista"><img src="img/aliado-pista.svg" alt=""></li>
+                    <li class="aliado-freno"><img src="img/aliado-freno.svg" alt=""></li>
+                    <li class="aliado-lubri"><img src="img/aliado-lubri.svg" alt=""></li>
+                </ul>
+            </div>
         </section>
 
         <!-- Contacto -->
