@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proveedores - AutoGestión ERP</title>
+    <link rel="stylesheet" href="css/empleados.css">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="crud-header">
+        <a href="index.html" class="header-logo">
+            <img src="img/logo.jpeg" alt="AutoGestión ERP">
+        </a>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="empleados.html">Empleados</a>
+            <a href="proveedores.html" class="active">Proveedores</a>
+            <a href="vehiculos.html">Vehículos</a>
+            <a href="modulos.html" class="btn-volver">Volver</a>
+        </nav>
+    </header>
+
+    <!-- MAIN -->
+    <main class="crud-main">
+        <div class="crud-titulo-seccion">
+            <p>GESTIÓN DE PROVEEDORES</p>
+            <h1>PROVEEDORES DEL TALLER</h1>
+        </div>
+
+        <div class="crud-toolbar">
+            <div class="crud-busqueda">
+                <input
+                    type="text"
+                    id="inputBusqueda"
+                    placeholder="Buscar por código, razón social o NIT...">
+            </div>
+            <span class="crud-contador" id="contadorRegistros">0 de 0 registros</span>
+            <button class="btn-nuevo" id="btnNuevoProveedor">NUEVO PROVEEDOR</button>
+        </div>
+
+        <div class="tabla-contenedor">
+            <table class="tabla-crud">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Razón Social</th>
+                        <th>NIT</th>
+                        <th>Dirección</th>
+                        <th>Teléfono</th>
+                        <th>Correo</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpoTabla">
+                    <!-- Se llena dinámicamente con JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- MODAL: Crear / Editar Proveedor -->
+    <div class="modal-overlay" id="modalProveedor">
+        <div class="modal-contenido">
+            <h2 class="modal-titulo" id="modalTitulo">NUEVO PROVEEDOR</h2>
+            <p class="modal-subtitulo" id="modalSubtitulo">Registra los datos del nuevo proveedor</p>
+
+            <form id="formProveedor" novalidate>
+                <div class="form-grid">
+
+                    <div class="campo-grupo">
+                        <label for="codigo">Código único *</label>
+                        <input
+                            type="text"
+                            id="codigo"
+                            maxlength="10"
+                            placeholder="Ej: PROV001"
+                            required>
+                        <span class="campo-error" id="errorCodigo">Código inválido (3 a 10 caracteres alfanuméricos)</span>
+                    </div>
+
+                    <div class="campo-grupo">
+                        <label for="nit">NIT *</label>
+                        <input
+                            type="text"
+                            id="nit"
+                            maxlength="15"
+                            placeholder="Ej: 900123456-7"
+                            required>
+                        <span class="campo-error" id="errorNit">NIT inválido (5 a 12 dígitos, guion y dígito de verificación opcional)</span>
+                    </div>
+
+                    <div class="campo-grupo completo">
+                        <label for="razonSocial">Razón social *</label>
+                        <input
+                            type="text"
+                            id="razonSocial"
+                            maxlength="100"
+                            placeholder="Ej: Repuestos El Motor S.A.S."
+                            required>
+                        <span class="campo-error" id="errorRazonSocial">Mínimo 3 caracteres</span>
+                    </div>
+
+                    <div class="campo-grupo completo">
+                        <label for="direccion">Dirección *</label>
+                        <input
+                            type="text"
+                            id="direccion"
+                            maxlength="100"
+                            placeholder="Ej: Cra 10 # 20-30, Bogotá"
+                            required>
+                        <span class="campo-error" id="errorDireccion">Mínimo 5 caracteres</span>
+                    </div>
+
+                    <div class="campo-grupo">
+                        <label for="telefono">Teléfono *</label>
+                        <input
+                            type="text"
+                            id="telefono"
+                            maxlength="10"
+                            placeholder="Ej: 6012345678"
+                            required>
+                        <span class="campo-error" id="errorTelefono">Teléfono inválido (7 a 10 dígitos)</span>
+                    </div>
+
+                    <div class="campo-grupo">
+                        <label for="correo">Correo electrónico *</label>
+                        <input
+                            type="email"
+                            id="correo"
+                            maxlength="100"
+                            placeholder="contacto@proveedor.com"
+                            required>
+                        <span class="campo-error" id="errorCorreo">Ingresa un correo válido</span>
+                    </div>
+
+                </div>
+
+                <div class="modal-botones">
+                    <button type="button" class="btn-modal btn-cancelar" id="btnCancelar">Cancelar</button>
+                    <button type="submit" class="btn-modal btn-guardar" id="btnGuardar">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: Confirmar activar/inactivar -->
+    <div class="modal-overlay modal-confirmacion" id="modalConfirmacion">
+        <div class="modal-contenido">
+            <h2 class="modal-titulo">¿ESTÁS SEGURO?</h2>
+            <p id="textoConfirmacion">Esta acción no se puede deshacer.</p>
+            <div class="modal-botones">
+                <button type="button" class="btn-modal btn-cancelar" id="btnCancelarConfirmacion">Cancelar</button>
+                <button type="button" class="btn-modal btn-guardar" id="btnConfirmarEliminar">Sí, confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST / NOTIFICACIÓN -->
+    <div class="toast" id="toast">
+        <span id="toastMensaje">Operación exitosa</span>
+    </div>
+
+    <script src="js/proveedores.js"></script>
+</body>
+</html>

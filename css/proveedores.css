@@ -1,0 +1,587 @@
+/* ==========================================================================
+   CRUD - Proveedores (mismo estilo que Empleados)
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: #111216;
+    color: #f2f2f2;
+    font-family: Arial, sans-serif;
+    padding-top: 80px;
+}
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+.barra {
+    height: 80px;
+    padding: 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #151519;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.barra-logo img {
+    width: 70px;
+    height: auto;
+    display: block;
+}
+
+.barra-nav {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.barra-nav a {
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 15px;
+    transition: color 0.3s ease;
+}
+
+.barra-nav a:hover,
+.barra-nav a.activo {
+    color: #e3262e;
+}
+
+/* Botón VOLVER */
+.barra-nav a.btn-volver {
+    display: inline-block;
+    background-color: #e3262e;
+    color: #ffffff !important;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.barra-nav a.btn-volver:hover {
+    background-color: #b91d24;
+}
+
+/* ==========================================================================
+   MAIN
+   ========================================================================== */
+.contenedor {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 50px 40px;
+}
+
+.etiqueta {
+    margin: 0 0 15px;
+    color: #e3262e;
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    letter-spacing: 4px;
+    font-weight: bold;
+}
+
+.pagina-encabezado h1 {
+    margin: 0;
+    font-family: "Arial Narrow", Arial, sans-serif;
+    font-size: 58px;
+    font-weight: 800;
+    line-height: 0.98;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   TOOLBAR (buscador + botón nuevo)
+   ========================================================================== */
+.barra-herramientas {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin: 40px 0 25px;
+    flex-wrap: wrap;
+}
+
+.barra-herramientas input {
+    flex: 1;
+    max-width: 500px;
+    width: 100%;
+    background-color: #1a1b20;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    border: 1px solid #33353a;
+    padding: 14px 18px;
+    font-size: 15px;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.barra-herramientas input:focus {
+    border-color: #e3262e;
+}
+
+.barra-herramientas input::placeholder {
+    color: #6c757d;
+}
+
+/* ==========================================================================
+   BOTONES GENERALES
+   ========================================================================== */
+.btn {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+.btn-primario {
+    background-color: #e3262e;
+    color: #ffffff;
+}
+
+.btn-primario:hover {
+    background-color: #b91d24;
+    transform: translateY(-2px);
+}
+
+.btn-secundario {
+    background-color: transparent;
+    color: #9ba2ad;
+    border-color: #33353a;
+}
+
+.btn-secundario:hover {
+    color: #ffffff;
+    border-color: #6c757d;
+}
+
+/* ==========================================================================
+   TABLA
+   ========================================================================== */
+.tabla-wrap {
+    background-color: #151519;
+    border: 1px solid #22252a;
+    border-radius: 8px;
+    overflow: hidden;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px;
+}
+
+thead {
+    background-color: #1a1b20;
+}
+
+th {
+    padding: 18px 20px;
+    text-align: left;
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #e3262e;
+    font-weight: bold;
+    border-bottom: 2px solid #22252a;
+}
+
+td {
+    padding: 18px 20px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #e0e0e0;
+    border-bottom: 1px solid #1f2126;
+}
+
+td.placa {
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #ffffff;
+}
+
+tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+tbody tr:hover {
+    background-color: #1a1b20;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.vacio {
+    text-align: center;
+    padding: 40px;
+    color: #6c757d;
+    font-family: "Courier New", monospace;
+    font-size: 14px;
+}
+
+/* ==========================================================================
+   BOTONES DE ACCIÓN (tabla)
+   ========================================================================== */
+td.acciones-celda {
+    white-space: nowrap;
+}
+
+.acciones {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-tabla {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid #33353a;
+    background-color: transparent;
+    color: #ffffff;
+}
+
+.btn-tabla:hover {
+    border-color: #e3262e;
+    color: #e3262e;
+}
+
+.btn-tabla.eliminar {
+    color: #e3262e;
+    border-color: rgba(227, 38, 46, 0.4);
+}
+
+.btn-tabla.eliminar:hover {
+    background-color: #e3262e;
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   MODALES (dialog)
+   ========================================================================== */
+dialog {
+    margin: auto;
+    width: min(700px, 94vw);
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 0;
+    color: #f2f2f2;
+    background-color: #1a1b20;
+    border: 1px solid #33353a;
+    border-top: 5px solid #e3262e;
+    border-radius: 10px;
+}
+
+dialog.modal-chico {
+    width: min(450px, 94vw);
+}
+
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+.modal-encabezado {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 35px 40px 10px;
+}
+
+.modal-encabezado h2 {
+    margin: 0;
+    font-family: "Arial Narrow", Arial, sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+
+.btn-cerrar {
+    background: none;
+    border: none;
+    color: #9ba2ad;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.btn-cerrar:hover {
+    color: #e3262e;
+}
+
+.modal-info {
+    margin: 0;
+    color: #9ba2ad;
+    font-family: "Courier New", monospace;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+dialog form {
+    padding: 0 40px 40px;
+}
+
+form .modal-info {
+    padding: 0 0 25px;
+}
+
+dialog > .modal-info {
+    padding: 15px 40px 0;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    letter-spacing: 0;
+    text-transform: none;
+    color: #c8c8c8;
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   FORMULARIO
+   ========================================================================== */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.campo label {
+    color: #f2f2f2;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.campo input,
+.campo select {
+    width: 100%;
+    background-color: #202226;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    border: 1px solid #33353a;
+    padding: 12px 14px;
+    font-size: 15px;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.campo select {
+    cursor: pointer;
+}
+
+.campo input::placeholder {
+    color: #6c757d;
+}
+
+.campo input:focus,
+.campo select:focus {
+    border-color: #e3262e;
+    box-shadow: 0 0 0 0.2rem rgba(227, 38, 46, 0.2);
+}
+
+.campo.invalido input,
+.campo.invalido select {
+    border-color: #e3262e;
+}
+
+.error {
+    min-height: 1em;
+    color: #e3262e;
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   BOTONES DEL MODAL
+   ========================================================================== */
+.modal-pie {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 35px;
+}
+
+dialog > .modal-pie {
+    margin-top: 30px;
+    padding: 0 40px 40px;
+    justify-content: center;
+}
+
+.modal-pie .btn {
+    padding: 14px 30px;
+}
+
+/* ==========================================================================
+   AVISO / TOAST
+   ========================================================================== */
+.aviso {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #1a1b20;
+    border-left: 4px solid #28a745;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    padding: 18px 25px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    z-index: 3000;
+    max-width: 400px;
+    transform: translateX(120%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.aviso.visible {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.aviso.error-aviso {
+    border-left-color: #e3262e;
+}
+
+/* ==========================================================================
+   FOCO / ACCESIBILIDAD
+   ========================================================================== */
+.btn:focus-visible,
+.btn-cerrar:focus-visible,
+.btn-tabla:focus-visible,
+.barra-nav a:focus-visible {
+    outline: 2px solid #e3262e;
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width: 768px) {
+    body {
+        padding-top: 70px;
+    }
+
+    .barra {
+        height: 70px;
+        padding: 0 15px;
+    }
+
+    .barra-nav {
+        gap: 12px;
+    }
+
+    .barra-nav a {
+        font-size: 12px;
+    }
+
+    .barra-nav a.btn-volver {
+        padding: 8px 16px;
+        font-size: 11px;
+    }
+
+    .contenedor {
+        padding: 30px 15px;
+    }
+
+    .pagina-encabezado h1 {
+        font-size: 36px;
+        letter-spacing: -1px;
+    }
+
+    .barra-herramientas {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .barra-herramientas input {
+        max-width: 100%;
+    }
+
+    .barra-herramientas .btn {
+        width: 100%;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-encabezado {
+        padding: 25px 20px 10px;
+    }
+
+    .modal-encabezado h2 {
+        font-size: 24px;
+    }
+
+    dialog form {
+        padding: 0 20px 25px;
+    }
+
+    dialog > .modal-info {
+        padding: 15px 20px 0;
+    }
+
+    dialog > .modal-pie {
+        padding: 0 20px 25px;
+    }
+
+    .modal-pie {
+        flex-direction: column;
+    }
+
+    .modal-pie .btn {
+        width: 100%;
+    }
+}
