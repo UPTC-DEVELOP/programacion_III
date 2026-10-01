@@ -1,0 +1,308 @@
+/* ==========================================================================
+   AutoTech - Estilos propios
+   Se carga despues de style.css para poder sobrescribir la plantilla.
+   ========================================================================== */
+
+/* El menu de la plantilla es fijo: sin esto, el ancla queda tapada */
+#reseñas, #resenas, #contacto {
+    scroll-margin-top: 90px;
+}
+
+:root {
+    --at-primary: #ff4a5a;
+    --at-secondary: #F99B9B;
+    --at-text-dark: #223239;
+    --at-gray: #6C757D;
+    --at-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    --at-radius: 12px;
+}
+
+/* --- Reseñas --- */
+.resena-card {
+    background: #FFFFFF;
+    border: 1px solid #f0f0f0;
+    border-radius: var(--at-radius);
+    box-shadow: var(--at-shadow);
+    padding: 30px 25px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.resena-avatar {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    margin-bottom: 14px;
+}
+
+.resena-card .title {
+    color: var(--at-text-dark);
+    margin-bottom: 12px;
+}
+
+.resena-estrellas {
+    width: 55px;
+    height: auto;
+    margin-bottom: 16px;
+}
+
+.resena-card .exeption {
+    font-size: 14px;
+    color: var(--at-gray);
+    max-width: 24ch;
+    margin: 0 auto;
+}
+
+/* --- Logos de aliados --- */
+.aliados-logos {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 25px;
+    max-width: 1000px;
+    margin: 50px auto 0;
+    padding: 0;
+}
+
+.aliados-logos li {
+    background-color: #F8F9FA;
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.aliados-logos img {
+    height: 26px;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: 0.75;
+    transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+.aliados-logos img:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+/* --- Contacto --- */
+#contacto .tag-rojo {
+    display: block;
+    color: var(--at-primary);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+#contacto .contacto-titulo {
+    color: var(--at-text-dark);
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.contacto-lista {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin: 30px 0;
+    padding: 0;
+}
+
+.contacto-lista li {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    text-align: left;
+}
+
+.contacto-lista .icon {
+    background-color: #FEE2E2;
+    border-radius: 8px;
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.contacto-lista .lista-texto strong {
+    display: block;
+    color: var(--at-text-dark);
+    margin-bottom: 2px;
+}
+
+.contacto-lista .lista-texto p {
+    font-size: 14px;
+    color: var(--at-gray);
+    margin: 0;
+}
+
+.contacto-imagen {
+    margin: 0;
+}
+
+.contacto-imagen img {
+    display: block;
+    width: 100%;
+    height: auto;
+    mix-blend-mode: multiply;
+}
+
+.contacto-accion {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.contacto-accion .btn-rosa {
+    background-color: var(--at-secondary);
+    color: var(--at-text-dark);
+    border: none;
+    border-radius: 4px;
+    padding: 12px 24px;
+    font-weight: 700;
+    font-size: 14px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.contacto-accion .btn-rosa:hover {
+    background-color: #f77b7b;
+    transform: scale(1.05);
+}
+
+.contacto-accion .accion-texto {
+    font-size: 13px;
+    color: var(--at-gray);
+    line-height: 1.4;
+}
+
+/* --- Formulario --- */
+.formulario-card {
+    background-color: #FFFFFF;
+    border-radius: var(--at-radius);
+    box-shadow: var(--at-shadow);
+    padding: 35px 30px;
+}
+
+.formulario-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.formulario-titulo {
+    display: inline-block;
+    background-color: var(--at-secondary);
+    color: var(--at-text-dark);
+    border-radius: 6px;
+    padding: 5px 15px;
+    margin: 0;
+}
+
+.formulario-header .icon-menu {
+    font-size: 22px;
+    color: var(--at-text-dark);
+}
+
+.formulario-card .form-group {
+    margin-bottom: 18px;
+}
+
+.formulario-card label {
+    display: block;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--at-text-dark);
+    margin-bottom: 8px;
+}
+
+.formulario-card input[type="text"],
+.formulario-card input[type="email"],
+.formulario-card input[type="tel"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #FFFFFF;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.formulario-card input:focus {
+    outline: none;
+    border-color: var(--at-primary);
+}
+
+.formulario-card .form-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.formulario-card .form-check input {
+    width: auto;
+    margin-top: 3px;
+    accent-color: var(--at-primary);
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.formulario-card .form-check label {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--at-gray);
+    cursor: pointer;
+}
+
+.formulario-card .btn-submit {
+    width: 50%;
+    background-color: var(--at-secondary);
+    color: var(--at-text-dark);
+    border: none;
+    border-radius: 4px;
+    padding: 12px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.formulario-card .btn-submit:hover {
+    background-color: #f77b7b;
+}
+
+/* --- Responsive --- */
+@media (max-width: 991px) {
+    .formulario-card {
+        margin-top: 40px;
+    }
+
+    .contacto-accion {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 575px) {
+    .formulario-card .btn-submit {
+        width: 100%;
+    }
+}
