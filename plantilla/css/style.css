@@ -5,39 +5,38 @@
    ===================================================================== */
 
 :root {
-  /* Charcoal / graphite base */
-  --tq-ink:        #121417;   /* near-black base */
-  --tq-graphite:   #191C21;   /* dark surface */
-  --tq-graphite-2: #21252C;   /* dark card */
-  --tq-graphite-3: #2A2F37;   /* raised dark */
-  --tq-line-dark:  #31363F;   /* dark borders */
+  /* Fondos oscuros */
+  --tq-ink:        #111216;   /* fondo principal oscuro (hero, contacto, nosotros) */
+  --tq-graphite:   #151519;   /* encabezado, métricas */
+  --tq-graphite-2: #1a1b20;   /* tarjetas oscuras */
+  --tq-graphite-3: #202226;   /* campos de formulario / elementos elevados */
+  --tq-line-dark:  #33353a;   /* bordes en oscuro */
 
-  /* Steel neutrals */
-  --tq-steel:      #8C96A4;   /* muted text on dark */
-  --tq-steel-2:    #B9C1CC;   /* secondary on dark */
-  --tq-paper:      #EEF1F5;   /* light section bg */
-  --tq-paper-2:    #E2E7EE;   /* light alt / borders */
-  --tq-line:       #D3DAE3;   /* light borders */
-  --tq-white:      #FFFFFF;
+  /* Neutros */
+  --tq-steel:      #9ba2ad;   /* texto atenuado sobre oscuro */
+  --tq-steel-2:    #c8c8c8;   /* texto secundario sobre oscuro */
+  --tq-paper:      #f4f1eb;   /* fondo crema de secciones claras */
+  --tq-paper-2:    #dcd8ce;   /* crema alterno / bordes suaves */
+  --tq-line:       #d4d0c5;   /* bordes en claro */
 
-  /* Text on light */
-  --tq-body:       #4B535F;   /* body copy on light */
-  --tq-heading:    #16191D;   /* headings on light */
+  /* Texto sobre claro */
+  --tq-body:       #74777b;   /* párrafos */
+  --tq-heading:    #151519;   /* títulos */
 
-  /* Accent — safety orange (committed) */
+  /* Acento: rojo AutoGestión */
   --tq-orange:     #e3262e;
   --tq-orange-600: #e3262e;
   --tq-orange-700: #b91d24;
-  --tq-orange-soft:#FFE7D6;
+  --tq-orange-soft:#fbe3e4;
 
-  --tq-green:      #2FBF71;   /* checks / open */
-  --tq-radius:     4px;       /* deliberately sharp, mechanical */
+    --tq-white:      #FFFFFF;
+  --tq-green:      #2FBF71;
+  --tq-radius:     4px;
   --tq-radius-lg:  6px;
   --tq-shadow:     0 18px 40px -22px rgba(9, 11, 14, .55);
   --tq-shadow-sm:  0 8px 22px -14px rgba(9, 11, 14, .45);
-
-  --tq-display: "Saira Condensed", "Arial Narrow", sans-serif;
-  --tq-body-font: "Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --tq-display:    "Saira Condensed", "Arial Narrow", sans-serif;
+  --tq-body-font:  "Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 /* ---------------- Base ---------------- */
@@ -743,3 +742,105 @@ body.tq-lock { overflow: hidden; }
   .tq-footer-grid { grid-template-columns: 1fr; }
   .tq-stat { padding: .5rem; }
 }
+
+/* PALETA AUTOGESTIÓN ERP - secciones*/
+
+/*  Logo en navbar y footer  */
+.tq-brand img { height: 40px; width: auto; }
+
+/* Hero: espacio inferior para que se vean las etiquetas  */
+.tq-hero--home { padding-bottom: 3.5rem; }
+
+/*  Barra de estadísticas del hero con 3 columnas */
+.tq-trust.tq-trust--3 { grid-template-columns: repeat(3, 1fr); }
+
+@media (max-width: 767px) {
+  .tq-trust.tq-trust--3 .tq-trust-item:nth-child(2) { border-right: 1px solid var(--tq-line-dark); }
+  .tq-trust.tq-trust--3 .tq-trust-item:nth-child(1),
+  .tq-trust.tq-trust--3 .tq-trust-item:nth-child(2) { border-bottom: 0; }
+  .tq-trust.tq-trust--3 .tq-trust-item:last-child { border-right: 0; }
+}
+@media (max-width: 575px) {
+  .tq-trust.tq-trust--3 { grid-template-columns: 1fr; }
+  .tq-trust.tq-trust--3 .tq-trust-item { border-right: 0; border-bottom: 1px solid var(--tq-line-dark); }
+  .tq-trust.tq-trust--3 .tq-trust-item:last-child { border-bottom: 0; }
+}
+
+/*  Encabezado de sección con más aire  */
+.tq-shead--spaced { margin-bottom: 3rem; }
+
+/*  Proceso: 4 pasos  */
+.tq-steps.tq-steps--4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 991px) { .tq-steps.tq-steps--4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 767px) { .tq-steps.tq-steps--4 { grid-template-columns: 1fr; } }
+
+/*  Quiénes somos  */
+.tq-about h3 { font-size: 1.5rem; margin: 1.6rem 0 .5rem; }
+.tq-about h3:first-child { margin-top: 0; }
+.tq-about-values { padding-left: 1.2rem; margin: 0; }
+.tq-about-values li { margin-bottom: .35rem; }
+
+.tq-about-team { display: grid; gap: 1rem; margin-top: 1.2rem; }
+.tq-about-member {
+  display: flex; align-items: center; gap: 1rem; padding: 1rem 1.2rem;
+  background: #fff; border: 1px solid var(--tq-line); border-radius: var(--tq-radius-lg);
+}
+.tq-about-member h4 { font-size: 1.3rem; margin: 0; }
+.tq-about-member span:not(.tq-avatar) { font-size: .9rem; color: var(--tq-steel); }
+.tq-avatar {
+  flex: none; width: 52px; height: 52px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--tq-orange); color: #fff;
+  font-family: var(--tq-display); font-size: 1.5rem; font-weight: 700;
+}
+
+.tq-about-cert { margin-top: 3rem; }
+.tq-about-cert ul { margin: 0; padding-left: 1.2rem; }
+.tq-about-cert li { margin-bottom: .4rem; }
+
+/* PALETA AUTOGESTIÓN ERP */
+
+/* 2. Colores escritos a mano en la plantilla */
+.tq-btn--accent { box-shadow: 0 10px 20px -10px rgba(227, 38, 46, .7); }
+.tq-btn--ghost:hover { background: rgba(227, 38, 46, .1); }
+
+.tq-hero-flag { background: rgba(227, 38, 46, .14); border-color: rgba(227, 38, 46, .4); }
+
+.tq-field input:focus,
+.tq-field select:focus,
+.tq-field textarea:focus { box-shadow: 0 0 0 3px rgba(227, 38, 46, .16); }
+
+.tq-why-ico { background: rgba(227, 38, 46, .12); border-color: rgba(227, 38, 46, .28); }
+.tq-dark .tq-why-ico { background: rgba(227, 38, 46, .16); }
+
+.tq-map-diag { background: repeating-linear-gradient(-45deg, transparent 0 40px, rgba(227, 38, 46, .05) 40px 41px); }
+.tq-map-pin-dot { box-shadow: 0 0 0 8px rgba(227, 38, 46, .2); }
+
+/* Grises azulados escritos a mano -> grises de la landing */
+.tq-nav { background: rgba(21, 21, 25, .98); }
+.tq-hero-bg::after {
+  background: linear-gradient(100deg, rgba(17, 18, 22, .97) 0%, rgba(17, 18, 22, .86) 42%, rgba(17, 18, 22, .55) 100%);
+}
+.tq-banner-bg::after { background: linear-gradient(90deg, rgba(17, 18, 22, .95), rgba(17, 18, 22, .7)); }
+.tq-hazard-thin {
+  background-image: repeating-linear-gradient(-45deg, var(--tq-orange) 0, var(--tq-orange) 12px, var(--tq-graphite) 12px, var(--tq-graphite) 24px);
+}
+
+/* 3. Quiénes somos sobre fondo oscuro */
+.tq-about h3 { color: var(--tq-orange); }
+.tq-about p,
+.tq-about-values { color: var(--tq-steel-2); }
+
+.tq-about-member { background: var(--tq-graphite-2); border-color: var(--tq-line-dark); }
+.tq-about-member h4 { color: #fff; }
+.tq-about-member span:not(.tq-avatar) { color: var(--tq-steel); }
+
+/* Certificaciones: caja oscura con borde rojo a la izquierda */
+.tq-dark .tq-faq details { background: var(--tq-graphite-2); border-color: var(--tq-line-dark); border-left: 4px solid var(--tq-orange); }
+.tq-dark .tq-faq summary { color: #fff; }
+.tq-dark .tq-faq summary .tq-faq-ico { background: var(--tq-graphite-3); }
+.tq-dark .tq-faq summary .tq-faq-ico::before,
+.tq-dark .tq-faq summary .tq-faq-ico::after { background: #fff; }
+.tq-dark .tq-faq-body { color: var(--tq-steel-2); }
+.tq-dark .tq-about-cert li { border-bottom: 1px solid var(--tq-line-dark); padding: .5rem 0; margin: 0; }
+.tq-dark .tq-about-cert li:last-child { border-bottom: 0; }
