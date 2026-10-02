@@ -1,110 +1,142 @@
 <!DOCTYPE html>
-<html lang ="es">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
- 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
   <title>TallerMax | Gestión de Autos</title>
+  <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/estilosAutos.css">
 </head>
 
 <body>
-    <header class="encabezado">
-        <div class="encabezado__marca">
-            <span class="encabezado__icono" aria-hidden="true">🚗</span>
-            <div>
-                <h1>Taller Max</h1>
-                <p>Módulo: Gestión de Autos</p>
-            </div>
-        </div>
-    </header>
+
+    <!-- Encabezado del Sitio es el mismo de index.html, para mantener la misma navegación) -->
+  <header class="encabezado-sitio">
+    <p class="logo">
+      <img src="img/Tuerca_encabezado.jpg" alt="" width="28" height="28">
+      <span>TALLER<span class="resaltado">MAX</span></span>
+    </p>
+
+    <nav class="menu-principal" aria-label="Navegación principal">
+      <ul>
+        <li><a href="index.html#servicios">Servicios</a></li>
+        <li><a href="index.html#nosotros">Nosotros</a></li>
+        <li><a href="index.html#beneficios">Beneficios</a></li>
+        <li><a href="index.html#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <!-- Menú desplegable para registrar autos, clientes o empleados -->
+    <nav class="menu-registro" aria-label="Menú de registro">
+      <button type="button" class="boton boton-secundario boton-pequeno boton-registro"
+        id="botonRegistro" aria-expanded="false" aria-controls="listaRegistro">
+        Registro <span class="icono-flecha" aria-hidden="true">▾</span>
+      </button>
+
+      <ul class="lista-registro" id="listaRegistro" hidden>
+        <li><a href="autos.html">Registrar auto</a></li>
+        <li><a href="clientes.html">Registrar cliente</a></li>
+        <li><a href="empleados.html">Registrar empleado</a></li>
+      </ul>
+    </nav>
+
+    <a href="index.html#contacto" class="boton boton-primario boton-pequeno">Prueba gratis 15 días</a>
+  </header>
 
     <main class="contenedor">
         
         <div id="mensaje" class="mensaje mensaje--oculto" role="status"></div>
+    
+        <header class="encabezado-pagina">
+           <h1 id="autos-title">Autos</h1>
+           <p class="ubicacion-taller">Taller · Tunja, Boyacá</p>
+       </header>
 
-        <!-- SECCIÓN 1: FORMULARIO -->
-        <section class="tarjeta">
+        <!-- Barra: buscador + botón agregar -->
+        <div class="barra-superior">
+           <label for="buscar" class="etiqueta-oculta">Buscar auto</label>
+           <input type="search" id="buscar" class="campo-busqueda" placeholder="Buscar por placa o cédula del dueño" autocomplete="off">
+           <button type="button" id="btnAgregar" class="boton boton-primario">
+           <span class="boton__texto">+ Agregar auto</span>
+           </button>
+       </div>
+
+        <section class="tarjeta tarjeta-form oculto" id="tarjetaForm" aria-labelledby="tituloFormulario">
+
+            <!-- SECCIÓN 1: FORMULARIO -->
             <h2 id="tituloFormulario"> Registro de auto</h2>
 
             <form id="formAuto" novalidate>
 
-                <!--Campo: placa-->
-                <div class="campo">
-                    <label for="placa">Placa</label>
-                    <input type="text" id="placa" name="placa" maxlenght="6" placeholder="Ej: ABC123" autocomplete="off">
-                    <small class="ayuda">Formato: 3 letras + 3 números (Ej: ABC123). Debe ser única.</small>
-                    <span class="error" id="errorPlaca"></span>
+                <div class="formulario-grid">
+
+                    
+
+                    <!--Campo: placa-->
+                    <div class="campo">
+                        <label for="placa">Placa</label>
+                        <input type="text" id="placa" name="placa" maxlength="6" placeholder="Ej: ABC123" autocomplete="off">
+                        <small class="ayuda">Formato: 3 letras + 3 números (Ej: ABC123). Debe ser única.</small>
+                        <span class="error" id="errorPlaca"></span>
+                    </div>
+
+
+                    <!--Campo: modelo-->
+                    <div class="campo">
+                        <label for="modelo">Modelo (año)</label>
+                        <input type="text" id="modelo" name="modelo" maxlength="4" inputmode="numeric" placeholder="Ej: 2025" autocomplete="off">
+                        <small class="ayuda">Año del vehículo, 4 dígitos.</small>
+                        <span class="error" id="errorModelo"></span>
+                    </div>
+
+                    <!-- Campo: color -->
+                    <div class="campo">
+                        <label for="color">Color</label>
+                        <input type="text" id="color" name="color" maxlength="30" placeholder="Ej: Rojo" autocomplete="off">
+                        <small class="ayuda">Máximo 30 caracteres.</small>
+                        <span class="error" id="errorColor"></span>
+                    </div>
+
+                    <!-- Campo: cédula del dueño -->
+                    <div class="campo">
+                        <label for="cedulaDueno">Cédula del dueño</label>
+                        <input type="text" id="cedulaDueno" name="cedulaDueno" maxlength="10" inputmode="numeric" placeholder="Ej: 1015896321" autocomplete="off">
+                        <small class="ayuda">Debe corresponder a un cliente ya registrado.</small>
+                        <span class="error" id="errorCedulaDueno"></span>
+                    </div>
+
+                    <!-- Campo: fecha de ingreso -->
+                    <div class="campo">
+                        <label for="fechaIngreso">Fecha de ingreso</label>
+                        <input type="date" id="fechaIngreso" name="fechaIngreso">
+                        <small class="ayuda">Día en que el auto ingresa al taller.</small>
+                        <span class="error" id="errorFechaIngreso"></span>
+                    </div>
+
+                    <!-- Campo: hora de ingreso -->
+                    <div class="campo">
+                        <label for="horaIngreso">Hora de ingreso</label>
+                        <input type="time" id="horaIngreso" name="horaIngreso">
+                        <small class="ayuda">Hora en que el auto ingresa al taller.</small>
+                        <span class="error" id="errorHoraIngreso"></span>
+                    </div>
                 </div>
-
-
-                <!--Campo: modelo-->
-                <div class="campo">
-                    <label for="modelo">Modelo (año)</label>
-                    <input type="text" id="modelo" name="modelo" maxlenght="4" inputmode="numeric" placeholder="Ej: 2025" autocomplete="off">
-                    <small class="ayuda">Año del vehículo, 4 dígitos.</small>
-                    <span class="error" id="errorModelo"></span>
-                </div>
-
-                <!-- Campo: color -->
-                <div class="campo">
-                    <label for="color">Color</label>
-                    <input type="text" id="color" name="color" maxlength="30" placeholder="Ej: Rojo" autocomplete="off">
-                    <small class="ayuda">Máximo 30 caracteres.</small>
-                    <span class="error" id="errorColor"></span>
-                </div>
-
-                <!-- Campo: cédula del dueño -->
-                <div class="campo">
-                     <label for="cedulaDueno">Cédula del dueño</label>
-                    <input type="text" id="cedulaDueno" name="cedulaDueno" maxlength="10" inputmode="numeric placeholder="Ej: 1015896321" autocomplete="off">
-                    <small class="ayuda">Debe corresponder a un cliente ya registrado.</small>
-                    <span class="error" id="errorCedulaDueno"></span>
-                </div>
-
-                <!-- Campo: fecha de ingreso -->
-                <div class="campo">
-                    <label for="fechaIngreso">Fecha de ingreso</label>
-                    <input type="date" id="fechaIngreso" name="fechaIngreso">
-                    <small class="ayuda">Día en que el auto ingresa al taller.</small>
-                    <span class="error" id="errorFechaIngreso"></span>
-                </div>
-
-                <!-- Campo: hora de ingreso -->
-                <div class="campo">
-                    <label for="horaIngreso">Hora de ingreso</label>
-                    <input type="time" id="horaIngreso" name="horaIngreso">
-                    <small class="ayuda">Hora en que el auto ingresa al taller.</small>
-                    <span class="error" id="errorHoraIngreso"></span>
-                </div>
-
                 <!-- Campo oculto: guarda la placa original cuando estamos actualizando -->
                 <input type="hidden" id="placaOriginal" value="">
 
                 <div class="botones">
-                    <button type="submit" id="btnGuardar" class="boton boton--primario">
-                    <span class="boton__texto">Registrar auto</span>
+                    <button type="button" id="btnCancelar" class="boton boton-secundario">Cancelar</button>
+                    <button type="submit" id="btnGuardar" class="boton boton-primario">
+                    <span class="boton__texto">Guardar</span>
                     </button>
-                    <button type="button" id="btnCancelar" class="boton boton--secundario oculto">Cancelar edición</button>
-                    <button type="reset" class="boton boton--fantasma">Limpiar</button>
                 </div>
 
             </form>
         </section>
-
-        <!--  SECCIÓN 2: BÚSQUEDA  -->
-        <section class="tarjeta">
-            <h2> Consultar auto</h2>
-            <div class="busqueda">
-                <input type="text" id="buscar" placeholder="Buscar por placa o cédula del dueño" autocomplete="off">
-                <button type="button" id="btnBuscar" class="boton boton--primario">Buscar</button>
-                <button type="button" id="btnLimpiarBusqueda" class="boton boton--fantasma">Ver todos</button>
-            </div>
-        </section>
-
         <!--  SECCIÓN 3: LISTADO  -->
-        <section class="tarjeta">
-            <h2>Autos Registrados</h2>
+        <section class="tarjeta" aria-label="Autos registrados">
             <div class="tabla-envoltorio">
                 <table id="tablaAutos">
                     <thead>
@@ -124,11 +156,28 @@
         </section>
     </main>
 
-    <footer class="pie">
-     <p>TallerMax · Gestión de Autos</p>
-    </footer>
+ <!-- Pie de Página (igual al de index.html) -->
+  <footer class="pie-de-pagina" id="footer">
+    <p class="marca-footer">
+      <span class="texto-logo">TALLER<span class="resaltado">MAX</span></span><br>
+      Software de gestión para talleres mecánicos.
+    </p>
 
-    <script src="/Original/js/scriptAutos.js"></script>
+    <nav class="columna-footer" aria-label="Mapa del sitio">
+      <ul>
+        <li class="titulo-columna">Mapa del sitio</li>
+        <li><a href="index.html#servicios">Servicios</a></li>
+        <li><a href="index.html#nosotros">Nosotros</a></li>
+        <li><a href="index.html#beneficios">Beneficios</a></li>
+        <li><a href="index.html#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <p class="linea-copyright">© <span id="year"></span> TallerMax. Todos los derechos reservados - Calidad y servicio garantizado.</p>
+  </footer>
+
+    <script src="js/script.js"></script>
+    <script src="js/scriptAutos.js"></script>
 
 </body>
 </html>
