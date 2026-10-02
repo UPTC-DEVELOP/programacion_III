@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clientes — TallerMax</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/clientes.css">
+</head>
+
+<body>
+
+  <!-- Encabezado del Sitio (igual al de index.html, para mantener la misma navegación) -->
+  <header class="encabezado-sitio">
+    <p class="logo">
+      <img src="img/Tuerca_encabezado.jpg" alt="" width="28" height="28">
+      <span>TALLER<span class="resaltado">MAX</span></span>
+    </p>
+
+    <nav class="menu-principal" aria-label="Navegación principal">
+      <ul>
+        <li><a href="index.html#servicios">Servicios</a></li>
+        <li><a href="index.html#nosotros">Nosotros</a></li>
+        <li><a href="index.html#beneficios">Beneficios</a></li>
+        <li><a href="index.html#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <!-- Menú desplegable para registrar autos, clientes o empleados -->
+    <nav class="menu-registro" aria-label="Menú de registro">
+      <button type="button" class="boton boton-secundario boton-pequeno boton-registro"
+        id="botonRegistro" aria-expanded="false" aria-controls="listaRegistro">
+        Registro <span class="icono-flecha" aria-hidden="true">▾</span>
+      </button>
+
+      <ul class="lista-registro" id="listaRegistro" hidden>
+        <li><a href="autos.html">Registrar auto</a></li>
+        <li><a href="clientes.html">Registrar cliente</a></li>
+        <li><a href="empleados.html">Registrar empleado</a></li>
+      </ul>
+    </nav>
+
+    <a href="index.html#contacto" class="boton boton-primario boton-pequeno">Prueba gratis 15 días</a>
+  </header>
+
+  <main id="main">
+
+    <!-- Panel de CLIENTES -->
+    <section class="seccion panel-clientes" id="clientes" aria-labelledby="clientes-title">
+
+      <h1 id="clientes-title">Clientes</h1>
+      <p class="ubicacion-taller">Taller · Tunja, Boyacá</p>
+
+      <!-- Buscador  -->
+      <p class="barra-acciones-clientes">
+        <label for="buscarCliente" class="etiqueta-oculta">Buscar cliente</label>
+        <input type="search" id="buscarCliente" class="campo-busqueda" placeholder="Buscar por nombre o cédula...">
+
+        <button type="button" id="botonNuevoCliente" class="boton boton-primario boton-pequeno"
+          aria-expanded="false" aria-controls="formularioNuevoCliente">
+          + Nuevo cliente
+        </button>
+      </p>
+
+      <!-- Formulario para registrar o editar un cliente (oculto hasta que se necesite) -->
+      <form id="formularioNuevoCliente" class="formulario-cliente" novalidate hidden>
+        <h2 id="tituloFormularioCliente">Nuevo cliente</h2>
+
+        <!-- Si tiene un ID, el formulario está editando ese cliente; si está vacío, es uno nuevo -->
+        <input type="hidden" id="clienteIdEditando" value="">
+
+        <p class="campo-formulario">
+          <label for="nombreCliente">Nombres</label>
+          <input type="text" id="nombreCliente" name="nombreCliente" placeholder="Ej. Juan Pérez" required>
+          <span class="error-campo" data-error-for="nombreCliente"></span>
+        </p>
+
+        <p class="campo-formulario">
+          <label for="cedulaCliente">Cédula o NIT</label>
+          <input type="text" id="cedulaCliente" name="cedulaCliente" placeholder="Ej. 1000123456" required>
+          <span class="error-campo" data-error-for="cedulaCliente"></span>
+        </p>
+
+        <p class="campo-formulario">
+          <label for="telefonoCliente">Teléfono</label>
+          <input type="tel" id="telefonoCliente" name="telefonoCliente" placeholder="Ej. 3000000000" required>
+          <span class="error-campo" data-error-for="telefonoCliente"></span>
+        </p>
+
+        <p class="campo-formulario">
+          <label for="correoCliente">Correo</label>
+          <input type="email" id="correoCliente" name="correoCliente" placeholder="correo@ejemplo.com" required>
+          <span class="error-campo" data-error-for="correoCliente"></span>
+        </p>
+
+        <p class="campo-formulario">
+          <label for="direccionCliente">Dirección</label>
+          <input type="text" id="direccionCliente" name="direccionCliente" placeholder="Ej. Cra 5 # 10-20" required>
+          <span class="error-campo" data-error-for="direccionCliente"></span>
+        </p>
+
+        <p class="botones-formulario-cliente">
+          <button type="button" id="botonCancelarCliente" class="boton boton-secundario boton-pequeno">Cancelar</button>
+          <button type="submit" class="boton boton-primario boton-pequeno">Guardar</button>
+        </p>
+
+        <p class="estado-formulario" id="estadoFormularioCliente" role="status" aria-live="polite"></p>
+      </form>
+
+      <!-- Tabla con la lista de clientes registrados -->
+      <table class="tabla-clientes" id="tablaClientes">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Cédula</th>
+            <th scope="col">Teléfono</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Autos</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="cuerpoTablaClientes">
+          <!-- Las filas se generan dinámicamente desde js/clientes.js -->
+        </tbody>
+      </table>
+
+      <p class="mensaje-sin-resultados" id="mensajeSinClientes" hidden>No se encontraron clientes con esos datos.</p>
+
+    </section>
+
+  </main>
+
+  <!-- Pie de Página (igual al de index.html) -->
+  <footer class="pie-de-pagina" id="footer">
+    <p class="marca-footer">
+      <span class="texto-logo">TALLER<span class="resaltado">MAX</span></span><br>
+      Software de gestión para talleres mecánicos.
+    </p>
+
+    <nav class="columna-footer" aria-label="Mapa del sitio">
+      <ul>
+        <li class="titulo-columna">Mapa del sitio</li>
+        <li><a href="index.html#servicios">Servicios</a></li>
+        <li><a href="index.html#nosotros">Nosotros</a></li>
+        <li><a href="index.html#beneficios">Beneficios</a></li>
+        <li><a href="index.html#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <p class="linea-copyright">© <span id="year"></span> TallerMax. Todos los derechos reservados - Calidad y servicio garantizado.</p>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script src="js/clientes.js"></script>
+</body>
+
+</html>
