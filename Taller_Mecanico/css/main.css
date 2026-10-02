@@ -3192,5 +3192,345 @@ span.flatpickr-weekday {
     color: var(--brand-lime) !important;
 }
 
+/* ========================================================
+   LJA MOTORS - DESIGN SYSTEM & THEME
+   File: assets/css/main.css
+   ======================================================== */
 
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  /* 1. Fondo general y tarjetas (Estética SaaS Limpia) */
+  --bs-body-bg: #f8fafc;
+  --bs-body-font-family: 'Plus Jakarta Sans', sans-serif;
+  --card-bg: #ffffff;
+  --border-subtle: #e2e8f0;
+  
+  /* 2. Colores Corporativos LJA MOTORS */
+  --brand-navy-dark: #091322;      /* Fondo Sidebar */
+  --brand-navy-card: #0f1f38;      /* Hover en Sidebar */
+  --brand-action-blue: #1e3a6d;    /* Azul sólido para botones CTA unificados */
+  --brand-action-hover: #15294f;   /* Hover de botones CTA */
+  --brand-lime: #b6f300;           /* Acento Amarillo Lima */
+  
+  /* 3. Tipografía */
+  --text-primary: #0f172a;
+  --text-muted: #64748b;
+  --text-sidebar: #cbd5e1;
+  --text-sidebar-muted: #94a3b8;
+
+  /* 4. Layout */
+  --sidebar-width: 260px;
+  --topbar-height: 70px;
+}
+
+/* Base */
+body {
+  background-color: var(--bs-body-bg);
+  font-family: var(--bs-body-font-family);
+  color: var(--text-primary);
+  margin: 0;
+  overflow-x: hidden;
+}
+
+/* ========================================================
+   SIDEBAR
+   ======================================================== */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--sidebar-width);
+  background-color: var(--brand-navy-dark);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-header {
+  height: var(--topbar-height);
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+
+.sidebar-brand img {
+  height: 38px;
+  width: auto;
+  border-radius: 6px;
+}
+
+.sidebar-brand-title {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1.05rem;
+  line-height: 1.2;
+}
+
+.sidebar-brand-subtitle {
+  color: var(--text-sidebar-muted);
+  font-size: 0.75rem;
+  display: block;
+}
+
+.sidebar-nav {
+  padding: 1.25rem 0.75rem;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.sidebar-section-title {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #475569;
+  font-weight: 700;
+  padding: 0.5rem 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.nav-item-link {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.65rem 0.85rem;
+  color: var(--text-sidebar);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  margin-bottom: 0.25rem;
+}
+
+.nav-item-link:hover {
+  background-color: var(--brand-navy-card);
+  color: #ffffff;
+}
+
+.nav-item-link.active {
+  background-color: #1e293b;
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: inset 3px 0 0 var(--brand-lime);
+}
+
+.sidebar-footer {
+  padding: 1rem 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ========================================================
+   MAIN CONTENT & HEADER
+   ======================================================== */
+.main-wrapper {
+  margin-left: var(--sidebar-width);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.top-navbar {
+  height: var(--topbar-height);
+  background-color: var(--card-bg);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 900;
+}
+
+.page-title-group h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.page-subtitle {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+/* ========================================================
+   BOTÓN UNIFICADO CTA (Idéntico en Navbar y en Tablas)
+   ======================================================== */
+.btn-lja-primary {
+  background-color: var(--brand-action-blue) !important;
+  border: 1px solid var(--brand-action-blue) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  font-size: 0.875rem !important;
+  padding: 0.5rem 1.15rem !important;
+  border-radius: 8px !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 4px rgba(30, 58, 109, 0.2);
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-lja-primary:hover,
+.btn-lja-primary:focus {
+  background-color: var(--brand-action-hover) !important;
+  border-color: var(--brand-action-hover) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 8px rgba(30, 58, 109, 0.3);
+  transform: translateY(-1px);
+}
+
+/* Dropdown Cascada */
+.dropdown-menu-quick {
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+  min-width: 250px;
+}
+
+.dropdown-menu-quick .dropdown-header {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.dropdown-menu-quick .dropdown-item {
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.55rem 1rem;
+}
+
+.dropdown-menu-quick .dropdown-item:hover {
+  background-color: #f1f5f9;
+}
+
+/* ========================================================
+   FILA 1: TARJETAS KPI
+   ======================================================== */
+.card-kpi {
+  background: var(--card-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  padding: 1.25rem;
+}
+
+.kpi-icon-container {
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+}
+
+.bg-purple-soft { background-color: #f3e8ff; color: #7c3aed; }
+.bg-red-soft { background-color: #ffe4e6; color: #e11d48; }
+.bg-slate-soft { background-color: #f1f5f9; color: #64748b; }
+.bg-blue-soft { background-color: #e0f2fe; color: #0284c7; }
+
+/* ========================================================
+   FILA 2: MÓDULOS DE ACCESO RÁPIDO
+   ======================================================== */
+.quick-module-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 0.5rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  text-decoration: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease;
+}
+
+.quick-module-btn:hover {
+  transform: translateY(-2px);
+  border-color: #cbd5e1;
+  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.06);
+}
+
+.quick-module-btn i {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.quick-module-btn span {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+/* ========================================================
+   FILA 3: TABLA DE SERVICIOS
+   ======================================================== */
+.card-table {
+  background: var(--card-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.badge-status {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+}
+
+.badge-process {
+  background-color: #e0f2fe;
+  color: #0369a1;
+}
+
+.dot-pulse {
+  width: 6px;
+  height: 6px;
+  background-color: #0369a1;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.badge-finished {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.btn-table-action {
+  background-color: #f8fafc;
+  border: 1px solid var(--border-subtle);
+  color: #475569;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 0.25rem 0.85rem;
+  text-decoration: none;
+}
+
+.btn-table-action:hover {
+  background-color: #e2e8f0;
+  color: var(--text-primary);
+}
 

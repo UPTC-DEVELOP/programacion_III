@@ -25,7 +25,7 @@ body {
 }
 
 /* ==========================================================================
-   COLUMNA IZQUIERDA (Estilo del Bloque 3 original tuyo)
+   COLUMNA IZQUIERDA (Estilo del Bloque 3 
    ========================================================================== */
 .columna-izquierda {
     flex: 1;
@@ -35,15 +35,15 @@ body {
     padding: 3rem 4rem;
     position: relative;
     
-    /* Tu fondo original adaptado */
+    /*  fondo original adaptado */
     background-image: 
-        linear-gradient(to right, rgba(7, 11, 25, 0.98) 50%, rgba(7, 11, 25, 0.85) 100%),
-        url('../assets/Mechanical_engineer_scanning_car…_2K_20260912132231.jpeg'); 
+        linear-gradient(to right, rgba(7, 11, 25, 0.98) 30%, rgba(7, 11, 25, 0.85) 100%),
+        url('../assets/imagenes/73039.jpg'); 
     background-size: cover;
     background-position: center;
 }
 
-/* Tu efecto de resplandor LED azul de fondo */
+/*  efecto de resplandor LED azul de fondo */
 .columna-izquierda::before {
     content: '';
     position: absolute;
