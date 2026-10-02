@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes - AutoTech</title>
+    <link rel="stylesheet" href="crud.css">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-logo">
+            <a href="../index.html">
+                <img src="../img/Logo.jpeg" alt="AutoTech - Sistema de Gestión para Talleres">
+            </a>
+        </div>
+        <nav aria-label="Navegación principal">
+            <ul>
+                <li><a href="clientes.html" class="active">Clientes</a></li>
+                <li><a href="vehiculos.html">Vehículos</a></li>
+                <li><a href="empleados.html">Empleados</a></li>
+                <li><a href="repuestos.html">Repuestos</a></li>
+                <li><a href="proveedores.html">Proveedores</a></li>
+                <li><a href="ordenes.html">Órdenes</a></li>
+                <li><a href="facturas.html">Facturas</a></li>
+                <li><a href="../index.html">← Volver al inicio</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="crud-main">
+        <h1 class="crud-titulo">Clientes</h1>
+
+        <div id="notificacion-crud" class="crud-notificacion"></div>
+
+        <div class="crud-acciones">
+            <input type="text" 
+                   class="crud-buscar" 
+                   id="buscar-cliente" 
+                   placeholder="Buscar en clientes...">
+            <span class="crud-contador" id="contador-clientes">0 registro(s)</span>
+            <button class="btn-nuevo" id="btn-nuevo-cliente">Nuevo Cliente</button>
+        </div>
+
+        <div class="crud-tabla-container">
+            <table class="crud-tabla">
+                <thead>
+                    <tr>
+                        <th>Nombre Completo</th>
+                        <th>Documento</th>
+                        <th>Teléfono</th>
+                        <th>Correo</th>
+                        <th>Dirección</th>
+                        <th>Tipo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-clientes-body"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- MODAL CREAR/EDITAR -->
+    <div class="crud-modal" id="modal-cliente">
+        <div class="crud-modal-content">
+            <div class="crud-modal-header">
+                <h3 id="modal-titulo">Nuevo Cliente</h3>
+                <button class="crud-modal-close" onclick="cerrarModal('modal-cliente')">✕</button>
+            </div>
+            <form id="form-cliente" novalidate>
+                <div class="crud-form-group">
+                    <label for="nombre">Nombre Completo <span>*</span></label>
+                    <input type="text" id="nombre" required minlength="3" maxlength="100" placeholder="Ej. Carlos Rodríguez">
+                    <span class="error-message">El nombre debe tener al menos 3 caracteres.</span>
+                </div>
+                <div class="crud-form-group">
+                    <label for="documento">Documento <span>*</span></label>
+                    <input type="text" id="documento" required minlength="8" maxlength="15" placeholder="Ej. 79123456">
+                    <span class="error-message">El documento debe tener entre 8 y 15 dígitos.</span>
+                </div>
+                <div class="crud-form-group">
+                    <label for="telefono">Teléfono <span>*</span></label>
+                    <input type="tel" id="telefono" required minlength="10" maxlength="15" placeholder="Ej. 3201234567">
+                    <span class="error-message">El teléfono debe tener entre 10 y 15 dígitos.</span>
+                </div>
+                <div class="crud-form-group">
+                    <label for="correo">Correo Electrónico <span>*</span></label>
+                    <input type="email" id="correo" required maxlength="100" placeholder="Ej. carlos@mail.com">
+                    <span class="error-message">Ingresa un correo electrónico válido.</span>
+                </div>
+                <div class="crud-form-group">
+                    <label for="direccion">Dirección</label>
+                    <input type="text" id="direccion" maxlength="100" placeholder="Ej. Cra 7 # 45-10">
+                </div>
+                <div class="crud-form-group">
+                    <label for="tipo">Tipo</label>
+                    <select id="tipo">
+                        <option value="Particular">Particular</option>
+                        <option value="Empresa">Empresa</option>
+                    </select>
+                </div>
+                <div class="crud-form-actions">
+                    <button type="button" class="btn-cancelar" onclick="cerrarModal('modal-cliente')">Cancelar</button>
+                    <button type="submit" class="btn-guardar">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="crud.js"></script>
+    <script src="clientes.js"></script>
+</body>
+</html>
