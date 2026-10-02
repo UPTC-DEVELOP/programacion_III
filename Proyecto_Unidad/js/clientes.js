@@ -1,5 +1,5 @@
 
-// CRUD DE CLIENTES 
+// CRUD DE CLIENTES - Lógica específica
 
 
 // ---------- DATOS DE PRUEBA ----------
@@ -54,7 +54,7 @@ function renderizarTabla(filtro = '') {
 
     if (filtrados.length === 0) {
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td colspan="7" style="text-align: center; padding: 40px; color: #6C757D;">No se encontraron clientes</td>`;
+        tr.innerHTML = `<td colspan="7" class="sin-resultados">No se encontraron clientes</td>`;
         tablaBody.appendChild(tr);
     } else {
         filtrados.forEach(cliente => {
@@ -78,6 +78,40 @@ function renderizarTabla(filtro = '') {
     }
 
     contador.textContent = filtrados.length + ' registro(s)';
+}
+
+// ---------- MOSTRAR NOTIFICACIÓN ----------
+function mostrarNotificacion(mensaje, tipo) {
+    const notificacion = document.getElementById('notificacion-crud');
+    if (!notificacion) return;
+    
+    notificacion.className = 'crud-notificacion ' + tipo;
+    notificacion.textContent = mensaje;
+    
+    notificacion.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    
+    setTimeout(() => {
+        notificacion.className = 'crud-notificacion';
+        notificacion.textContent = '';
+    }, 4000);
+}
+
+// ---------- ABRIR MODAL ----------
+function abrirModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+// ---------- CERRAR MODAL ----------
+function cerrarModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
 }
 
 // ---------- ABRIR MODAL NUEVO (Create) ----------
@@ -177,6 +211,25 @@ function eliminarCliente(documento) {
 // ---------- BUSCADOR ----------
 buscador.addEventListener('input', function() {
     renderizarTabla(this.value);
+});
+
+// ---------- CERRAR MODAL AL HACER CLIC FUERA ----------
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('crud-modal')) {
+        e.target.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+});
+
+// ---------- CERRAR MODAL CON ESC ----------
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const modalesAbiertos = document.querySelectorAll('.crud-modal.active');
+        modalesAbiertos.forEach(modal => {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    }
 });
 
 // ---------- VALIDACIONES EN TIEMPO REAL ----------

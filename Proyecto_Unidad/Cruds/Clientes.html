@@ -4,15 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clientes - AutoTech</title>
-    <link rel="stylesheet" href="crud.css">
+    <!-- Estilos base (landing page) -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Estilos específicos del CRUD -->
+    <link rel="stylesheet" href="../css/clientes.css">
 </head>
 <body>
 
-    <!-- HEADER -->
+
+    <!-- HEADER                   -->
+   
     <header>
         <div class="header-logo">
             <a href="../index.html">
-                <img src="../img/Logo.jpeg" alt="AutoTech - Sistema de Gestión para Talleres">
+                <img src="../img/Logo.jpeg" alt="AutoTech - Sistema de Gestión para Talleres" class="logo">
             </a>
         </div>
         <nav aria-label="Navegación principal">
@@ -20,8 +25,8 @@
                 <li><a href="clientes.html" class="active">Clientes</a></li>
                 <li><a href="vehiculos.html">Vehículos</a></li>
                 <li><a href="empleados.html">Empleados</a></li>
-                <li><a href="repuestos.html">Repuestos</a></li>
                 <li><a href="proveedores.html">Proveedores</a></li>
+                <li><a href="productos.html">Productos</a></li>
                 <li><a href="ordenes.html">Órdenes</a></li>
                 <li><a href="facturas.html">Facturas</a></li>
                 <li><a href="../index.html">← Volver al inicio</a></li>
@@ -29,12 +34,16 @@
         </nav>
     </header>
 
-    <!-- CONTENIDO PRINCIPAL -->
+   
+    <!-- CONTENIDO PRINCIPAL                                       -->
+   
     <main class="crud-main">
+
         <h1 class="crud-titulo">Clientes</h1>
 
         <div id="notificacion-crud" class="crud-notificacion"></div>
 
+        <!-- Barra de acciones -->
         <div class="crud-acciones">
             <input type="text" 
                    class="crud-buscar" 
@@ -44,6 +53,7 @@
             <button class="btn-nuevo" id="btn-nuevo-cliente">Nuevo Cliente</button>
         </div>
 
+        <!-- Tabla -->
         <div class="crud-tabla-container">
             <table class="crud-tabla">
                 <thead>
@@ -60,9 +70,12 @@
                 <tbody id="tabla-clientes-body"></tbody>
             </table>
         </div>
+
     </main>
 
-    <!-- MODAL CREAR/EDITAR -->
+    
+    <!--  CREAR/EDITAR                                        -->
+   
     <div class="crud-modal" id="modal-cliente">
         <div class="crud-modal-content">
             <div class="crud-modal-header">
@@ -109,8 +122,7 @@
         </div>
     </div>
 
-    <!-- SCRIPTS -->
-    <script src="crud.js"></script>
-    <script src="clientes.js"></script>
+    <!-- JS específico del CRUD -->
+    <script src="../js/clientes.js"></script>
 </body>
 </html>

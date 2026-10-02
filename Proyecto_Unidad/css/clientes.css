@@ -1,0 +1,434 @@
+/* 
+   CRUD DE CLIENTES 
+  */
+
+/* ---------- LAYOUT GENERAL ---------- */
+.crud-main {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.crud-titulo {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 30px;
+    text-transform: capitalize;
+}
+
+/* ---------- BARRA DE ACCIONES ---------- */
+.crud-acciones {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.crud-buscar {
+    background-color: var(--color-text-light);
+    border: 2px solid #e9ecef;
+    color: var(--color-text-dark);
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    width: 300px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-family: var(--font-family);
+}
+
+.crud-buscar::placeholder {
+    color: var(--color-gray);
+}
+
+.crud-buscar:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(238, 37, 36, 0.1);
+}
+
+.crud-contador {
+    color: var(--color-gray);
+    font-size: 0.95rem;
+}
+
+.btn-nuevo {
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-family: var(--font-family);
+}
+
+.btn-nuevo:hover {
+    background-color: #c62828;
+    transform: scale(1.02);
+}
+
+/* ---------- TABLA ---------- */
+.crud-tabla-container {
+    background-color: var(--color-text-light);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.crud-tabla {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.crud-tabla thead {
+    background-color: var(--color-primary);
+}
+
+.crud-tabla th {
+    padding: 18px 20px;
+    text-align: left;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-text-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.crud-tabla td {
+    padding: 18px 20px;
+    color: var(--color-text-dark);
+    font-size: 0.95rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.crud-tabla tbody tr {
+    transition: background-color 0.3s ease;
+}
+
+.crud-tabla tbody tr:hover {
+    background-color: var(--color-bg-light);
+}
+
+.crud-tabla tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.crud-tabla .sin-resultados {
+    text-align: center;
+    padding: 40px;
+    color: var(--color-gray);
+}
+
+/* ---------- BOTONES DE ACCIÓN ---------- */
+.crud-acciones-tabla {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-accion {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-family);
+}
+
+.btn-editar {
+    background-color: transparent;
+    color: var(--color-text-dark);
+    border: 1px solid #e9ecef;
+}
+
+.btn-editar:hover {
+    background-color: var(--color-bg-light);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.btn-eliminar {
+    background-color: transparent;
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+}
+
+.btn-eliminar:hover {
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+}
+
+/* ---------- MODAL ---------- */
+.crud-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(34, 50, 57, 0.6);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.crud-modal.active {
+    display: flex;
+    opacity: 1;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.crud-modal-content {
+    background-color: var(--color-text-light);
+    padding: 35px;
+    border-radius: var(--radius);
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    animation: slideInUp 0.3s ease;
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.crud-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.crud-modal-header h3 {
+    color: var(--color-primary);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.crud-modal-close {
+    background: none;
+    border: none;
+    color: var(--color-gray);
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    line-height: 1;
+}
+
+.crud-modal-close:hover {
+    color: var(--color-primary);
+}
+
+/* ---------- FORMULARIO ---------- */
+.crud-form-group {
+    margin-bottom: 20px;
+}
+
+.crud-form-group label {
+    display: block;
+    color: var(--color-text-dark);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.crud-form-group label span {
+    color: var(--color-primary);
+}
+
+.crud-form-group input,
+.crud-form-group select,
+.crud-form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: var(--color-text-light);
+    border: 2px solid #e9ecef;
+    color: var(--color-text-dark);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-family: var(--font-family);
+}
+
+.crud-form-group input:focus,
+.crud-form-group select:focus,
+.crud-form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(238, 37, 36, 0.1);
+}
+
+.crud-form-group input::placeholder {
+    color: var(--color-gray);
+}
+
+.crud-form-group input.is-invalid {
+    border-color: #dc3545;
+    background-color: #fff5f5;
+}
+
+.crud-form-group input.is-valid {
+    border-color: #4CAF50;
+}
+
+.crud-form-group .error-message {
+    display: none;
+    color: #dc3545;
+    font-size: 0.8rem;
+    margin-top: 5px;
+}
+
+.crud-form-group input.is-invalid + .error-message {
+    display: block;
+}
+
+.crud-form-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #e9ecef;
+}
+
+.btn-guardar {
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: var(--font-family);
+}
+
+.btn-guardar:hover {
+    background-color: #c62828;
+}
+
+.btn-cancelar {
+    background-color: transparent;
+    color: var(--color-gray);
+    padding: 12px 30px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-family);
+}
+
+.btn-cancelar:hover {
+    background-color: var(--color-bg-light);
+    color: var(--color-text-dark);
+}
+
+/* ---------- NOTIFICACIONES ---------- */
+.crud-notificacion {
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: none;
+    font-weight: 500;
+    text-align: center;
+}
+
+.crud-notificacion.success {
+    display: block;
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #4CAF50;
+    animation: slideInDown 0.3s ease;
+}
+
+.crud-notificacion.error {
+    display: block;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid var(--color-primary);
+    animation: slideInDown 0.3s ease;
+}
+
+@keyframes slideInDown {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+    .crud-main {
+        padding: 20px 15px;
+    }
+
+    .crud-titulo {
+        font-size: 1.8rem;
+    }
+
+    .crud-acciones {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .crud-buscar {
+        width: 100%;
+    }
+
+    .crud-tabla-container {
+        overflow-x: auto;
+    }
+
+    .crud-tabla th,
+    .crud-tabla td {
+        padding: 12px 10px;
+        font-size: 0.85rem;
+    }
+
+    .btn-accion {
+        padding: 6px 10px;
+        font-size: 0.75rem;
+    }
+
+    .crud-modal-content {
+        padding: 25px 20px;
+    }
+
+    .crud-form-actions {
+        flex-direction: column;
+    }
+
+    .crud-form-actions button {
+        width: 100%;
+    }
+}
