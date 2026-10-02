@@ -103,7 +103,7 @@ input, select, textarea {
 		background-image: url("images/overlay.png"), -moz-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
 		background-image: url("images/overlay.png"), -webkit-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
 		background-image: url("images/overlay.png"), -ms-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-		background-image: url("images/overlay.png"), linear-gradient(45deg, #0666f7 15%, #0f46fc 85%);
+		background-image: url("images/overlay.png"), linear-gradient(45deg, #021f4c 15%, #031550 85%);
 	}
 
 		body.is-preload *, body.is-preload *:before, body.is-preload *:after {
