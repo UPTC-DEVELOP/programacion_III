@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empleados - AutoTech</title>
+   <link rel="icon" type="image/png" href="../img/favicon.svg">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/empleados.css">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-logo">
+            <a href="../index.html">
+                <img src="../img/Logo.jpeg" alt="AutoTech" class="logo">
+            </a>
+        </div>
+        <nav aria-label="Navegación principal">
+            <ul>
+                <li><a href="clientes.html">Clientes</a></li>
+                <li><a href="vehiculos.html">Vehículos</a></li>
+                <li><a href="empleados.html" class="active">Empleados</a></li>
+                <li><a href="proveedores.html">Proveedores</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="ordenes.html">Órdenes</a></li>
+                <li><a href="facturas.html">Facturas</a></li>
+                <li><a href="../index.html">← Volver al inicio</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- CONTENIDO -->
+    <main class="crud-main">
+        <h1 class="crud-titulo">Empleados</h1>
+
+        <div id="notificacion-crud" class="crud-notificacion"></div>
+
+        <div class="crud-acciones">
+            <input type="text" class="crud-buscar" id="buscar-empleado" placeholder="Buscar en empleados...">
+            <span class="crud-contador" id="contador-empleados">0 registro(s)</span>
+            <button class="btn-nuevo" id="btn-nuevo-empleado">Nuevo Empleado</button>
+        </div>
+
+        <div class="crud-tabla-container">
+            <table class="crud-tabla">
+                <thead>
+                    <tr>
+                        <th>Nombre Completo</th>
+                        <th>Documento</th>
+                        <th>Rol</th>
+                        <th>Teléfono</th>
+                        <th>Correo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-empleados-body"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- MODAL -->
+    <div class="crud-modal" id="modal-empleado">
+        <div class="crud-modal-content">
+            <div class="crud-modal-header">
+                <h3 id="modal-titulo">Nuevo Empleado</h3>
+                <button class="crud-modal-close" onclick="cerrarModal('modal-empleado')">✕</button>
+            </div>
+            <form id="form-empleado" novalidate>
+                <div class="crud-form-group">
+                    <label for="nombres">Nombres <span>*</span></label>
+                    <input type="text" id="nombres" required minlength="3" maxlength="50" placeholder="Ej. Juan">
+                    <span class="error-message">El nombre debe tener al menos 3 caracteres.</span>
+                </div>
+                <div class="crud-form-group">
+                    <label for="apellidos">Apellidos <span>*</span></label>
+                    <input type="text" id="apellidos" required minlength="3" maxlength="50" placeholder="Ej. Pérez">
+                    <span class="error-message">El apellido debe tener al menos 3 caracteres.</span>
+                </div>
+                <div class="crud-form-group">
+                    <label for="documento">Documento <span>*</span></label>
+                    <input type="text" id="documento" required minlength="10" maxlength="15" placeholder="Ej. 79123456">
+                    <span class="error-message">El documento debe tener entre 10 y 15 dígitos.</span>
+                </div>
+                <div class="crud-form-group">
+                    <label for="rol">Rol <span>*</span></label>
+                    <select id="rol" required>
+                        <option value="">Selecciona un rol</option>
+                        <option value="Administrador">Administrador</option>
+                        <option value="Recepcionista">Recepcionista</option>
+                        <option value="Mecánico">Mecánico</option>
+                        <option value="Almacenista">Almacenista</option>
+                    </select>
+                    <span class="error-message">Debes seleccionar un rol.</span>
+                </div>
+                <div class="crud-form-group">
+                    <label for="telefono">Teléfono <span>*</span></label>
+                    <input type="tel" id="telefono" required minlength="10" maxlength="15" placeholder="Ej. 3201234567">
+                    <span class="error-message">El teléfono debe tener entre 10 y 15 dígitos.</span>
+                </div>
+                <div class="crud-form-group">
+                    <label for="correo">Correo Electrónico <span>*</span></label>
+                    <input type="email" id="correo" required maxlength="100" placeholder="Ej. juan@autotech.com">
+                    <span class="error-message">Ingresa un correo electrónico válido.</span>
+                </div>
+                <div class="crud-form-actions">
+                    <button type="button" class="btn-cancelar" onclick="cerrarModal('modal-empleado')">Cancelar</button>
+                    <button type="submit" class="btn-guardar">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/empleados.js"></script>
+</body>
+</html>
