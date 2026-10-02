@@ -433,7 +433,6 @@ const descripcionModalCliente =
 const guardarCliente =
   document.getElementById("guardar-cliente");
 
-  
   function generarIdCliente() {
   if (clientes.length === 0) {
     return "0001";
@@ -442,6 +441,10 @@ const guardarCliente =
   const mayorId = Math.max(
     ...clientes.map((cliente) => Number(cliente.id))
   );
+
+  if (mayorId >= 9999) {
+    return null;
+  }
 
   return String(mayorId + 1).padStart(4, "0");
 }
@@ -554,7 +557,14 @@ buscarCliente.addEventListener("input", aplicarFiltroClientes);
 
    modoEdicionCliente = false;
 
-  idCliente.value = generarIdCliente();
+  const nuevoId = generarIdCliente();
+
+if (nuevoId === null) {
+  alert("No es posible registrar más clientes. Se alcanzó el límite de 9999 registros.");
+  return;
+}
+
+idCliente.value = nuevoId;
 
   tituloModalCliente.textContent = "Registrar cliente";
   descripcionModalCliente.textContent =
@@ -630,6 +640,7 @@ confirmarEliminarCliente.addEventListener("click", () => {
   const apellidos = apellidosCliente.value.trim();
   const telefono = telefonoCliente.value.trim();
   const direccion = direccionCliente.value.trim();
+  const patronNombre = /^[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s'-]+$/;
 
   if (!cedula || !nombres || !apellidos || !telefono || !direccion) {
     alert("Todos los campos son obligatorios.");
@@ -657,6 +668,18 @@ confirmarEliminarCliente.addEventListener("click", () => {
   if (cedulaDuplicada) {
   alert("La cédula ya está registrada.");
   cedulaCliente.focus();
+  return false;
+}
+
+ if (!patronNombre.test(nombres)) {
+  alert("Los nombres solo deben contener letras.");
+  nombresCliente.focus();
+  return false;
+}
+
+if (!patronNombre.test(apellidos)) {
+  alert("Los apellidos solo deben contener letras.");
+  apellidosCliente.focus();
   return false;
 }
   if (nombres.length > 40) {
