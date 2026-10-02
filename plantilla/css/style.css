@@ -844,3 +844,11 @@ body.tq-lock { overflow: hidden; }
 .tq-dark .tq-faq-body { color: var(--tq-steel-2); }
 .tq-dark .tq-about-cert li { border-bottom: 1px solid var(--tq-line-dark); padding: .5rem 0; margin: 0; }
 .tq-dark .tq-about-cert li:last-child { border-bottom: 0; }
+.tq-brand-logo {
+  height: 42px;
+  width: auto;
+  object-fit: contain;
+  filter: grayscale(1) opacity(.6);
+  transition: filter .2s ease;
+}
+.tq-brand-logo:hover { filter: grayscale(0) opacity(1); }
