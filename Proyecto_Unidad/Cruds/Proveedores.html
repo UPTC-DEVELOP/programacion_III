@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proveedores - AutoTech</title>
+    <link rel="icon" type="image/png" href="../img/favicon.svg">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/empleados.css">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-logo">
+            <a href="../index.html">
+                <img src="../img/Logo.jpeg" alt="AutoTech" class="logo">
+            </a>
+        </div>
+        <nav aria-label="Navegación principal">
+            <ul>
+                <li><a href="clientes.html">Clientes</a></li>
+                <li><a href="vehiculos.html">Vehículos</a></li>
+                <li><a href="empleados.html">Empleados</a></li>
+                <li><a href="proveedores.html" class="active">Proveedores</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="ordenes.html">Órdenes</a></li>
+                <li><a href="facturas.html">Facturas</a></li>
+                <li><a href="../index.html">← Volver al inicio</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- CONTENIDO -->
+    <main class="crud-main">
+        <h1 class="crud-titulo">Proveedores</h1>
+
+        <div id="notificacion-crud" class="crud-notificacion"></div>
+
+        <div class="crud-acciones">
+            <input type="text" class="crud-buscar" id="buscar-proveedor" placeholder="Buscar proveedor...">
+            <span class="crud-contador" id="contador-proveedores">2 registro(s)</span>
+            <button class="btn-nuevo" id="btn-nuevo-proveedor">Nuevo Proveedor</button>
+        </div>
+
+        <div class="crud-tabla-container">
+            <table class="crud-tabla">
+                <thead>
+                    <tr>
+                        <th>Empresa / Proveedor</th>
+                        <th>NIT</th>
+                        <th>Contacto</th>
+                        <th>Teléfono</th>
+                        <th>Correo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-proveedores-body">
+                    <tr>
+                        <td>Distribuidora de Repuestos Andina S.A.S.</td>
+                        <td>900456789-1</td>
+                        <td>Andrés Vargas</td>
+                        <td>3104567890</td>
+                        <td>ventas@repuestosandina.com</td>
+                        <td>
+                            <button class="btn-editar">Editar</button>
+                            <button class="btn-eliminar">Eliminar</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Lubricantes y Baterías del Centro</td>
+                        <td>800123456-3</td>
+                        <td>Lucía Torres</td>
+                        <td>3209876543</td>
+                        <td>contacto@lubicentros.com</td>
+                        <td>
+                            <button class="btn-editar">Editar</button>
+                            <button class="btn-eliminar">Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="../js/empleados.js"></script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+/* Contenedor Principal */
+.crud-main {
+    padding: 2.5rem 2rem;
+    max-width: 1250px;
+    margin: 0 auto;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Título de la Sección */
+.crud-titulo {
+    color: #e53935;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.5px;
+}
+
+/* Barra de Acciones (Buscador, Contador y Botón) */
+.crud-acciones {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+}
+
+.crud-buscar {
+    padding: 10px 15px;
+    width: 320px;
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.crud-buscar:focus {
+    border-color: #e53935;
+}
+
+.crud-contador {
+    color: #666;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+/* Botón Nuevo Registro */
+.btn-nuevo {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-nuevo:hover {
+    background-color: #d32f2f;
+}
+
+/* Contenedor de la Tabla */
+.crud-tabla-container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    border: 1px solid #eaeaea;
+}
+
+/* Estilos de la Tabla */
+.crud-tabla {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.95rem;
+}
+
+.crud-tabla th {
+    background-color: #f44336;
+    color: white;
+    padding: 16px 20px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.crud-tabla td {
+    padding: 16px 20px;
+    border-bottom: 1px solid #eaeaea;
+    color: #333;
+    vertical-align: middle;
+}
+
+.crud-tabla tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.crud-tabla tbody tr:hover {
+    background-color: #fafafa;
+}
+
+/* Botones de Acción (Editar / Eliminar) */
+.btn-editar, .btn-eliminar {
+    background: white;
+    border: 1px solid #f44336;
+    color: #f44336;
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-right: 6px;
+}
+
+.btn-editar:hover {
+    background-color: #f44336;
+    color: white;
+}
+
+.btn-eliminar {
+    border-color: #e53935;
+    color: #e53935;
+}
+
+.btn-eliminar:hover {
+    background-color: #e53935;
+    color: white;
+}
+
+/* Notificaciones (Por si se usan con JS) */
+.crud-notificacion {
+    margin-bottom: 1rem;
+}

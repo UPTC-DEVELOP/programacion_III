@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos - AutoTech</title>
+    <link rel="icon" type="image/png" href="../img/favicon.svg">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/empleados.css">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-logo">
+            <a href="../index.html">
+                <img src="../img/Logo.jpeg" alt="AutoTech" class="logo">
+            </a>
+        </div>
+        <nav aria-label="Navegación principal">
+            <ul>
+                <li><a href="clientes.html">Clientes</a></li>
+                <li><a href="vehiculos.html">Vehículos</a></li>
+                <li><a href="empleados.html">Empleados</a></li>
+                <li><a href="proveedores.html">Proveedores</a></li>
+                <li><a href="productos.html" class="active">Productos</a></li>
+                <li><a href="ordenes.html">Órdenes</a></li>
+                <li><a href="facturas.html">Facturas</a></li>
+                <li><a href="../index.html">← Volver al inicio</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- CONTENIDO -->
+    <main class="crud-main">
+        <h1 class="crud-titulo">Productos y Repuestos</h1>
+
+        <div id="notificacion-crud" class="crud-notificacion"></div>
+
+        <div class="crud-acciones">
+            <input type="text" class="crud-buscar" id="buscar-producto" placeholder="Buscar en productos...">
+            <span class="crud-contador" id="contador-productos">3 registro(s)</span>
+            <button class="btn-nuevo" id="btn-nuevo-producto">Nuevo Producto</button>
+        </div>
+
+        <div class="crud-tabla-container">
+            <table class="crud-tabla">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombre del Repuesto</th>
+                        <th>Categoría</th>
+                        <th>Stock</th>
+                        <th>Precio Unitario</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-productos-body">
+                    <tr>
+                        <td>REP-001</td>
+                        <td>Pastillas de Freno Delanteras</td>
+                        <td>Frenos</td>
+                        <td>12</td>
+                        <td>$ 120,000 COP</td>
+                        <td>
+                            <button class="btn-editar">Editar</button>
+                            <button class="btn-eliminar">Eliminar</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>REP-002</td>
+                        <td>Filtro de Aceite Sintético</td>
+                        <td>Filtros</td>
+                        <td>25</td>
+                        <td>$ 35,000 COP</td>
+                        <td>
+                            <button class="btn-editar">Editar</button>
+                            <button class="btn-eliminar">Eliminar</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>REP-003</td>
+                        <td>Batería 12V 70Ah</td>
+                        <td>Eléctrico</td>
+                        <td>5</td>
+                        <td>$ 380,000 COP</td>
+                        <td>
+                            <button class="btn-editar">Editar</button>
+                            <button class="btn-eliminar">Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="../js/empleados.js"></script>
+</body>
+</html>
