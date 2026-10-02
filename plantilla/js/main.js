@@ -182,6 +182,19 @@
     });
   }
 
+  /* ---------- Filtro de módulos (select) · DIANA ---------- */
+  function initModuleSelect() {
+    var select = document.getElementById("controlModulos");
+    var items = document.querySelectorAll(".tq-service-item");
+    if (!select || !items.length) return;
+    select.addEventListener("change", function () {
+      items.forEach(function (item) {
+        var show = select.value === "todos" || item.getAttribute("data-cat") === select.value;
+        item.classList.toggle("is-hidden", !show);
+      });
+    });
+  }
+
   /* ---------- Cost estimator (services page) ---------- */
   function initEstimator() {
     var form = document.querySelector("[data-estimator]");
@@ -336,5 +349,6 @@
     initForms();
     initCoupons();
     initHoursToday();
+    initModuleSelect();
   });
 })();

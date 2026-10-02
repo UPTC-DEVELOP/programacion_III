@@ -29,7 +29,7 @@
   --tq-orange-700: #b91d24;
   --tq-orange-soft:#fbe3e4;
 
-    --tq-white:      #FFFFFF;
+  --tq-white:      #FFFFFF;
   --tq-green:      #2FBF71;
   --tq-radius:     4px;
   --tq-radius-lg:  6px;
@@ -852,3 +852,29 @@ body.tq-lock { overflow: hidden; }
   transition: filter .2s ease;
 }
 .tq-brand-logo:hover { filter: grayscale(0) opacity(1); }
+
+/* =====================================================================
+   MÓDULOS Y CONTACTO · DIANA
+   ===================================================================== */
+
+/* MÓDULOS: filtro y etiquetas */
+.tq-modfilter { max-width: 340px; margin: 0 auto 2.5rem; }
+.tq-service-foot { gap: .8rem; flex-wrap: wrap; }
+.tq-mod-tags { display: flex; gap: .4rem; flex-wrap: wrap; }
+.tq-mod-tags span {
+  font-family: var(--tq-display); font-weight: 600; text-transform: uppercase;
+  letter-spacing: .06em; font-size: .72rem; padding: .25rem .6rem;
+  border: 1px solid var(--tq-line); border-radius: 999px; color: var(--tq-body);
+}
+.tq-mod-num {
+  font-family: var(--tq-display); font-weight: 700; font-size: 1rem;
+  letter-spacing: .06em; color: var(--tq-orange-700);
+}
+
+/* CONTACTO sobre fondo oscuro */
+.tq-dark .tq-visit-line b { color: #fff; }
+.tq-dark .tq-visit-line a { color: var(--tq-steel-2); }
+.tq-dark .tq-visit-line a:hover { color: var(--tq-orange); }
+.tq-contact-info > .tq-btn { margin-top: 1.6rem; }
+.tq-map--embed { display: block; min-height: 260px; margin-top: 1.6rem; background-image: none; }
+.tq-map--embed iframe { width: 100%; height: 100%; min-height: 260px; border: 0; display: block; }

@@ -361,24 +361,171 @@
       </div>
     </section>
 
-    <!--  MÓDULOS · DIANA  -->
-    <!-- DIANA: select de filtro + 4 tarjetas MOD-01..04. Base: .tq-services-grid / .tq-service. -->
-    <section class="tq-section tq-light" id="modulos">
-      <div class="container">
-        <!-- DIANA: contenido aquí -->
-      </div>
-    </section>
+<!--  MÓDULOS · DIANA  -->
+<section class="tq-section tq-light" id="modulos">
+  <div class="container">
+    <div class="tq-shead tq-shead--center tq-reveal tq-shead--spaced">
+      <span class="tq-eyebrow tq-eyebrow--center">Módulos del sistema</span>
+      <h2 class="tq-h2">Gestión integral automotriz</h2>
+    </div>
 
-    <!-- CONTACTO · DIANA  -->
-    <!-- DIANA: formulario de cotización, datos de contacto, WhatsApp y mapa.
-         Base: form data-validate del hero original + .tq-visit-grid. -->
-    <section class="tq-section tq-dark tq-carbon" id="contacto">
-      <div class="container">
-        <!-- DIANA: contenido aquí -->
-      </div>
-    </section>
+    <div class="tq-field tq-modfilter tq-reveal">
+      <label for="controlModulos">Filtrar módulo:</label>
+      <select id="controlModulos">
+        <option value="todos">Todos los módulos</option>
+        <option value="clientes">01. Clientes y Vehículos</option>
+        <option value="taller">02. Gestión de Taller</option>
+        <option value="inventario">03. Inventario y Repuestos</option>
+        <option value="facturacion">04. Facturación y Caja</option>
+      </select>
+    </div>
 
-  </main>
+    <div class="tq-services-grid">
+
+      <article class="tq-service tq-service-item tq-reveal" data-cat="clientes">
+        <div class="tq-service-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg></div>
+        <h3>Clientes y vehículos</h3>
+        <p>Historial mecánico completo por placa, datos del propietario y vinculación directa con órdenes activas.</p>
+        <div class="tq-service-foot">
+          <div class="tq-mod-tags"><span>Hoja de vida</span><span>Historial</span></div>
+          <span class="tq-mod-num">MOD-01</span>
+        </div>
+      </article>
+
+      <article class="tq-service tq-service-item tq-reveal d1" data-cat="taller">
+        <div class="tq-service-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <h3>Gestión de taller</h3>
+        <p>Asignación de mecánicos responsables, control de tiempos de entrega y seguimiento de estados de reparación.</p>
+        <div class="tq-service-foot">
+          <div class="tq-mod-tags"><span>Órdenes</span><span>Asignación</span></div>
+          <span class="tq-mod-num">MOD-02</span>
+        </div>
+      </article>
+
+      <article class="tq-service tq-service-item tq-reveal d2" data-cat="inventario">
+        <div class="tq-service-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></div>
+        <h3>Inventario y repuestos</h3>
+        <p>Entradas y salidas de insumos, alertas de stock mínimo y desacople automático según la orden de trabajo.</p>
+        <div class="tq-service-foot">
+          <div class="tq-mod-tags"><span>Stock</span><span>Repuestos</span></div>
+          <span class="tq-mod-num">MOD-03</span>
+        </div>
+      </article>
+
+      <article class="tq-service tq-service-item tq-reveal d3" data-cat="facturacion">
+        <div class="tq-service-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg></div>
+        <h3>Facturación y caja</h3>
+        <p>Liquidación de órdenes de servicio, desglose de mano de obra, cálculo automático del IVA e historial de pagos.</p>
+        <div class="tq-service-foot">
+          <div class="tq-mod-tags"><span>Pagos</span><span>Liquidación</span></div>
+          <span class="tq-mod-num">MOD-04</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!--  CONTACTO · DIANA  -->
+<section class="tq-section tq-dark tq-carbon" id="contacto">
+  <div class="container">
+    <div class="tq-shead tq-shead--center tq-reveal tq-shead--spaced">
+      <span class="tq-eyebrow tq-eyebrow--center">Contacto</span>
+      <h2 class="tq-h2">Solicita una cotización</h2>
+      <p class="tq-lead" style="margin-inline:auto;">Completa los datos y agenda el servicio que necesita tu vehículo. Te contactamos para confirmar la cita.</p>
+    </div>
+
+    <div class="tq-visit-grid">
+
+      <!-- Formulario (lo valida initForms de main.js) -->
+      <div class="tq-book-card tq-reveal">
+        <form id="contactoForm" data-validate novalidate>
+          <p class="tq-form-note" style="margin:0 0 1.2rem;">Todos los campos marcados con * son obligatorios.</p>
+
+          <div class="tq-field">
+            <label for="nombre">Nombre completo *</label>
+            <input type="text" id="nombre" name="nombre" required>
+            <span class="err">Ingresa tu nombre completo.</span>
+          </div>
+
+          <div class="tq-field-row">
+            <div class="tq-field">
+              <label for="correo">Correo electrónico *</label>
+              <input type="email" id="correo" name="correo" required>
+              <span class="err">Ingresa un correo válido.</span>
+            </div>
+            <div class="tq-field">
+              <label for="telefono">Teléfono *</label>
+              <input type="tel" id="telefono" name="telefono" required>
+              <span class="err">Ingresa un teléfono válido.</span>
+            </div>
+          </div>
+
+          <div class="tq-field-row">
+            <div class="tq-field">
+              <label for="fecha">Fecha preferida *</label>
+              <input type="date" id="fecha" name="fecha" required>
+              <span class="err">Selecciona una fecha.</span>
+            </div>
+            <div class="tq-field">
+              <label for="vehiculo">Marca y modelo del vehículo *</label>
+              <input type="text" id="vehiculo" name="vehiculo" placeholder="Ej: Mazda 3, 2018" required>
+              <span class="err">Indica la marca y el modelo.</span>
+            </div>
+          </div>
+
+          <div class="tq-field">
+            <label for="servicio">Servicio requerido</label>
+            <input type="text" id="servicio" name="servicio" placeholder="Ej: cambio de aceite, frenos...">
+          </div>
+
+          <div class="tq-field">
+            <label for="mensaje">Mensaje o solicitud *</label>
+            <textarea id="mensaje" name="mensaje" rows="5" placeholder="Cuéntanos qué necesitas..." required></textarea>
+            <span class="err">Cuéntanos qué necesitas.</span>
+          </div>
+
+          <button type="submit" class="tq-btn tq-btn--accent tq-btn--lg tq-btn--block">Solicitar cotización</button>
+
+          <div class="tq-form-success">
+            ¡Gracias! Recibimos tu solicitud y te contactaremos pronto para confirmar la cita.
+          </div>
+        </form>
+      </div>
+
+      <!-- Datos de contacto -->
+      <div class="tq-reveal d1 tq-contact-info">
+        <h3>Hablemos</h3>
+        <p>En nuestro taller diagnosticamos y reparamos tu vehículo con repuestos de calidad y tiempos de entrega claros.</p>
+
+        <div class="tq-visit-contact">
+          <div class="tq-visit-line">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div><b>Dirección</b>Bogotá D.C., Colombia</div>
+          </div>
+          <div class="tq-visit-line">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <div><b>Teléfono</b><a href="tel:+573000000000">+57 300 000 0000</a></div>
+          </div>
+          <div class="tq-visit-line">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <div><b>Correo</b><a href="mailto:autogestionerp@gmail.com">autogestionerp@gmail.com</a></div>
+          </div>
+        </div>
+
+        <a href="https://wa.me/573000000000" target="_blank" rel="noopener noreferrer" class="tq-btn tq-btn--accent">Contactar por WhatsApp</a>
+
+        <div class="tq-map tq-map--embed">
+          <iframe
+            src="https://www.google.com/maps?q=Bogotá%20Colombia&output=embed"
+            loading="lazy"
+            title="Ubicación del taller mecánico"></iframe>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
   <!-- FOOTER (MATEO)-->
   <div class="tq-hazard-thin" role="presentation"></div>
