@@ -1,5 +1,6 @@
 const navToggle = document.getElementById('navToggle');
 const nav = document.getElementById('nav');
+
 document.addEventListener('DOMContentLoaded', function() {
 
 
@@ -24,7 +25,7 @@ if (carro) {
 
 
 
-    //
+    // Tarjeta beneficios
     const tarjetas = document.querySelectorAll('.benefit-card');
     if (tarjetas.length > 0) {
         tarjetas.forEach((tarjeta, indice) => {
@@ -51,6 +52,15 @@ if (carro) {
     const loginOpen = document.getElementById('loginOpen');
     const loginClose = document.getElementById('loginClose');
     const loginModal = document.getElementById('loginModal');
+
+        //CRUD Administrador
+          const PAGINAS = {
+            administrador: 'crud_administrador/administradores.html',
+            empleado: 'crud_empleados/empleados.html',
+            cliente: 'crud_clientes/clientes_2.html'//<----- tiene error de sintasis en la ruta 
+  };
+
+           
 
     if (loginOpen && loginModal) {
 
@@ -82,23 +92,22 @@ if (carro) {
             if (e.key === 'Escape' && !loginModal.hidden) cerrarLogin();
         });
 
-        // Clic en cada tipo de usuario
+        
+        // Clic en cada tipo de usuario: lleva a su página
         loginModal.querySelectorAll('.role-btn').forEach((boton) => {
-            boton.addEventListener('click', () => {
+      boton.addEventListener('click', () => {
+        const rol = boton.dataset.role; // "cliente", "empleado" o "administrador"
+        const destino = PAGINAS[rol];
+        if (!destino) return;
 
-                // "cliente", "empleado" o "administrador"
-                const rol = boton.dataset.role; 
-                if (rol === 'administrador') {
-                    window.location.href = 'administradores.html';
-                }
+        try { sessionStorage.setItem('tallerpro_rol', rol); } catch (e) { /* sin acceso */ }
+        window.location.href = destino;
 
                 
-            });
-        });
-    }
-
-            
-        });
+             });
+        });    
+     }            
+});
     
 
 
