@@ -1198,7 +1198,16 @@ document.addEventListener("DOMContentLoaded", () => {
       propietarioVehiculo.appendChild(opcion);
     });
   }
-
+  // ---------- FORMATO DE FECHA (03/10/2026, 6:40 p. m.) ----------
+  function formatearFecha(fecha) {
+    return fecha.toLocaleString("es-CO", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+  }
   // ---------- MOSTRAR LA TABLA ----------
   function mostrarVehiculos(lista = vehiculos) {
     tablaVehiculos.innerHTML = "";
@@ -1207,7 +1216,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const fila = document.createElement("tr");
       const celda = document.createElement("td");
 
-      celda.colSpan = 8;
+      celda.colSpan = 9;
       celda.textContent =
         vehiculos.length === 0
           ? "Todavía no existen vehículos registrados."
@@ -1239,7 +1248,8 @@ document.addEventListener("DOMContentLoaded", () => {
         vehiculo.linea,
         vehiculo.modelo,
         vehiculo.color,
-        nombrePropietario(vehiculo.idCliente)
+        nombrePropietario(vehiculo.idCliente),
+        formatearFecha(vehiculo.fechaHoraIngreso)
       ];
 
       datosVehiculo.forEach((dato) => {
@@ -1282,6 +1292,8 @@ document.addEventListener("DOMContentLoaded", () => {
       return (
         vehiculo.placa.toLowerCase().includes(texto) ||
         vehiculo.marca.toLowerCase().includes(texto) ||
+        vehiculo.modelo.includes(texto) ||
+        vehiculo.color.toLowerCase().includes(texto) ||
         nombrePropietario(vehiculo.idCliente).toLowerCase().includes(texto)
       );
     });
@@ -1466,11 +1478,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       alert("Vehículo actualizado correctamente.");
     } else {
+            // La fecha y hora de ingreso se generan solas al registrar
+      // y no se cambian al actualizar
       vehiculos.push({
         id: idVehiculo.value,
-        ...datos
+        ...datos,
+        fechaHoraIngreso: new Date()
       });
-
       alert("Vehículo registrado correctamente.");
     }
 
