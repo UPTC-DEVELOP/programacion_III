@@ -1,5 +1,11 @@
 
-
+// DATOS COMPARTIDOS DEL TALLER
+// Las listas van aquí afuera para que los módulos puedan usarlas entre sí
+// (por ejemplo, el vehículo necesita saber qué clientes existen).
+const datosTaller = {
+  clientes: [],
+  vehiculos: []
+};
 (() => {
   const imagenes = document.querySelectorAll("#inicio .imagen-carrusel");
   const anterior = document.getElementById("foto-anterior");
@@ -396,8 +402,7 @@ document.addEventListener("DOMContentLoaded", () => {
  // CRUD CLIENTES 
 
 document.addEventListener("DOMContentLoaded", () => {
-  const clientes = [];
-
+ const clientes = datosTaller.clientes;
   const btnNuevoCliente = document.querySelector(".btn-nuevo-cliente");
   const modalCliente = document.getElementById("modal-cliente");
   const btnCerrarCliente = document.querySelector(".cerrar-modal-cliente");
