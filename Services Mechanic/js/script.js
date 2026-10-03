@@ -329,10 +329,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const enlaceEmpleados = document.querySelector(
     '.menu-sistema a[href="#empleados"]'
   );
+  const enlaceVehiculos = document.querySelector(
+    '.menu-sistema a[href="#vehiculos"]'
+  );
 
   const dashboard = document.getElementById("dashboard");
   const clientes = document.getElementById("clientes");
   const empleados = document.getElementById("empleados");
+   const vehiculos = document.getElementById("vehiculos");
 
   const titulo = document.querySelector(".topbar-sistema h2");
   const subtitulo = document.querySelector(".topbar-sistema p");
@@ -343,7 +347,9 @@ document.addEventListener("DOMContentLoaded", () => {
     !enlaceEmpleados ||
     !dashboard ||
     !clientes ||
-    !empleados
+    !empleados ||
+    !enlaceVehiculos ||
+    !vehiculos
   ) {
     return;
   }
@@ -352,12 +358,28 @@ document.addEventListener("DOMContentLoaded", () => {
     dashboard.hidden = true;
     clientes.hidden = true;
     empleados.hidden = true;
+     vehiculos.hidden = true;
 
     enlaceInicio.classList.remove("activo");
     enlaceClientes.classList.remove("activo");
     enlaceEmpleados.classList.remove("activo");
+     enlaceVehiculos.classList.remove("activo");
   }
 
+  enlaceVehiculos.addEventListener("click", (evento) => {
+    evento.preventDefault();
+
+    ocultarSecciones();
+
+    vehiculos.hidden = false;
+    enlaceVehiculos.classList.add("activo");
+
+    if (titulo) titulo.textContent = "Vehículos";
+    if (subtitulo) {
+      subtitulo.textContent = "Registro y consulta de vehículos";
+    }
+  });
+  
   enlaceInicio.addEventListener("click", (evento) => {
     evento.preventDefault();
 
