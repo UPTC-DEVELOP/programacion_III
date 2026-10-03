@@ -1041,7 +1041,205 @@
               </div>
             </div>
           </div>
+          <!-- Vehículos -->
+          <section id="vehiculos" class="vehiculos-sistema" hidden>
+            <div class="encabezado-vehiculos">
+              <div>
+                <h2>Vehículos registrados</h2>
+                <p id="cantidad-vehiculos">0 vehículos</p>
+              </div>
 
+              <button type="button" id="btn-nuevo-vehiculo">
+                + Registrar vehículo
+              </button>
+            </div>
+
+            <div class="busqueda-vehiculos">
+              <input
+                type="search"
+                id="buscar-vehiculo"
+                maxlength="40"
+                placeholder="Buscar por placa, marca o propietario..."
+              />
+            </div>
+
+            <div class="tabla-vehiculos">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Placa</th>
+                    <th>Marca</th>
+                    <th>Línea</th>
+                    <th>Modelo</th>
+                    <th>Color</th>
+                    <th>Propietario</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="lista-vehiculos"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Modal registrar / editar vehículo -->
+          <div id="modal-vehiculo" class="modal-vehiculo" hidden>
+            <div class="contenido-modal-vehiculo">
+              <div class="cabecera-modal-vehiculo">
+                <div>
+                  <h2 id="titulo-modal-vehiculo">Registrar vehículo</h2>
+                  <p id="descripcion-modal-vehiculo">
+                    Ingresa la información del nuevo vehículo.
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  id="cerrar-modal-vehiculo"
+                  class="cerrar-modal-vehiculo"
+                  aria-label="Cerrar formulario"
+                >
+                  ×
+                </button>
+              </div>
+
+              <form id="formulario-vehiculo" novalidate>
+                <div class="fila-formulario-vehiculo">
+                  <div class="grupo-formulario-vehiculo">
+                    <label for="id-vehiculo">ID Vehículo</label>
+                    <input type="text" id="id-vehiculo" readonly />
+                  </div>
+
+                  <div class="grupo-formulario-vehiculo">
+                    <label for="placa-vehiculo">Placa</label>
+                    <input
+                      type="text"
+                      id="placa-vehiculo"
+                      maxlength="6"
+                      placeholder="Ej: ABC123"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="fila-formulario-vehiculo">
+                  <div class="grupo-formulario-vehiculo">
+                    <label for="marca-vehiculo">Marca</label>
+                    <input
+                      type="text"
+                      id="marca-vehiculo"
+                      maxlength="30"
+                      placeholder="Ej: Chevrolet"
+                      required
+                    />
+                  </div>
+
+                  <div class="grupo-formulario-vehiculo">
+                    <label for="linea-vehiculo">Línea</label>
+                    <input
+                      type="text"
+                      id="linea-vehiculo"
+                      maxlength="30"
+                      placeholder="Ej: Spark GT"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="fila-formulario-vehiculo">
+                  <div class="grupo-formulario-vehiculo">
+                    <label for="modelo-vehiculo">Modelo (año)</label>
+                    <input
+                      type="number"
+                      id="modelo-vehiculo"
+                      min="1950"
+                      placeholder="Ej: 2020"
+                      required
+                    />
+                  </div>
+
+                  <div class="grupo-formulario-vehiculo">
+                    <label for="color-vehiculo">Color</label>
+                    <input
+                      type="text"
+                      id="color-vehiculo"
+                      maxlength="20"
+                      placeholder="Ej: Rojo"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="grupo-formulario-vehiculo">
+                  <label for="propietario-vehiculo">Propietario</label>
+                  <select id="propietario-vehiculo" required>
+                    <option value="">Seleccione un cliente</option>
+                  </select>
+                </div>
+
+                <div class="botones-formulario-vehiculo">
+                  <button
+                    type="button"
+                    id="btn-cancelar-vehiculo"
+                    class="btn-cancelar-vehiculo"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="submit"
+                    id="guardar-vehiculo"
+                    class="btn-guardar-vehiculo"
+                  >
+                    Guardar vehículo
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Modal eliminar vehículo -->
+          <div id="modal-eliminar-vehiculo" class="modal-vehiculo" hidden>
+            <div class="contenido-modal-vehiculo">
+              <h2>¿Eliminar vehículo?</h2>
+
+              <p class="texto-eliminar-vehiculo">
+                Esta acción no se puede deshacer.
+              </p>
+
+              <div class="datos-vehiculo-eliminar">
+                <p>
+                  <strong>ID:</strong>
+                  <span id="eliminar-id-vehiculo"></span>
+                </p>
+                <p>
+                  <strong>Placa:</strong>
+                  <span id="eliminar-placa-vehiculo"></span>
+                </p>
+                <p>
+                  <strong>Vehículo:</strong>
+                  <span id="eliminar-descripcion-vehiculo"></span>
+                </p>
+              </div>
+
+              <div class="botones-formulario-vehiculo">
+                <button
+                  type="button"
+                  id="cancelar-eliminar-vehiculo"
+                  class="btn-cancelar-vehiculo"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="button"
+                  id="confirmar-eliminar-vehiculo"
+                  class="btn-confirmar-eliminar-vehiculo"
+                >
+                  Sí, eliminar
+                </button>
+              </div>
+            </div>
+          </div>
+          
           <!-- Empleados -->
           <section id="empleados" class="seccion-empleados" hidden>
             <div class="contenedor-empleados">
