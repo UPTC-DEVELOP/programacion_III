@@ -379,7 +379,7 @@ document.addEventListener("DOMContentLoaded", () => {
       subtitulo.textContent = "Registro y consulta de vehículos";
     }
   });
-  
+
   enlaceInicio.addEventListener("click", (evento) => {
     evento.preventDefault();
 
@@ -1083,3 +1083,437 @@ if (direccion.length > 80) {
     mostrarEmpleados();
 
 })
+
+// CRUD VEHÍCULOS
+
+document.addEventListener("DOMContentLoaded", () => {
+  const vehiculos = datosTaller.vehiculos;
+  const clientes = datosTaller.clientes;
+
+  const enlaceVehiculos = document.querySelector(
+    '.menu-sistema a[href="#vehiculos"]'
+  );
+
+  const btnNuevoVehiculo = document.getElementById("btn-nuevo-vehiculo");
+  const modalVehiculo = document.getElementById("modal-vehiculo");
+  const btnCerrarVehiculo = document.getElementById("cerrar-modal-vehiculo");
+  const btnCancelarVehiculo = document.getElementById("btn-cancelar-vehiculo");
+
+  const formularioVehiculo = document.getElementById("formulario-vehiculo");
+  const tablaVehiculos = document.getElementById("lista-vehiculos");
+  const cantidadVehiculos = document.getElementById("cantidad-vehiculos");
+  const buscarVehiculo = document.getElementById("buscar-vehiculo");
+
+  const tituloModalVehiculo = document.getElementById("titulo-modal-vehiculo");
+  const descripcionModalVehiculo = document.getElementById("descripcion-modal-vehiculo");
+  const guardarVehiculo = document.getElementById("guardar-vehiculo");
+
+  // Campos del formulario
+  const idVehiculo = document.getElementById("id-vehiculo");
+  const placaVehiculo = document.getElementById("placa-vehiculo");
+  const marcaVehiculo = document.getElementById("marca-vehiculo");
+  const lineaVehiculo = document.getElementById("linea-vehiculo");
+  const modeloVehiculo = document.getElementById("modelo-vehiculo");
+  const colorVehiculo = document.getElementById("color-vehiculo");
+  const propietarioVehiculo = document.getElementById("propietario-vehiculo");
+
+  // Modal eliminar
+  const modalEliminarVehiculo = document.getElementById("modal-eliminar-vehiculo");
+  const cancelarEliminarVehiculo = document.getElementById("cancelar-eliminar-vehiculo");
+  const confirmarEliminarVehiculo = document.getElementById("confirmar-eliminar-vehiculo");
+  const eliminarIdVehiculo = document.getElementById("eliminar-id-vehiculo");
+  const eliminarPlacaVehiculo = document.getElementById("eliminar-placa-vehiculo");
+  const eliminarDescripcionVehiculo = document.getElementById("eliminar-descripcion-vehiculo");
+
+  if (!btnNuevoVehiculo || !modalVehiculo || !formularioVehiculo || !tablaVehiculos) {
+    return;
+  }
+
+  let modoEdicionVehiculo = false;
+  let idVehiculoEliminar = null;
+
+  // El modelo no puede ser mayor al año siguiente al actual
+  const anioMaximo = new Date().getFullYear() + 1;
+  modeloVehiculo.max = anioMaximo;
+
+  // ---------- GENERAR ID (0001, 0002, ...) ----------
+  function generarIdVehiculo() {
+    if (vehiculos.length === 0) {
+      return "0001";
+    }
+
+    const mayorId = Math.max(
+      ...vehiculos.map((vehiculo) => Number(vehiculo.id))
+    );
+
+    if (mayorId >= 9999) {
+      return null;
+    }
+
+    return String(mayorId + 1).padStart(4, "0");
+  }
+
+  // ---------- NOMBRE DEL PROPIETARIO ----------
+  // El vehículo guarda el ID del cliente; el nombre se busca en la lista de clientes
+  function nombrePropietario(idCliente) {
+    const cliente = clientes.find((item) => item.id === idCliente);
+
+    if (!cliente) {
+      return "Sin propietario";
+    }
+
+    return `${cliente.nombres} ${cliente.apellidos}`;
+  }
+
+  // ---------- LLENAR LA LISTA DE PROPIETARIOS ----------
+  function llenarPropietarios() {
+    propietarioVehiculo.innerHTML = "";
+
+    const opcionInicial = document.createElement("option");
+    opcionInicial.value = "";
+    opcionInicial.textContent = "Seleccione un cliente";
+    propietarioVehiculo.appendChild(opcionInicial);
+
+    clientes.forEach((cliente) => {
+      const opcion = document.createElement("option");
+      opcion.value = cliente.id;
+      opcion.textContent =
+        `${cliente.cedula} - ${cliente.nombres} ${cliente.apellidos}`;
+      propietarioVehiculo.appendChild(opcion);
+    });
+  }
+
+  // ---------- MOSTRAR LA TABLA ----------
+  function mostrarVehiculos(lista = vehiculos) {
+    tablaVehiculos.innerHTML = "";
+
+    if (lista.length === 0) {
+      const fila = document.createElement("tr");
+      const celda = document.createElement("td");
+
+      celda.colSpan = 8;
+      celda.textContent =
+        vehiculos.length === 0
+          ? "Todavía no existen vehículos registrados."
+          : "No se encontraron vehículos.";
+
+      fila.appendChild(celda);
+      tablaVehiculos.appendChild(fila);
+    }
+
+    lista.forEach((vehiculo) => {
+      const fila = document.createElement("tr");
+
+      // ID
+      const celdaId = document.createElement("td");
+      celdaId.textContent = vehiculo.id;
+      fila.appendChild(celdaId);
+
+      // Placa (con estilo de placa amarilla)
+      const celdaPlaca = document.createElement("td");
+      const placa = document.createElement("span");
+      placa.className = "placa-tabla";
+      placa.textContent = vehiculo.placa;
+      celdaPlaca.appendChild(placa);
+      fila.appendChild(celdaPlaca);
+
+      // Resto de datos
+      const datosVehiculo = [
+        vehiculo.marca,
+        vehiculo.linea,
+        vehiculo.modelo,
+        vehiculo.color,
+        nombrePropietario(vehiculo.idCliente)
+      ];
+
+      datosVehiculo.forEach((dato) => {
+        const celda = document.createElement("td");
+        celda.textContent = dato;
+        fila.appendChild(celda);
+      });
+
+      // Botones
+      const celdaAcciones = document.createElement("td");
+
+      const botonEditar = document.createElement("button");
+      botonEditar.type = "button";
+      botonEditar.className = "btn-editar-vehiculo";
+      botonEditar.dataset.id = vehiculo.id;
+      botonEditar.textContent = "Editar";
+
+      const botonEliminar = document.createElement("button");
+      botonEliminar.type = "button";
+      botonEliminar.className = "btn-eliminar-vehiculo";
+      botonEliminar.dataset.id = vehiculo.id;
+      botonEliminar.textContent = "Eliminar";
+
+      celdaAcciones.appendChild(botonEditar);
+      celdaAcciones.appendChild(botonEliminar);
+      fila.appendChild(celdaAcciones);
+
+      tablaVehiculos.appendChild(fila);
+    });
+
+    cantidadVehiculos.textContent =
+      `${lista.length} ${lista.length === 1 ? "vehículo" : "vehículos"}`;
+  }
+
+  // ---------- BUSCAR ----------
+  function aplicarFiltroVehiculos() {
+    const texto = buscarVehiculo.value.toLowerCase().trim();
+
+    const resultados = vehiculos.filter((vehiculo) => {
+      return (
+        vehiculo.placa.toLowerCase().includes(texto) ||
+        vehiculo.marca.toLowerCase().includes(texto) ||
+        nombrePropietario(vehiculo.idCliente).toLowerCase().includes(texto)
+      );
+    });
+
+    mostrarVehiculos(resultados);
+  }
+
+  buscarVehiculo.addEventListener("input", aplicarFiltroVehiculos);
+
+  // Al entrar a la sección se actualiza la tabla
+  // (por si cambiaron los nombres de los clientes)
+  if (enlaceVehiculos) {
+    enlaceVehiculos.addEventListener("click", aplicarFiltroVehiculos);
+  }
+
+  // ---------- ABRIR Y CERRAR EL MODAL ----------
+  function cerrarModalVehiculo() {
+    formularioVehiculo.reset();
+    modalVehiculo.hidden = true;
+  }
+
+  btnNuevoVehiculo.addEventListener("click", () => {
+    // Un vehículo siempre debe tener dueño
+    if (clientes.length === 0) {
+      alert("Primero debes registrar al menos un cliente para asignarle el vehículo.");
+      return;
+    }
+
+    const nuevoId = generarIdVehiculo();
+
+    if (nuevoId === null) {
+      alert("No es posible registrar más vehículos. Se alcanzó el límite de 9999 registros.");
+      return;
+    }
+
+    formularioVehiculo.reset();
+    modoEdicionVehiculo = false;
+    llenarPropietarios();
+
+    idVehiculo.value = nuevoId;
+
+    tituloModalVehiculo.textContent = "Registrar vehículo";
+    descripcionModalVehiculo.textContent = "Ingresa la información del nuevo vehículo.";
+    guardarVehiculo.textContent = "Guardar vehículo";
+
+    modalVehiculo.hidden = false;
+    placaVehiculo.focus();
+  });
+
+  function abrirModalEditarVehiculo(id) {
+    const vehiculo = vehiculos.find((item) => item.id === id);
+
+    if (!vehiculo) {
+      return;
+    }
+
+    modoEdicionVehiculo = true;
+    llenarPropietarios();
+
+    idVehiculo.value = vehiculo.id;
+    placaVehiculo.value = vehiculo.placa;
+    marcaVehiculo.value = vehiculo.marca;
+    lineaVehiculo.value = vehiculo.linea;
+    modeloVehiculo.value = vehiculo.modelo;
+    colorVehiculo.value = vehiculo.color;
+    propietarioVehiculo.value = vehiculo.idCliente;
+
+    tituloModalVehiculo.textContent = "Editar vehículo";
+    descripcionModalVehiculo.textContent = "Modifica la información del vehículo.";
+    guardarVehiculo.textContent = "Actualizar vehículo";
+
+    modalVehiculo.hidden = false;
+    placaVehiculo.focus();
+  }
+
+  btnCerrarVehiculo.addEventListener("click", cerrarModalVehiculo);
+  btnCancelarVehiculo.addEventListener("click", cerrarModalVehiculo);
+
+  // La placa se escribe siempre en mayúsculas
+  placaVehiculo.addEventListener("input", () => {
+    placaVehiculo.value = placaVehiculo.value.toUpperCase();
+  });
+
+  // ---------- VALIDAR ----------
+  function validarDatosVehiculo() {
+    const placa = placaVehiculo.value.trim().toUpperCase();
+    const marca = marcaVehiculo.value.trim();
+    const linea = lineaVehiculo.value.trim();
+    const modelo = modeloVehiculo.value.trim();
+    const color = colorVehiculo.value.trim();
+    const propietario = propietarioVehiculo.value;
+    const patronTexto = /^[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s-]+$/;
+
+    if (!placa || !marca || !linea || !modelo || !color || !propietario) {
+      alert("Todos los campos son obligatorios.");
+      return false;
+    }
+
+    // Placa de carro en Colombia: 3 letras y 3 números (ABC123)
+    if (!/^[A-Z]{3}\d{3}$/.test(placa)) {
+      alert("La placa debe tener 3 letras y 3 números. Ejemplo: ABC123");
+      placaVehiculo.focus();
+      return false;
+    }
+
+    const placaDuplicada = vehiculos.some(
+      (vehiculo) =>
+        vehiculo.placa === placa &&
+        vehiculo.id !== idVehiculo.value
+    );
+
+    if (placaDuplicada) {
+      alert("Ya existe un vehículo registrado con esa placa.");
+      placaVehiculo.focus();
+      return false;
+    }
+
+    if (!patronTexto.test(marca)) {
+      alert("La marca solo debe contener letras.");
+      marcaVehiculo.focus();
+      return false;
+    }
+
+    const anio = Number(modelo);
+
+    if (!Number.isInteger(anio) || anio < 1950 || anio > anioMaximo) {
+      alert(`El modelo debe ser un año entre 1950 y ${anioMaximo}.`);
+      modeloVehiculo.focus();
+      return false;
+    }
+
+    if (!patronTexto.test(color)) {
+      alert("El color solo debe contener letras.");
+      colorVehiculo.focus();
+      return false;
+    }
+
+    const clienteExiste = clientes.some((cliente) => cliente.id === propietario);
+
+    if (!clienteExiste) {
+      alert("El propietario seleccionado ya no existe.");
+      propietarioVehiculo.focus();
+      return false;
+    }
+
+    return true;
+  }
+
+  // ---------- GUARDAR (CREAR O ACTUALIZAR) ----------
+  formularioVehiculo.addEventListener("submit", (evento) => {
+    evento.preventDefault();
+
+    if (!validarDatosVehiculo()) {
+      return;
+    }
+
+    const datos = {
+      placa: placaVehiculo.value.trim().toUpperCase(),
+      marca: marcaVehiculo.value.trim(),
+      linea: lineaVehiculo.value.trim(),
+      modelo: modeloVehiculo.value.trim(),
+      color: colorVehiculo.value.trim(),
+      idCliente: propietarioVehiculo.value
+    };
+
+    const vehiculoExistente = vehiculos.find(
+      (vehiculo) => vehiculo.id === idVehiculo.value
+    );
+
+    if (modoEdicionVehiculo && !vehiculoExistente) {
+      alert("El vehículo seleccionado ya no existe.");
+      return;
+    }
+
+    if (vehiculoExistente) {
+      vehiculoExistente.placa = datos.placa;
+      vehiculoExistente.marca = datos.marca;
+      vehiculoExistente.linea = datos.linea;
+      vehiculoExistente.modelo = datos.modelo;
+      vehiculoExistente.color = datos.color;
+      vehiculoExistente.idCliente = datos.idCliente;
+
+      alert("Vehículo actualizado correctamente.");
+    } else {
+      vehiculos.push({
+        id: idVehiculo.value,
+        ...datos
+      });
+
+      alert("Vehículo registrado correctamente.");
+    }
+
+    aplicarFiltroVehiculos();
+    cerrarModalVehiculo();
+  });
+
+  // ---------- BOTONES EDITAR Y ELIMINAR DE LA TABLA ----------
+  tablaVehiculos.addEventListener("click", (evento) => {
+    const botonEditar = evento.target.closest(".btn-editar-vehiculo");
+    const botonEliminar = evento.target.closest(".btn-eliminar-vehiculo");
+
+    if (botonEditar) {
+      abrirModalEditarVehiculo(botonEditar.dataset.id);
+      return;
+    }
+
+    if (botonEliminar) {
+      const vehiculo = vehiculos.find(
+        (item) => item.id === botonEliminar.dataset.id
+      );
+
+      if (!vehiculo) {
+        return;
+      }
+
+      idVehiculoEliminar = vehiculo.id;
+
+      eliminarIdVehiculo.textContent = vehiculo.id;
+      eliminarPlacaVehiculo.textContent = vehiculo.placa;
+      eliminarDescripcionVehiculo.textContent =
+        `${vehiculo.marca} ${vehiculo.linea} ${vehiculo.modelo}`;
+
+      modalEliminarVehiculo.hidden = false;
+    }
+  });
+
+  // ---------- ELIMINAR ----------
+  cancelarEliminarVehiculo.addEventListener("click", () => {
+    modalEliminarVehiculo.hidden = true;
+    idVehiculoEliminar = null;
+  });
+
+  confirmarEliminarVehiculo.addEventListener("click", () => {
+    const posicion = vehiculos.findIndex(
+      (vehiculo) => vehiculo.id === idVehiculoEliminar
+    );
+
+    if (posicion === -1) {
+      alert("El vehículo seleccionado ya no existe.");
+    } else {
+      vehiculos.splice(posicion, 1);
+      aplicarFiltroVehiculos();
+      alert("Vehículo eliminado correctamente.");
+    }
+
+    modalEliminarVehiculo.hidden = true;
+    idVehiculoEliminar = null;
+  });
+
+  mostrarVehiculos();
+});
