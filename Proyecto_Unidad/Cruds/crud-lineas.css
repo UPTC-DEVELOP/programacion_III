@@ -1,0 +1,87 @@
+/* Complemento del popup de órdenes y del resumen de facturas.
+   El resto del diseño se reutiliza desde clientes.css. */
+
+.crud-modal-amplio {
+    max-width: 760px;
+}
+
+.repuestos-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.repuesto-fila {
+    display: grid;
+    grid-template-columns: 0.9fr 1.4fr 0.9fr 0.8fr auto;
+    gap: 8px;
+    align-items: end;
+}
+
+.repuesto-fila label {
+    display: block;
+    color: var(--color-text-dark);
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.repuesto-fila input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-family: var(--font-family);
+    color: var(--color-text-dark);
+}
+
+.repuesto-fila input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.btn-agregar-linea {
+    background: transparent;
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--font-family);
+}
+
+.btn-agregar-linea:hover {
+    background: var(--color-primary);
+    color: #fff;
+}
+
+.factura-resumen {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 16px 18px;
+}
+
+.factura-resumen p {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 6px 0;
+    color: var(--color-text-dark);
+}
+
+.factura-resumen .total {
+    font-weight: 700;
+    color: var(--color-primary);
+    border-top: 1px solid #e9ecef;
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
+@media (max-width: 700px) {
+    .repuesto-fila {
+        grid-template-columns: 1fr 1fr;
+    }
+}

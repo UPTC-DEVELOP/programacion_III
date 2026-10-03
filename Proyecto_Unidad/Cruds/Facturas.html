@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facturas - AutoTech</title>
+    <link rel="icon" type="image/png" href="../img/favicon.svg">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/clientes.css">
+    <link rel="stylesheet" href="crud-lineas.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-logo">
+            <a href="../index.html">
+                <img src="../img/Logo.jpeg" alt="AutoTech - Sistema de Gestión para Talleres" class="logo">
+            </a>
+        </div>
+        <nav aria-label="Navegación principal">
+            <ul>
+                <li><a href="clientes.html">Clientes</a></li>
+                <li><a href="vehiculos.html">Vehículos</a></li>
+                <li><a href="empleados.html">Empleados</a></li>
+                <li><a href="proveedores.html">Proveedores</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="ordenes.html">Órdenes</a></li>
+                <li><a href="facturas.html" class="active">Facturas</a></li>
+                <li><a href="../index.html">← Volver al inicio</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="crud-main">
+        <h1 class="crud-titulo">Facturas</h1>
+        <div id="notificacion-crud" class="crud-notificacion"></div>
+
+        <div class="crud-acciones">
+            <input type="text" class="crud-buscar" id="buscar-factura" placeholder="Buscar en facturas...">
+            <span class="crud-contador" id="contador-facturas">0 registro(s)</span>
+            <button class="btn-nuevo" id="btn-nueva-factura" type="button">Nueva factura</button>
+        </div>
+
+        <div class="crud-tabla-container">
+            <table class="crud-tabla">
+                <thead>
+                    <tr>
+                        <th>N° factura</th>
+                        <th>Fecha</th>
+                        <th>Cliente</th>
+                        <th>Orden</th>
+                        <th>Subtotal</th>
+                        <th>IVA 19%</th>
+                        <th>Total</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-facturas-body"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <div class="crud-modal" id="modal-factura">
+        <div class="crud-modal-content">
+            <div class="crud-modal-header">
+                <h3 id="modal-titulo">Nueva factura</h3>
+                <button class="crud-modal-close" type="button" onclick="cerrarModal('modal-factura')">✕</button>
+            </div>
+            <form id="form-factura" novalidate>
+                <div class="crud-form-group">
+                    <label for="orden">Orden de servicio <span>*</span></label>
+                    <select id="orden" required></select>
+                </div>
+                <div class="crud-form-group">
+                    <label for="fecha">Fecha de emisión <span>*</span></label>
+                    <input type="date" id="fecha" required>
+                </div>
+                <div class="crud-form-group">
+                    <label for="tarifa-hora">Tarifa por hora <span>*</span></label>
+                    <input type="number" id="tarifa-hora" min="1" step="1" value="35000" required>
+                </div>
+                <div class="crud-form-group">
+                    <label for="utilidad">Utilidad estimada <span>*</span></label>
+                    <input type="number" id="utilidad" min="0" step="1" value="0" required>
+                </div>
+                <div class="factura-resumen" aria-live="polite">
+                    <p><span>Repuestos</span><strong id="res-repuestos">$ 0</strong></p>
+                    <p><span>Mano de obra</span><strong id="res-mano">$ 0</strong></p>
+                    <p><span>Utilidad estimada</span><strong id="res-utilidad">$ 0</strong></p>
+                    <p><span>Subtotal</span><strong id="res-subtotal">$ 0</strong></p>
+                    <p><span>IVA 19%</span><strong id="res-iva">$ 0</strong></p>
+                    <p class="total"><span>Total</span><strong id="res-total">$ 0</strong></p>
+                </div>
+                <div class="crud-form-actions">
+                    <button type="button" class="btn-cancelar" onclick="cerrarModal('modal-factura')">Cancelar</button>
+                    <button type="submit" class="btn-guardar">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="crud-comun.js"></script>
+    <script src="facturas.js"></script>
+</body>
+</html>

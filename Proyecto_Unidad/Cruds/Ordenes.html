@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Órdenes - AutoTech</title>
+    <link rel="icon" type="image/png" href="../img/favicon.svg">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/clientes.css">
+    <link rel="stylesheet" href="crud-lineas.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-logo">
+            <a href="../index.html">
+                <img src="../img/Logo.jpeg" alt="AutoTech - Sistema de Gestión para Talleres" class="logo">
+            </a>
+        </div>
+        <nav aria-label="Navegación principal">
+            <ul>
+                <li><a href="clientes.html">Clientes</a></li>
+                <li><a href="vehiculos.html">Vehículos</a></li>
+                <li><a href="empleados.html">Empleados</a></li>
+                <li><a href="proveedores.html">Proveedores</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="ordenes.html" class="active">Órdenes</a></li>
+                <li><a href="facturas.html">Facturas</a></li>
+                <li><a href="../index.html">← Volver al inicio</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="crud-main">
+        <h1 class="crud-titulo">Órdenes</h1>
+        <div id="notificacion-crud" class="crud-notificacion"></div>
+
+        <div class="crud-acciones">
+            <input type="text" class="crud-buscar" id="buscar-orden" placeholder="Buscar en órdenes...">
+            <span class="crud-contador" id="contador-ordenes">0 registro(s)</span>
+            <button class="btn-nuevo" id="btn-nueva-orden" type="button">Nueva orden</button>
+        </div>
+
+        <div class="crud-tabla-container">
+            <table class="crud-tabla">
+                <thead>
+                    <tr>
+                        <th>N° orden</th>
+                        <th>Cliente</th>
+                        <th>Placa</th>
+                        <th>Empleado</th>
+                        <th>Ingreso</th>
+                        <th>Horas</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-ordenes-body"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <div class="crud-modal" id="modal-orden">
+        <div class="crud-modal-content crud-modal-amplio">
+            <div class="crud-modal-header">
+                <h3 id="modal-titulo">Nueva orden</h3>
+                <button class="crud-modal-close" type="button" onclick="cerrarModal('modal-orden')">✕</button>
+            </div>
+            <form id="form-orden" novalidate>
+                <div class="crud-form-group">
+                    <label for="cliente">Cliente <span>*</span></label>
+                    <select id="cliente" required></select>
+                </div>
+                <div class="crud-form-group">
+                    <label for="placa">Vehículo <span>*</span></label>
+                    <select id="placa" required></select>
+                </div>
+                <div class="crud-form-group">
+                    <label for="ingreso">Fecha y hora de ingreso <span>*</span></label>
+                    <input type="datetime-local" id="ingreso" required>
+                </div>
+                <div class="crud-form-group">
+                    <label for="empleado">Empleado disponible <span>*</span></label>
+                    <select id="empleado" required></select>
+                </div>
+                <div class="crud-form-group">
+                    <label for="horas">Horas empleadas <span>*</span></label>
+                    <input type="number" id="horas" min="0.5" step="0.5" placeholder="Ej. 4" required>
+                </div>
+                <div class="crud-form-group">
+                    <label>Repuestos <span>*</span></label>
+                    <div class="repuestos-lista" id="lista-repuestos"></div>
+                    <button type="button" class="btn-agregar-linea" id="btn-agregar-repuesto">Agregar repuesto</button>
+                </div>
+                <div class="crud-form-actions">
+                    <button type="button" class="btn-cancelar" onclick="cerrarModal('modal-orden')">Cancelar</button>
+                    <button type="submit" class="btn-guardar">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="crud-comun.js"></script>
+    <script src="ordenes.js"></script>
+</body>
+</html>
