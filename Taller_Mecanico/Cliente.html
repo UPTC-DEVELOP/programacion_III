@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta 
+        name="viewport" 
+        content="width=device-width, initial-scale=1.0">
+    <title>Clientes</title>
+    <link
+        rel="stylesheet"
+        href="assets/libs/bootstrap-icons/bootstrap-icons.css">
+    <link
+        href="assets/libs/bootstrap/css/bootstrap.min.css"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/cliente.css">
+
+</head>
+<body class="bg-dark-panel">
+
+        <div id="sidebar-component"></div>
+
+        <div class="main-wrapper">
+
+            <div id="header-component"></div>
+
+            <main class="content-body">
+
+                <h2>Clientes</h2>
+
+                <div>
+                    <button type="button" id="btn-abrir-modal">
+                        + Nuevo cliente
+                    </button>
+                </div>
+
+                <div class="barra-busqueda">
+
+                    <input type="text" id="input-busqueda" placeholder="Buscar cliente...">
+                    <button type="button">Buscar</button>
+                </div>
+
+                <div class="Estado d-none" id="empty-state">
+
+                    <p>Aún no hay clientes registrados.</p>
+                    <p>Haz clic en<strong>+ Nuevo cliente</strong>
+                    </p>
+                </div>
+
+                <div class="tabla"id="tabla-container">
+                    <table class="tabla_cliente">
+                        <thead>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Cédula</th>
+                                <th>Teléfono</th>
+                                <th>Dirección</th>
+                                <th>Registro</th>
+                                <th class="acciones">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody class="lista_cliente" id="lista-clientes">
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+    
+    
+    <div class="modal-overlay d-none" id="modal-cliente">
+    <div class="modal-card">
+
+
+            <div class="modal-header">
+
+                <h3 id="modal-titulo">
+                    Registrar nuevo cliente
+                </h3>
+
+                <button type="button" class="btn-close-modal" id="btn-cerrar-modal">×</button>
+            </div>
+
+
+            <form id="form-cliente">
+                <input type="hidden"id="cliente-id">
+
+                <div class="form-group">
+
+                    <label for="cliente-cedula">Cédula<span class="required">*</span></label>
+                    <input
+                        type="text" id="cliente-cedula" placeholder="Ej. 1234567890" required>
+
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group col-6">
+
+                        <label for="cliente-nombres"> Nombres <span class="required">*</span> </label>
+
+                        <input type="text" id="cliente-nombres" placeholder="Ej. Carlos" required>
+                    </div>
+
+                    <div class="form-group col-6">
+
+                        <label for="cliente-apellidos">Apellidos<span class="required">*</span></label>
+
+                        <input type="text" id="cliente-apellidos" placeholder="Ej. Mendoza" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cliente-telefono"> Teléfono <span class="required">*</span></label>
+
+                    <input type="text" id="cliente-telefono" placeholder="Ej. +57 300 000 0000" required>
+                </div>
+
+
+                <!-- Dirección -->
+                <div class="form-group">
+
+                    <label for="cliente-direccion">
+
+                        Dirección
+                        <span class="required">*</span>
+
+                    </label>
+                    <input type="text" id="cliente-direccion"placeholder="Ej. Calle 10 # 5-23, Barrio Centro"required>
+                </div>
+                <div class="modal-footer">
+                    <button
+                        type="button" class="btn btn-secondary" id="btn-cancelar">Cancelar</button>
+                    <button
+                        type="submit" class="btn btn-primary" id="btn-guardar">Registrar cliente</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/header_nav.js"></script>
+    <script src="js/Cliente.js"></script>
+</body>
+</html>

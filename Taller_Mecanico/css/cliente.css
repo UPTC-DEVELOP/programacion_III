@@ -1,0 +1,423 @@
+:root {
+    /* Fondos claros */
+    --bg-main: #ffffff;
+    --bg-card: #f8f9fa;
+    --bg-input: #f1f5f9;
+    --border-color: #e2e8f0;
+
+    /* Textos oscuros para que sean visibles */
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+
+    /* Colores principales */
+    --primary-blue: #0d6efd;
+    --primary-hover: #0b5ed7;
+
+    --danger: #dc3545;
+    --danger-hover: #bb2d3b;
+}
+
+/* =========================================
+   GENERAL
+========================================= */
+
+body.bg-dark-panel {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/*
+   IMPORTANTE:
+   No modificamos .app-layout,
+   .main-wrapper ni el Header.
+   Esos estilos pertenecen al header_nav.css.
+*/
+
+.content-body {
+    padding: 2rem;
+}
+
+/* =========================================
+   TÍTULO
+========================================= */
+
+.content-body h2 {
+    margin: 0 0 1.5rem;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+/* =========================================
+   BOTÓN NUEVO CLIENTE
+========================================= */
+
+#btn-abrir-modal {
+    background-color: var(--primary-blue);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.65rem 1.2rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#btn-abrir-modal:hover {
+    background-color: var(--primary-hover);
+}
+
+/* =========================================
+   BARRA DE BÚSQUEDA
+========================================= */
+
+.barra-busqueda {
+    display: flex;
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+}
+
+.barra-busqueda input {
+    flex: 1;
+    min-width: 0;
+    background-color: var(--bg-input);
+    color: var(--text-main); /* CORREGIDO: Texto oscuro */
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.barra-busqueda input::placeholder {
+    color: var(--text-muted);
+}
+
+.barra-busqueda input:focus {
+    border-color: var(--primary-blue);
+}
+
+.barra-busqueda > button {
+    background-color: #111827; /* CORREGIDO: Botón oscuro como en la imagen */
+    color: #ffffff;
+    border: 1px solid #111827;
+    border-radius: 8px;
+    padding: 0.75rem 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.barra-busqueda > button:hover {
+    background-color: #1f2937;
+}
+
+/* =========================================
+   ESTADO VACÍO
+========================================= */
+
+.Estado {
+    text-align: center;
+    padding: 4rem 1rem;
+    color: var(--text-muted);
+}
+
+.Estado p {
+    margin: 0.4rem 0;
+}
+
+.Estado strong {
+    color: var(--text-main);
+}
+
+/* =========================================
+   TABLA
+========================================= */
+
+.tabla {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.tabla_cliente {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--bg-input); /* Fondo claro para las filas */
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Cabecera */
+.tabla_cliente thead {
+    background-color: #111827; /* Mantiene la cabecera oscura */
+}
+
+.tabla_cliente th {
+    padding: 1rem;
+    text-align: left;
+    color: #f3f4f6; /* Texto claro para la cabecera oscura */
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-bottom: 1px solid #1f2937;
+}
+
+/* Celdas */
+.tabla_cliente td {
+    padding: 1rem;
+    color: var(--text-main); /* CORREGIDO: Texto oscuro para que sea visible */
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Última fila */
+.tabla_cliente tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Hover */
+.tabla_cliente tbody tr:hover {
+    background-color: #e2e8f0; /* Hover adaptado a tema claro */
+}
+
+/* =========================================
+   ACCIONES
+========================================= */
+
+.acciones {
+    white-space: nowrap;
+}
+
+.btn-editar,
+.btn-eliminar {
+    border-radius: 6px;
+    padding: 0.4rem 0.7rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    margin-right: 0.3rem;
+    transition: 0.2s ease;
+}
+
+/* Editar */
+.btn-editar {
+    background-color: #111827;
+    color: #ffffff;
+    border: 1px solid #111827;
+}
+
+.btn-editar:hover {
+    background-color: #1f2937;
+}
+
+/* Eliminar */
+.btn-eliminar {
+    background-color: #fee2e2;
+    color: #ef4444;
+    border: 1px solid #fca5a5;
+}
+
+.btn-eliminar:hover {
+    background-color: #fca5a5;
+    color: #b91c1c;
+}
+
+/* =========================================
+   MODAL
+========================================= */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    z-index: 9999;
+}
+
+.modal-overlay.d-none {
+    display: none !important;
+}
+
+/* Ventana Modal */
+.modal-card {
+    width: 100%;
+    max-width: 625px;
+    background-color: var(--bg-main); /* Modal claro */
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 1.75rem;
+    color: var(--text-main);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* =========================================
+   HEADER DEL MODAL
+========================================= */
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: var(--text-main);
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+/* Botón X */
+.btn-close-modal {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.7rem;
+    line-height: 1;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.btn-close-modal:hover {
+    color: var(--text-main);
+    background-color: var(--bg-input);
+}
+
+/* =========================================
+   FORMULARIO
+========================================= */
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.col-6 {
+    flex: 1;
+    min-width: 0;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.4rem;
+    color: var(--text-muted); /* Label oscuro */
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.required {
+    color: var(--danger);
+}
+
+/* Inputs Modal */
+.form-group input {
+    width: 100%;
+    background-color: var(--bg-input);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.7rem 0.85rem;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.form-group input::placeholder {
+    color: #94a3b8;
+}
+
+.form-group input:focus {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.12);
+}
+
+/* =========================================
+   FOOTER DEL MODAL
+========================================= */
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.modal-footer .btn {
+    border: none;
+    border-radius: 8px;
+    padding: 0.65rem 1.2rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* Cancelar */
+.modal-footer .btn-secondary {
+    background-color: var(--bg-input);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+}
+
+.modal-footer .btn-secondary:hover {
+    background-color: #e2e8f0;
+}
+
+/* Registrar */
+.modal-footer .btn-primary {
+    background-color: var(--primary-blue);
+    color: #ffffff;
+}
+
+.modal-footer .btn-primary:hover {
+    background-color: var(--primary-hover);
+}
+
+/* =========================================
+   OCULTAR
+========================================= */
+
+.d-none {
+    display: none !important;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+    .content-body {
+        padding: 1rem;
+    }
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    .barra-busqueda {
+        flex-direction: column;
+    }
+    .barra-busqueda > button {
+        width: 100%;
+    }
+    .modal-card {
+        padding: 1.25rem;
+    }
+    .tabla {
+        overflow-x: auto;
+    }
+    .tabla_cliente {
+        min-width: 700px;
+    }
+}
