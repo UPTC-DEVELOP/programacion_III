@@ -652,6 +652,18 @@ confirmarEliminarCliente.addEventListener("click", () => {
   return;
 }
 
+ // No se puede eliminar un cliente que todavía tiene vehículos registrados
+ const tieneVehiculos = datosTaller.vehiculos.some(
+   (vehiculo) => vehiculo.idCliente === idClienteEliminar
+ );
+
+ if (tieneVehiculos) {
+   alert("No se puede eliminar: el cliente tiene vehículos registrados. Elimina primero sus vehículos.");
+   modalEliminarCliente.hidden = true;
+   idClienteEliminar = null;
+   return;
+ }
+ 
  clientes.splice(posicion, 1);
 
  aplicarFiltroClientes();
