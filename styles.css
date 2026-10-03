@@ -589,3 +589,16 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .login-modal__card { transition: none; }
 }
 
+.tq-team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+.tq-mechanic { }
+.tq-mechanic-photo { position: relative; border-radius: var(--tq-radius-lg); overflow: hidden; aspect-ratio: 1 / 1; }
+.tq-mechanic-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .3s ease; }
+.tq-mechanic:hover .tq-mechanic-photo img { transform: scale(1.05); }
+.tq-mechanic-cert {
+  position: absolute; left: 12px; top: 12px; background: var(--tq-orange); color: #fff;
+  font-family: var(--tq-display); font-weight: 600; text-transform: uppercase; letter-spacing: .05em;
+  font-size: .72rem; padding: .3rem .6rem; border-radius: 3px;
+}
+.tq-mechanic h4 { font-size: 1.45rem; margin: 1rem 0 .1rem; }
+.tq-mechanic-role { color: var(--tq-orange-700); font-family: var(--tq-display); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; font-size: .9rem; }
+.tq-mechanic p { font-size: .92rem; margin: .5rem 0 0; }
