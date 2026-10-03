@@ -4,67 +4,101 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
- 
-  <title>TallerMax | Gestión de Empleados</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap"
+    rel="stylesheet">
+
+  <title>Empleados — TallerMax</title>
+  <link rel="stylesheet" href="css/style.css">
+
   <link rel="stylesheet" href="css/estilosEmpleado.css">
+
 </head>
 
 <body>
 
-  <!-- ===== ENCABEZADO ===== -->
-  <header class="encabezado">
-    <div class="encabezado__marca">
-      <span class="encabezado__icono" aria-hidden="true">🔧</span>
-      <div>
-        <h1>TallerMax</h1>
-        <p>Módulo: Gestión de Empleados</p>
-      </div>
-    </div>
+  <!-- ===== Encabezado Mantener Estructura===== -->
+  <header class="encabezado-sitio">
+    <p class="logo">
+      <img src="img/Tuerca_encabezado.jpg" alt="" width="28" height="28">
+      <span>TALLER<span class="resaltado">MAX</span></span>
+    </p>
+
+    <nav class="menu-principal" aria-label="Navegación principal">
+      <ul>
+        <li><a href="index.html#servicios">Servicios</a></li>
+        <li><a href="index.html#nosotros">Nosotros</a></li>
+        <li><a href="index.html#beneficios">Beneficios</a></li>
+        <li><a href="index.html#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <!-- Menú desplegable para registrar autos, clientes o empleados -->
+    <nav class="menu-registro" aria-label="Menú de registro">
+      <button type="button" class="boton boton-secundario boton-pequeno boton-registro" id="botonRegistro"
+        aria-expanded="false" aria-controls="listaRegistro">
+        Registro <span class="icono-flecha" aria-hidden="true">▾</span>
+      </button>
+
+      <ul class="lista-registro" id="listaRegistro" hidden>
+        <li><a href="autos.html">Registrar auto</a></li>
+        <li><a href="clientes.html">Registrar cliente</a></li>
+        <li><a href="empleados.html">Registrar empleado</a></li>
+      </ul>
+    </nav>
+
+    <a href="index.html#contacto" class="boton boton-primario boton-pequeno">Prueba gratis 15 días</a>
   </header>
 
-  <main class="contenedor">
+  <main id="main">
 
-    <!-- ===== MENSAJES DE AVISO (éxito / error) ===== -->
-    <!-- role="status" avisa a lectores de pantalla cuando aparece un mensaje -->
-    <div id="mensajeEmpleado" class="mensaje mensaje--oculto" role="status"></div>
+    <section class="seccion panel-empleados" id="empleados" aria-labelledby="empleados-title">
+      <h1 id="empleados-title">Tu mejor Recurso -- Empleados --</h1>
+      <p class="ubicacion-taller">Taller · Tunja, Boyacá</p>
 
-    <!-- ===== SECCIÓN 1: FORMULARIO ===== -->
-    <section class="tarjeta">
-      <h2 id="tituloFormulario">Registro empleado</h2>
+      <!-- Buscador y botón para abrir el formulario -->
+      <p class="barra-acciones-empleados">
+        <label for="buscarEmpleado" class="etiqueta-oculta">Buscar empleado</label>
+        <input type="search" id="buscarEmpleado" class="campo-busqueda" placeholder="Buscar por nombre o cédula..."
+          autocomplete="off">
 
-      <form id="formEmpleado" novalidate>
+        <button type="button" id="botonNuevoEmpleado" class="boton boton-primario boton-pequeno" aria-expanded="false"
+          aria-controls="formularioNuevoEmpleado">
+          + Nuevo empleado
+        </button>
+      </p>
 
-        <!-- Campo: cédula -->
-        <div class="campo">
-          <label for="cedula">Cédula</label>
-          <input type="text" id="cedula" name="cedula" maxlength="10" inputmode="numeric" placeholder="Ej: 1015896321"
-            autocomplete="off">
-          <small class="ayuda">Debe ser numérica, de 10 dígitos y única.</small>
-          <span class="error" id="errorCedula"></span>
-        </div>
+      <!-- Formulario pCRUD Empleado -->
+      <form id="formularioNuevoEmpleado" class="formulario-empleado" novalidate hidden>
+        <h2 id="tituloFormularioEmpleado">Nuevo empleado</h2>
 
-        <!-- Campo: nombres -->
-        <div class="campo">
-          <label for="nombres">Nombres</label>
-          <input type="text" id="nombres" name="nombres" maxlength="60" placeholder="Ej: Juan Camilo"
-            autocomplete="off">
-          <small class="ayuda">Máximo 60 caracteres.</small>
-          <span class="error" id="errorNombres"></span>
-        </div>
+        <!-- Si tiene una cédula, el formulario está editando a ese empleado; si está vacío, es uno nuevo -->
+        <input type="hidden" id="empleadoCedulaEditando" value="">
 
-        <!-- Campo: apellidos -->
-        <div class="campo">
-          <label for="apellidos">Apellidos</label>
-          <input type="text" id="apellidos" name="apellidos" maxlength="60" placeholder="Ej: Rodríguez Peña"
-            autocomplete="off">
-          <small class="ayuda">Máximo 60 caracteres.</small>
-          <span class="error" id="errorApellidos"></span>
-        </div>
+        <p class="campo-formulario">
+          <label for="cedulaEmpleado">Cédula</label>
+          <input type="text" id="cedulaEmpleado" name="cedulaEmpleado" maxlength="10" inputmode="numeric"
+            placeholder="Ej. 1015896321" autocomplete="off" required>
+          <span class="error-campo" data-error-for="cedulaEmpleado"></span>
+        </p>
 
-        <!-- Campo: cargo -->
-        <div class="campo">
-          <label for="cargo">Cargo</label>
-          <select id="cargo" name="cargo">
+        <p class="campo-formulario">
+          <label for="nombresEmpleado">Nombres</label>
+          <input type="text" id="nombresEmpleado" name="nombresEmpleado" maxlength="60" placeholder="Ej. Juan Camilo"
+            autocomplete="off" required>
+          <span class="error-campo" data-error-for="nombresEmpleado"></span>
+        </p>
+
+        <p class="campo-formulario">
+          <label for="apellidosEmpleado">Apellidos</label>
+          <input type="text" id="apellidosEmpleado" name="apellidosEmpleado" maxlength="60"
+            placeholder="Ej. Rodríguez Peña" autocomplete="off" required>
+          <span class="error-campo" data-error-for="apellidosEmpleado"></span>
+        </p>
+        <p class="campo-formulario">
+          <label for="cargoEmpleado">Cargo</label>
+          <select id="cargoEmpleado" name="cargoEmpleado" required>
             <option value="">-- Seleccione un cargo --</option>
             <option value="Mecánico">Mecánico</option>
             <option value="Electricista automotriz">Electricista automotriz</option>
@@ -72,63 +106,64 @@
             <option value="Administrador">Administrador</option>
             <option value="Ayudante de taller">Ayudante de taller</option>
           </select>
-          <small class="ayuda">Debe ser un cargo válido definido por el taller.</small>
-          <span class="error" id="errorCargo"></span>
-        </div>
-
-        <!-- Campo oculto: guarda la cédula original cuando estamos actualizando -->
-        <input type="hidden" id="cedulaOriginal" value="">
-
-        <div class="botones">
-          <button type="submit" id="btnGuardar" class="boton boton--primario">
-            <span class="boton__texto">Registrar empleado</span>
-          </button>
-          <button type="button" id="btnCancelar" class="boton boton--secundario oculto">Cancelar edición</button>
-          <button type="reset" class="boton boton--fantasma">Limpiar</button>
-        </div>
+          <span class="error-campo" data-error-for="cargoEmpleado"></span>
+        </p>
+        <p class="botones-formulario-empleado">
+          <button type="button" id="botonCancelarEmpleado"
+            class="boton boton-secundario boton-pequeno">Cancelar</button>
+          <button type="submit" class="boton boton-primario boton-pequeno">Guardar</button>
+        </p>
+        <p class="estado-formulario" id="estadoFormularioEmpleado" role="status" aria-live="polite"></p>
       </form>
-    </section>
+      <!-- Mensajes generales  -->
+      <p class="estado-formulario" id="estadoEmpleados" role="status" aria-live="polite"></p>
 
-    <!-- ===== SECCIÓN 2: BÚSQUEDA  ===== -->
-    <section class="tarjeta">
-      <h2>Consultar empleado</h2>
-      <div class="busqueda">
-        <input type="text" id="buscar" placeholder="Buscar por cédula o nombre..." autocomplete="off">
-        <button type="button" id="btnBuscar" class="boton boton--primario">Buscar</button>
-        <button type="button" id="btnLimpiarBusqueda" class="boton boton--fantasma">Ver todos</button>
-      </div>
-    </section>
-
-    <!-- ===== SECCIÓN 3: LISTADO  ===== -->
-    <section class="tarjeta">
-      <h2>Empleados registrados</h2>
+      <!-- Tabla con la lista de empleados registrados -->
       <div class="tabla-envoltorio">
-        <table id="tablaEmpleados">
+        <table class="tabla-empleados" id="tablaEmpleados">
           <thead>
             <tr>
-              <th>Cédula</th>
-              <th>Nombres</th>
-              <th>Apellidos</th>
-              <th>Cargo</th>
-              <th>Acciones</th>
+              <th scope="col">Cédula</th>
+              <th scope="col">Nombres</th>
+              <th scope="col">Apellidos</th>
+              <th scope="col">Cargo</th>
+              <th scope="col">Acciones</th>
             </tr>
           </thead>
-          <!-- Las filas se generan por JavaScript. Cada <td> lleva un
-               atributo data-etiqueta: en pantallas pequeñas el CSS lo usa
-               para mostrar la tabla como tarjetas apiladas (ver estilos.css) -->
-          <tbody id="cuerpoTabla"></tbody>
+          <tbody id="cuerpoTablaEmpleados">
+            <!-- Las filas se generan dinámicamente desde js/scriptEmpleado.js -->
+          </tbody>
         </table>
-        <p id="sinResultados" class="sin-resultados oculto">No hay empleados para mostrar.</p>
+
       </div>
+      <p class="mensaje-sin-resultados" id="mensajeSinEmpleados" hidden>No hay empleados para mostrar.</p>
     </section>
 
   </main>
 
-  <footer class="pie">
-    <p>TallerMax · Gestión de Empleados</p>
-  </footer>
+  <footer class="pie-de-pagina" id="footer">
+    <!-- Pie de Página (igual al de index.html) -->
+    <footer class="pie-de-pagina" id="footer">
+      <p class="marca-footer">
+        <span class="texto-logo">TALLER<span class="resaltado">MAX</span></span><br>
+        Software de gestión para talleres mecánicos.
+      </p>
 
-  <script src="js/scriptEmpleado.js"></script>
+      <nav class="columna-footer" aria-label="Mapa del sitio">
+        <ul>
+          <li class="titulo-columna">Mapa del sitio</li>
+          <li><a href="index.html#servicios">Servicios</a></li>
+          <li><a href="index.html#nosotros">Nosotros</a></li>
+          <li><a href="index.html#beneficios">Beneficios</a></li>
+          <li><a href="index.html#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <p class="linea-copyright">© <span id="year"></span> TallerMax. Todos los derechos reservados - Calidad y servicio
+        garantizado.</p>
+    </footer>
+    <script src="js/script.js"></script>
+    <script src="js/scriptEmpleado.js"></script>
 </body>
 
 </html>
