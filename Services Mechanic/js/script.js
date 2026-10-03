@@ -932,13 +932,17 @@ if (direccion.length > 80) {
         idEmpleado.value = "";
     }
 
-    function generarId() {
+        function generarId() {
 
         if (empleados.length === 0) {
-            return "001";
+            return "0001";
         }
 
-        return String(empleados.length + 1).padStart(3, "0");
+        const mayorId = Math.max(
+            ...empleados.map((empleado) => Number(empleado.id))
+        );
+
+        return String(mayorId + 1).padStart(4, "0");
     }
 
     formulario.addEventListener("submit", (evento) => {
