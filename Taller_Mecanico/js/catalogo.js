@@ -54,7 +54,7 @@ document.querySelectorAll(".filter").forEach(btn => {
     activeCategory = btn.dataset.category;
     renderProducts();
   });
-});
+}); 
 
 function consult(product){
   const message = encodeURIComponent(`Hola, LJA MOTORS. Quiero consultar disponibilidad y precio de: ${product}.`);
