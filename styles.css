@@ -598,7 +598,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 
 .tq-team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
-.tq-mechanic { }
 .tq-mechanic-photo { position: relative; border-radius: var(--tq-radius-lg); overflow: hidden; aspect-ratio: 1 / 1; }
 .tq-mechanic-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .3s ease; }
 .tq-mechanic:hover .tq-mechanic-photo img { transform: scale(1.05); }

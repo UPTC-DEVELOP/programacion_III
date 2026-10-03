@@ -85,16 +85,19 @@ if (carro) {
         // Clic en cada tipo de usuario
         loginModal.querySelectorAll('.role-btn').forEach((boton) => {
             boton.addEventListener('click', () => {
-                const rol = boton.dataset.role; // "cliente", "empleado" o "administrador"
-                console.log('Tipo de usuario elegido:', rol);
+
+                // "cliente", "empleado" o "administrador"
+                const rol = boton.dataset.role; 
+                if (rol === 'administrador') {
+                    window.location.href = 'administradores.html';
+                }
 
                 
             });
         });
     }
 
-            // Esto es para conectar un servidor 
-            console.log('Login listo para enviar al servidor:', email);
+            
         });
     
 
