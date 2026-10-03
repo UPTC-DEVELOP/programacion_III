@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de administración | TallerPro</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><text y=%2218%22 font-size=%2218%22>🔧</text></svg>">
+
+  <!-- Reutiliza las variables de color y los botones de tu sitio -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="adm-body">
+
+  <header class="adm-header">
+    <div class="adm-container adm-header__inner">
+      <a href="index.html" class="adm-logo">
+        <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
+          <path d="M3 13l1.5-4.5A2 2 0 0 1 6.4 7h11.2a2 2 0 0 1 1.9 1.5L21 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <rect x="2.5" y="13" width="19" height="5" rx="1.5" stroke="currentColor" stroke-width="1.6" fill="none"/>
+          <circle cx="6.5" cy="18" r="1.6" fill="currentColor"/>
+          <circle cx="17.5" cy="18" r="1.6" fill="currentColor"/>
+        </svg>
+        <span>Taller<strong>Pro</strong> <small>Administración</small></span>
+      </a>
+      <a href="index.html" class="btn btn--ghost btn--sm">Volver al sitio</a>
+    </div>
+  </header>
+
+  <main class="adm-container adm-main">
+
+    <div class="adm-title">
+      <h1>Órdenes de servicio</h1>
+      <p>Registra, edita y controla los trabajos del taller.</p>
+    </div>
+
+    <!-- Resumen -->
+    <section class="adm-stats" aria-label="Resumen">
+      <div class="adm-stat"><span class="adm-stat__n" id="statTotal">0</span><span class="adm-stat__l">Órdenes</span></div>
+      <div class="adm-stat"><span class="adm-stat__n" id="statPendiente">0</span><span class="adm-stat__l">Pendientes</span></div>
+      <div class="adm-stat"><span class="adm-stat__n" id="statProceso">0</span><span class="adm-stat__l">En proceso</span></div>
+      <div class="adm-stat"><span class="adm-stat__n" id="statIngresos">$0</span><span class="adm-stat__l">Facturado (finalizadas y entregadas)</span></div>
+    </section>
+
+    <!-- Barra de herramientas -->
+    <section class="adm-toolbar" aria-label="Filtros">
+      <input type="search" id="buscar" placeholder="Buscar por cliente, placa o vehículo" aria-label="Buscar">
+      <select id="filtroEstado" aria-label="Filtrar por estado">
+        <option value="">Todos los estados</option>
+        <option value="pendiente">Pendiente</option>
+        <option value="proceso">En proceso</option>
+        <option value="finalizado">Finalizado</option>
+        <option value="entregado">Entregado</option>
+      </select>
+      <button type="button" class="btn btn--ghost btn--sm" id="btnExportar">Exportar CSV</button>
+      <button type="button" class="btn btn--primary btn--sm" id="btnNueva">Nueva orden</button>
+    </section>
+
+    <!-- Tabla -->
+    <div class="adm-table-wrap">
+      <table class="adm-table">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Cliente</th>
+            <th>Vehículo</th>
+            <th>Servicio</th>
+            <th>Estado</th>
+            <th class="adm-right">Valor</th>
+            <th class="adm-right">Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tablaBody"></tbody>
+      </table>
+      <div class="adm-empty" id="vacio" hidden>
+        <p><strong>No hay órdenes para mostrar.</strong></p>
+        <p>Cambia los filtros o crea una nueva orden.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal crear / editar -->
+  <div class="adm-modal" id="modalOrden" role="dialog" aria-modal="true" aria-labelledby="modalTitulo" hidden>
+    <div class="adm-modal__card">
+      <button type="button" class="adm-modal__close" id="cerrarOrden" aria-label="Cerrar">&times;</button>
+      <h2 id="modalTitulo">Nueva orden</h2>
+
+      <form id="formOrden" novalidate>
+        <input type="hidden" id="ordenId">
+
+        <div class="adm-grid">
+          <div class="adm-field">
+            <label for="fCliente">Cliente</label>
+            <input type="text" id="fCliente" placeholder="Nombre completo" required>
+            <span class="adm-err" id="eCliente"></span>
+          </div>
+          <div class="adm-field">
+            <label for="fTelefono">Celular</label>
+            <input type="tel" id="fTelefono" placeholder="3001234567" required>
+            <span class="adm-err" id="eTelefono"></span>
+          </div>
+          <div class="adm-field">
+            <label for="fPlaca">Placa</label>
+            <input type="text" id="fPlaca" placeholder="ABC123" maxlength="7" required>
+            <span class="adm-err" id="ePlaca"></span>
+          </div>
+          <div class="adm-field">
+            <label for="fVehiculo">Vehículo</label>
+            <input type="text" id="fVehiculo" placeholder="Marca, modelo y año" required>
+            <span class="adm-err" id="eVehiculo"></span>
+          </div>
+          <div class="adm-field">
+            <label for="fServicio">Servicio</label>
+            <select id="fServicio" required>
+              <option value="" disabled selected>Selecciona una opción</option>
+              <option>Mantenimiento preventivo</option>
+              <option>Diagnóstico computarizado</option>
+              <option>Reparación de motor</option>
+              <option>Alineación y balanceo</option>
+            </select>
+            <span class="adm-err" id="eServicio"></span>
+          </div>
+          <div class="adm-field">
+            <label for="fEstado">Estado</label>
+            <select id="fEstado">
+              <option value="pendiente">Pendiente</option>
+              <option value="proceso">En proceso</option>
+              <option value="finalizado">Finalizado</option>
+              <option value="entregado">Entregado</option>
+            </select>
+          </div>
+          <div class="adm-field">
+            <label for="fPrecio">Valor (COP)</label>
+            <input type="number" id="fPrecio" min="0" step="1000" placeholder="150000" required>
+            <span class="adm-err" id="ePrecio"></span>
+          </div>
+          <div class="adm-field">
+            <label for="fFecha">Fecha</label>
+            <input type="date" id="fFecha" required>
+            <span class="adm-err" id="eFecha"></span>
+          </div>
+        </div>
+
+        <div class="adm-field">
+          <label for="fNotas">Notas</label>
+          <textarea id="fNotas" rows="3" placeholder="Repuestos, observaciones, fallas detectadas"></textarea>
+        </div>
+
+        <div class="adm-actions">
+          <button type="button" class="btn btn--ghost btn--sm" id="cancelarOrden">Cancelar</button>
+          <button type="submit" class="btn btn--primary btn--sm" id="guardarOrden">Guardar orden</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal confirmar eliminación -->
+  <div class="adm-modal" id="modalEliminar" role="alertdialog" aria-modal="true" aria-labelledby="elimTitulo" hidden>
+    <div class="adm-modal__card adm-modal__card--sm">
+      <h2 id="elimTitulo">Eliminar orden</h2>
+      <p id="elimTexto"></p>
+      <div class="adm-actions">
+        <button type="button" class="btn btn--ghost btn--sm" id="cancelarElim">Cancelar</button>
+        <button type="button" class="btn btn--sm adm-btn-danger" id="confirmarElim">Eliminar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="adm-toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
