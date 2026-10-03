@@ -4777,3 +4777,405 @@ input, select, textarea {
 		}
 
 	}
+
+
+/* ==================== SERVICIOS ==================== */
+
+#servicios {
+  background-color: #111315;
+  color: #ffffff;
+  padding: 80px max(24px, calc((100% - 1100px) / 2));
+}
+
+#servicios .encabezado-servicios {
+  max-width: 780px;
+  margin-bottom: 38px;
+}
+
+#servicios .etiqueta-servicios {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 18px;
+  color: #f5c518;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+#servicios .etiqueta-servicios::before {
+  content: "";
+  display: inline-block;
+  width: 30px;
+  height: 3px;
+  border-radius: 3px;
+  background-color: #f5c518;
+}
+
+#servicios #titulo-servicios {
+  margin: 0 0 18px;
+  color: #ffffff;
+  font-size: clamp(32px, 4vw, 44px);
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+#servicios .encabezado-servicios > p:last-child {
+  max-width: 720px;
+  margin: 0;
+  color: #b8bdc3;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+#servicios .servicios-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+#servicios .tarjeta-servicio {
+  position: relative;
+  min-width: 0;
+  padding: 28px;
+  overflow: hidden;
+  background: linear-gradient(145deg, #202326, #191b1d);
+  border: 1px solid #303437;
+  border-radius: 16px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+#servicios .tarjeta-servicio::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 28px;
+  width: 48px;
+  height: 4px;
+  background-color: #f5c518;
+  border-radius: 0 0 5px 5px;
+}
+
+#servicios .tarjeta-servicio:hover {
+  transform: translateY(-5px);
+  border-color: #f5c518;
+  box-shadow: 0 15px 32px rgba(0, 0, 0, 0.25);
+}
+
+#servicios .icono-servicio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 22px;
+  background-color: rgba(245, 197, 24, 0.1);
+  border: 1px solid rgba(245, 197, 24, 0.4);
+  border-radius: 10px;
+  color: #f5c518;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+#servicios .tarjeta-servicio h3 {
+  margin: 0 0 12px;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+#servicios .tarjeta-servicio p {
+  margin: 0;
+  color: #b8bdc3;
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+
+/* ==================== BENEFICIOS ==================== */
+
+#beneficios {
+  background-color: #f7f7f5;
+  color: #202124;
+  padding: 80px max(24px, calc((100% - 1200px) / 2));
+}
+
+#beneficios .encabezado-beneficios {
+  max-width: 850px;
+  margin: 0 auto 44px;
+  text-align: center;
+}
+
+#beneficios .etiqueta-beneficios {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 0 0 18px;
+  color: #d5a900;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+#beneficios .etiqueta-beneficios::before {
+  content: "";
+  width: 28px;
+  height: 3px;
+  background-color: #f5c518;
+  border-radius: 3px;
+}
+
+#beneficios #titulo-beneficios {
+  margin: 0 0 18px;
+  color: #202124;
+  font-size: clamp(32px, 4vw, 44px);
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+#beneficios #titulo-beneficios span {
+  color: #e2b600;
+}
+
+#beneficios .descripcion-beneficios {
+  max-width: 760px;
+  margin: 0 auto;
+  color: #6b7075;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+#beneficios .beneficios-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+#beneficios .tarjeta-beneficio {
+  min-width: 0;
+  min-height: 245px;
+  padding: 26px 22px;
+  background: linear-gradient(145deg, #1b1e20, #111315);
+  border: 1px solid #2a2d2f;
+  border-radius: 16px;
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+#beneficios .tarjeta-beneficio:hover {
+  transform: translateY(-5px);
+  border-color: #f5c518;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.16);
+}
+
+#beneficios .numero-beneficio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 22px;
+  background-color: rgba(245, 197, 24, 0.1);
+  border: 1px solid rgba(245, 197, 24, 0.45);
+  border-radius: 10px;
+  color: #f5c518;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+#beneficios .tarjeta-beneficio h3 {
+  margin: 0 0 12px;
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+#beneficios .tarjeta-beneficio p {
+  margin: 0;
+  color: #b8bdc3;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+
+/* ==================== EQUIPO ==================== */
+
+.seccion-equipo {
+  background-color: #f7f7f5;
+  color: #202124;
+  padding: 80px max(24px, calc((100% - 1100px) / 2));
+}
+
+.encabezado-equipo {
+  max-width: 900px;
+  margin: 0 auto 44px;
+  text-align: center;
+}
+
+.etiqueta-equipo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 0 0 18px;
+  color: #d5a900;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.etiqueta-equipo::before {
+  content: "";
+  width: 28px;
+  height: 3px;
+  background-color: #f5c518;
+  border-radius: 3px;
+}
+
+.seccion-equipo #titulo-equipo {
+  margin: 0;
+  color: #202124;
+  font-size: clamp(32px, 4vw, 42px);
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.seccion-equipo #titulo-equipo span {
+  color: #e2b600;
+}
+
+.grid-equipo {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  max-width: 1050px;
+  margin: 0 auto;
+}
+
+.tarjeta-equipo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 0;
+  min-height: 220px;
+  padding: 32px 22px;
+  background-color: #ffffff;
+  border: 1px solid #e6e7e7;
+  border-radius: 17px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.tarjeta-equipo:hover {
+  transform: translateY(-5px);
+  border-color: #f5c518;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.burbuja-equipo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 66px;
+  height: 66px;
+  margin-bottom: 20px;
+  background: linear-gradient(145deg, #25282a, #111315);
+  border: 1px solid #333638;
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 28px;
+  transition: transform 0.25s ease;
+}
+
+.tarjeta-equipo:hover .burbuja-equipo {
+  transform: scale(1.08);
+}
+
+.tarjeta-equipo h3 {
+  margin: 0 0 10px;
+  color: #17191a;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.tarjeta-equipo .rol-equipo {
+  margin: 0;
+  color: #74797d;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+
+/* ==================== TABLET ==================== */
+
+@media (max-width: 1000px) {
+  #beneficios .beneficios-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .grid-equipo {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* ==================== CELULARES ==================== */
+
+@media (max-width: 600px) {
+  #servicios,
+  #beneficios,
+  .seccion-equipo {
+    padding: 55px 20px;
+  }
+
+  #servicios .servicios-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  #servicios .tarjeta-servicio {
+    padding: 24px;
+  }
+
+  #beneficios .encabezado-beneficios,
+  .encabezado-equipo {
+    margin-bottom: 32px;
+  }
+
+  #beneficios .beneficios-grid,
+  .grid-equipo {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  #beneficios .tarjeta-beneficio {
+    min-height: auto;
+    padding: 24px 22px;
+  }
+
+  .tarjeta-equipo {
+    min-height: auto;
+    padding: 28px 22px;
+  }
+}
