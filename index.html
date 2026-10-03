@@ -363,27 +363,79 @@
       <p>© 2026 TallerPro. Todos los derechos reservados.</p>
     </div>
   </footer>
+
+  <!-- ===== BOTON MODAL DE LOGIN ===== --> 
   <div class="login-modal" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle" hidden>
   <div class="login-modal__card">
-    <button type="button" class="login-modal__close" id="loginClose" aria-label="Cerrar">&times;</button>
- 
-    <h2 class="login-modal__title" id="loginTitle">Iniciar sesión</h2>
-    <p class="login-modal__hint">Consulta el historial y las facturas de tu vehículo.</p>
- 
-    <form id="loginForm" novalidate>
-      <label for="loginEmail">Correo electrónico</label>
-      <input type="email" id="loginEmail" name="email" placeholder="tucorreo@ejemplo.com" autocomplete="email" required>
- 
-      <label for="loginPass">Contraseña</label>
-      <div class="login-modal__pass">
-        <input type="password" id="loginPass" name="password" placeholder="Tu contraseña" autocomplete="current-password" required>
-        <button type="button" id="loginShowPass" aria-label="Mostrar contraseña">Mostrar</button>
-      </div>
- 
-      <p class="login-modal__error" id="loginError" role="alert" hidden></p>
- 
-      <button type="submit" class="login-modal__submit">Entrar</button>
-    </form>
+
+    <div class="login-brand">
+      <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#5bb4ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+      </svg>
+      <span class="login-brand__name">Taller<span>Pro</span></span>
+    </div>
+
+    <h2 class="login-modal__title" id="loginTitle">¡Bienvenido!</h2>
+    <p class="login-modal__hint">Selecciona el tipo de usuario para continuar.</p>
+
+    <ul class="role-list">
+      <li>
+        <button type="button" class="role-btn" data-role="cliente">
+          <span class="role-btn__icon role-btn__icon--blue">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="#fff" aria-hidden="true">
+              <circle cx="12" cy="8" r="4"/>
+              <path d="M4 21a8 8 0 0 1 16 0z"/>
+            </svg>
+          </span>
+          <span class="role-btn__text">
+            <strong>Cliente</strong>
+            <small>Gestionar clientes</small>
+          </span>
+          <span class="role-btn__arrow" aria-hidden="true">&rsaquo;</span>
+        </button>
+      </li>
+
+      <li>
+        <button type="button" class="role-btn" data-role="empleado">
+          <span class="role-btn__icon role-btn__icon--green">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="#fff" aria-hidden="true">
+              <path d="M5 13a7 7 0 0 1 14 0z"/>
+              <rect x="3" y="13" width="18" height="2.5" rx="1"/>
+              <path d="M6 22a6 6 0 0 1 12 0z"/>
+            </svg>
+          </span>
+          <span class="role-btn__text">
+            <strong>Empleado</strong>
+            <small>Gestionar empleados</small>
+          </span>
+          <span class="role-btn__arrow" aria-hidden="true">&rsaquo;</span>
+        </button>
+      </li>
+
+      <li>
+        <button type="button" class="role-btn" data-role="administrador">
+          <span class="role-btn__icon role-btn__icon--purple">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+          </span>
+          <span class="role-btn__text">
+            <strong>Administrador</strong>
+            <small>Gestionar administradores</small>
+          </span>
+          <span class="role-btn__arrow" aria-hidden="true">&rsaquo;</span>
+        </button>
+      </li>
+    </ul>
+
+    <button type="button" class="login-modal__logout" id="loginClose">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
+      </svg>
+      Cerrar sesión
+    </button>
+
   </div>
 </div>
 
