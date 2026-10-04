@@ -1,29 +1,29 @@
-// Datos iniciales por defecto si la base de datos local está vacía
+// Datos iniciales de prueba
 const datosIniciales = [
-  { id: 1, nombre: 'Laura Gómez', cedula: '1001234567', email: 'laura@tallerpro.com', telefono: '300 123 4567', empresa: 'TallerPro', estado: 'Activo' },
-  { id: 2, nombre: 'Camilo Pérez', cedula: '1007654321', email: 'camilo@tallerpro.com', telefono: '310 987 6543', empresa: 'Logística S.A.', estado: 'Activo' },
+  { id: 1, nombre: 'Juan Carlos Rodríguez Pérez', cedula: '1001234567', email: 'juan@tallerpro.com', telefono: '300 123 4567', empresa: 'TallerPro', estado: 'Activo' },
+  { id: 2, nombre: 'María Fernanda Gómez López', cedula: '1007654321', email: 'maria@tallerpro.com', telefono: '310 987 6543', empresa: 'Logística S.A.', estado: 'Activo' },
   { id: 3, nombre: 'Paula García', cedula: '1012345678', email: 'paula@tallerpro.com', telefono: '320 555 1234', empresa: 'Independiente', estado: 'Inactivo' }
 ];
 
-// Cargar desde localStorage o inicializar datos
+// Cargar desde localStorage o usar iniciales
 let clientes = JSON.parse(localStorage.getItem('tallerpro_clientes')) || datosIniciales;
 
 let modalCliente;
 
 document.addEventListener('DOMContentLoaded', () => {
   modalCliente = new bootstrap.Modal(document.getElementById('clientModal'));
-  guardarEnLocalStorage(); // Asegurar inicialización
+  guardarEnLocalStorage();
   renderizarTabla(clientes);
 
   document.getElementById('clientForm').addEventListener('submit', guardarCliente);
 });
 
-// Función para guardar los cambios permanentemente en localStorage
+// Guardar en localStorage
 function guardarEnLocalStorage() {
   localStorage.setItem('tallerpro_clientes', JSON.stringify(clientes));
 }
 
-// Renderizar tabla con los datos guardados
+// Renderizar tabla
 function renderizarTabla(lista) {
   const tbody = document.getElementById('clientTableBody');
   const emptyState = document.getElementById('emptyState');
@@ -94,7 +94,7 @@ function abrirModalEditar(id) {
   modalCliente.show();
 }
 
-// Validaciones del Formulario
+// Validaciones
 function validarCampos(nombre, cedula, email, telefono) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -106,7 +106,7 @@ function validarCampos(nombre, cedula, email, telefono) {
   return true;
 }
 
-// Guardar cliente (crear o actualizar) y guardar en localStorage
+// Guardar cliente
 function guardarCliente(e) {
   e.preventDefault();
   const form = document.getElementById('clientForm');
@@ -154,12 +154,12 @@ function guardarCliente(e) {
     });
   }
 
-  guardarEnLocalStorage(); // Guardar cambios persistentes
+  guardarEnLocalStorage();
   modalCliente.hide();
   renderizarTabla(clientes);
 }
 
-// Eliminar cliente y guardar en localStorage
+// Eliminar cliente
 function eliminarCliente(id) {
   Swal.fire({
     title: '¿Eliminar cliente?',
@@ -173,7 +173,7 @@ function eliminarCliente(id) {
   }).then((result) => {
     if (result.isConfirmed) {
       clientes = clientes.filter(c => c.id !== id);
-      guardarEnLocalStorage(); // Guardar cambios persistentes
+      guardarEnLocalStorage();
       renderizarTabla(clientes);
       Swal.fire({
         icon: 'success',

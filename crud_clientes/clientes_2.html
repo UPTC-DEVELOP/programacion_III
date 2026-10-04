@@ -13,74 +13,81 @@
 </head>
 <body>
 
-  <!-- Encabezado TallerPro -->
-  <header class="header-tallerpro py-3 px-4">
-    <div class="d-flex justify-content-between align-items-center">
+  <!-- Layout Principal -->
+  <div class="app-container">
+    
+    <!-- Encabezado Superior -->
+    <header class="main-header px-4 py-3">
       <div class="brand-logo d-flex align-items-center gap-2">
         <i class="bi bi-wrench-adjustable fs-3 text-white"></i>
         <span class="fs-3 fw-bold text-white">TallerPro</span>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <!-- Barra de Navegación con Íconos Superiores -->
-  <nav class="nav-sub-bar py-2">
-    <div class="container d-flex justify-content-center align-items-center gap-5">
-      <a href="clientes_2.html" class="nav-item-custom active">
-        <i class="bi bi-people-fill"></i>
-        <span>Clientes</span>
-      </a>
-      <a href="../index.html" class="nav-item-custom">
-        <i class="bi bi-house-door-fill"></i>
-        <span>Inicio</span>
-      </a>
-      <a href="../index.html" class="nav-item-custom">
-        <i class="bi bi-box-arrow-right"></i>
-        <span>Cerrar sesión</span>
-      </a>
-    </div>
-  </nav>
-
-  <!-- Contenido del CRUD -->
-  <main class="container py-4">
-    <div class="card-crud p-4">
+    <!-- Cuerpo Principal con Sidebar + Contenido -->
+    <div class="main-body">
       
-      <!-- Título y Botón Registrar Cliente -->
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="crud-title m-0">CRUD Clientes</h2>
-        <button class="btn btn-registrar" onclick="abrirModalCrear()">
-          <i class="bi bi-plus-lg me-1"></i> Registrar cliente
-        </button>
-      </div>
+      <!-- Menú Lateral (Sidebar Left) -->
+      <aside class="sidebar-nav">
+        <nav class="nav flex-column gap-2 p-3">
+          <a href="clientes_2.html" class="sidebar-link active">
+            <i class="bi bi-people-fill fs-5"></i>
+            <span>Clientes</span>
+          </a>
+          <a href="../index.html" class="sidebar-link">
+            <i class="bi bi-house-door-fill fs-5"></i>
+            <span>Inicio</span>
+          </a>
+          <a href="../index.html" class="sidebar-link">
+            <i class="bi bi-box-arrow-right fs-5"></i>
+            <span>Cerrar sesión</span>
+          </a>
+        </nav>
+      </aside>
 
-      <!-- Tabla de Clientes con Cédula -->
-      <div class="table-responsive">
-        <table class="table table-custom align-middle mb-0">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nombre</th>
-              <th>Cédula</th>
-              <th>Correo</th>
-              <th>Teléfono</th>
-              <th>Empresa</th>
-              <th>Estado</th>
-              <th class="text-end pe-3">Acciones</th>
-            </tr>
-          </thead>
-          <tbody id="clientTableBody">
-            <!-- Creado dinámicamente -->
-          </tbody>
-        </table>
-      </div>
+      <!-- Área de Contenido Principal -->
+      <main class="content-area p-4">
+        <div class="card-crud p-4">
+          
+          <!-- Encabezado del CRUD -->
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="crud-title m-0">CRUD Clientes</h2>
+            <button class="btn btn-registrar" onclick="abrirModalCrear()">
+              <i class="bi bi-plus-lg me-1"></i> Registrar cliente
+            </button>
+          </div>
 
-      <div id="emptyState" class="text-center py-5 d-none">
-        <i class="bi bi-inbox text-muted display-4"></i>
-        <p class="text-muted mt-2">No hay clientes registrados.</p>
-      </div>
+          <!-- Tabla de Clientes -->
+          <div class="table-responsive">
+            <table class="table table-custom align-middle mb-0">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Cédula</th>
+                  <th>Correo</th>
+                  <th>Teléfono</th>
+                  <th>Empresa</th>
+                  <th>Estado</th>
+                  <th class="text-end pe-3">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="clientTableBody">
+                <!-- Creado dinámicamente -->
+              </tbody>
+            </table>
+          </div>
+
+          <div id="emptyState" class="text-center py-5 d-none">
+            <i class="bi bi-inbox text-muted display-4"></i>
+            <p class="text-muted mt-2">No hay clientes registrados.</p>
+          </div>
+
+        </div>
+      </main>
 
     </div>
-  </main>
+  </div>
 
   <!-- Modal Registrar/Editar Cliente -->
   <div class="modal fade" id="clientModal" tabindex="-1" aria-hidden="true">
@@ -97,19 +104,19 @@
             <div class="mb-3">
               <label for="nameInput" class="form-label fw-semibold">Nombre Completo *</label>
               <input type="text" class="form-control" id="nameInput" required placeholder="Ej. Laura Gómez">
-              <div class="invalid-feedback">Ingresa un nombre válido (mínimo 3 letras).</div>
+              <div class="invalid-feedback">Ingresa un nombre válido.</div>
             </div>
 
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="cedulaInput" class="form-label fw-semibold">Cédula *</label>
                 <input type="text" class="form-control" id="cedulaInput" required placeholder="Ej. 1001234567">
-                <div class="invalid-feedback">Ingresa un número de cédula válido.</div>
+                <div class="invalid-feedback">Ingresa una cédula válida.</div>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="phoneInput" class="form-label fw-semibold">Teléfono *</label>
                 <input type="tel" class="form-control" id="phoneInput" required placeholder="Ej. 300 123 4567">
-                <div class="invalid-feedback">Ingresa un número de teléfono válido.</div>
+                <div class="invalid-feedback">Ingresa un teléfono válido.</div>
               </div>
             </div>
 
