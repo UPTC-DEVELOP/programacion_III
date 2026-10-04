@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LJA Taller | Productos</title>
+
+    <!-- Fuente principal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Russo+One&display=swap" rel="stylesheet">
+
+    <!-- Iconos -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- CSS principal -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- CSS específico de Productos -->
+    <link rel="stylesheet" href="css/Productos.css">
+</head>
+
+<body>  
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+    <header class="productos-header">
+
+        <div class="productos-logo">
+            <a href="index.html">
+                <img src="assets/iconos/LOGO.png" alt="LJA Taller">
+            </a>
+
+            <span>LJA <strong>Taller</strong></span>
+        </div>
+
+        <nav class="productos-nav">
+            <ul>
+                <li>
+                    <a href="index.html#Servicios">Servicios</a>
+                </li>
+
+                <li>
+                    <a href="index.html#nosotros">Nosotros</a>
+                </li>
+
+                <li>
+                    <a href="index.html#contacto">Contacto</a>
+                </li>
+
+                <li>
+                    <a href="Catalogo.html">Catálogo</a>
+                </li>
+            </ul>
+        </nav>
+
+        <a href="index.html" class="productos-acceso">
+            Volver al inicio
+        </a>
+
+    </header>
+
+
+    <!-- =========================
+         CONTENIDO PRINCIPAL
+    ========================== -->
+
+    <main class="productos-main">
+
+        <!-- Encabezado -->
+        <section class="productos-hero">
+
+            <span class="productos-tag">
+                ADMINISTRACIÓN
+            </span>
+
+            <h1>
+                Gestión de
+                <span>Productos</span>
+            </h1>
+
+            <p>
+                Administra los productos disponibles en el sistema
+                de LJA Taller Mecánico.
+            </p>
+
+        </section>
+
+
+        <!-- 
+             CRUD  -->
+
+        <section class="crud-container">
+
+            <!-- FORMULARIO -->
+
+            <div class="producto-form-card">
+
+                <div class="crud-card-header">
+
+                    <div>
+                        <span class="crud-mini-tag">
+                            PRODUCTO
+                        </span>
+
+                        <h2 id="form-title">
+                            Registrar producto
+                        </h2>
+
+                        <p>
+                            Ingresa la información del producto.
+                        </p>
+                    </div>
+
+                    <div class="crud-icon">
+                        <i data-lucide="package"></i>
+                    </div>
+
+                </div>
+
+
+                <form id="producto-form">
+
+                    <!-- ID oculto -->
+                    <input type="hidden" id="producto-id">
+
+
+                    <div class="form-grid">
+
+                        <!-- Nombre -->
+                        <div class="form-group">
+
+                            <label for="nombre">
+                                Nombre del producto
+                            </label>
+
+                            <input
+                                type="text"
+                                id="nombre"
+                                placeholder="Ej: Aceite de motor 20W50"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Categoría -->
+                        <div class="form-group">
+
+                            <label for="categoria">
+                                Categoría
+                            </label>
+
+                            <select id="categoria" required>
+
+                                <option value="">
+                                    Selecciona una categoría
+                                </option>
+
+                                <option value="Lubricantes">
+                                    Lubricantes
+                                </option>
+
+                                <option value="Motor">
+                                    Motor
+                                </option>
+
+                                <option value="Frenos">
+                                    Frenos
+                                </option>
+
+                                <option value="Filtros">
+                                    Filtros
+                                </option>
+
+                                <option value="Electricidad">
+                                    Electricidad
+                                </option>
+
+                                <option value="Accesorios">
+                                    Accesorios
+                                </option>
+
+                                <option value="Suspensión">
+                                    Suspensión
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Imagen -->
+                        <div class="form-group">
+
+                            <label for="imagen">
+                                Nombre de la imagen
+                            </label>
+
+                            <input
+                                type="text"
+                                id="imagen"
+                                placeholder="Ej: aceite-motor.jpg"
+                                required
+                            >
+
+                            <small>
+                                La imagen debe estar dentro de
+                                <strong>assets/imagenes/</strong>
+                            </small>
+
+                        </div>
+
+
+                        <!-- Badge -->
+                        <div class="form-group">
+
+                            <label for="badge">
+                                Etiqueta / Badge
+                            </label>
+
+                            <input
+                                type="text"
+                                id="badge"
+                                placeholder="Ej: Más buscado"
+                            >
+
+                        </div>
+
+
+                        <!-- Descripción -->
+                        <div class="form-group form-full">
+
+                            <label for="descripcion">
+                                Descripción
+                            </label>
+
+                            <textarea
+                                id="descripcion"
+                                placeholder="Escribe una descripción del producto..."
+                                required
+                            ></textarea>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Botones -->
+
+                    <div class="form-buttons">
+
+                        <button
+                            type="submit"
+                            class="btn-guardar"
+                            id="btn-submit"
+                        >
+                            <i data-lucide="plus"></i>
+                            Registrar producto
+                        </button>
+
+                        <button
+                            type="button"
+                            class="btn-cancelar"
+                            id="btn-cancelar"
+                            style="display: none;"
+                        >
+                            <i data-lucide="x"></i>
+                            Cancelar
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+            <!-- =========================
+                 LISTADO
+            ========================== -->
+
+            <div class="productos-listado-card">
+
+                <div class="listado-header">
+
+                    <div>
+
+                        <span class="crud-mini-tag">
+                            INVENTARIO
+                        </span>
+
+                        <h2>
+                            Productos registrados
+                        </h2>
+
+                    </div>
+
+                    <div class="contador-productos">
+                        <span id="contador-productos">
+                            0
+                        </span>
+
+                        productos
+                    </div>
+
+                </div>
+
+
+                <!-- Buscadores -->
+
+                <div class="filtros-productos">
+
+                    <div class="buscador">
+
+                        <i data-lucide="search"></i>
+
+                        <input
+                            type="text"
+                            id="buscar-producto"
+                            placeholder="Buscar producto..."
+                        >
+
+                    </div>
+
+
+                    <select id="filtro-categoria">
+
+                        <option value="Todas">
+                            Todas las categorías
+                        </option>
+
+                        <option value="Lubricantes">
+                            Lubricantes
+                        </option>
+
+                        <option value="Motor">
+                            Motor
+                        </option>
+
+                        <option value="Frenos">
+                            Frenos
+                        </option>
+
+                        <option value="Filtros">
+                            Filtros
+                        </option>
+
+                        <option value="Electricidad">
+                            Electricidad
+                        </option>
+
+                        <option value="Accesorios">
+                            Accesorios
+                        </option>
+
+                        <option value="Suspensión">
+                            Suspensión
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Tabla -->
+
+                <div class="tabla-responsive">
+
+                    <table class="productos-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Producto</th>
+
+                                <th>Categoría</th>
+
+                                <th>Descripción</th>
+
+                                <th>Badge</th>
+
+                                <th>Acciones</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="productos-body">
+                            <!-- JavaScript -->
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- Estado vacío -->
+
+                <div
+                    id="estado-vacio"
+                    class="estado-vacio"
+                >
+
+                    <div class="estado-icon">
+
+                        <i data-lucide="package-open"></i>
+
+                    </div>
+
+                    <h3>
+                        No hay productos
+                    </h3>
+
+                    <p>
+                        Registra tu primer producto para comenzar.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer class="lja-footer-pro">
+
+        <div class="lja-top-glow"></div>
+
+        <div class="lja-footer-content">
+
+            <div class="lja-footer-grid">
+
+                <!-- Marca -->
+
+                <div class="lja-col-brand">
+
+                    <div class="lja-brand-header">
+
+                        <div class="lja-icon-box">
+
+                            <i data-lucide="wrench"></i>
+
+                        </div>
+
+                        <span class="lja-brand-name">
+                            LJA
+                            <span class="text-blue">
+                                Taller
+                            </span>
+                        </span>
+
+                    </div>
+
+                    <p class="lja-brand-text">
+
+                        Tu taller de confianza con más de 10 años
+                        de experiencia en mecánica automotriz.
+                        Calidad, precisión y garantía en cada trabajo.
+
+                    </p>
+
+                </div>
+
+
+                <!-- Servicios -->
+
+                <div class="lja-col-links">
+
+                    <h4>
+                        Servicios
+                    </h4>
+
+                    <ul>
+
+                        <li>
+                            <a href="#">
+                                <i data-lucide="chevron-right" class="link-arrow"></i>
+                                Cambio de aceite
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#">
+                                <i data-lucide="chevron-right" class="link-arrow"></i>
+                                Frenos
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#">
+                                <i data-lucide="chevron-right" class="link-arrow"></i>
+                                Alineación
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#">
+                                <i data-lucide="chevron-right" class="link-arrow"></i>
+                                Diagnóstico
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#">
+                                <i data-lucide="chevron-right" class="link-arrow"></i>
+                                Otro
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <!-- Información -->
+
+                <div class="lja-col-links">
+
+                    <h4>
+                        Información
+                    </h4>
+
+                    <ul>
+
+                        <li>
+                            <a href="#">
+                                <i data-lucide="chevron-right" class="link-arrow"></i>
+                                Privacidad
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#">
+                                <i data-lucide="chevron-right" class="link-arrow"></i>
+                                Términos
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#">
+                                <i data-lucide="chevron-right" class="link-arrow"></i>
+                                Protección de datos
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <!-- Contacto -->
+
+                <div class="lja-col-contact">
+
+                    <h4>
+                        Contacto
+                    </h4>
+
+                    <ul>
+
+                        <li>
+
+                            <div class="contact-icon">
+                                <i data-lucide="phone"></i>
+                            </div>
+
+                            <a href="tel:+573000000000">
+                                +57 300 000 0000
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <div class="contact-icon">
+                                <i data-lucide="mail"></i>
+                            </div>
+
+                            <a href="mailto:contacto@lja-taller.com">
+                                contacto@lja-taller.com
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <div class="contact-icon">
+                                <i data-lucide="map-pin"></i>
+                            </div>
+
+                            <a href="#">
+                                Ubicación del taller
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+            <hr class="lja-divider">
+
+
+            <div class="lja-footer-bottom">
+
+                <div class="lja-social-links">
+
+                    <a href="#" aria-label="Instagram">
+                        <i data-lucide="instagram"></i>
+                    </a>
+
+                    <a href="#" aria-label="Facebook">
+                        <i data-lucide="facebook"></i>
+                    </a>
+
+                </div>
+
+                <p class="lja-copyright">
+
+                    © 2026 LJA Taller Mecánico.
+                    Derechos de autor para el grupo 2.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- LJA gigante -->
+
+        <div class="lja-giant-text-container">
+
+            <svg
+                id="text-hover-svg"
+                width="100%"
+                height="100%"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+
+                <text
+                    x="50%"
+                    y="50%"
+                    text-anchor="middle"
+                    dominant-baseline="middle"
+                    class="lja-svg-text-base"
+                >
+                    LJA
+                </text>
+
+                <text
+                    x="50%"
+                    y="50%"
+                    text-anchor="middle"
+                    dominant-baseline="middle"
+                    class="lja-svg-text-glow"
+                >
+                    LJA
+                </text>
+
+            </svg>
+
+        </div>
+
+    </footer>
+
+
+    <!-- JavaScript -->
+
+    <script src="js/Productos.js"></script>
+
+</body>
+</html>  
