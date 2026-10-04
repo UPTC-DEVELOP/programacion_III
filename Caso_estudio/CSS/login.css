@@ -26,7 +26,7 @@ body {
 
 
 /* =========================================
-   CONTENEDOR
+   CONTENEDOR.
 ========================================= */
 
 .login-container {
@@ -59,12 +59,9 @@ body {
     color: white;
 
     background:
-        linear-gradient(
-            rgba(17, 24, 39, 0.85),
-            rgba(17, 24, 39, 0.9)
-        ),
-        url("../Imagenes/taller_visitanos_1788976590606.jpg")
-        center / cover no-repeat;
+        linear-gradient(rgba(17, 24, 39, 0.85),
+            rgba(17, 24, 39, 0.9)),
+        url("../Imagenes/taller_visitanos_1788976590606.jpg") center / cover no-repeat;
 
 }
 

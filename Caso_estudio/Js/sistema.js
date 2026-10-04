@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /* =========================================================
-   INICIO DE SESIÓN DE DEMOSTRACIÓN
+   INICIO DE SESIÓN DE DEMOSTRACIÓN.
 ========================================================= */
 
 function inicializarLogin(formulario) {
