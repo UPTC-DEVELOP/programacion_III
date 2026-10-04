@@ -3,314 +3,146 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TallerPro | Empleados</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <style>
-    body {
-      background-color: #030246;
-      font-family: Arial, sans-serif;
-    }
-    .tarjeta {
-      background: white;
-      max-width: 500px;
-      margin: 30px auto;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    h2 {
-      text-align: center;
-      color: #333;
-      margin-bottom: 25px;
-    }
-    .campo {
-      margin-bottom: 15px;
-    }
-    label {
-      display: block;
-      margin-bottom: 5px;
-      color: #444;
-    }
-    input, select {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-    }
-    .btn-enviar {
-      width: 100%;
-      padding: 12px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .btn-enviar:hover {
-      transform: scale(1.03);
-      background-color: #0056b3;
-    }
-    .tabla-container {
-      max-width: 900px;
-      margin: 30px auto;
-      background: white;
-      padding: 25px;
-      border-radius: 10px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-    }
-    th, td {
-      padding: 10px;
-      text-align: left;
-      border-bottom: 1px solid #eee;
-    }
-    .btn-Actualizar {
-      background: #3b82f6;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 4px;
-      margin-right: 5px;
-      cursor: pointer;
-    }
-    .btn-eliminar {
-      background: #ef4444;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .btn-cancelar {
-      background: #6c757d;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      margin-right: 10px;
-      cursor: pointer;
-    }
-    .botones-form {
-      display: flex;
-      margin-top: 20px;
-    }
-    .buscador {
-      margin-bottom: 15px;
-    }
-  </style>
+  <title>CRUD Empleados | TallerPro</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><text y=%2218%22 font-size=%2218%22>🔧</text></svg>">
+  <link rel="stylesheet" href="empleados.css">
 </head>
-<body>
+<body class="ca-body">
 
-  <!-- FORMULARIO DE EMPLEADOS -->
-  <div class="tarjeta">
-    <h2 id="tituloForm">Registro de Empleado</h2>
-    <form id="formEmpleado">
-      <div class="campo">
-        <label>ID Empleado:</label>
-        <input type="text" id="idEmpleado" disabled value="(automático)">
-      </div>
-      <div class="campo">
-        <label>Cédula:</label>
-        <input type="text" id="cedula" required placeholder="Número de documento">
-      </div>
-      <div class="campo">
-        <label>Nombres:</label>
-        <input type="text" id="nombres" required placeholder="Nombres completos">
-      </div>
-      <div class="campo">
-        <label>Apellidos:</label>
-        <input type="text" id="apellidos" required placeholder="Apellidos completos">
-      </div>
-      <div class="campo">
-        <label>Cargo:</label>
-        <select id="cargo" required>
-          <option value="">Seleccione...</option>
-          <option>Mecánico</option>
-          <option>Jefe de Taller</option>
-          <option>Recepcionista</option>
-          <option>Administrativo</option>
-          <option>Ayudante</option>
-        </select>
-      </div>
-      <div class="campo">
-        <label>Teléfono:</label>
-        <input type="tel" id="telefono" required placeholder="Número de contacto">
-      </div>
-      <div class="campo">
-        <label>Dirección:</label>
-        <input type="text" id="direccion" placeholder="Dirección de residencia">
-      </div>
-      <div class="campo">
-        <label>Correo:</label>
-        <input type="email" id="correo" placeholder="correo@ejemplo.com">
-      </div>
-      <div class="campo">
-        <label>Fecha de ingreso:</label>
-        <input type="date" id="fechaIngreso">
-      </div>
-      <div class="botones-form">
-        <button type="button" class="btn-cancelar" id="btnCancelar" style="display:none;">Cancelar</button>
-        <button type="submit" class="btn-enviar">Guardar Empleado</button>
-      </div>
-      <p id="mensaje" style="margin-top:15px; text-align:center;"></p>
-    </form>
+  
+    <!-- ===== BARRA SUPERIOR ===== -->
+  <header class="ca-topbar">
+    <a href="../index.html" class="ca-brand">
+      <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    
+      <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+      </svg>
+      <span>Taller<span>Pro</span></span>
+    </a>
+
+  </header>
+
+  <div class="ca-layout">
+
+    <!-- ===== MENÚ LATERAL ===== -->
+    <aside class="ca-sidebar">
+      <nav class="ca-menu" aria-label="Menú del panel">
+        <a href="empleados.html" class="is-active" aria-current="page">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          Empleados
+        </a>
+        
+        </a>
+        <a href="../index.html">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+            <path d="M12 3l9 8h-3v9h-5v-6h-2v6H6v-9H3z"/>
+          </svg>
+          Inicio
+        </a>
+        <a href="../index.html" id="cerrarSesion">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
+          </svg>
+          Cerrar sesión
+        </a>
+      </nav>
+    </aside>
+
+    <!-- ===== CONTENIDO ===== -->
+    <main class="ca-content">
+      <section class="ca-card">
+        <div class="ca-card__head">
+          <h1>CRUD Empleados</h1>
+          <button type="button" class="ca-btn ca-btn--primary" id="btnRegistrar">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true">
+              <path d="M12 5v14M5 12h14"/>
+            </svg>
+            Registrar empleado
+          </button>
+        </div>
+
+        <div class="ca-table-wrap">
+          <table class="ca-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Cédula</th>
+                <th>Cargo</th>
+                <th>Teléfono</th>
+                <th class="ca-center">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tablaEmpleados"></tbody>
+          </table>
+          <p class="ca-empty" id="sinDatos" hidden>No hay empleados registrados.</p>
+        </div>
+      </section>
+    </main>
   </div>
 
-  <!-- TABLA DE EMPLEADOS -->
-  <div class="tabla-container">
-    <h3>Lista de Empleados</h3>
-    <div class="buscador">
-      <input type="text" id="buscarEmpleado" placeholder="Buscar por nombre, cédula o cargo..." style="max-width:450px;">
+  <!-- ===== MODAL CREAR / EDITAR ===== -->
+  <div class="ca-modal" id="modalEmpleado" role="dialog" aria-modal="true" aria-labelledby="modalTitulo" hidden>
+    <div class="ca-modal__card">
+      <button type="button" class="ca-modal__close" id="cerrarModal" aria-label="Cerrar">&times;</button>
+      <h2 id="modalTitulo">Registrar empleado</h2>
+
+      <form id="formEmpleado" novalidate>
+        <input type="hidden" id="empleadoId">
+
+        <div class="ca-field">
+          <label for="fNombre">Nombre completo</label>
+          <input type="text" id="fNombre" placeholder="Ej: Juan Pérez">
+          <span class="ca-err" id="eNombre"></span>
+        </div>
+        <div class="ca-field">
+          <label for="fCedula">Cédula / Documento</label>
+          <input type="text" id="fCedula" placeholder="Ej: 123456789">
+          <span class="ca-err" id="eCedula"></span>
+        </div>
+        <div class="ca-field">
+          <label for="fCargo">Cargo</label>
+          <select id="fCargo">
+            <option value="Mecánico">Mecánico</option>
+            <option value="Recepcionista">Recepcionista</option>
+            <option value="Jefe de Taller">Jefe de Taller</option>
+            <option value="Auxiliar">Auxiliar</option>
+          </select>
+        </div>
+        <div class="ca-field">
+          <label for="fTelefono">Teléfono</label>
+          <input type="tel" id="fTelefono" placeholder="Ej: 300 123 4567">
+          <span class="ca-err" id="eTelefono"></span>
+        </div>
+
+        <div class="ca-modal__actions">
+          <button type="button" class="ca-btn ca-btn--ghost" id="cancelarModal">Cancelar</button>
+          <button type="submit" class="ca-btn ca-btn--primary">Guardar</button>
+        </div>
+      </form>
     </div>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Cédula</th>
-          <th>Nombre Completo</th>
-          <th>Cargo</th>
-          <th>Teléfono</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody id="tablaEmpleados"></tbody>
-    </table>
   </div>
 
-  <script>
-    let empleados = [];
-    let idSiguiente = 1;
-    let indiceEdicion = null;
+  <!-- ===== MODAL CONFIRMAR ELIMINAR ===== -->
+  <div class="ca-modal" id="modalEliminar" role="alertdialog" aria-modal="true" aria-labelledby="elimTitulo" hidden>
+    <div class="ca-modal_card ca-modal_card--sm">
+      <h2 id="elimTitulo">Eliminar empleado</h2>
+      <p id="elimTexto"></p>
+      <div class="ca-modal__actions">
+        <button type="button" class="ca-btn ca-btn--ghost" id="cancelarElim">Cancelar</button>
+        <button type="button" class="ca-btn ca-btn--danger" id="confirmarElim">Eliminar</button>
+      </div>
+    </div>
+  </div>
 
-    cargarEmpleados();
+  <div class="ca-toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-    // Enviar formulario
-    $("#formEmpleado").submit(function(e) {
-      e.preventDefault();
-
-      const datos = {
-        id: indiceEdicion !== null ? empleados[indiceEdicion].id : idSiguiente++,
-        cedula: $("#cedula").val().trim(),
-        nombres: $("#nombres").val().trim(),
-        apellidos: $("#apellidos").val().trim(),
-        cargo: $("#cargo").val(),
-        telefono: $("#telefono").val().trim(),
-        direccion: $("#direccion").val().trim(),
-        correo: $("#correo").val().trim(),
-        fechaIngreso: $("#fechaIngreso").val()
-      };
-
-      if (indiceEdicion === null) {
-        // CREAR
-        empleados.push(datos);
-        $("#mensaje").text("✅ Empleado registrado correctamente").css("color", "green");
-      } else {
-        // EDITAR
-        empleados[indiceEdicion] = datos;
-        indiceEdicion = null;
-        $("#tituloForm").text("Registro de Empleado");
-        $("#btnCancelar").hide();
-        $("#mensaje").text("✅ Empleado actualizado correctamente").css("color", "green");
-      }
-
-      guardarEmpleados();
-      actualizarTabla();
-      $("#formEmpleado")[0].reset();
-      $("#idEmpleado").val("(automático)");
-    });
-
-    // Buscador
-    $("#buscarEmpleado").on("input", actualizarTabla);
-
-    function actualizarTabla() {
-      $("#tablaEmpleados").empty();
-      const texto = $("#buscarEmpleado").val().toLowerCase().trim();
-
-      const filtro = empleados.filter(emp => {
-        if (!texto) return true;
-        return emp.nombres.toLowerCase().includes(texto) ||
-               emp.apellidos.toLowerCase().includes(texto) ||
-               emp.cedula.includes(texto) ||
-               emp.cargo.toLowerCase().includes(texto);
-      });
-
-      filtro.forEach(emp => {
-        const indiceReal = empleados.indexOf(emp);
-        $("#tablaEmpleados").append(`
-          <tr>
-            <td>${emp.id}</td>
-            <td>${emp.cedula}</td>
-            <td>${emp.nombres} ${emp.apellidos}</td>
-            <td>${emp.cargo}</td>
-            <td>${emp.telefono}</td>
-            <td>
-              <button class="btn-Actualizar" onclick="editarEmpleado(${indiceReal})">Actualizar</button>
-              <button class="btn-eliminar" onclick="eliminarEmpleado(${indiceReal})">Eliminar</button>
-            </td>
-          </tr>
-        `);
-      });
-    }
-
-    // EDITAR
-    function editarEmpleado(indice) {
-      const emp = empleados[indice];
-      $("#idEmpleado").val(emp.id);
-      $("#cedula").val(emp.cedula);
-      $("#nombres").val(emp.nombres);
-      $("#apellidos").val(emp.apellidos);
-      $("#cargo").val(emp.cargo);
-      $("#telefono").val(emp.telefono);
-      $("#direccion").val(emp.direccion || "");
-      $("#correo").val(emp.correo || "");
-      $("#fechaIngreso").val(emp.fechaIngreso || "");
-      
-      indiceEdicion = indice;
-      $("#tituloForm").text("Editar Empleado");
-      $("#btnCancelar").show();
-      $("#mensaje").text("");
-    }
-
-    // ELIMINAR
-    function eliminarEmpleado(indice) {
-      if (confirm("¿Seguro que quieres eliminar este empleado?")) {
-        empleados.splice(indice, 1);
-        guardarEmpleados();
-        actualizarTabla();
-      }
-    }
-
-    // CANCELAR
-    $("#btnCancelar").click(function() {
-      indiceEdicion = null;
-      $("#tituloForm").text("Registro de Empleado");
-      $(this).hide();
-      $("#formEmpleado")[0].reset();
-      $("#idEmpleado").val("(automático)");
-      $("#mensaje").text("");
-    });
-
-    // Guardar y cargar
-    function guardarEmpleados() {
-      localStorage.setItem("empleadosTallerPro", JSON.stringify(empleados));
-      localStorage.setItem("idSiguienteEmpleado", idSiguiente);
-    }
-
-    function cargarEmpleados() {
-      const guardados = localStorage.getItem("empleadosTallerPro");
-      if (guardados) {
-        empleados = JSON.parse(guardados);
-        idSiguiente = parseInt(localStorage.getItem("idSiguienteEmpleado")) || 1;
-        actualizarTabla();
-      }
-    }
-  </script>
-
+  <script src="empleados.js"></script>
 </body>
 </html>
