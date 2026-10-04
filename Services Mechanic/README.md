@@ -2,35 +2,81 @@
 
 ## Descripción del caso de estudio
 
-Services Mechanic es una propuesta de sistema orientada a apoyar la gestión de talleres mecánicos.
+Services Mechanic es una propuesta de sistema web orientada a apoyar la gestión administrativa de talleres mecánicos.
 
 El sistema busca organizar información relacionada con clientes, vehículos, empleados, repuestos, servicios realizados, horas trabajadas y facturación.
 
-Durante la Unidad 1 se desarrolló una Landing Page promocional del sistema utilizando HTML5 semántico, CSS3 y JavaScript. La página incorpora diseño responsive, principios básicos de accesibilidad web, navegación entre secciones e interactividad mediante JavaScript.
+Durante la Unidad 1 se desarrolló la Landing Page promocional del sistema utilizando HTML5 semántico, CSS3 y JavaScript.
 
-## Roles del equipo
+En la Unidad 2 el proyecto fue ampliado mediante la adaptación de la interfaz a una plantilla web y la construcción de un aplicativo frontend que permite gestionar diferentes módulos del sistema.
 
-### Frontend Architect
+Actualmente el proyecto incluye:
 
-Responsable de la estructura principal del sitio y del desarrollo de la cabecera, menú de navegación y las secciones Inicio, Problema y Nosotros.
+- Landing Page institucional.
+- Pantalla de inicio de sesión.
+- Panel principal del aplicativo.
+- CRUD de Clientes.
+- CRUD de Empleados.
+- CRUD de Vehículos.
+- Relación entre Clientes y Vehículos.
+- Validaciones mediante JavaScript.
+- Diseño responsive para diferentes tamaños de pantalla.
 
-También realizó ajustes de diseño responsive e implementó el carrusel de imágenes de la sección Inicio mediante JavaScript.
+El proyecto corresponde a un prototipo frontend, por lo que la información se administra temporalmente mediante estructuras de datos en JavaScript y no utiliza todavía una base de datos o backend.
 
-**Integrante:** Liceth Torres
+## Módulos desarrollados
 
-### Accessibility Lead (a11y)
+### Clientes
 
-Responsable del desarrollo de las secciones Servicios, Beneficios, Comparación, Equipo y Testimonios, teniendo en cuenta criterios de estructura, legibilidad y accesibilidad de los contenidos.
+Permite registrar, consultar, actualizar y eliminar clientes.
 
-**Integrante:** Sebastián Herrera
+Incluye validaciones para:
 
-### Quality Assurance (QA) & Forms Engineer
+- Cédula numérica y única.
+- Longitud máxima de cédula.
+- Nombres y apellidos.
+- Teléfono de 10 dígitos.
+- Dirección.
+- Generación automática de identificadores de cuatro dígitos.
 
-Responsable del desarrollo y validación del formulario de solicitud de información, la sección de Contacto y el Footer.
+También se controla que un cliente con vehículos asociados no pueda eliminarse directamente.
 
-También es responsable de implementar las validaciones mediante JavaScript y apoyar la revisión final del código.
+### Empleados
 
-**Integrante:** Santiago Aguilar
+Permite registrar, consultar, actualizar y eliminar empleados del taller.
+
+El módulo administra información como:
+
+- Identificador.
+- Cédula.
+- Nombres.
+- Apellidos.
+- Teléfono.
+- Cargo.
+- Estado de disponibilidad.
+
+### Vehículos
+
+Permite registrar, consultar, actualizar y eliminar vehículos asociados a clientes existentes.
+
+La información gestionada incluye:
+
+- Identificador.
+- Placa.
+- Marca.
+- Línea.
+- Modelo.
+- Color.
+- Propietario.
+- Fecha y hora de ingreso.
+
+Cada vehículo queda relacionado con un cliente registrado previamente.
+
+## Acceso al sistema
+
+El proyecto incorpora una pantalla de inicio de sesión que permite ingresar al aplicativo desde la Landing Page.
+
+Desde el aplicativo también se dispone de una opción para cerrar sesión y regresar nuevamente al Landing Page.
 
 ## Identidad visual
 
@@ -45,7 +91,7 @@ La interfaz utiliza una paleta inspirada en el sector automotriz, combinando ton
 - Gris claro: `#F7F7F5`
 - Texto oscuro: `#202124`
 
-Se tuvieron en cuenta criterios básicos de contraste y legibilidad durante el desarrollo. La validación final de accesibilidad y contraste se realizará como parte de la revisión del proyecto.
+La tipografía principal utilizada es Manrope.
 
 ## Tecnologías utilizadas
 
@@ -53,9 +99,11 @@ Se tuvieron en cuenta criterios básicos de contraste y legibilidad durante el d
 - CSS3
 - JavaScript
 - Google Fonts - Manrope
-- Git y GitHub
+- Git
+- GitHub
 
 ## Estructura del proyecto
+
 
 Services Mechanic/
 ├── css/
