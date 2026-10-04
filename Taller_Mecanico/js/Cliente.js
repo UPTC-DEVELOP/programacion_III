@@ -2,11 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const STORAGE_KEY = "lja_clientes_db";
 
-
-    // ==============================
-    // ELEMENTOS DEL HTML
-    // ==============================
-
     const tablaContainer = document.getElementById("tabla-container");
     const listaClientes = document.getElementById("lista-clientes");
     const emptyState = document.getElementById("empty-state");
@@ -32,11 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const inputTelefono = document.getElementById("cliente-telefono");
     const inputDireccion = document.getElementById("cliente-direccion");
 
-
-    // ==============================
-    // OBTENER CLIENTES
-    // ==============================
-
     function obtenerClientes() {
 
         const data = localStorage.getItem(STORAGE_KEY);
@@ -59,10 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    // ==============================
-    // GUARDAR CLIENTES
-    // ==============================
-
+   
     function guardarClientes(clientes) {
 
         localStorage.setItem(
@@ -72,20 +59,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    // ==============================
-    // ABRIR MODAL
-    // ==============================
-
+   
     function abrirModal() {
 
         modalCliente.classList.remove("d-none");
 
     }
 
-
-    // ==============================
-    // CERRAR MODAL
-    // ==============================
 
     function cerrarModal() {
 
@@ -100,10 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
         btnGuardar.textContent = "Registrar cliente";
     }
 
-
-    // ==============================
-    // NUEVO CLIENTE
-    // ==============================
 
     btnAbrirModal.addEventListener(
         "click",
@@ -124,10 +100,6 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
 
-    // ==============================
-    // CERRAR MODAL
-    // ==============================
-
     btnCerrarModal.addEventListener(
         "click",
         cerrarModal
@@ -139,10 +111,6 @@ document.addEventListener("DOMContentLoaded", () => {
         cerrarModal
     );
 
-
-    // ==============================
-    // RENDERIZAR CLIENTES
-    // ==============================
 
     function renderizarClientes(filtro = "") {
 
@@ -186,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
 
-        // No hay clientes
+     
         if (clientesFiltrados.length === 0) {
 
             tablaContainer.classList.add("d-none");
@@ -280,10 +248,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    // ==============================
-    // GUARDAR / EDITAR CLIENTE
-    // ==============================
-
     formCliente.addEventListener(
         "submit",
         function(event) {
@@ -307,30 +271,163 @@ document.addEventListener("DOMContentLoaded", () => {
                 inputDireccion.value.trim();
 
 
-            // Validar campos
-            if (
-                !cedula ||
-                !nombres ||
-                !apellidos ||
-                !telefono ||
-                !direccion
-            ) {
+// Validar campos vacíos
+if (
+    !cedula ||
+    !nombres ||
+    !apellidos ||
+    !telefono ||
+    !direccion
+) {
 
-                alert(
-                    "Por favor completa todos los campos."
-                );
+    alert(
+        "Por favor completa todos los campos."
+    );
 
-                return;
-            }
-
-
-            const clientes =
-                obtenerClientes();
+    return;
+}
 
 
-            // ==========================
-            // EDITAR
-            // ==========================
+// Validar cédula
+const soloNumeros = /^[0-9]+$/;
+
+if (!soloNumeros.test(cedula)) {
+
+    alert(
+        "La cédula solo debe contener números."
+    );
+
+    return;
+}
+
+
+if (
+    cedula.length < 5 ||
+    cedula.length > 12
+) {
+
+    alert(
+        "La cédula debe tener entre 5 y 12 dígitos."
+    );
+
+    return;
+}
+
+
+// Validar nombres
+const soloLetras =
+    /^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/;
+
+
+if (!soloLetras.test(nombres)) {
+
+    alert(
+        "Los nombres solo deben contener letras y espacios."
+    );
+
+    return;
+}
+
+
+if (
+    nombres.length < 2 ||
+    nombres.length > 50
+) {
+
+    alert(
+        "Los nombres deben tener entre 2 y 50 caracteres."
+    );
+
+    return;
+}
+
+
+// Validar apellidos
+if (!soloLetras.test(apellidos)) {
+
+    alert(
+        "Los apellidos solo deben contener letras y espacios."
+    );
+
+    return;
+}
+
+
+if (
+    apellidos.length < 2 ||
+    apellidos.length > 50
+) {
+
+    alert(
+        "Los apellidos deben tener entre 2 y 50 caracteres."
+    );
+
+    return;
+}
+
+
+// Validar teléfono
+if (!soloNumeros.test(telefono)) {
+
+    alert(
+        "El teléfono solo debe contener números."
+    );
+
+    return;
+}
+
+
+if (
+    telefono.length < 7 ||
+    telefono.length > 15
+) {
+
+    alert(
+        "El teléfono debe tener entre 7 y 15 dígitos."
+    );
+
+    return;
+}
+
+
+// Validar dirección
+if (
+    direccion.length < 5 ||
+    direccion.length > 100
+) {
+
+    alert(
+        "La dirección debe tener entre 5 y 100 caracteres."
+    );
+
+    return;
+}
+
+
+const clientes =
+    obtenerClientes();
+
+
+// Validar cédula duplicada
+const cedulaDuplicada =
+    clientes.some(cliente => {
+
+        return (
+            String(cliente.cedula) === String(cedula) &&
+            String(cliente.id) !== String(inputId.value)
+        );
+
+    });
+
+
+if (cedulaDuplicada) {
+
+    alert(
+        "Ya existe un cliente registrado con esta cédula."
+    );
+
+    return;
+}
 
             if (inputId.value) {
 
@@ -377,10 +474,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
 
-            // ==========================
-            // REGISTRAR
-            // ==========================
-
             const nuevoCliente = {
 
                 id: Date.now(),
@@ -421,21 +514,12 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
 
-    // ==============================
-    // BOTONES EDITAR / ELIMINAR
-    // ==============================
-
     listaClientes.addEventListener(
         "click",
         function(event) {
 
             const boton =
                 event.target;
-
-
-            // ==========================
-            // EDITAR
-            // ==========================
 
             if (
                 boton.classList.contains(
@@ -449,11 +533,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 editarCliente(id);
 
             }
-
-
-            // ==========================
-            // ELIMINAR
-            // ==========================
 
             if (
                 boton.classList.contains(
@@ -471,10 +550,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     );
 
-
-    // ==============================
-    // EDITAR CLIENTE
-    // ==============================
 
     function editarCliente(id) {
 
@@ -530,11 +605,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
-    // ==============================
-    // ELIMINAR CLIENTE
-    // ==============================
-
     function eliminarCliente(id) {
 
         const clientes =
@@ -584,11 +654,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
-    // ==============================
-    // BUSCAR CLIENTES
-    // ==============================
-
     inputBusqueda.addEventListener(
         "input",
         function() {
@@ -599,11 +664,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
     );
-
-
-    // ==============================
-    // CARGAR AL INICIAR
-    // ==============================
 
     renderizarClientes();
 
