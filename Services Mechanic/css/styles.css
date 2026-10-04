@@ -2792,6 +2792,8 @@ footer#contacto .mapa-footer iframe {
 .contenido-modal-cliente {
   width: 430px;
   max-width: calc(100% - 30px);
+  max-height: calc(100vh - 30px);
+  overflow-y: auto;
   background-color: #ffffff;
   border-radius: 14px;
   padding: 25px;
@@ -3165,6 +3167,8 @@ footer#contacto .mapa-footer iframe {
 .contenido-modal-empleado {
     width: 430px;
     max-width: calc(100% - 30px);
+    max-height: calc(100vh - 30px);
+    overflow-y: auto;
     background: #ffffff;
     border-radius: 14px;
     padding: 25px;
@@ -3245,8 +3249,6 @@ footer#contacto .mapa-footer iframe {
     background: #fbc515;
     border: none;
 }
-
-/* TALLER SEMANAS 6 Y 7 */
 
 
 /* MÓVIL - HASTA 480PX */
@@ -3785,5 +3787,298 @@ footer#contacto .mapa-footer iframe {
   .fila-formulario-vehiculo {
     grid-template-columns: 1fr;
     gap: 0;
+  }
+}
+
+@media (max-width: 700px) {
+
+  .contenedor-empleados {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  .cabecera-empleados {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  #btn-registrar-empleado {
+    width: 100%;
+  }
+}
+
+/* APLICATIVO EN PANTALLAS GRANDES */
+
+@media (min-width: 1600px) {
+
+  /* LOGIN */
+
+  #login {
+  font-size: clamp(1rem, 1vw, 1.25rem);
+  padding: 3.75em 1.5em;
+  }
+  
+  #login .login-card {
+  width: clamp(500px, 32vw, 620px);
+  max-width: 620px;
+
+  border-radius: 0.875em;
+  box-shadow: 0 0.9375em 2.5em rgba(0, 0, 0, 0.35);
+  }
+
+  #login .login-brand {
+    padding: 1.75em 1.5em;
+  }
+
+  #login .login-brand h2 {
+    font-size: 1.75em;
+  }
+
+  #login .login-brand p {
+    margin-top: 0.5em;
+    font-size: 0.875em;
+  }
+
+  #login .login-content {
+    padding: 1.875em 1.625em;
+  }
+
+  #login .login-content h2 {
+    margin-bottom: 0.5em;
+    font-size: 1.625em;
+  }
+
+  #login .login-text {
+    margin-bottom: 1.5em;
+    font-size: 1em;
+  }
+
+  #login .campo-login {
+    margin-bottom: 1.125em;
+  }
+
+  #login .campo-login label {
+    margin-bottom: 0.4375em;
+    font-size: 0.9375em;
+  }
+
+  #login .campo-login input {
+    padding: 0.75em 0.875em;
+    border-radius: 0.5em;
+    font-size: 0.9375em;
+  }
+
+  #login .btn-login {
+    padding: 0.8125em;
+    border-radius: 0.5em;
+    font-size: 1em;
+  }
+
+  #login .btn-volver-landing {
+    margin-top: 0.875em;
+    padding: 0.8125em 1.25em;
+    border-radius: 0.5em;
+    font-size: 0.875em;
+  }
+
+
+  /* =======================================================
+     APLICATIVO
+     ======================================================= */
+
+  #sistema {
+    font-size: clamp(1rem, 0.9vw, 1.25rem);
+    grid-template-columns: 16.25em minmax(0, 1fr);
+  }
+
+
+  /* SIDEBAR */
+
+  #sistema .sidebar-sistema {
+    padding: 1.5em 1.125em;
+  }
+
+  #sistema .logo-sistema {
+    gap: 0.75em;
+    padding-bottom: 1.375em;
+    margin-bottom: 1.375em;
+  }
+
+  #sistema .logo-sistema img {
+    width: 3.375em;
+    height: 3.375em;
+  }
+
+  #sistema .logo-sistema h2 {
+    font-size: 1em;
+  }
+
+  #sistema .logo-sistema p {
+    margin-top: 0.125em;
+    font-size: 0.75em;
+  }
+
+  #sistema .menu-sistema {
+    gap: 0.5em;
+  }
+
+  #sistema .menu-sistema a {
+    padding: 0.75em 0.875em;
+    border-radius: 0.5em;
+    font-size: 0.875em;
+  }
+
+
+  /* BARRA SUPERIOR */
+    
+
+  #sistema .topbar-sistema {
+    min-height: 5.375em;
+    padding: 1.125em 1.75em;
+    gap: 1.25em;
+  }
+
+  #sistema .topbar-sistema h2 {
+    font-size: 1.5em;
+  }
+
+  #sistema .topbar-sistema p {
+    margin-top: 0.25em;
+    font-size: 0.8125em;
+  }
+
+  #sistema .usuario-sistema {
+    gap: 0.625em;
+    font-size: 0.875em;
+    padding: 0.5em 0.625em;
+  }
+
+  #sistema .avatar-sistema {
+    width: 2.375em;
+    height: 2.375em;
+    font-size: 0.875em;
+  }
+
+  #sistema .nombre-usuario {
+    font-size: 0.875em;
+  }
+
+  #sistema .rol-usuario {
+    font-size: 0.6875em;
+  }
+
+
+  /*  DASHBOARD APLICATIVO  */
+
+  #sistema .dashboard-sistema {
+    width: min(calc(100% - 4em), 90em);
+    margin: 0 auto;
+    padding: 2.5em 0;
+  }
+
+  #sistema .dashboard-sistema h2 {
+    font-size: 1.75em;
+  }
+
+  #sistema .dashboard-sistema p {
+    max-width: 40.625em;
+    font-size: 0.9375em;
+  }
+
+
+  /* CONTENEDORES DE LOS MÓDULOS DEL APLICATIVO */
+     
+     
+  #sistema .clientes-sistema,
+  #sistema .vehiculos-sistema,
+  #sistema .contenedor-empleados {
+    width: min(calc(100% - 2em), 100em);
+    margin: 2em auto;
+    padding: 1.25em;
+  }
+
+
+  /* ENCABEZADOS */
+
+  #sistema .encabezado-clientes,
+  #sistema .encabezado-vehiculos,
+  #sistema .cabecera-empleados {
+    gap: 1.25em;
+    margin-bottom: 1.5em;
+  }
+
+  #sistema .encabezado-clientes h2,
+  #sistema .encabezado-vehiculos h2,
+  #sistema .cabecera-empleados h2 {
+    font-size: 1.125em;
+  }
+
+  #sistema .encabezado-clientes p,
+  #sistema .encabezado-vehiculos p,
+  #sistema .cabecera-empleados p {
+    margin-top: 0.375em;
+    font-size: 0.8125em;
+  }
+
+
+  /*  BUSCADORES */
+
+  #sistema .busqueda-clientes input,
+  #sistema .busqueda-vehiculos input,
+  #sistema #buscar-empleado {
+    width: 26.25em;
+    max-width: 100%;
+    height: 2.75em;
+    padding-inline: 0.875em;
+    border-radius: 0.5em;
+    font-size: 0.875em;
+  }
+
+
+  /* TABLAS */
+
+  #sistema .tabla-clientes th,
+  #sistema .tabla-vehiculos th,
+  #sistema .tabla-empleados th {
+    padding: 0.8125em 0.75em;
+    font-size: 0.75em;
+  }
+
+  #sistema .tabla-clientes td,
+  #sistema .tabla-vehiculos td,
+  #sistema .tabla-empleados td {
+    padding: 0.9375em 0.75em;
+    font-size: 0.8125em;
+  }
+
+
+  /* BOTONES PRINCIPALES */
+
+  #sistema .encabezado-clientes button,
+  #sistema #btn-nuevo-vehiculo,
+  #sistema #btn-registrar-empleado {
+    padding: 0.8125em 1.25em;
+    border-radius: 0.625em;
+    font-size: 0.875em;
+  }
+
+
+  /*  MODALES */
+  #sistema .contenido-modal-cliente,
+  #sistema .contenido-modal-empleado {
+    width: 26.875em;
+    max-width: calc(100% - 2em);
+    max-height: calc(100vh - 3em);
+    padding: 1.5625em;
+    overflow-y: auto;
+  }
+
+  #sistema .contenido-modal-vehiculo {
+    width: 32.5em;
+    max-width: calc(100% - 2em);
+    max-height: calc(100vh - 3em);
+    padding: 1.5625em;
+    overflow-y: auto;
   }
 }
