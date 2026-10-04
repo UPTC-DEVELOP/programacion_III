@@ -10,8 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
-    <link rel="stylesheet" href="css/sistema.css" />
-    <script src="js/sistema.js" defer></script>
+    <link rel="stylesheet" href="CSS/sistema.css" />
+    <script src="Js/sistema.js" defer></script>
 </head>
 
 <body>
@@ -21,7 +21,7 @@
                 <img src="https://cdn-icons-png.flaticon.com/512/1995/1995470.png" alt="" class="logo-icon-svg" />
                 <span>
                     <strong>SERVI-AUTO</strong>
-                    <small>Taller Mecanicon</small>
+                    <small>Taller mecánico</small>
                 </span>
             </a>
 
@@ -33,7 +33,7 @@
             </nav>
 
             <footer>
-                <a class="salir-sistema" href="Login.html">Volver al sitio</a>
+                <a id="cerrar-sesion" class="salir-sistema" href="Login.html">🚪 Cerrar sesión</a>
             </footer>
         </aside>
 
@@ -46,14 +46,24 @@
                 </div>
                 <div class="usuario-sistema">
                     <span class="avatar-sistema" aria-hidden="true">AD</span>
-                    <span>Administrador</span>
+                    <span id="nombreUsuario">Administrador</span>
                 </div>
             </header>
 
             <section id="dashboard" class="dashboard-sistema" aria-labelledby="titulo-dashboard">
                 <p class="eyebrow-sistema">Resumen del taller</p>
                 <h2 id="titulo-dashboard">Bienvenido a SERVI-AUTO</h2>
-                <p>Selecciona una opción del menu para poder acceder a las diferentes funcionalidades de sistema.</p>
+                <p>Selecciona una opción del menú para acceder a las diferentes funcionalidades del sistema.</p>
+                <div class="estadisticas-dashboard" aria-label="Resumen de registros">
+                    <article class="tarjeta-resumen">
+                        <span>Clientes registrados</span>
+                        <strong id="total-clientes">0</strong>
+                    </article>
+                    <article class="tarjeta-resumen">
+                        <span>Vehículos registrados</span>
+                        <strong id="total-vehiculos">0</strong>
+                    </article>
+                </div>
                 <nav class="resumen-dashboard" aria-label="Módulos disponibles">
                     <button type="button" data-ir-a="clientes">
                         <span>01</span><strong>Clientes</strong><small>Consulta y registro</small>
@@ -71,7 +81,7 @@
                         <h2 id="titulo-clientes">Clientes registrados</h2>
                         <p id="cantidad-clientes" class="contador-sistema">0 clientes</p>
                     </div>
-                    <button type="button" class="boton-principal btn-nuevo-cliente"> Registrar cliente</button>
+                    <button type="button" class="boton-principal btn-nuevo-cliente">➕ Registrar cliente</button>
                 </header>
                 <search class="campo-busqueda">
                     <label for="buscar-cliente">Buscar clientes</label>
@@ -104,8 +114,9 @@
                         <h2 id="titulo-vehiculos">Vehículos registrados</h2>
                         <p id="cantidad-vehiculos" class="contador-sistema">0 vehículos</p>
                     </div>
-                    <button type="button" id="btn-registrar-vehiculo" class="boton-principal"> Registrar
-                        vehículo</button>
+                    <button type="button" id="btn-registrar-vehiculo" class="boton-principal">
+                        ➕ Registrar vehículo
+                    </button>
                 </header>
                 <search class="campo-busqueda">
                     <label for="buscar-vehiculo">Buscar vehículos</label>
@@ -179,8 +190,8 @@
                 <small class="error-campo" id="error-direccion-cliente"></small>
             </label>
             <footer class="acciones-modal">
-                <button type="button" class="boton-secundario btn-cancelar-cliente">Cancelar</button>
-                <button type="submit" class="boton-principal" id="guardar-cliente">Guardar cliente</button>
+                <button type="button" class="boton-secundario btn-cancelar-cliente">↩ Cancelar</button>
+                <button type="submit" class="boton-principal" id="guardar-cliente">💾 Guardar cliente</button>
             </footer>
         </form>
     </dialog>
@@ -223,13 +234,13 @@
                 <small class="error-campo" id="error-vehiculo-hora-ingreso"></small>
             </label>
             <footer class="acciones-modal">
-                <button type="button" id="btn-cancelar-vehiculo" class="boton-secundario">Cancelar</button>
-                <button type="submit" class="boton-principal">Guardar vehículo</button>
+                <button type="button" id="btn-cancelar-vehiculo" class="boton-secundario">↩ Cancelar</button>
+                <button type="submit" class="boton-principal">💾 Guardar vehículo</button>
             </footer>
         </form>
     </dialog>
 
-    <p id="estado-sistema" class="sr-only" role="status" aria-live="polite"></p>
+    <p id="estado-sistema" class="estado-sistema" role="status" aria-live="polite"></p>
 </body>
 
 </html>

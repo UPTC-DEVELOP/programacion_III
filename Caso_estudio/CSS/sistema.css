@@ -197,6 +197,34 @@ button {
     margin-top: 32px;
 }
 
+.estadisticas-dashboard {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 260px));
+    gap: 14px;
+    margin-top: 28px;
+}
+
+.tarjeta-resumen {
+    display: grid;
+    min-height: 110px;
+    align-content: space-between;
+    padding: 18px 20px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+}
+
+.tarjeta-resumen span {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.tarjeta-resumen strong {
+    color: var(--ink);
+    font-size: 28px;
+}
+
 .resumen-dashboard button {
     display: grid;
     min-height: 150px;
@@ -444,6 +472,26 @@ td button+button {
     border: 0;
 }
 
+.estado-sistema {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 10;
+    max-width: min(420px, calc(100vw - 40px));
+    margin: 0;
+    padding: 12px 16px;
+    color: #ffffff;
+    background: var(--ink);
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    box-shadow: 0 8px 24px rgb(0 0 0 / 16%);
+    font-size: 14px;
+}
+
+.estado-sistema:empty {
+    display: none;
+}
+
 @media (max-width: 760px) {
     .sistema {
         grid-template-columns: 1fr;
@@ -488,7 +536,8 @@ td button+button {
         flex-direction: column;
     }
 
-    .resumen-dashboard {
+    .resumen-dashboard,
+    .estadisticas-dashboard {
         grid-template-columns: 1fr;
     }
 }
