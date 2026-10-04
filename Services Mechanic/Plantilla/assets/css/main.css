@@ -4782,81 +4782,89 @@ input, select, textarea {
 /* ==================== SERVICIOS ==================== */
 
 #servicios {
+  box-sizing: border-box;
+  width: 100%;
   background-color: #111315;
   color: #ffffff;
-  padding: 80px max(24px, calc((100% - 1100px) / 2));
+  padding: 70px 5%;
 }
 
 #servicios .encabezado-servicios {
-  max-width: 780px;
-  margin-bottom: 38px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto 42px;
 }
 
 #servicios .etiqueta-servicios {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin: 0 0 18px;
+  margin: 0 0 16px;
   color: #f5c518;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 800;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
 }
 
 #servicios .etiqueta-servicios::before {
   content: "";
   display: inline-block;
-  width: 30px;
+  flex-shrink: 0;
+  width: 32px;
   height: 3px;
   border-radius: 3px;
   background-color: #f5c518;
 }
 
 #servicios #titulo-servicios {
-  margin: 0 0 18px;
+  margin: 0 0 22px;
   color: #ffffff;
-  font-size: clamp(32px, 4vw, 44px);
+  font-size: clamp(32px, 3vw, 44px);
   font-weight: 800;
-  line-height: 1.15;
+  line-height: 1.2;
 }
 
 #servicios .encabezado-servicios > p:last-child {
-  max-width: 720px;
+  max-width: 850px;
   margin: 0;
   color: #b8bdc3;
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.8;
 }
 
 #servicios .servicios-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
+  gap: 24px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
 #servicios .tarjeta-servicio {
   position: relative;
+  box-sizing: border-box;
   min-width: 0;
-  padding: 28px;
+  min-height: 230px;
+  padding: 34px;
   overflow: hidden;
   background: linear-gradient(145deg, #202326, #191b1d);
   border: 1px solid #303437;
   border-radius: 16px;
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
-  transition:
-    transform 0.25s ease,
-    border-color 0.25s ease,
-    box-shadow 0.25s ease;
+  transition: transform 0.25s ease,
+              border-color 0.25s ease,
+              box-shadow 0.25s ease;
 }
 
 #servicios .tarjeta-servicio::before {
   content: "";
   position: absolute;
   top: 0;
-  left: 28px;
-  width: 48px;
-  height: 4px;
+  left: 30px;
+  width: 55px;
+  height: 5px;
   background-color: #f5c518;
   border-radius: 0 0 5px 5px;
 }
@@ -4871,21 +4879,21 @@ input, select, textarea {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
-  margin-bottom: 22px;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 24px;
   background-color: rgba(245, 197, 24, 0.1);
   border: 1px solid rgba(245, 197, 24, 0.4);
   border-radius: 10px;
   color: #f5c518;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
 }
 
 #servicios .tarjeta-servicio h3 {
-  margin: 0 0 12px;
+  margin: 0 0 14px;
   color: #ffffff;
-  font-size: 18px;
+  font-size: 21px;
   font-weight: 700;
   line-height: 1.4;
 }
@@ -4893,21 +4901,24 @@ input, select, textarea {
 #servicios .tarjeta-servicio p {
   margin: 0;
   color: #b8bdc3;
-  font-size: 15px;
-  line-height: 1.75;
+  font-size: 16px;
+  line-height: 1.8;
 }
 
 
 /* ==================== BENEFICIOS ==================== */
 
 #beneficios {
+  box-sizing: border-box;
+  width: 100%;
   background-color: #f7f7f5;
   color: #202124;
-  padding: 80px max(24px, calc((100% - 1200px) / 2));
+  padding: 70px 5%;
 }
 
 #beneficios .encabezado-beneficios {
-  max-width: 850px;
+  width: 100%;
+  max-width: 1100px;
   margin: 0 auto 44px;
   text-align: center;
 }
@@ -4917,61 +4928,65 @@ input, select, textarea {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  margin: 0 0 18px;
-  color: #d5a900;
-  font-size: 13px;
+  margin: 0 0 16px;
+  color: #b99500;
+  font-size: 14px;
   font-weight: 800;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
 }
 
 #beneficios .etiqueta-beneficios::before {
   content: "";
-  width: 28px;
+  width: 32px;
   height: 3px;
   background-color: #f5c518;
   border-radius: 3px;
+  flex-shrink: 0;
 }
 
 #beneficios #titulo-beneficios {
-  margin: 0 0 18px;
+  margin: 0 0 22px;
   color: #202124;
-  font-size: clamp(32px, 4vw, 44px);
+  font-size: clamp(32px, 3vw, 44px);
   font-weight: 800;
   line-height: 1.2;
 }
 
 #beneficios #titulo-beneficios span {
-  color: #e2b600;
+  color: #d5a900;
 }
 
 #beneficios .descripcion-beneficios {
-  max-width: 760px;
+  max-width: 850px;
   margin: 0 auto;
   color: #6b7075;
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.8;
 }
 
 #beneficios .beneficios-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 18px;
+  gap: 22px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 #beneficios .tarjeta-beneficio {
+  box-sizing: border-box;
   min-width: 0;
-  min-height: 245px;
-  padding: 26px 22px;
+  min-height: 270px;
+  padding: 30px 26px;
   background: linear-gradient(145deg, #1b1e20, #111315);
   border: 1px solid #2a2d2f;
   border-radius: 16px;
   color: #ffffff;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  transition:
-    transform 0.25s ease,
-    border-color 0.25s ease,
-    box-shadow 0.25s ease;
+  transition: transform 0.25s ease,
+              border-color 0.25s ease,
+              box-shadow 0.25s ease;
 }
 
 #beneficios .tarjeta-beneficio:hover {
@@ -4984,43 +4999,46 @@ input, select, textarea {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
-  margin-bottom: 22px;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 24px;
   background-color: rgba(245, 197, 24, 0.1);
   border: 1px solid rgba(245, 197, 24, 0.45);
   border-radius: 10px;
   color: #f5c518;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
 }
 
 #beneficios .tarjeta-beneficio h3 {
-  margin: 0 0 12px;
+  margin: 0 0 14px;
   color: #ffffff;
-  font-size: 17px;
+  font-size: 19px;
   font-weight: 700;
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 #beneficios .tarjeta-beneficio p {
   margin: 0;
   color: #b8bdc3;
-  font-size: 14px;
-  line-height: 1.75;
+  font-size: 15px;
+  line-height: 1.8;
 }
 
 
 /* ==================== EQUIPO ==================== */
 
 .seccion-equipo {
+  box-sizing: border-box;
+  width: 100%;
   background-color: #f7f7f5;
   color: #202124;
-  padding: 80px max(24px, calc((100% - 1100px) / 2));
+  padding: 70px 5%;
 }
 
 .encabezado-equipo {
-  max-width: 900px;
+  width: 100%;
+  max-width: 1100px;
   margin: 0 auto 44px;
   text-align: center;
 }
@@ -5030,39 +5048,41 @@ input, select, textarea {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  margin: 0 0 18px;
-  color: #d5a900;
-  font-size: 13px;
+  margin: 0 0 16px;
+  color: #b99500;
+  font-size: 14px;
   font-weight: 800;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
 }
 
 .etiqueta-equipo::before {
   content: "";
-  width: 28px;
+  width: 32px;
   height: 3px;
   background-color: #f5c518;
   border-radius: 3px;
+  flex-shrink: 0;
 }
 
 .seccion-equipo #titulo-equipo {
   margin: 0;
   color: #202124;
-  font-size: clamp(32px, 4vw, 42px);
+  font-size: clamp(32px, 3vw, 44px);
   font-weight: 800;
   line-height: 1.2;
 }
 
 .seccion-equipo #titulo-equipo span {
-  color: #e2b600;
+  color: #d5a900;
 }
 
 .grid-equipo {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 22px;
-  max-width: 1050px;
+  gap: 26px;
+  width: 100%;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
@@ -5071,18 +5091,18 @@ input, select, textarea {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  box-sizing: border-box;
   min-width: 0;
-  min-height: 220px;
-  padding: 32px 22px;
+  min-height: 250px;
+  padding: 36px 26px;
   background-color: #ffffff;
   border: 1px solid #e6e7e7;
   border-radius: 17px;
   text-align: center;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-  transition:
-    transform 0.25s ease,
-    border-color 0.25s ease,
-    box-shadow 0.25s ease;
+  transition: transform 0.25s ease,
+              border-color 0.25s ease,
+              box-shadow 0.25s ease;
 }
 
 .tarjeta-equipo:hover {
@@ -5096,14 +5116,14 @@ input, select, textarea {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 66px;
-  height: 66px;
-  margin-bottom: 20px;
+  width: 72px;
+  height: 72px;
+  margin-bottom: 22px;
   background: linear-gradient(145deg, #25282a, #111315);
   border: 1px solid #333638;
   border-radius: 50%;
   color: #ffffff;
-  font-size: 28px;
+  font-size: 30px;
   transition: transform 0.25s ease;
 }
 
@@ -5112,9 +5132,9 @@ input, select, textarea {
 }
 
 .tarjeta-equipo h3 {
-  margin: 0 0 10px;
+  margin: 0 0 12px;
   color: #17191a;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 800;
   line-height: 1.4;
 }
@@ -5122,14 +5142,20 @@ input, select, textarea {
 .tarjeta-equipo .rol-equipo {
   margin: 0;
   color: #74797d;
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: 15px;
+  line-height: 1.7;
 }
 
 
 /* ==================== TABLET ==================== */
 
-@media (max-width: 1000px) {
+@media screen and (max-width: 1000px) {
+  #servicios,
+  #beneficios,
+  .seccion-equipo {
+    padding: 60px 4%;
+  }
+
   #beneficios .beneficios-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -5142,11 +5168,15 @@ input, select, textarea {
 
 /* ==================== CELULARES ==================== */
 
-@media (max-width: 600px) {
+@media screen and (max-width: 600px) {
   #servicios,
   #beneficios,
   .seccion-equipo {
-    padding: 55px 20px;
+    padding: 48px 20px;
+  }
+
+  #servicios .encabezado-servicios {
+    margin-bottom: 30px;
   }
 
   #servicios .servicios-grid {
@@ -5155,7 +5185,16 @@ input, select, textarea {
   }
 
   #servicios .tarjeta-servicio {
-    padding: 24px;
+    min-height: auto;
+    padding: 26px 24px;
+  }
+
+  #servicios .tarjeta-servicio h3 {
+    font-size: 19px;
+  }
+
+  #servicios .tarjeta-servicio p {
+    font-size: 15px;
   }
 
   #beneficios .encabezado-beneficios,
@@ -5171,11 +5210,49 @@ input, select, textarea {
 
   #beneficios .tarjeta-beneficio {
     min-height: auto;
-    padding: 24px 22px;
+    padding: 26px 24px;
+  }
+
+  #beneficios .tarjeta-beneficio h3 {
+    font-size: 18px;
   }
 
   .tarjeta-equipo {
     min-height: auto;
-    padding: 28px 22px;
+    padding: 30px 24px;
+  }
+
+  .tarjeta-equipo h3 {
+    font-size: 19px;
+  }
+}
+
+
+/* ==================== PANTALLAS GRANDES ==================== */
+
+@media screen and (min-width: 1600px) {
+  #servicios,
+  #beneficios,
+  .seccion-equipo {
+    padding-top: 85px;
+    padding-bottom: 85px;
+  }
+
+  #servicios .encabezado-servicios,
+  #servicios .servicios-grid,
+  #beneficios .encabezado-beneficios,
+  .seccion-equipo .encabezado-equipo,
+  .grid-equipo {
+    max-width: 1250px;
+  }
+
+  #beneficios .beneficios-grid {
+    max-width: 1350px;
+  }
+
+  #servicios .tarjeta-servicio,
+  #beneficios .tarjeta-beneficio,
+  .tarjeta-equipo {
+    padding: 38px;
   }
 }
