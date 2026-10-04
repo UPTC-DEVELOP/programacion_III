@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Gestión de proveedores</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+</head>
+
+<body class="is-preload">
+    <div id="page-wrapper">
+
+        <!-- Header -->
+        <header id="header">
+            <div class="logo container">
+                <div>
+                    <h1><a href="index.html" id="logo">Olimac Riders Store</a></h1>
+                    <p>Sistema de Gestión de Taller Mecánico</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Nav -->
+        <nav id="nav">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li>
+                    <a href="index.html#servicios">El taller</a>
+                    <ul>
+                        <li><a href="index.html#servicios">Módulos</a></li>
+                        <li><a href="index.html#nosotros">Nosotros</a></li>
+                        <li><a href="index.html#contacto">Contacto</a></li>
+                    </ul>
+                </li>
+                <li><a href="no-sidebar.html">Clientes</a></li>
+                <li><a href="left-sidebar.html">Vehículos</a></li>
+                <li><a href="proveedores.html">Proveedores</a></li>
+                <li><a href="orden-servicio.html">Servicios</a></li>
+                <li><a href="right-sidebar.html">Empleados</a></li>
+                <li><a href="repuestos.html">Repuestos</a></li>
+                <li><a href="inventario.html">Inventario</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main -->
+        <section id="main">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="content">
+
+                            <article class="box page-content">
+
+                                <header>
+                                    <h2>Gestión de Proveedores</h2>
+                                    <p>
+                                        Registro y administración de los proveedores del taller mecánico.
+                                    </p>
+                                </header>
+
+                                <section>
+                                    <h3>Registrar proveedor</h3>
+
+                                    <form id="formProveedor">
+
+                                        <input type="hidden" id="proveedorId">
+
+                                        <fieldset>
+                                            <label for="nitProveedor">NIT / Identificación</label>
+                                            <input type="text" id="nitProveedor" placeholder="Ej. 900123456-7" required>
+                                        </fieldset>
+
+                                        <fieldset>
+                                            <label for="nombreProveedor">Nombre o razón social</label>
+                                            <input type="text" id="nombreProveedor" placeholder="Ej. Repuestos El Motor"
+                                                required>
+                                        </fieldset>
+
+                                        <fieldset>
+                                            <label for="telefonoProveedor">Teléfono</label>
+                                            <input type="text" id="telefonoProveedor" placeholder="Ej. 3001234567"
+                                                required>
+                                        </fieldset>
+
+                                        <fieldset>
+                                            <label for="correoProveedor">Correo electrónico</label>
+                                            <input type="email" id="correoProveedor" placeholder="proveedor@correo.com"
+                                                required>
+                                        </fieldset>
+
+                                        <fieldset>
+                                            <label for="direccionProveedor">Dirección</label>
+                                            <input type="text" id="direccionProveedor"
+                                                placeholder="Ej. Calle 10 # 15-20" required>
+                                        </fieldset>
+
+                                        <footer style="margin-top: 25px;">
+                                            <button type="reset">Limpiar</button>
+                                            <button type="submit" id="btnGuardarProveedor" style="margin-left: 10px;">
+                                                Registrar Proveedor
+                                            </button>
+                                        </footer>
+
+                                    </form>
+                                </section>
+
+                                <section>
+                                    <header>
+                                        <h3>Proveedores registrados</h3>
+                                    </header>
+
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>NIT</th>
+                                                <th>Nombre / Razón social</th>
+                                                <th>Teléfono</th>
+                                                <th>Correo</th>
+                                                <th>Dirección</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody id="tablaProveedores">
+                                        </tbody>
+                                    </table>
+                                </section>
+
+                                <aside>
+                                    <h3>Información</h3>
+
+                                    <p>
+                                        En este módulo se pueden registrar, consultar,
+                                        actualizar y eliminar los proveedores que suministran
+                                        repuestos y productos al taller mecánico.
+                                    </p>
+                                </aside>
+
+                            </article>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Scripts -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/jquery.dropotron.min.js"></script>
+        <script src="assets/js/jquery.scrolly.min.js"></script>
+        <script src="assets/js/browser.min.js"></script>
+        <script src="assets/js/breakpoints.min.js"></script>
+        <script src="assets/js/util.js"></script>
+        <script src="assets/js/main.js"></script>
+
+        <script src="assets/js/datos-taller.js"></script>
+        <script src="assets/js/crud-proveedores.js"></script>
+
+</body>
+
+</html>

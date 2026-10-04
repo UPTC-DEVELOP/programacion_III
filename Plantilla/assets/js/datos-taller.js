@@ -70,3 +70,24 @@ function ajustarStockTaller(lineas, signo) {
   });
   guardarInventario(inventario);
 }
+function ajustarStockTaller(lineas, signo) {
+  const inventario = obtenerInventario();
+  lineas.forEach(linea => {
+    const item = inventario.find(i => i.referencia === linea.referencia);
+    if (item) {
+      item.stock = item.stock + (signo * Number(linea.cantidad));
+      if (item.stock < 0) {
+        item.stock = 0;
+      }
+    }
+    // DATOS DE VEHÍCULOS
+    function obtenerVehiculos() {
+      return leerListaTaller("olimac_vehiculos");
+    }
+
+    function guardarVehiculos(lista) {
+      guardarListaTaller("olimac_vehiculos", lista);
+    }
+  });
+  guardarInventario(inventario);
+}

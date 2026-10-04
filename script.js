@@ -1,11 +1,13 @@
 // Base de datos simulada en memoria
-let listaClientes = [];
+let listaClientes = JSON.parse(localStorage.getItem("olimac_clientes")) || [];
 
 document.addEventListener("DOMContentLoaded", () => {
   const formCliente = document.getElementById("formCliente");
   const cedulaInput = document.getElementById("cedulaCliente");
   const correoInput = document.getElementById("correoCliente");
   const telefonoInput = document.getElementById("telefonoCliente");
+
+  renderizarTabla();
 
   // Validaciones en tiempo real con expresiones regulares (Regex)
   cedulaInput.addEventListener("input", function () {
@@ -34,8 +36,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const id = document.getElementById("clienteId").value;
 
     // Validación general antes de registrar
-    if (!nombre || !/^[0-9]{7,10}$/.test(cedula) || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo) \vert{}\vert{} !/^[0-9]{10}$/.test(telefono)) {
-      mostrarAlerta("Por favor complete todos los campos con un formato válido.", "danger");
+    if (!nombre || !/^[0-9]{7,10}$/.test(cedula) || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo) || !/^[0-9]{10}$/.test(telefono)) {
+      mostrarAlerta("Por favor complete todos los campos con un formato válido.","danger");
       return;
     }
 
@@ -44,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const index = listaClientes.findIndex(c => c.cedula === id);
       if (index !== -1) {
         listaClientes[index] = { nombre, cedula, correo, telefono };
+        localStorage.setItem("olimac_clientes", JSON.stringify(listaClientes));
         mostrarAlerta("Cliente actualizado con éxito.", "success");
       }
     } else {
@@ -54,6 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       // Agregar nuevo cliente
       listaClientes.push({ nombre, cedula, correo, telefono });
+      localStorage.setItem("olimac_clientes", JSON.stringify(listaClientes));
       mostrarAlerta("Cliente registrado correctamente.", "success");
     }
 
@@ -117,6 +121,9 @@ function cargarParaEditar(cedula) {
 function eliminarCliente(cedula) {
   if (confirm("¿Está seguro de eliminar este cliente?")) {
     listaClientes = listaClientes.filter(c => c.cedula !== cedula);
+
+    localStorage.setItem("olimac_clientes", JSON.stringify(listaClientes));
+
     renderizarTabla();
     mostrarAlerta("Cliente eliminado del sistema.", "warning");
   }
