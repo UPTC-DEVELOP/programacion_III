@@ -4777,444 +4777,818 @@ input, select, textarea {
 		}
 
 	}
+	/* =========================================================
+   SERVICES MECHANIC
+   SOLO: SERVICIOS + BENEFICIOS + EQUIPO + EXPERIENCIAS
+   ========================================================= */
 
 
-/* ==================== SERVICIOS ==================== */
+/* =========================================================
+   SERVICIOS
+   ========================================================= */
 
 #servicios {
-  box-sizing: border-box;
   width: 100%;
-  background-color: #111315;
-  color: #ffffff;
   padding: 70px 5%;
+  background: #111315;
+  color: #ffffff;
 }
 
-#servicios .encabezado-servicios {
-  width: 100%;
+.encabezado-servicios {
   max-width: 1100px;
   margin: 0 auto 42px;
 }
 
-#servicios .etiqueta-servicios {
+.etiqueta-servicios {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin: 0 0 16px;
+  margin: 0 0 18px;
+
   color: #f5c518;
   font-size: 14px;
   font-weight: 800;
-  letter-spacing: 1.5px;
   text-transform: uppercase;
+  letter-spacing: 1.5px;
 }
 
-#servicios .etiqueta-servicios::before {
+.etiqueta-servicios::before {
   content: "";
-  display: inline-block;
-  flex-shrink: 0;
   width: 32px;
   height: 3px;
+  background: #f5c518;
+  flex-shrink: 0;
   border-radius: 3px;
-  background-color: #f5c518;
 }
 
-#servicios #titulo-servicios {
-  margin: 0 0 22px;
+#titulo-servicios {
+  margin: 0 0 18px;
+
   color: #ffffff;
-  font-size: clamp(32px, 3vw, 44px);
+  font-size: clamp(32px, 4vw, 44px);
   font-weight: 800;
   line-height: 1.2;
+  letter-spacing: -1px;
 }
 
-#servicios .encabezado-servicios > p:last-child {
+.encabezado-servicios > p:last-child {
   max-width: 850px;
   margin: 0;
+
   color: #b8bdc3;
   font-size: 17px;
   line-height: 1.8;
 }
 
-#servicios .servicios-grid {
+
+/* GRID */
+
+.servicios-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px;
-  width: 100%;
+
   max-width: 1100px;
   margin: 0 auto;
+
+  /* En pantallas pequeñas se adapta a una columna */
+  grid-template-columns: 1fr;
 }
 
-#servicios .tarjeta-servicio {
+
+/* TARJETAS */
+
+.tarjeta-servicio {
   position: relative;
-  box-sizing: border-box;
-  min-width: 0;
+
   min-height: 230px;
   padding: 34px;
+
   overflow: hidden;
-  background: linear-gradient(145deg, #202326, #191b1d);
-  border: 1px solid #303437;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.035),
+      rgba(255, 255, 255, 0.01)
+    ),
+    #17191c;
+
+  border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: 16px;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
-  transition: transform 0.25s ease,
-              border-color 0.25s ease,
-              box-shadow 0.25s ease;
+
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.18);
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
-#servicios .tarjeta-servicio::before {
+.tarjeta-servicio::before {
   content: "";
+
   position: absolute;
   top: 0;
-  left: 30px;
+  left: 0;
+
   width: 55px;
   height: 5px;
-  background-color: #f5c518;
-  border-radius: 0 0 5px 5px;
+
+  background: #f5c518;
+  border-radius: 0 0 5px 0;
 }
 
-#servicios .tarjeta-servicio:hover {
+.tarjeta-servicio:hover {
   transform: translateY(-5px);
   border-color: #f5c518;
-  box-shadow: 0 15px 32px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.28);
 }
 
-#servicios .icono-servicio {
+.icono-servicio {
   display: flex;
   align-items: center;
   justify-content: center;
+
   width: 48px;
   height: 48px;
+
   margin-bottom: 24px;
-  background-color: rgba(245, 197, 24, 0.1);
-  border: 1px solid rgba(245, 197, 24, 0.4);
+
   border-radius: 10px;
+
+  background: rgba(245, 197, 24, 0.10);
+  border: 1px solid rgba(245, 197, 24, 0.25);
+
   color: #f5c518;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 800;
 }
 
-#servicios .tarjeta-servicio h3 {
-  margin: 0 0 14px;
+.tarjeta-servicio h3 {
+  margin: 0 0 10px;
+
   color: #ffffff;
   font-size: 21px;
-  font-weight: 700;
-  line-height: 1.4;
+  font-weight: 800;
+  line-height: 1.35;
 }
 
-#servicios .tarjeta-servicio p {
+.tarjeta-servicio p {
   margin: 0;
+
   color: #b8bdc3;
   font-size: 16px;
   line-height: 1.8;
 }
 
 
-/* ==================== BENEFICIOS ==================== */
+/* =========================================================
+   BENEFICIOS
+   ========================================================= */
 
 #beneficios {
-  box-sizing: border-box;
   width: 100%;
-  background-color: #f7f7f5;
-  color: #202124;
   padding: 70px 5%;
+
+  background: #f7f7f5;
+  color: #111315;
 }
 
-#beneficios .encabezado-beneficios {
-  width: 100%;
+.encabezado-beneficios {
   max-width: 1100px;
-  margin: 0 auto 44px;
-  text-align: center;
+  margin: 0 auto 42px;
 }
 
-#beneficios .etiqueta-beneficios {
+.etiqueta-beneficios {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 12px;
-  margin: 0 0 16px;
-  color: #b99500;
+
+  margin: 0 0 18px;
+
+  color: #686d72;
   font-size: 14px;
   font-weight: 800;
-  letter-spacing: 1.5px;
   text-transform: uppercase;
+  letter-spacing: 1.5px;
 }
 
-#beneficios .etiqueta-beneficios::before {
+.etiqueta-beneficios::before {
   content: "";
+
   width: 32px;
   height: 3px;
-  background-color: #f5c518;
-  border-radius: 3px;
+
+  background: #f5c518;
   flex-shrink: 0;
+  border-radius: 3px;
 }
 
-#beneficios #titulo-beneficios {
-  margin: 0 0 22px;
-  color: #202124;
-  font-size: clamp(32px, 3vw, 44px);
+#titulo-beneficios {
+  margin: 0 0 18px;
+
+  color: #111315;
+  font-size: clamp(32px, 4vw, 44px);
   font-weight: 800;
   line-height: 1.2;
+  letter-spacing: -1px;
 }
 
-#beneficios #titulo-beneficios span {
-  color: #d5a900;
+#titulo-beneficios span {
+  color: #9b7900;
 }
 
-#beneficios .descripcion-beneficios {
+.descripcion-beneficios {
   max-width: 850px;
-  margin: 0 auto;
-  color: #6b7075;
+  margin: 0;
+
+  color: #5f646a;
   font-size: 17px;
   line-height: 1.8;
 }
 
-#beneficios .beneficios-grid {
+
+/* GRID */
+
+.beneficios-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 22px;
-  width: 100%;
-  max-width: 1200px;
+  gap: 20px;
+
+  max-width: 1100px;
   margin: 0 auto;
+
+  grid-template-columns: 1fr;
 }
 
-#beneficios .tarjeta-beneficio {
-  box-sizing: border-box;
-  min-width: 0;
+
+/* TARJETAS */
+
+.tarjeta-beneficio {
+  position: relative;
+
   min-height: 270px;
   padding: 30px 26px;
-  background: linear-gradient(145deg, #1b1e20, #111315);
-  border: 1px solid #2a2d2f;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.035),
+      rgba(255, 255, 255, 0.01)
+    ),
+    #111315;
+
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 16px;
-  color: #ffffff;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  transition: transform 0.25s ease,
-              border-color 0.25s ease,
-              box-shadow 0.25s ease;
+
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
-#beneficios .tarjeta-beneficio:hover {
+.tarjeta-beneficio:hover {
   transform: translateY(-5px);
-  border-color: #f5c518;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
-#beneficios .numero-beneficio {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 46px;
-  height: 46px;
-  margin-bottom: 24px;
-  background-color: rgba(245, 197, 24, 0.1);
-  border: 1px solid rgba(245, 197, 24, 0.45);
-  border-radius: 10px;
+.numero-beneficio {
+  display: block;
+
+  margin-bottom: 35px;
+
   color: #f5c518;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 800;
+  letter-spacing: 1px;
 }
 
-#beneficios .tarjeta-beneficio h3 {
-  margin: 0 0 14px;
+.tarjeta-beneficio h3 {
+  margin: 0 0 12px;
+
   color: #ffffff;
-  font-size: 19px;
-  font-weight: 700;
-  line-height: 1.45;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.35;
 }
 
-#beneficios .tarjeta-beneficio p {
+.tarjeta-beneficio p {
   margin: 0;
+
   color: #b8bdc3;
-  font-size: 15px;
-  line-height: 1.8;
+  font-size: 14px;
+  line-height: 1.75;
 }
 
 
-/* ==================== EQUIPO ==================== */
+/* =========================================================
+   EQUIPO
+   ========================================================= */
 
 .seccion-equipo {
-  box-sizing: border-box;
   width: 100%;
-  background-color: #f7f7f5;
-  color: #202124;
   padding: 70px 5%;
+
+  background: #f7f7f5;
+  color: #111315;
 }
 
 .encabezado-equipo {
-  width: 100%;
   max-width: 1100px;
-  margin: 0 auto 44px;
-  text-align: center;
+  margin: 0 auto 42px;
 }
 
 .etiqueta-equipo {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 12px;
-  margin: 0 0 16px;
-  color: #b99500;
+
+  margin: 0 0 18px;
+
+  color: #686d72;
   font-size: 14px;
   font-weight: 800;
-  letter-spacing: 1.5px;
   text-transform: uppercase;
+  letter-spacing: 1.5px;
 }
 
 .etiqueta-equipo::before {
   content: "";
+
   width: 32px;
   height: 3px;
-  background-color: #f5c518;
-  border-radius: 3px;
+
+  background: #f5c518;
   flex-shrink: 0;
+  border-radius: 3px;
 }
 
-.seccion-equipo #titulo-equipo {
+#titulo-equipo {
   margin: 0;
-  color: #202124;
-  font-size: clamp(32px, 3vw, 44px);
+
+  color: #111315;
+  font-size: clamp(32px, 4vw, 44px);
   font-weight: 800;
   line-height: 1.2;
+  letter-spacing: -1px;
 }
 
-.seccion-equipo #titulo-equipo span {
-  color: #d5a900;
+#titulo-equipo span {
+  color: #9b7900;
 }
+
+
+/* GRID */
 
 .grid-equipo {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 26px;
-  width: 100%;
+  gap: 22px;
+
   max-width: 1100px;
   margin: 0 auto;
+
+  grid-template-columns: 1fr;
 }
 
+
+/* TARJETAS */
+
 .tarjeta-equipo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  box-sizing: border-box;
-  min-width: 0;
   min-height: 250px;
   padding: 36px 26px;
-  background-color: #ffffff;
-  border: 1px solid #e6e7e7;
-  border-radius: 17px;
+
   text-align: center;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-  transition: transform 0.25s ease,
-              border-color 0.25s ease,
-              box-shadow 0.25s ease;
+
+  background: #ffffff;
+
+  border: 1px solid #dfe2e4;
+  border-radius: 17px;
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .tarjeta-equipo:hover {
   transform: translateY(-5px);
-  border-color: #f5c518;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+
+  border-color: rgba(245, 197, 24, 0.7);
+
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.09);
 }
 
 .burbuja-equipo {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  width: 72px;
-  height: 72px;
-  margin-bottom: 22px;
-  background: linear-gradient(145deg, #25282a, #111315);
-  border: 1px solid #333638;
-  border-radius: 50%;
-  color: #ffffff;
-  font-size: 30px;
-  transition: transform 0.25s ease;
-}
 
-.tarjeta-equipo:hover .burbuja-equipo {
-  transform: scale(1.08);
+  width: 70px;
+  height: 70px;
+
+  margin: 0 auto 20px;
+
+  border-radius: 50%;
+
+  background: rgba(245, 197, 24, 0.14);
+  border: 1px solid rgba(245, 197, 24, 0.3);
+
+  font-size: 32px;
 }
 
 .tarjeta-equipo h3 {
-  margin: 0 0 12px;
-  color: #17191a;
+  margin: 0 0 7px;
+
+  color: #111315;
   font-size: 20px;
   font-weight: 800;
-  line-height: 1.4;
 }
 
-.tarjeta-equipo .rol-equipo {
+.rol-equipo {
   margin: 0;
-  color: #74797d;
+
+  color: #8d6e00;
+  font-size: 13px;
+  font-weight: 800;
+
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+}
+
+
+/* =========================================================
+   EXPERIENCIAS
+   ========================================================= */
+
+.seccion-experiencias {
+  width: 100%;
+  padding: 75px 5%;
+
+  background: #f5f5f3;
+  color: #111315;
+}
+
+.encabezado-experiencias {
+  max-width: 1100px;
+  margin: 0 auto 42px;
+}
+
+.etiqueta-experiencias {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin: 0 0 18px;
+
+  color: #d9a900;
+  font-size: 14px;
+  font-weight: 800;
+
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.etiqueta-experiencias::before {
+  content: "";
+
+  width: 32px;
+  height: 3px;
+
+  background: #d9a900;
+  flex-shrink: 0;
+
+  border-radius: 3px;
+}
+
+#titulo-experiencias {
+  margin: 0 0 18px;
+
+  color: #111315;
+  font-size: clamp(32px, 4vw, 44px);
+  font-weight: 800;
+
+  line-height: 1.2;
+  letter-spacing: -1px;
+}
+
+#titulo-experiencias span {
+  color: #d9a900;
+}
+
+.descripcion-experiencias {
+  max-width: 850px;
+  margin: 0;
+
+  color: #555b61;
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+
+/* GRID */
+
+.grid-experiencias {
+  display: grid;
+  gap: 22px;
+
+  max-width: 1100px;
+  margin: 0 auto;
+
+  grid-template-columns: 1fr;
+}
+
+
+/* TARJETAS */
+
+.tarjeta-experiencia {
+  min-height: 500px;
+
+  padding: 26px 22px 28px;
+
+  text-align: left;
+
+  background: #111315;
+
+  border: 1px solid #111315;
+  border-radius: 14px;
+
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.10);
+
+  display: flex;
+  flex-direction: column;
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.tarjeta-experiencia:hover {
+  transform: translateY(-5px);
+
+  border-color: #d9a900;
+
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.18);
+}
+
+
+/* FOTOS */
+
+.foto-experiencia {
+  display: block;
+
+  width: 100%;
+  height: 218px;
+
+  margin: 0 0 22px;
+
+  object-fit: cover;
+  object-position: center;
+
+  border: none;
+  border-radius: 9px;
+
+  background: #202327;
+}
+
+
+/* ESTRELLAS */
+
+.estrellas-experiencia {
+  margin: 0 0 22px;
+
+  color: #f5c518;
+
+  font-size: 17px;
+  line-height: 1;
+
+  letter-spacing: 2px;
+}
+
+
+/* OPINIÓN */
+
+.opinion-experiencia {
+  max-width: none;
+
+  margin: 0 0 20px;
+
+  color: #ffffff;
+
   font-size: 15px;
   line-height: 1.7;
+
+  flex-grow: 1;
 }
 
 
-/* ==================== TABLET ==================== */
+/* NOMBRE */
 
-@media screen and (max-width: 1000px) {
+.nombre-experiencia {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   TABLET
+   601px - 899px
+   ========================================================= */
+
+@media screen and (min-width: 601px) and (max-width: 899px) {
+
   #servicios,
   #beneficios,
-  .seccion-equipo {
+  .seccion-equipo,
+  .seccion-experiencias {
     padding: 60px 4%;
   }
 
-  #beneficios .beneficios-grid {
+
+  /* SERVICIOS */
+
+  .servicios-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
   }
+
+  .tarjeta-servicio {
+    padding: 30px;
+  }
+
+
+  /* BENEFICIOS */
+
+  .beneficios-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .tarjeta-beneficio {
+    min-height: 250px;
+  }
+
+
+  /* EQUIPO */
 
   .grid-equipo {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+
+  /* EXPERIENCIAS */
+
+  .grid-experiencias {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .tarjeta-experiencia:last-child {
+    grid-column: 1 / -1;
+
+    width: 100%;
+    max-width: calc(50% - 10px);
+
+    justify-self: center;
+  }
+
+  .tarjeta-experiencia {
+    min-height: 470px;
+  }
+
+  .foto-experiencia {
+    height: 205px;
+  }
+
+
+  /* TITULOS */
+
+  #titulo-servicios,
+  #titulo-beneficios,
+  #titulo-equipo,
+  #titulo-experiencias {
+    font-size: 38px;
   }
 }
 
 
-/* ==================== CELULARES ==================== */
+/* =========================================================
+   ESCRITORIO
+   900px EN ADELANTE
+   ========================================================= */
+
+@media screen and (min-width: 900px) {
+
+  /* SERVICIOS */
+
+  .servicios-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+
+  /* BENEFICIOS */
+
+  .beneficios-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+
+  /* EQUIPO */
+
+  .grid-equipo {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+
+  /* EXPERIENCIAS */
+
+  .grid-experiencias {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+
+/* =========================================================
+   CELULAR
+   HASTA 600px
+   ========================================================= */
 
 @media screen and (max-width: 600px) {
+
   #servicios,
   #beneficios,
-  .seccion-equipo {
+  .seccion-equipo,
+  .seccion-experiencias {
     padding: 48px 20px;
   }
 
-  #servicios .encabezado-servicios {
-    margin-bottom: 30px;
-  }
 
-  #servicios .servicios-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
+  /* ENCABEZADOS */
 
-  #servicios .tarjeta-servicio {
-    min-height: auto;
-    padding: 26px 24px;
-  }
-
-  #servicios .tarjeta-servicio h3 {
-    font-size: 19px;
-  }
-
-  #servicios .tarjeta-servicio p {
-    font-size: 15px;
-  }
-
-  #beneficios .encabezado-beneficios,
-  .encabezado-equipo {
+  .encabezado-servicios,
+  .encabezado-beneficios,
+  .encabezado-equipo,
+  .encabezado-experiencias {
     margin-bottom: 32px;
   }
 
-  #beneficios .beneficios-grid,
-  .grid-equipo {
+
+  /* SERVICIOS */
+
+  .servicios-grid {
     grid-template-columns: 1fr;
     gap: 16px;
   }
 
-  #beneficios .tarjeta-beneficio {
+  .tarjeta-servicio {
     min-height: auto;
     padding: 26px 24px;
   }
 
-  #beneficios .tarjeta-beneficio h3 {
-    font-size: 18px;
+  .icono-servicio {
+    margin-bottom: 20px;
+  }
+
+  .tarjeta-servicio h3 {
+    font-size: 20px;
+  }
+
+  .tarjeta-servicio p {
+    font-size: 15px;
+  }
+
+
+  /* BENEFICIOS */
+
+  .beneficios-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .tarjeta-beneficio {
+    min-height: auto;
+    padding: 28px 24px;
+  }
+
+  .numero-beneficio {
+    margin-bottom: 25px;
+  }
+
+
+  /* EQUIPO */
+
+  .grid-equipo {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 
   .tarjeta-equipo {
@@ -5222,37 +5596,109 @@ input, select, textarea {
     padding: 30px 24px;
   }
 
-  .tarjeta-equipo h3 {
-    font-size: 19px;
+
+  /* EXPERIENCIAS */
+
+  .grid-experiencias {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .tarjeta-experiencia {
+    min-height: auto;
+    padding: 24px 22px 26px;
+  }
+
+  .tarjeta-experiencia:last-child {
+    grid-column: auto;
+    max-width: none;
+  }
+
+  .foto-experiencia {
+    width: 100%;
+    height: 220px;
+    margin-bottom: 22px;
+    border-radius: 9px;
+  }
+
+
+  /* TEXTOS */
+
+  #titulo-servicios,
+  #titulo-beneficios,
+  #titulo-equipo,
+  #titulo-experiencias {
+    font-size: 32px;
+  }
+
+  .encabezado-servicios > p:last-child,
+  .descripcion-beneficios,
+  .descripcion-experiencias {
+    font-size: 15px;
+  }
+
+  .etiqueta-servicios,
+  .etiqueta-beneficios,
+  .etiqueta-equipo,
+  .etiqueta-experiencias {
+    font-size: 12px;
   }
 }
 
 
-/* ==================== PANTALLAS GRANDES ==================== */
+/* =========================================================
+   PANTALLAS GRANDES
+   1600px EN ADELANTE
+   ========================================================= */
 
 @media screen and (min-width: 1600px) {
+
   #servicios,
   #beneficios,
-  .seccion-equipo {
+  .seccion-equipo,
+  .seccion-experiencias {
     padding-top: 85px;
     padding-bottom: 85px;
   }
 
-  #servicios .encabezado-servicios,
-  #servicios .servicios-grid,
-  #beneficios .encabezado-beneficios,
-  .seccion-equipo .encabezado-equipo,
-  .grid-equipo {
+
+  .encabezado-servicios,
+  .encabezado-beneficios,
+  .encabezado-equipo,
+  .encabezado-experiencias {
     max-width: 1250px;
   }
 
-  #beneficios .beneficios-grid {
-    max-width: 1350px;
+
+  .servicios-grid,
+  .beneficios-grid,
+  .grid-equipo,
+  .grid-experiencias {
+    max-width: 1250px;
   }
 
-  #servicios .tarjeta-servicio,
-  #beneficios .tarjeta-beneficio,
-  .tarjeta-equipo {
+
+  .tarjeta-servicio {
     padding: 38px;
+  }
+
+
+  .tarjeta-beneficio {
+    padding: 38px 32px;
+  }
+
+
+  .tarjeta-equipo {
+    padding: 38px 30px;
+  }
+
+
+  .tarjeta-experiencia {
+    padding: 30px 22px 32px;
+  }
+
+
+  .foto-experiencia {
+    height: 240px;
   }
 }
