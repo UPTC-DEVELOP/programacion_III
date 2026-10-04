@@ -25,14 +25,17 @@
 }
 
 .crud-buscar {
-    padding: 10px 15px;
-    width: 320px;
-    border: 1px solid #dcdcdc;
-    border-radius: 6px;
+    background-color: var(--color-text-light);
+    border: 2px solid #e9ecef;
+    color: var(--color-text-dark);
+    padding: 12px 20px;
+    border-radius: 8px;
     font-size: 0.95rem;
-    outline: none;
-    transition: border-color 0.2s;
+    width: 300px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-family: var(--font-family);
 }
+
 
 .crud-buscar:focus {
     border-color: #e53935;
@@ -46,19 +49,22 @@
 
 /* Botón Nuevo Registro */
 .btn-nuevo {
-    background-color: #f44336;
-    color: white;
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    padding: 12px 25px;
     border: none;
-    padding: 10px 20px;
-    border-radius: 6px;
-    font-size: 0.95rem;
+    border-radius: 8px;
     font-weight: 600;
+    font-size: 0.95rem;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-family: var(--font-family);
 }
 
+
 .btn-nuevo:hover {
-    background-color: #d32f2f;
+      background-color: #c62828;
+    transform: scale(1.02);
 }
 
 /* Contenedor de la Tabla */
@@ -102,34 +108,45 @@
 }
 
 /* Botones de Acción (Editar / Eliminar) */
-.btn-editar, .btn-eliminar {
-    background: white;
-    border: 1px solid #f44336;
-    color: #f44336;
-    padding: 6px 14px;
-    border-radius: 4px;
+
+.crud-acciones-tabla {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-accion {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
     font-size: 0.85rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
-    margin-right: 6px;
+    transition: all 0.3s ease;
+    font-family: var(--font-family);
+}
+
+.btn-editar {
+    background-color: transparent;
+    color: var(--color-text-dark);
+    border: 1px solid #e9ecef;
 }
 
 .btn-editar:hover {
-    background-color: #f44336;
-    color: white;
+    background-color: var(--color-bg-light);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
 }
 
 .btn-eliminar {
-    border-color: #e53935;
-    color: #e53935;
+    background-color: transparent;
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
 }
 
 .btn-eliminar:hover {
-    background-color: #e53935;
-    color: white;
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
 }
-
 /* Notificaciones (Por si se usan con JS) */
 .crud-notificacion {
     margin-bottom: 1rem;
