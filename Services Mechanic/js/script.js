@@ -260,6 +260,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const headerPrincipal = document.querySelector("body > header");
   const main = document.querySelector("main");
   const footer = document.getElementById("contacto");
+  const btnUsuario = document.getElementById("btn-usuario");
+  const menuUsuario = document.getElementById("menu-usuario");
+  const btnCerrarSesion = document.getElementById("btn-cerrar-sesion");
+  const btnVolverLanding = document.querySelector(".btn-volver-landing");
 
   // Mostrar pantalla de login desde el landing
   if (botonLoginHeader && login && main) {
@@ -267,7 +271,7 @@ document.addEventListener("DOMContentLoaded", () => {
       evento.preventDefault();
 
       main.querySelectorAll(":scope > section").forEach((seccion) => {
-        seccion.hidden = true;
+      seccion.hidden = true;
       });
 
       login.hidden = false;
@@ -312,6 +316,70 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
+
+  // Volver del login al landing page
+if (btnVolverLanding && login && main) {
+  btnVolverLanding.addEventListener("click", () => {
+    login.hidden = true;
+
+    main.querySelectorAll(":scope > section").forEach((seccion) => {
+      seccion.hidden =
+        seccion.id === "login" ||
+        seccion.id === "sistema";
+    });
+
+    if (headerPrincipal) {
+      headerPrincipal.hidden = false;
+    }
+
+    if (footer) {
+      footer.hidden = false;
+    }
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+}
+
+  // Abrir y cerrar menú de usuario
+if (btnUsuario && menuUsuario) {
+  btnUsuario.addEventListener("click", () => {
+    menuUsuario.hidden = !menuUsuario.hidden;
+  });
+}
+
+// Cerrar sesión y volver al landing page
+if (btnCerrarSesion && sistema && main) {
+  btnCerrarSesion.addEventListener("click", () => {
+    sistema.hidden = true;
+    login.hidden = true;
+
+    main.querySelectorAll(":scope > section").forEach((seccion) => {
+    seccion.hidden =
+    seccion.id === "login" ||
+    seccion.id === "sistema";
+    });
+
+    if (headerPrincipal) {
+      headerPrincipal.hidden = false;
+    }
+
+    if (footer) {
+      footer.hidden = false;
+    }
+
+    if (menuUsuario) {
+      menuUsuario.hidden = true;
+    }
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+}
 
 });
 

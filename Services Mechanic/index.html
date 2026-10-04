@@ -795,8 +795,9 @@
 
             <form>
               <div class="campo-login">
-                <label for="correo-login">Correo electrónico</label>
-                <input type="email" id="correo-login" name="correo-login" />
+                <label for="correo-login">Usuario</label>
+                <input type="text" id="usuario-login" name="usuario-login" />
+                
               </div>
 
               <div class="campo-login">
@@ -810,6 +811,9 @@
               </div>
 
               <button type="button" class="btn-login">Iniciar sesión</button>
+              <button type="button" class="btn-volver-landing">
+              ← Volver al inicio
+              </button>
             </form>
           </div>
         </div>
@@ -846,10 +850,24 @@
               <p>Panel principal</p>
             </div>
 
-            <div class="usuario-sistema">
-              <span class="avatar-sistema">U</span>
-              <span>Usuario</span>
-            </div>
+            <div class="usuario-menu">
+  <button type="button" class="usuario-sistema" id="btn-usuario">
+    <span class="avatar-sistema">U</span>
+
+    <span class="datos-usuario">
+      <span class="nombre-usuario">Usuario</span>
+      <span class="rol-usuario">Administrador</span>
+    </span>
+
+    <span class="flecha-usuario">▾</span>
+  </button>
+
+  <div class="menu-usuario-desplegable" id="menu-usuario" hidden>
+    <button type="button" id="btn-cerrar-sesion">
+      Cerrar sesión
+    </button>
+  </div>
+</div>
           </header>
 
           <section id="dashboard" class="dashboard-sistema">

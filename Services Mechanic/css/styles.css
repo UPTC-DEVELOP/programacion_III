@@ -2321,6 +2321,35 @@ footer#contacto .mapa-footer iframe {
     background-color: #ddb012;
 }
 
+#login .btn-volver-landing {
+    width: 100%;
+    margin-top: 14px;
+    padding: 13px 20px;
+
+    background-color: transparent;
+    color: #b8bdc3;
+
+    border: 1px solid #3a3d40;
+    border-radius: 8px;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s,
+        color 0.2s,
+        background-color 0.2s;
+}
+
+#login .btn-volver-landing:hover {
+    border-color: #f5c518;
+    color: #f5c518;
+    background-color: rgba(245, 197, 24, 0.06);
+}
+
 
 @media (max-width: 480px) {
 
@@ -2475,6 +2504,111 @@ footer#contacto .mapa-footer iframe {
 
   font-size: 14px;
   font-weight: 800;
+}
+
+/* Contenedor del menú de usuario */
+#sistema .usuario-menu {
+  position: relative;
+}
+
+/* Botón principal del usuario */
+#sistema .usuario-sistema {
+  border: none;
+  background-color: transparent;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 8px 10px;
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  transition:
+    background-color 0.2s,
+    box-shadow 0.2s;
+}
+
+#sistema .usuario-sistema:hover {
+  background-color: #f7f7f5;
+}
+
+#sistema .usuario-sistema:focus-visible {
+  outline: 2px solid #f5c518;
+  outline-offset: 2px;
+}
+
+/* Nombre y rol */
+#sistema .datos-usuario {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.25;
+}
+
+#sistema .nombre-usuario {
+  color: #202124;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+#sistema .rol-usuario {
+  color: #6b7075;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* Flecha */
+#sistema .flecha-usuario {
+  margin-left: 4px;
+  color: #6b7075;
+  font-size: 14px;
+}
+
+/* Menú desplegable */
+#sistema .menu-usuario-desplegable {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+
+  min-width: 180px;
+  padding: 8px;
+
+  background-color: #ffffff;
+  border: 1px solid #e4e5e6;
+  border-radius: 12px;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+
+  z-index: 1000;
+}
+
+/* Botón cerrar sesión */
+#sistema .menu-usuario-desplegable button {
+  width: 100%;
+  padding: 11px 14px;
+
+  border: none;
+  border-radius: 8px;
+
+  background-color: transparent;
+  color: #202124;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+#sistema .menu-usuario-desplegable button:hover {
+  background-color: #111315;
+  color: #f5c518;
 }
 
 /* DASHBOARD */
