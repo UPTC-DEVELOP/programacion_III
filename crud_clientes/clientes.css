@@ -1,0 +1,126 @@
+/* Fondo general */
+body {
+  background-color: #f4f6f9;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Header superior azul oscuro de TallerPro */
+.header-tallerpro {
+  background-color: #0b2545;
+}
+
+/* Barra de navegación secundaria */
+.nav-sub-bar {
+  background-color: #0b2545;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Items de navegación con ícono vertical arriba */
+.nav-item-custom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #a0aec0;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 10px 45px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.nav-item-custom i {
+  font-size: 1.6rem;
+  margin-bottom: 4px;
+}
+
+.nav-item-custom:hover {
+  color: #ffffff;
+}
+
+/* Pestaña activa igual a la imagen de Empleados (#1d72f3) */
+.nav-item-custom.active {
+  background-color: #1d72f3 !important;
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+/* Contenedor tipo tarjeta */
+.card-crud {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  border: 1px solid #e2e8f0;
+}
+
+.crud-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #0b2545;
+}
+
+/* Botón Registrar Cliente azul vibrante */
+.btn-registrar {
+  background-color: #1d72f3;
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 10px 24px;
+  border: none;
+}
+
+.btn-registrar:hover {
+  background-color: #155bb5;
+  color: #ffffff;
+}
+
+/* Tabla de clientes */
+.table-custom thead th {
+  color: #0b2545;
+  font-weight: 700;
+  border-bottom: 2px solid #f1f5f9;
+  padding: 16px 12px;
+}
+
+.table-custom tbody td {
+  padding: 16px 12px;
+  color: #2d3748;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 0.95rem;
+}
+
+/* Botones de Acción */
+.btn-action-edit {
+  background-color: #1d72f3;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-action-edit:hover {
+  background-color: #155bb5;
+  color: #ffffff;
+}
+
+.btn-action-delete {
+  background-color: #dc3545;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-action-delete:hover {
+  background-color: #bb2d3b;
+  color: #ffffff;
+}

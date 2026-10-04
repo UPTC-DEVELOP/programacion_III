@@ -3,122 +3,139 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CRUD de Clientes</title>
+  <title>CRUD Clientes | TallerPro</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
   <!-- Estilos personalizados -->
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="clientes.css">
 </head>
-<body class="bg-light">
+<body>
 
-  <div class="container py-4">
-    <!-- Encabezado -->
-    <header class="pb-3 mb-4 border-bottom d-flex justify-content-between align-items-center">
-      <span class="fs-4 fw-bold text-primary">
-        <i class="bi bi-people-fill me-2"></i>Gestión de Clientes
-      </span>
-      <button class="btn btn-primary" onclick="abrirModalCrear()">
-        <i class="bi bi-person-plus-fill me-1"></i> Nuevo Cliente
-      </button>
-    </header>
-
-    <!-- Barra de Búsqueda y Estadísticas -->
-    <div class="row g-3 mb-4">
-      <div class="col-md-8">
-        <div class="input-group">
-          <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
-          <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre, email o empresa..." onkeyup="filtrarClientes()">
-        </div>
-      </div>
-      <div class="col-md-4 text-md-end">
-        <span class="badge bg-secondary p-2 fs-6">
-          Total Clientes: <span id="totalCount">0</span>
-        </span>
+  <!-- Encabezado TallerPro -->
+  <header class="header-tallerpro py-3 px-4">
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="brand-logo d-flex align-items-center gap-2">
+        <i class="bi bi-wrench-adjustable fs-3 text-white"></i>
+        <span class="fs-3 fw-bold text-white">TallerPro</span>
       </div>
     </div>
+  </header>
 
-    <!-- Tabla de Clientes -->
-    <div class="card shadow-sm border-0">
-      <div class="card-body p-0">
-        <div class="table-responsive">
-          <table class="table table-hover align-middle mb-0">
-            <thead class="table-dark">
-              <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Edad</th>
-                <th>Contacto</th>
-                <th>Empresa</th>
-                <th>Estado</th>
-                <th class="text-end">Acciones</th>
-              </tr>
-            </thead>
-            <tbody id="clientTableBody">
-              <!-- Se puebla dinámicamente con JS -->
-            </tbody>
-          </table>
-        </div>
-        <div id="emptyState" class="text-center py-5 d-none">
-          <i class="bi bi-inbox text-muted fs-1 display-1"></i>
-          <p class="text-muted mt-2">No se encontraron clientes registrado(s).</p>
-        </div>
-      </div>
+  <!-- Barra de Navegación con Íconos Superiores -->
+  <nav class="nav-sub-bar py-2">
+    <div class="container d-flex justify-content-center align-items-center gap-5">
+      <a href="clientes_2.html" class="nav-item-custom active">
+        <i class="bi bi-people-fill"></i>
+        <span>Clientes</span>
+      </a>
+      <a href="../index.html" class="nav-item-custom">
+        <i class="bi bi-house-door-fill"></i>
+        <span>Inicio</span>
+      </a>
+      <a href="../index.html" class="nav-item-custom">
+        <i class="bi bi-box-arrow-right"></i>
+        <span>Cerrar sesión</span>
+      </a>
     </div>
-  </div>
+  </nav>
 
-  <!-- Modal para Agregar/Editar Cliente -->
+  <!-- Contenido del CRUD -->
+  <main class="container py-4">
+    <div class="card-crud p-4">
+      
+      <!-- Título y Botón Registrar Cliente -->
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="crud-title m-0">CRUD Clientes</h2>
+        <button class="btn btn-registrar" onclick="abrirModalCrear()">
+          <i class="bi bi-plus-lg me-1"></i> Registrar cliente
+        </button>
+      </div>
+
+      <!-- Tabla de Clientes con Cédula -->
+      <div class="table-responsive">
+        <table class="table table-custom align-middle mb-0">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Cédula</th>
+              <th>Correo</th>
+              <th>Teléfono</th>
+              <th>Empresa</th>
+              <th>Estado</th>
+              <th class="text-end pe-3">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="clientTableBody">
+            <!-- Creado dinámicamente -->
+          </tbody>
+        </table>
+      </div>
+
+      <div id="emptyState" class="text-center py-5 d-none">
+        <i class="bi bi-inbox text-muted display-4"></i>
+        <p class="text-muted mt-2">No hay clientes registrados.</p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Modal Registrar/Editar Cliente -->
   <div class="modal fade" id="clientModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalTitle">Nuevo Cliente</h5>
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg rounded-4">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title fw-bold" id="modalTitle">Registrar cliente</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form id="clientForm">
+          <form id="clientForm" novalidate>
             <input type="hidden" id="clientId">
             
             <div class="mb-3">
-              <label for="nameInput" class="form-label">Nombre Completo *</label>
-              <input type="text" class="form-control" id="nameInput" required>
-            </div>
-
-
-             <div class="mb-3">
-              <label for="nameInput" class="form-label">Edad*</label>
-              <input type="text" class="form-control" id="edadInput" required>
-            </div>
-
-
-            <div class="mb-3">
-              <label for="emailInput" class="form-label">Correo Electrónico *</label>
-              <input type="email" class="form-control" id="emailInput" required>
+              <label for="nameInput" class="form-label fw-semibold">Nombre Completo *</label>
+              <input type="text" class="form-control" id="nameInput" required placeholder="Ej. Laura Gómez">
+              <div class="invalid-feedback">Ingresa un nombre válido (mínimo 3 letras).</div>
             </div>
 
             <div class="row">
               <div class="col-md-6 mb-3">
-                <label for="phoneInput" class="form-label">Teléfono *</label>
-                <input type="tel" class="form-control" id="phoneInput" required>
+                <label for="cedulaInput" class="form-label fw-semibold">Cédula *</label>
+                <input type="text" class="form-control" id="cedulaInput" required placeholder="Ej. 1001234567">
+                <div class="invalid-feedback">Ingresa un número de cédula válido.</div>
               </div>
               <div class="col-md-6 mb-3">
-                <label for="companyInput" class="form-label">Empresa</label>
-                <input type="text" class="form-control" id="companyInput">
+                <label for="phoneInput" class="form-label fw-semibold">Teléfono *</label>
+                <input type="tel" class="form-control" id="phoneInput" required placeholder="Ej. 300 123 4567">
+                <div class="invalid-feedback">Ingresa un número de teléfono válido.</div>
               </div>
             </div>
 
             <div class="mb-3">
-              <label for="statusSelect" class="form-label">Estado</label>
-              <select class="form-select" id="statusSelect">
-                <option value="Activo">Activo</option>
-                <option value="Inactivo">Inactivo</option>
-              </select>
+              <label for="emailInput" class="form-label fw-semibold">Correo Electrónico *</label>
+              <input type="email" class="form-control" id="emailInput" required placeholder="correo@tallerpro.com">
+              <div class="invalid-feedback">Ingresa un correo electrónico válido.</div>
             </div>
 
-            <div class="modal-footer px-0 pb-0 pt-3">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-              <button type="submit" class="btn btn-primary" id="saveButton">Guardar</button>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="companyInput" class="form-label fw-semibold">Empresa</label>
+                <input type="text" class="form-control" id="companyInput" placeholder="Ej. TallerPro">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="statusSelect" class="form-label fw-semibold">Estado</label>
+                <select class="form-select" id="statusSelect">
+                  <option value="Activo">Activo</option>
+                  <option value="Inactivo">Inactivo</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="modal-footer border-0 px-0 pb-0 pt-3">
+              <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-registrar">Guardar</button>
             </div>
           </form>
         </div>
@@ -126,11 +143,9 @@
     </div>
   </div>
 
-  <!-- Bootstrap Bundle con Popper -->
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- SweetAlert2 para alertas -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <!-- Lógica de JavaScript -->
-  <script src="app.js"></script>
+  <script src="clientes.js"></script>
 </body>
 </html>
