@@ -1,6 +1,6 @@
 // Datos iniciales de prueba
 const datosIniciales = [
-  { id: 1, nombre: 'Juan Carlos Rodríguez Pérez', cedula: '1001234567', email: 'juan@tallerpro.com', telefono: '300 123 4567', empresa: 'TallerPro', estado: 'Activo' },
+  { id: 1, nombre: 'Daniela Osorio', cedula: '1056777098', email: 'daniela.osorio@gmail.com', telefono: '3137826573', empresa: 'Quest', estado: 'Activo' },
   { id: 2, nombre: 'María Fernanda Gómez López', cedula: '1007654321', email: 'maria@tallerpro.com', telefono: '310 987 6543', empresa: 'Logística S.A.', estado: 'Activo' },
   { id: 3, nombre: 'Paula García', cedula: '1012345678', email: 'paula@tallerpro.com', telefono: '320 555 1234', empresa: 'Independiente', estado: 'Inactivo' }
 ];
