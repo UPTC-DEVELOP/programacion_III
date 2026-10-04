@@ -1292,7 +1292,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return (
         vehiculo.placa.toLowerCase().includes(texto) ||
         vehiculo.marca.toLowerCase().includes(texto) ||
-        vehiculo.modelo.includes(texto) ||
+        String(vehiculo.modelo).includes(texto) ||
         vehiculo.color.toLowerCase().includes(texto) ||
         nombrePropietario(vehiculo.idCliente).toLowerCase().includes(texto)
       );
@@ -1454,7 +1454,7 @@ document.addEventListener("DOMContentLoaded", () => {
       placa: placaVehiculo.value.trim().toUpperCase(),
       marca: marcaVehiculo.value.trim(),
       linea: lineaVehiculo.value.trim(),
-      modelo: modeloVehiculo.value.trim(),
+      modelo: Number(modeloVehiculo.value),
       color: colorVehiculo.value.trim(),
       idCliente: propietarioVehiculo.value
     };
