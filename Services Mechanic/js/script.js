@@ -1,7 +1,4 @@
 
-// DATOS COMPARTIDOS DEL TALLER
-// Las listas van aquí afuera para que los módulos puedan usarlas entre sí
-// (por ejemplo, el vehículo necesita saber qué clientes existen).
 const datosTaller = {
   clientes: [],
   vehiculos: []
@@ -1371,8 +1368,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   buscarVehiculo.addEventListener("input", aplicarFiltroVehiculos);
 
-  // Al entrar a la sección se actualiza la tabla
-  // (por si cambiaron los nombres de los clientes)
+ 
   if (enlaceVehiculos) {
     enlaceVehiculos.addEventListener("click", aplicarFiltroVehiculos);
   }
@@ -1546,8 +1542,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       alert("Vehículo actualizado correctamente.");
     } else {
-            // La fecha y hora de ingreso se generan solas al registrar
-      // y no se cambian al actualizar
+           
       vehiculos.push({
         id: idVehiculo.value,
         ...datos,
