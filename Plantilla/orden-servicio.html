@@ -12,6 +12,7 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+		<link rel="stylesheet" href="assets/css/modulos.css" />
 	</head>
 	<body class="is-preload">
 		<div id="page-wrapper">
@@ -30,18 +31,10 @@
 				<nav id="nav">
 					<ul>
 						<li><a href="index.html">Inicio</a></li>
-						<li>
-							<a href="index.html#servicios">El taller</a>
-							<ul>
-								<li><a href="index.html#servicios">Módulos</a></li>
-								<li><a href="index.html#nosotros">Nosotros</a></li>
-								<li><a href="index.html#contacto">Contacto</a></li>
-							</ul>
-						</li>
 						<li><a href="no-sidebar.html">Clientes</a></li>
 						<li><a href="left-sidebar.html">Vehículos</a></li>
 						<li><a href="proveedores.html">Proveedores</a></li>
-						<li><a href="orden-servicio.html">Servicios</a></li>
+						<li class="current"><a href="orden-servicio.html">Servicios</a></li>
 						<li><a href="right-sidebar.html">Empleados</a></li>
 						<li><a href="repuestos.html">Repuestos</a></li>
 						<li><a href="inventario.html">Inventario</a></li>
@@ -57,8 +50,8 @@
 									<article class="box page-content">
 										<section class="container mt-2" id="modulo-ordenes">
 											<header>
-												<h2 class="h3 mb-4 text-primary">Gestión de Servicios</h2>
-												<p class="text-muted">Asignación de mecánicos, repuestos utilizados y liquidación de horas laborales.</p>
+												<h2>Gestión de Servicios</h2>
+												<p>Asignación de mecánicos, repuestos utilizados y liquidación de horas laborales.</p>
 											</header>
 
 											<output id="alertaOrden" class="alert alert-success d-none animate__animated animate__fadeIn d-block mb-3" role="alert"></output>
@@ -116,7 +109,7 @@
 
 											<section>
 												<header>
-													<h3 class="h4 mb-3 text-dark">Listado de Órdenes de Servicio</h3>
+													<h3>Listado de Órdenes de Servicio</h3>
 												</header>
 												<figure class="table-responsive">
 													<table class="table table-hover table-striped align-middle">
@@ -166,7 +159,7 @@
 
 		</div>
 
-		<!-- Scripts de la plantilla -->
+		<!-- Scripts -->
 		<script src="assets/js/jquery.min.js"></script>
 		<script src="assets/js/jquery.dropotron.min.js"></script>
 		<script src="assets/js/jquery.scrolly.min.js"></script>

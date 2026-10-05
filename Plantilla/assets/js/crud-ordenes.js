@@ -1,4 +1,3 @@
-// Órdenes de servicio: usan el inventario y descuentan stock
 document.addEventListener("DOMContentLoaded", () => {
   const formOrden = document.getElementById("formOrden");
   const placaInput = document.getElementById("placaOrden");

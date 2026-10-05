@@ -1,0 +1,143 @@
+body,
+input,
+textarea,
+select,
+button,
+.btn,
+.form-control,
+.form-select,
+.table,
+.alert,
+.modal,
+.dropdown-menu {
+	font-family: 'Open Sans', sans-serif !important;
+}
+
+body {
+	font-size: 13pt !important;
+	color: #6b7770 !important;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+	font-family: 'Open Sans Condensed', sans-serif !important;
+	font-weight: 700 !important;
+	text-transform: uppercase !important;
+	color: #6b7770 !important;
+}
+
+#nav,
+#nav li a,
+#nav li span {
+	font-family: 'Open Sans Condensed', sans-serif !important;
+	font-weight: 700 !important;
+	text-transform: uppercase !important;
+}
+
+#header {
+	font-family: 'Open Sans Condensed', sans-serif !important;
+	font-weight: 700 !important;
+	text-transform: uppercase !important;
+	font-size: 2em !important;
+}
+
+#header .logo h1,
+#header .logo h1 a,
+#header #logo,
+#header .logo p {
+	font-family: 'Open Sans Condensed', sans-serif !important;
+	font-weight: 700 !important;
+	text-transform: uppercase !important;
+	font-size: 1em !important;
+	line-height: inherit !important;
+	margin: 0 !important;
+	display: inline !important;
+}
+
+#header .logo p {
+	color: #C1CAC5 !important;
+}
+
+.box.page-content h2,
+.box.page-content h2.h3,
+.box.page-content .h3 {
+	font-family: 'Open Sans Condensed', sans-serif !important;
+	font-weight: 700 !important;
+	text-transform: uppercase !important;
+	color: #6b7770 !important;
+	font-size: 1.85em !important;
+	line-height: 1.25 !important;
+	margin: 0 0 0.35em 0 !important;
+}
+
+.box.page-content header > p,
+.box.page-content p.text-muted {
+	font-family: 'Open Sans Condensed', sans-serif !important;
+	font-weight: 700 !important;
+	text-transform: uppercase !important;
+	color: #c1cac5 !important;
+	font-size: 1.05em !important;
+	line-height: 1.4 !important;
+}
+
+.box.page-content h3,
+.box.page-content h3.h4,
+.box.page-content .h4 {
+	font-family: 'Open Sans Condensed', sans-serif !important;
+	font-weight: 700 !important;
+	text-transform: uppercase !important;
+	color: #6b7770 !important;
+	font-size: 1.25em !important;
+}
+
+.box.page-content label,
+.box.page-content .form-label {
+	font-family: 'Open Sans Condensed', sans-serif !important;
+	font-size: 1em !important;
+	font-weight: 700 !important;
+	color: #6b7770 !important;
+	text-transform: uppercase !important;
+}
+
+.box.page-content input,
+.box.page-content select,
+.box.page-content textarea,
+.box.page-content .form-control,
+.box.page-content .form-select,
+.box.page-content .table {
+	font-family: 'Open Sans', sans-serif !important;
+	font-size: 13pt !important;
+	color: #6b7770 !important;
+}
+
+.box.page-content .text-primary,
+.box.page-content .text-dark {
+	color: #6b7770 !important;
+}
+
+.box.page-content .btn,
+.box.page-content button,
+.box.page-content input[type="submit"],
+.box.page-content input[type="button"],
+.box.page-content input[type="reset"] {
+	font-family: 'Open Sans Condensed', sans-serif !important;
+	font-weight: 700 !important;
+	text-transform: uppercase !important;
+}
+
+@media screen and (max-width: 1280px) {
+	#header {
+		font-size: 1.5em !important;
+	}
+
+	.box.page-content h2,
+	.box.page-content h2.h3,
+	.box.page-content .h3 {
+		font-size: 1.65em !important;
+	}
+
+	.box.page-content header > p,
+	.box.page-content p.text-muted {
+		font-size: 1em !important;
+	}
+}

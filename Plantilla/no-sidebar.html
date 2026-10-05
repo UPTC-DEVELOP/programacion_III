@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>AutoFix Pro - Gestión de Clientes</title>
+		<title>Olimac Riders Store - Gestión de Clientes</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -14,6 +14,7 @@
 		<!-- Bootstrap 5 CSS y Animate.css -->
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+		<link rel="stylesheet" href="assets/css/modulos.css" />
 	</head>
 	<body class="is-preload">
 		<div id="page-wrapper">
@@ -22,7 +23,7 @@
 				<header id="header">
 					<div class="logo container">
 						<div>
-							<h1><a href="index.html" id="logo">AutoFix Pro</a></h1>
+							<h1><a href="index.html" id="logo">Olimac Riders Store</a></h1>
 							<p>Sistema de Gestión de Taller Mecánico</p>
 						</div>
 					</div>
@@ -32,15 +33,7 @@
 				<nav id="nav">
 					<ul>
 						<li><a href="index.html">Inicio</a></li>
-						<li>
-							<a href="index.html#servicios">El taller</a>
-							<ul>
-								<li><a href="index.html#servicios">Módulos</a></li>
-								<li><a href="index.html#nosotros">Nosotros</a></li>
-								<li><a href="index.html#contacto">Contacto</a></li>
-							</ul>
-						</li>
-						<li><a href="no-sidebar.html">Clientes</a></li>
+						<li class="current"><a href="no-sidebar.html">Clientes</a></li>
 						<li><a href="left-sidebar.html">Vehículos</a></li>
 						<li><a href="proveedores.html">Proveedores</a></li>
 						<li><a href="orden-servicio.html">Servicios</a></li>
@@ -72,14 +65,14 @@
 											<section class="modal-dialog modal-dialog-centered">
 												<article class="modal-content">
 													<header class="modal-header bg-primary text-white">
-														<h3 class="modal-title h5">Acceso al Sistema - AutoFix Pro</h3>
+														<h3 class="modal-title h5">Acceso al Sistema - Olimac Riders Store</h3>
 														<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
 													</header>
 													<main class="modal-body">
 														<form id="formLogin" class="needs-validation" novalidate>
 															<fieldset class="mb-3">
 																<label for="loginUser" class="form-label text-dark">Correo / Usuario</label>
-																<input type="email" id="loginUser" class="form-control" placeholder="admin@autofix.com" required>
+																<input type="email" id="loginUser" class="form-control" placeholder="admin@olimac.com" required>
 																<p class="invalid-feedback">Ingresa un correo válido.</p>
 															</fieldset>
 															<fieldset class="mb-3">
@@ -97,8 +90,8 @@
 										<!-- SECTION: MÓDULO PRINCIPAL CRUD CLIENTES -->
 										<section class="container mt-2" id="modulo-clientes">
 											<header>
-												<h2 class="h3 mb-4 text-primary">Gestión de Clientes</h2>
-												<p class="text-muted">Módulo de registro, consulta, modificación y eliminación de clientes de AutoFix Pro.</p>
+												<h2>Gestión de Clientes</h2>
+												<p>Módulo de registro, consulta, modificación y eliminación de clientes de Olimac Riders Store.</p>
 											</header>
 											
 											<!-- Alerta dinámica -->
@@ -145,7 +138,7 @@
 											<!-- Tabla Dinámica para listar registros -->
 											<section>
 												<header>
-													<h3 class="h4 mb-3 text-dark">Listado de Clientes Registrados</h3>
+													<h3>Listado de Clientes Registrados</h3>
 												</header>
 												<figure class="table-responsive">
 													<table class="table table-hover table-striped align-middle">
@@ -180,7 +173,7 @@
 						<div class="row gtr-200">
 							<div class="col-12">
 								<section>
-									<h2 class="major"><span>AutoFix Pro</span></h2>
+									<h2 class="major"><span>Olimac Riders Store</span></h2>
 									<p>Sistema Web para la administración integral de talleres mecánicos. Desarrollo para Programación III - UPTC.</p>
 								</section>
 							</div>
@@ -188,7 +181,7 @@
 
 						<div id="copyright">
 							<ul class="menu">
-								<li>&copy; AutoFix Pro. Todos los derechos reservados.</li><li>Diseño base: <a href="http://html5up.net">HTML5 UP</a></li>
+								<li>&copy; Olimac Riders Store. Todos los derechos reservados.</li><li>Diseño base: <a href="http://html5up.net">HTML5 UP</a></li>
 							</ul>
 						</div>
 					</div>

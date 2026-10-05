@@ -40,6 +40,38 @@
 			offset: function() { return $nav.height() - 5; }
 		});
 
+		function offsetNav() {
+			return ($nav.length ? $nav.height() : 52) - 5;
+		}
+
+		function irASeccion(hash) {
+			var $el = $(hash);
+			if (!$el.length) {
+				return false;
+			}
+			$('html, body').stop(true).animate({
+				scrollTop: $el.offset().top - offsetNav()
+			}, 600);
+			return true;
+		}
+
+		$window.on('load', function() {
+			window.setTimeout(function() {
+				if (window.location.hash === '#servicios' || window.location.hash === '#nosotros' || window.location.hash === '#contacto') {
+					irASeccion(window.location.hash);
+				}
+			}, 200);
+		});
+
+		$(document).on('click', 'a[href*="#servicios"], a[href*="#nosotros"], a[href*="#contacto"]', function(e) {
+			var href = this.getAttribute('href') || '';
+			var hash = href.substring(href.indexOf('#'));
+			if (document.getElementById(hash.replace('#', ''))) {
+				e.preventDefault();
+				irASeccion(hash);
+			}
+		});
+
 	// Nav.
 
 		// Title Bar.

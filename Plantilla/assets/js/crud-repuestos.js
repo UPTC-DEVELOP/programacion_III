@@ -1,4 +1,3 @@
-// Catálogo de repuestos (compartido con inventario y órdenes)
 document.addEventListener("DOMContentLoaded", () => {
   const formRepuesto = document.getElementById("formRepuesto");
   const referenciaInput = document.getElementById("referenciaRepuesto");
@@ -6,7 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const marcaInput = document.getElementById("marcaRepuesto");
   const precioInput = document.getElementById("precioRepuesto");
 
-  // Validaciones en tiempo real con expresiones regulares (Regex)
   referenciaInput.addEventListener("input", function () {
     this.value = this.value.toUpperCase();
     const regexRef = /^[A-Z0-9-]{3,20}$/;

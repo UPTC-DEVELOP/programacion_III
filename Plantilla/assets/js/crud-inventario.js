@@ -1,4 +1,3 @@
-// Inventario: stock de las referencias del catálogo de repuestos
 document.addEventListener("DOMContentLoaded", () => {
   const formInventario = document.getElementById("formInventario");
   const referenciaSelect = document.getElementById("referenciaInventario");
