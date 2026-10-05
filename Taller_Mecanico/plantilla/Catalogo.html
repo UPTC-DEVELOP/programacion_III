@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<html lang="es">
+<head>
+    <title>LJA Taller Mecánico | Catálogo</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+    <!-- CSS original de la plantilla Solid State -->
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+    <!-- CSS exclusivo de esta página -->
+    <link rel="stylesheet" href="Catalogo.css" />
+</head>
+
+<body class="is-preload">
+
+<div id="page-wrapper">
+
+    <!-- Header de la plantilla -->
+    <header id="header">
+        <h1><a href="index.html">LJA Taller Mecánico</a></h1>
+        <nav>
+            <a href="#menu">Menú</a>
+        </nav>
+    </header>
+
+    <!-- Menú de la plantilla -->
+    <nav id="menu">
+        <div class="inner">
+            <h2>Menú</h2>
+            <ul class="links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="index.html#Servicios">Servicios</a></li>
+                <li><a href="index.html#nosotros">Nosotros</a></li>
+                <li><a href="index.html#contacto">Contacto</a></li>
+                <li><a href="Catalogo.html">Catálogo</a></li>
+                <li><a href="login.html">Acceder al sistema</a></li>
+            </ul>
+            <a href="#" class="close">Cerrar</a>
+        </div>
+    </nav>
+
+    <!-- Contenido del catálogo -->
+    <section id="wrapper">
+
+        <!-- Encabezado -->
+        <header class="catalog-header">
+            <div class="inner">
+                <span class="catalog-eyebrow">LJA TALLER MECÁNICO</span>
+                <h2>Catálogo de productos</h2>
+                <p>
+                    Encuentra repuestos, lubricantes y productos para el
+                    mantenimiento de tu vehículo.
+                </p>
+            </div>
+        </header>
+
+        <div class="wrapper catalog-wrapper">
+            <div class="inner">
+
+                <!-- Buscador -->
+                <div class="catalog-tools">
+                    <div class="catalog-search">
+                        <label for="searchInput">Buscar producto</label>
+                        <div class="search-field">
+                            <span class="icon solid fa-search" aria-hidden="true"></span>
+                            <input
+                                type="search"
+                                id="searchInput"
+                                placeholder="Busca por nombre o categoría..."
+                                autocomplete="off"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filtros -->
+                <div class="catalog-filters" aria-label="Filtrar productos">
+                    <button type="button" class="filter active" data-category="Todos">Todos</button>
+                    <button type="button" class="filter" data-category="Lubricantes">Lubricantes</button>
+                    <button type="button" class="filter" data-category="Frenos">Frenos</button>
+                    <button type="button" class="filter" data-category="Filtros">Filtros</button>
+                    <button type="button" class="filter" data-category="Motor">Motor</button>
+                    <button type="button" class="filter" data-category="Electricidad">Electricidad</button>
+                    <button type="button" class="filter" data-category="Suspensión">Suspensión</button>
+                    <button type="button" class="filter" data-category="Accesorios">Accesorios</button>
+                </div>
+
+                <!-- Productos -->
+                <div id="productGrid" class="product-grid"></div>
+
+                <!-- Sin resultados -->
+                <div id="emptyMessage" class="empty-message" hidden>
+                    <span class="icon solid fa-box-open" aria-hidden="true"></span>
+                    <h3>No encontramos productos</h3>
+                    <p>Prueba con otro nombre o selecciona otra categoría.</p>
+                </div>
+
+                <!-- Regresar -->
+                <ul class="actions catalog-actions">
+                    <li>
+                        <a href="index.html" class="button">Volver al inicio</a>
+                    </li>
+                    <li>
+                        <a href="index.html#contacto" class="button primary">Contactarnos</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer de la plantilla -->
+    <section id="footer">
+        <div class="inner">
+            <h2 class="major">LJA Taller Mecánico</h2>
+            <p>
+                Tu vehículo en manos expertas. Diagnóstico preciso,
+                mantenimiento y reparación con calidad y garantía.
+            </p>
+
+            <ul class="contact">
+                <li class="icon solid fa-home">
+                    LJA Taller Mecánico<br />
+                    Servicio automotriz
+                </li>
+                <li class="icon solid fa-phone">Contacto por nuestros canales de atención</li>
+                <li class="icon solid fa-envelope">
+                    <a href="mailto:contacto@ljatallermecanico.com">contacto@ljatallermecanico.com</a>
+                </li>
+            </ul>
+
+            <ul class="copyright">
+                <li>&copy; LJA Taller Mecánico. Todos los derechos reservados.</li>
+                <li>Diseño base: <a href="https://html5up.net">HTML5 UP</a></li>
+            </ul>
+        </div>
+    </section>
+
+</div>
+
+<!-- Scripts originales de Solid State -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.scrollex.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
+<!-- Lógica del catálogo -->
+<script src="catalogo.js"></script>
+
+</body>
+</html>

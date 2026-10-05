@@ -1,0 +1,344 @@
+/* =========================================================
+   CATÁLOGO LJA TALLER MECÁNICO
+   Estilos propios para integrarlo con la plantilla Solid State
+   ========================================================= */
+
+/* ---------- Encabezado ---------- */
+
+.catalog-header {
+    background: #2e3141;
+}
+
+.catalog-header .inner {
+    padding-top: 5em;
+    padding-bottom: 5em;
+}
+
+.catalog-eyebrow {
+    display: block;
+    color: #ffffff;
+    font-size: 0.75em;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    margin-bottom: 1em;
+    opacity: 0.9;
+}
+
+.catalog-header h2 {
+    margin-bottom: 0.5em;
+}
+
+.catalog-header p {
+    max-width: 700px;
+    margin-bottom: 0;
+}
+
+/* ---------- Zona principal ---------- */
+
+.catalog-wrapper {
+    background: #f7f7f8;
+}
+
+.catalog-wrapper > .inner {
+    padding-top: 4em;
+    padding-bottom: 5em;
+}
+
+/* ---------- Buscador ---------- */
+
+.catalog-tools {
+    margin-bottom: 1.75em;
+}
+
+.catalog-search {
+    max-width: 650px;
+}
+
+.catalog-search label {
+    display: block;
+    color: #4a4a4a;
+    font-weight: 700;
+    margin-bottom: 0.65em;
+}
+
+.search-field {
+    position: relative;
+}
+
+.search-field .icon {
+    position: absolute;
+    left: 1em;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #777;
+    z-index: 2;
+}
+
+.search-field input {
+    padding-left: 3em !important;
+    margin-bottom: 0 !important;
+    background: #ffffff !important;
+    color: #333333 !important;
+    border: 1px solid #dddddd !important;
+}
+
+.search-field input:focus {
+    border-color: #6f6f83 !important;
+    box-shadow: 0 0 0 2px rgba(111, 111, 131, 0.12);
+}
+
+/* ---------- Filtros ---------- */
+
+.catalog-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65em;
+    margin: 2em 0 2.5em;
+}
+
+.catalog-filters .filter {
+    appearance: none;
+    border: 1px solid #d5d5d8;
+    background: #ffffff;
+    color: #555;
+    border-radius: 2em;
+    padding: 0.7em 1.15em;
+    font-size: 0.85em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.catalog-filters .filter:hover,
+.catalog-filters .filter.active {
+    background: #4c4e5f;
+    border-color: #4c4e5f;
+    color: #ffffff;
+}
+
+/* ---------- Grid ---------- */
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5em;
+}
+
+/* ---------- Tarjeta ---------- */
+
+.product-card {
+    background: #ffffff;
+    border: 1px solid #e2e2e5;
+    border-radius: 0.35em;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 1em 2em rgba(0, 0, 0, 0.10);
+}
+
+.product-image {
+    position: relative;
+    height: 230px;
+    overflow: hidden;
+    background: #eeeeef;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.35s ease;
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.04);
+}
+
+/* ---------- Etiqueta ---------- */
+
+.product-badge {
+    position: absolute;
+    top: 1em;
+    left: 1em;
+    z-index: 2;
+    background: #4c4e5f;
+    color: #ffffff;
+    border-radius: 2em;
+    padding: 0.45em 0.8em;
+    font-size: 0.68em;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+/* ---------- Información ---------- */
+
+.product-info {
+    padding: 1.35em;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.product-category {
+    color: #77798a;
+    font-size: 0.7em;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.6em;
+}
+
+.product-info h3 {
+    color: #343543;
+    font-size: 1.15em;
+    line-height: 1.35;
+    margin: 0 0 0.65em;
+}
+
+.product-description {
+    color: #666;
+    font-size: 0.88em;
+    line-height: 1.65;
+    margin: 0;
+    flex: 1;
+}
+
+.product-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75em;
+    margin-top: 1.25em;
+}
+
+.product-price {
+    color: #343543;
+    font-size: 0.9em;
+    font-weight: 700;
+}
+
+.consult-btn {
+    display: inline-block;
+    border: 0;
+    background: #4c4e5f;
+    color: #ffffff !important;
+    border-radius: 2em;
+    padding: 0.65em 0.95em;
+    font-size: 0.72em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.consult-btn:hover {
+    background: #686a7c;
+    transform: translateY(-1px);
+}
+
+/* ---------- Sin resultados ---------- */
+
+.empty-message {
+    text-align: center;
+    padding: 4em 1em;
+    border: 1px dashed #cccccf;
+    background: #ffffff;
+    border-radius: 0.35em;
+}
+
+.empty-message .icon {
+    font-size: 2.5em;
+    color: #77798a;
+    margin-bottom: 0.5em;
+}
+
+.empty-message h3 {
+    color: #343543;
+    margin-bottom: 0.35em;
+}
+
+.empty-message p {
+    color: #666;
+}
+
+/* ---------- Botones inferiores ---------- */
+
+.catalog-actions {
+    margin-top: 3em;
+}
+
+/* ---------- Responsive ---------- */
+
+@media screen and (max-width: 980px) {
+    .product-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media screen and (max-width: 736px) {
+    .catalog-header .inner {
+        padding-top: 3.5em;
+        padding-bottom: 3.5em;
+    }
+
+    .catalog-wrapper > .inner {
+        padding-top: 3em;
+        padding-bottom: 3.5em;
+    }
+
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .product-image {
+        height: 250px;
+    }
+
+    .catalog-filters {
+        gap: 0.5em;
+    }
+
+    .catalog-filters .filter {
+        font-size: 0.78em;
+        padding: 0.6em 0.9em;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .product-image {
+        height: 220px;
+    }
+
+    .product-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .consult-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .catalog-actions {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .catalog-actions li {
+        width: 100%;
+    }
+
+    .catalog-actions .button {
+        width: 100%;
+        text-align: center;
+    }
+}
