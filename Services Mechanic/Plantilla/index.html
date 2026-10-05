@@ -659,83 +659,284 @@
 
         </section>
 
+<!-- ==================== SOLICITUD DE INFORMACIÓN ==================== -->
 
+      <section
+        id="solicitud-servicio"
+        aria-labelledby="titulo-solicitud-servicio"
+      >
+        <div class="contenedor-solicitud">
+          <div class="contenido-solicitud">
+            <p class="etiqueta-solicitud">Empieza hoy</p>
+
+            <h2 id="titulo-solicitud-servicio">
+              Lleva la gestión de tu taller al <span>siguiente nivel</span>
+            </h2>
+
+            <p class="descripcion-solicitud">
+              Solicita información y conoce cómo Services Mechanic puede
+              ayudarte a organizar mejor la operación de tu taller.
+            </p>
+
+            <ul class="checklist-solicitud">
+              <li>
+                <span class="check-solicitud" aria-hidden="true">✓</span>
+                Respuesta personalizada
+              </li>
+              <li>
+                <span class="check-solicitud" aria-hidden="true">✓</span> Sin
+                compromisos
+              </li>
+              <li>
+                <span class="check-solicitud" aria-hidden="true">✓</span>
+                Orientado a tus necesidades
+              </li>
+            </ul>
+
+            <div class="burbujas-solicitud" aria-hidden="true">
+              <span class="burbuja burbuja-1"></span>
+              <span class="burbuja burbuja-2"></span>
+              <span class="burbuja burbuja-3"></span>
+              <span class="burbuja burbuja-4"></span>
+            </div>
+          </div>
+          <form
+            id="form-solicitud"
+            action="#"
+            method="post"
+            novalidate
+            data-form-type="solicitud-informacion"
+            data-business-area="software-talleres"
+          >
+            <p>
+              <label for="nombre">Nombre de contacto</label>
+              <input
+                id="nombre"
+                name="nombre"
+                type="text"
+                required
+                minlength="3"
+                maxlength="80"
+                data-field-purpose="identificacion-cliente"
+              />
+              <span
+                class="mensaje-error"
+                id="error-nombre"
+                aria-live="polite"
+              ></span>
+            </p>
+
+            <p>
+              <label for="taller">Nombre del taller</label>
+              <input
+                id="taller"
+                name="taller"
+                type="text"
+                required
+                minlength="3"
+                maxlength="100"
+                data-field-purpose="identificacion-taller"
+              />
+              <span
+                class="mensaje-error"
+                id="error-taller"
+                aria-live="polite"
+              ></span>
+            </p>
+
+            <p>
+              <label for="correo">Correo</label>
+              <input
+                id="correo"
+                name="correo"
+                type="email"
+                required
+                data-field-purpose="contacto-cliente"
+              />
+              <span
+                class="mensaje-error"
+                id="error-correo"
+                aria-live="polite"
+              ></span>
+            </p>
+
+            <p>
+              <label for="telefono">Teléfono</label>
+              <input
+                id="telefono"
+                name="telefono"
+                type="tel"
+                required
+                pattern="[0-9+() -]{7,20}"
+                data-field-purpose="contacto-telefonico"
+              />
+              <span
+                class="mensaje-error"
+                id="error-telefono"
+                aria-live="polite"
+              ></span>
+            </p>
+
+            <p>
+              <label for="num-empleados">Número de empleados del taller</label>
+              <input
+                id="num-empleados"
+                name="num-empleados"
+                type="number"
+                min="1"
+                max="500"
+                data-field-purpose="tamano-taller"
+              />
+              <span
+                class="mensaje-error"
+                id="error-num-empleados"
+                aria-live="polite"
+              ></span>
+            </p>
+
+            <p>
+              <label for="plan-interes">Plan de interés</label>
+              <select
+                id="plan-interes"
+                name="plan-interes"
+                required
+                data-field-purpose="clasificacion-lead"
+              >
+                <option value="">Seleccione una opción</option>
+                <option value="basico" data-service-category="plan-basico">
+                  Plan Básico
+                </option>
+                <option
+                  value="profesional"
+                  data-service-category="plan-profesional"
+                >
+                  Plan Profesional
+                </option>
+                <option value="info" data-service-category="solo-informacion">
+                  Solo quiero más información
+                </option>
+              </select>
+              <span
+                class="mensaje-error"
+                id="error-plan-interes"
+                aria-live="polite"
+              ></span>
+            </p>
+
+            <p>
+              <label for="mensaje">Mensaje</label>
+              <textarea
+                id="mensaje"
+                name="mensaje"
+                required
+                minlength="10"
+                maxlength="500"
+                data-field-purpose="detalle-solicitud"
+              ></textarea>
+              <span
+                class="mensaje-error"
+                id="error-mensaje"
+                aria-live="polite"
+              ></span>
+            </p>
+
+            <p>
+              <button type="submit" data-action="enviar-solicitud">
+                Solicitar información
+              </button>
+            </p>
+          </form>
+        </div>
+      </section>
+
+      <p id="estado-sistema" role="status" aria-live="polite"></p>
       </div>
       <!-- Fin de #main -->
 
 
-      <!-- ==================== FOOTER ==================== -->
+     <!-- ==================== FOOTER ==================== -->
 
-      <footer id="footer">
-
-        <section>
-
-          <h2>Services Mechanic</h2>
-
+    <footer id="contacto" aria-labelledby="titulo-contacto">
+      <div class="contenedor-footer">
+        <div class="bloque-footer bloque-footer--marca">
+          <h2 id="titulo-contacto">Services Mechanic</h2>
           <p>
-            Una solución digital pensada para facilitar la organización
-            y administración de talleres mecánicos.
+            Caso de estudio académico orientado a la organización de talleres
+            mecánicos.
           </p>
+        </div>
 
-        </section>
-
-
-        <section>
-
-          <h2>Contacto</h2>
-
-          <dl class="alt">
-
-            <dt>Proyecto</dt>
-            <dd>Services Mechanic</dd>
-
-            <dt>Programa</dt>
-            <dd>Tecnología en Programación de Sistemas Informáticos</dd>
-
-            <dt>Email</dt>
-            <dd>
-              <a href="#">servicesmechanic@gmail.com</a>
-            </dd>
-
-          </dl>
-
-
-          <ul class="icons">
-
-            <li>
-              <a href="#" class="icon brands fa-twitter alt">
-                <span class="label">Twitter</span>
+        <div class="bloque-footer">
+          <h3>Contacto</h3>
+          <address>
+            <p>
+              <a href="mailto:contacto@servicesmechanic.com">
+                contacto@servicesmechanic.com
               </a>
-            </li>
+            </p>
+            <p>
+              <a href="tel:+573001234567">+57 300 123 4567</a>
+            </p>
+            <p>Cra 9 # 22-39, Tunja, Boyacá</p>
+            <div class="mapa-footer">
+              <iframe
+                src="https://www.google.com/maps?q=Carrera+9+%2322-39,+Tunja,+Boyac%C3%A1,+Colombia&output=embed"
+                width="100%"
+                height="180"
+                style="border: 0"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Ubicación de Services Mechanic en Tunja"
+              >
+              </iframe>
+            </div>
+          </address>
+          <a
+            class="enlace-whatsapp"
+            href="https://wa.me/573001234567"
+            target="_blank"
+            rel="noopener"
+          >
+            Escríbenos por WhatsApp
+          </a>
+        </div>
 
-            <li>
-              <a href="#" class="icon brands fa-facebook-f alt">
-                <span class="label">Facebook</span>
-              </a>
-            </li>
+        <div class="bloque-footer">
+          <h3>Navegación</h3>
+          <nav aria-label="Navegación secundaria">
+            <ul>
+              <li><a href="#intro">Inicio</a></li>
+              <li><a href="#servicios">Servicios</a></li>
+              <li><a href="#second">Nosotros</a></li>
+              <li><a href="#solicitud-servicio">Solicitar servicio</a></li>
+            </ul>
+          </nav>
+        </div>
 
-            <li>
-              <a href="#" class="icon brands fa-instagram alt">
-                <span class="label">Instagram</span>
-              </a>
-            </li>
+        <div class="bloque-footer">
+          <h3>Legal</h3>
+          <nav aria-label="Enlaces legales">
+            <ul>
+              <li><a href="#">Política de privacidad</a></li>
+              <li><a href="#">Términos y condiciones</a></li>
+              <li><a href="#">Aviso de protección de datos</a></li>
+            </ul>
+          </nav>
+          <h3>Síguenos</h3>
+          <nav aria-label="Redes sociales">
+            <ul class="redes-sociales">
+              <li><a href="#" aria-label="Facebook">Facebook</a></li>
+              <li><a href="#" aria-label="Instagram">Instagram</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
 
-            <li>
-              <a href="#" class="icon brands fa-github alt">
-                <span class="label">GitHub</span>
-              </a>
-            </li>
-
-          </ul>
-
-        </section>
-
-
-        <p class="copyright">
-          &copy; Services Mechanic.
-        </p>
-
-      </footer>
+      <p class="derechos-footer">
+        &copy; 2026 Services Mechanic. Todos los derechos reservados.
+      </p>
+    </footer>
 
     </div>
     <!-- Fin de #wrapper -->

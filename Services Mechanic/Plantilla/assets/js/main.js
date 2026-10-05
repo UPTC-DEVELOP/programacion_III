@@ -221,3 +221,125 @@
 	else
 		iniciarCarrusel();
 })();
+// VALIDACIÓN DEL FORMULARIO DE SOLICITUD DE INFORMACIÓN
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const formulario = document.getElementById("form-solicitud");
+  const estadoSistema = document.getElementById("estado-sistema");
+
+  if (!formulario) return;
+
+  const mensajesError = {
+    nombre: "Ingresa un nombre válido (mínimo 3 caracteres).",
+    taller: "Ingresa el nombre del taller (mínimo 3 caracteres).",
+    correo: "Ingresa un correo electrónico válido.",
+    telefono: "Ingresa un teléfono válido (solo números, +, espacios, guiones).",
+    "num-empleados": "El número de empleados no puede ser negativo.",
+    "plan-interes": "Selecciona un plan de interés.",
+    mensaje: "Escribe tu mensaje con al menos 10 caracteres."
+  };
+
+  function validarCampo(campo) {
+    const spanError = document.getElementById(`error-${campo.id}`);
+    const esValido = campo.checkValidity();
+
+    if (!esValido) {
+      campo.classList.add("campo-invalido");
+
+      if (spanError) {
+        spanError.textContent =
+          mensajesError[campo.id] || "Este campo no es válido.";
+      }
+    } else {
+      campo.classList.remove("campo-invalido");
+
+      if (spanError) {
+        spanError.textContent = "";
+      }
+    }
+
+    return esValido;
+  }
+
+  const campos = formulario.querySelectorAll(
+    "input, select, textarea"
+  );
+
+  campos.forEach((campo) => {
+
+    campo.addEventListener("blur", () => {
+      validarCampo(campo);
+    });
+
+    campo.addEventListener("input", () => {
+      if (campo.classList.contains("campo-invalido")) {
+        validarCampo(campo);
+      }
+    });
+
+  });
+
+  function mostrarMensajeEstado(texto, tipo) {
+
+    if (!estadoSistema) return;
+
+    estadoSistema.textContent = texto;
+    estadoSistema.classList.remove("exito", "error");
+    estadoSistema.classList.add(tipo);
+  }
+
+  formulario.addEventListener("submit", (evento) => {
+
+    evento.preventDefault();
+
+    let formularioValido = true;
+    let primerCampoInvalido = null;
+
+    campos.forEach((campo) => {
+
+      const esValido = validarCampo(campo);
+
+      if (!esValido) {
+        formularioValido = false;
+
+        if (!primerCampoInvalido) {
+          primerCampoInvalido = campo;
+        }
+      }
+    });
+
+    if (!formularioValido) {
+
+      mostrarMensajeEstado(
+        "Revisa los campos marcados en rojo antes de enviar la solicitud.",
+        "error"
+      );
+
+      if (primerCampoInvalido) {
+        primerCampoInvalido.focus();
+      }
+
+      return;
+    }
+
+    const nombre =
+      formulario.querySelector("#nombre").value.trim();
+
+    const taller =
+      formulario.querySelector("#taller").value.trim();
+
+    mostrarMensajeEstado(
+      `¡Gracias, ${nombre}! Registramos la solicitud de "${taller}". Un asesor te contactará pronto.`,
+      "exito"
+    );
+
+    formulario.reset();
+
+    campos.forEach((campo) => {
+      campo.classList.remove("campo-invalido");
+    });
+
+  });
+
+});
