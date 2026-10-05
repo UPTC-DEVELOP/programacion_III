@@ -46,7 +46,7 @@ function inicializarLogin(formulario) {
         }
 
         // Credenciales de demostración; no usar esta validación en producción.
-        if (username.toLowerCase() !== "admin" || password !== "1234") {
+        if (username.toLowerCase() !== "admin" || password !== "234") {
             mostrarMensajeLogin(mensajeLogin, "❌ Usuario o contraseña incorrectos.", "error");
             campoPassword.focus();
             return;
