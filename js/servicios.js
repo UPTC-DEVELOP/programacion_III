@@ -114,3 +114,172 @@ function cargarEmpleadosDisponibles() {
         empleadoSelect.appendChild(option);
     });
 }
+
+clienteSelect.addEventListener("change", () => {
+
+    const idCliente = Number(clienteSelect.value);
+
+    cargarVehiculos(idCliente);
+});
+
+cargarClientes();
+cargarEmpleadosDisponibles();
+
+// REGISTRO DE SERVICIOS
+
+const serviceForm = document.getElementById("serviceForm");
+const descripcionInput = document.getElementById("descripcionServicio");
+const fechaInput = document.getElementById("fechaServicio");
+const horaInput = document.getElementById("horaServicio");
+const formMessage = document.getElementById("formMessage");
+
+// Arreglo donde se almacenarán los servicios
+const servicios = [];
+
+// Contador para generar identificadores únicos
+let siguienteId = 1;
+
+// REGISTRAR SERVICIO
+
+serviceForm.addEventListener("submit", (event) => {
+
+    event.preventDefault();
+
+    const idCliente = Number(clienteSelect.value);
+    const placa = placaSelect.value;
+    const idEmpleado = Number(empleadoSelect.value);
+    const descripcionServicio = descripcionInput.value.trim();
+    const fechaServicio = fechaInput.value;
+    const horaServicio = horaInput.value;
+
+
+    // VALIDACIONES
+
+
+    if (!idCliente ||
+        !placa ||
+        !idEmpleado ||
+        !descripcionServicio ||
+        !fechaServicio ||
+        !horaServicio
+    ) {
+
+        mostrarMensaje(
+            "Por favor completa todos los campos.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    // Verificar que el cliente exista
+
+    const clienteExiste = clientes.some(
+        (cliente) => cliente.id === idCliente
+    );
+
+    if (!clienteExiste) {
+
+        mostrarMensaje(
+            "El cliente seleccionado no existe.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    // Verificar que el vehículo exista
+    // y pertenezca al cliente
+
+    const vehiculoValido = vehiculos.some(
+        (vehiculo) =>
+        vehiculo.placa === placa &&
+        vehiculo.idCliente === idCliente
+    );
+
+    if (!vehiculoValido) {
+
+        mostrarMensaje(
+            "El vehículo no pertenece al cliente seleccionado.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    // Verificar que el empleado exista
+    // y esté disponible
+
+    const empleadoValido = empleados.some(
+        (empleado) =>
+        empleado.id === idEmpleado &&
+        empleado.disponible
+    );
+
+    if (!empleadoValido) {
+
+        mostrarMensaje(
+            "Debe seleccionar un empleado disponible.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    // CREAR SERVICIO
+
+    const nuevoServicio = {
+
+        idServicio: siguienteId,
+        idCliente: idCliente,
+        placa: placa,
+        descripcionServicio: descripcionServicio,
+        idEmpleado: idEmpleado,
+        fechaServicio: fechaServicio,
+        horaServicio: horaServicio
+
+    };
+
+
+    // Guardar servicio
+
+    servicios.push(nuevoServicio);
+
+    // Preparar ID para el siguiente servicio
+
+    siguienteId++;
+
+
+    console.log("Servicios registrados:", servicios);
+
+
+    mostrarMensaje(
+        "Servicio registrado correctamente.",
+        "exito"
+    );
+
+
+    // Limpiar formulario
+
+    serviceForm.reset();
+
+    placaSelect.innerHTML =
+        '<option value="">Seleccione un vehículo</option>';
+});
+
+// MOSTRAR MENSAJES
+
+function mostrarMensaje(mensaje, tipo) {
+
+    formMessage.textContent = mensaje;
+
+    if (tipo === "exito") {
+        formMessage.style.color = "#16a34a";
+    } else {
+        formMessage.style.color = "#dc2626";
+    }
+}
