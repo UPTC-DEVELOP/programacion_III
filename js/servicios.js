@@ -253,6 +253,9 @@ serviceForm.addEventListener("submit", (event) => {
 
     siguienteId++;
 
+    // Actualizar tabla
+
+    mostrarServicios();
 
     console.log("Servicios registrados:", servicios);
 
@@ -283,3 +286,107 @@ function mostrarMensaje(mensaje, tipo) {
         formMessage.style.color = "#dc2626";
     }
 }
+
+// MOSTRAR SERVICIOS
+
+const servicesTableBody =
+    document.getElementById("servicesTableBody");
+
+
+function mostrarServicios() {
+
+    // Limpiar tabla antes de volver a mostrar los datos
+    servicesTableBody.innerHTML = "";
+
+
+    // Mostrar mensaje si no existen servicios
+    if (servicios.length === 0) {
+
+        servicesTableBody.innerHTML = `
+            <tr>
+                <td colspan="8" style="text-align: center;">
+                    No hay servicios registrados.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+
+    servicios.forEach((servicio) => {
+
+        // Buscar información del cliente
+        const cliente = clientes.find(
+            (cliente) =>
+            cliente.id === servicio.idCliente
+        );
+
+
+        // Buscar información del empleado
+        const empleado = empleados.find(
+            (empleado) =>
+            empleado.id === servicio.idEmpleado
+        );
+
+
+        // Crear fila
+        const fila = document.createElement("tr");
+
+
+        fila.innerHTML = `
+            <td>${servicio.idServicio}</td>
+
+            <td>
+                ${cliente ? cliente.nombre : "No encontrado"}
+            </td>
+
+            <td>
+                ${servicio.placa}
+            </td>
+
+            <td>
+                ${servicio.descripcionServicio}
+            </td>
+
+            <td>
+                ${empleado ? empleado.nombre : "No encontrado"}
+            </td>
+
+            <td>
+                ${servicio.fechaServicio}
+            </td>
+
+            <td>
+                ${servicio.horaServicio}
+            </td>
+
+            <td>
+                <div class="table-actions">
+
+                    <button
+                        class="btn-edit"
+                        data-id="${servicio.idServicio}"
+                    >
+                        Editar
+                    </button>
+
+                    <button
+                        class="btn-delete"
+                        data-id="${servicio.idServicio}"
+                    >
+                        Eliminar
+                    </button>
+
+                </div>
+            </td>
+        `;
+
+
+        servicesTableBody.appendChild(fila);
+    });
+}
+
+
+// Mostrar estado inicial de la tabla
+mostrarServicios();
