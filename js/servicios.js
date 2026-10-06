@@ -97,3 +97,20 @@ function cargarVehiculos(idCliente) {
         placaSelect.appendChild(option);
     });
 }
+
+function cargarEmpleadosDisponibles() {
+
+    const empleadosDisponibles = empleados.filter(
+        (empleado) => empleado.disponible
+    );
+
+    empleadosDisponibles.forEach((empleado) => {
+
+        const option = document.createElement("option");
+
+        option.value = empleado.id;
+        option.textContent = empleado.nombre;
+
+        empleadoSelect.appendChild(option);
+    });
+}
