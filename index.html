@@ -10,11 +10,6 @@
 </head>
 
 <body>
-    <section class="hero" style="text-align: center;">
-        <h1>
-            <span>Taller Mecanico 360</span>
-        </h1>
-    </section>
 
     <header class="header">
 
@@ -204,133 +199,92 @@
             </div>
 
         </section>
-        <section class="contact" id="contacto">
 
-            <div class="contact-content">
-
-                <div class="contact-info">
-
-                    <span class="section-label">
-                Contacto
-            </span>
-
-                    <h2>
-                        ¿Listo para comenzar?
-                    </h2>
-
+        <section class="contact section" id="contacto">
+            <div class="container contact-box">
+                <div>
+                    <span class="section-label">Contacto</span>
+                    <h2>¿Listo para comenzar?</h2>
                     <p>
                         Déjanos tus datos y nos pondremos en contacto contigo.
                     </p>
-
                 </div>
 
+                <form id="contactForm" class="contact-form">
+                    <input type="text" id="name" placeholder="Tu nombre" required>
 
-                <form class="contact-form" id="contactForm">
-
-                    <div class="form-group">
-
-                        <label for="name">
-                    Nombre
-                </label>
-
-                        <input type="text" id="name" name="name" placeholder="Tu nombre" required>
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label for="email">
-                    Correo electrónico
-                </label>
-
-                        <input type="email" id="email" name="email" placeholder="tu@email.com" required>
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label for="message">
-                    Mensaje
-                </label>
-
-                        <textarea id="message" name="message" placeholder="Escribe tu mensaje..." rows="5" required></textarea>
-
-                    </div>
-
+                    <input type="email" id="email" placeholder="Tu correo" required>
 
                     <button type="submit" class="btn btn-primary">
-                Enviar mensaje
-            </button>
+                        Enviar
+                    </button>
 
                     <p id="formMessage" class="form-message"></p>
-
                 </form>
-
             </div>
+        </section>
+
+        </div>
 
         </section>
-        <footer class="footer">
 
-            <div class="footer-content">
-
-                <div class="footer-brand">
-
-                    <a href="#" class="logo">
-                Siempre listos para ayudarte.
-            </a>
-
-                    <p>
-                        Mantenimiento y reparación automotriz con compromiso y profesionalismo.
-                    </p>
-
-                </div>
-
-
-                <div class="footer-links">
-
-                    <h3>
-                        Enlaces
-                    </h3>
-
-                    <a href="#inicio">
-                Inicio
-            </a>
-
-                    <a href="#beneficios">
-                Beneficios
-            </a>
-
-                    <a href="#nosotros">
-                Nosotros
-            </a>
-
-                    <a href="#contacto">
-                Contacto
-            </a>
-
-                </div>
-
-            </div>
-
-
-            <div class="footer-bottom">
-
-                <p>
-                    © <span id="year"></span> Taller Mecánico. Todos los derechos reservados.
-                </p>
-
-            </div>
-
-        </footer>
 
 
 
 
 
     </main>
+    <footer class="footer">
 
+        <div class="footer-content">
+
+            <div class="footer-brand">
+
+                <a href="#" class="logo">
+                Siempre listos para ayudarte.
+            </a>
+
+                <p>
+                    Mantenimiento y reparación automotriz con compromiso y profesionalismo.
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <h3>
+                    Enlaces
+                </h3>
+
+                <a href="#inicio">
+                Inicio
+            </a>
+
+                <a href="#beneficios">
+                Beneficios
+            </a>
+
+                <a href="#nosotros">
+                Nosotros
+            </a>
+
+                <a href="#contacto">
+                Contacto
+            </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+            <p>
+                © <span id="year"></span> Taller Mecánico. Todos los derechos reservados.
+            </p>
+        </div>
+
+    </footer>
 
     <script src="js/script.js"></script>
 
