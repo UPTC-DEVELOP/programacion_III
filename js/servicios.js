@@ -485,13 +485,18 @@ function editarServicio(idServicio) {
 
 servicesTableBody.addEventListener("click", (event) => {
 
+    const idServicio = Number(
+        event.target.dataset.id
+    );
+
+    // EDITAR
     if (event.target.classList.contains("btn-edit")) {
-
-        const idServicio = Number(
-            event.target.dataset.id
-        );
-
         editarServicio(idServicio);
+    }
+
+    // ELIMINAR
+    if (event.target.classList.contains("btn-delete")) {
+        eliminarServicio(idServicio);
     }
 
 });
@@ -511,3 +516,31 @@ cancelBtn.addEventListener("click", () => {
 
     formMessage.textContent = "";
 });
+
+function eliminarServicio(idServicio) {
+
+    const indice = servicios.findIndex(
+        (servicio) => servicio.idServicio === idServicio
+    );
+
+    if (indice === -1) {
+        return;
+    }
+
+    const confirmar = confirm(
+        "¿Está seguro de eliminar este servicio?"
+    );
+
+    if (!confirmar) {
+        return;
+    }
+
+    servicios.splice(indice, 1);
+
+    mostrarServicios();
+
+    mostrarMensaje(
+        "Servicio eliminado correctamente.",
+        "exito"
+    );
+}
