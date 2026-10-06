@@ -127,6 +127,8 @@ cargarEmpleadosDisponibles();
 
 // REGISTRO DE SERVICIOS
 
+
+
 const serviceForm = document.getElementById("serviceForm");
 const descripcionInput = document.getElementById("descripcionServicio");
 const fechaInput = document.getElementById("fechaServicio");
@@ -234,6 +236,47 @@ serviceForm.addEventListener("submit", (event) => {
         return;
     }
 
+    //ACTUALIZAR SERVICIO
+
+
+    if (servicioEditandoId !== null) {
+
+        const servicio = servicios.find(
+            (servicio) =>
+            servicio.idServicio === servicioEditandoId
+        );
+
+        if (servicio) {
+
+            servicio.idCliente = idCliente;
+            servicio.placa = placa;
+            servicio.descripcionServicio = descripcionServicio;
+            servicio.idEmpleado = idEmpleado;
+            servicio.fechaServicio = fechaServicio;
+            servicio.horaServicio = horaServicio;
+
+            mostrarServicios();
+
+            mostrarMensaje(
+                "Servicio actualizado correctamente.",
+                "exito"
+            );
+
+            serviceForm.reset();
+
+            placaSelect.innerHTML =
+                '<option value="">Seleccione un vehículo</option>';
+
+            servicioEditandoId = null;
+
+            submitBtn.textContent = "Registrar servicio";
+
+            cancelBtn.hidden = true;
+
+            return;
+        }
+    }
+
 
     // CREAR SERVICIO
 
@@ -248,7 +291,6 @@ serviceForm.addEventListener("submit", (event) => {
         horaServicio: horaServicio
 
     };
-
 
     // Guardar servicio
 
@@ -439,3 +481,33 @@ function editarServicio(idServicio) {
         behavior: "smooth"
     });
 }
+
+
+servicesTableBody.addEventListener("click", (event) => {
+
+    if (event.target.classList.contains("btn-edit")) {
+
+        const idServicio = Number(
+            event.target.dataset.id
+        );
+
+        editarServicio(idServicio);
+    }
+
+});
+
+cancelBtn.addEventListener("click", () => {
+
+    servicioEditandoId = null;
+
+    serviceForm.reset();
+
+    placaSelect.innerHTML =
+        '<option value="">Seleccione un vehículo</option>';
+
+    submitBtn.textContent = "Registrar servicio";
+
+    cancelBtn.hidden = true;
+
+    formMessage.textContent = "";
+});
