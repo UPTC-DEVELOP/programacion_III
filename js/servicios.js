@@ -55,3 +55,45 @@ const empleados = [{
         disponible: true
     }
 ];
+
+const clienteSelect = document.getElementById("cliente");
+const placaSelect = document.getElementById("placa");
+const empleadoSelect = document.getElementById("empleado");
+
+
+// cargar clientes 
+
+function cargarClientes() {
+
+    clientes.forEach((cliente) => {
+
+        const option = document.createElement("option");
+
+        option.value = cliente.id;
+        option.textContent = cliente.nombre;
+
+        clienteSelect.appendChild(option);
+    });
+}
+
+function cargarVehiculos(idCliente) {
+
+    placaSelect.innerHTML =
+        '<option value="">Seleccione un vehículo</option>';
+
+    const vehiculosCliente = vehiculos.filter(
+        (vehiculo) => vehiculo.idCliente === idCliente
+    );
+
+    vehiculosCliente.forEach((vehiculo) => {
+
+        const option = document.createElement("option");
+
+        option.value = vehiculo.placa;
+
+        option.textContent =
+            `${vehiculo.placa} - ${vehiculo.marca} ${vehiculo.modelo}`;
+
+        placaSelect.appendChild(option);
+    });
+}
