@@ -26,6 +26,134 @@
         </nav>
 
     </header>
+    <main class="services-page">
+
+        <div class="container">
+
+            <div class="section-heading">
+
+                <span class="section-label">
+                    Administración
+                </span>
+
+                <h1>
+                    Gestión de Servicios
+                </h1>
+
+                <p>
+                    Registra y administra los servicios realizados a los vehículos del taller.
+                </p>
+
+            </div>
+
+
+            <section class="service-form-section">
+
+                <h2>Registrar servicio</h2>
+
+                <form id="serviceForm" class="service-form">
+
+                    <div class="form-group">
+
+                        <label for="cliente">
+                            Cliente
+                        </label>
+
+                        <select id="cliente" required>
+                            <option value="">
+                                Seleccione un cliente
+                            </option>
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="placa">
+                            Vehículo
+                        </label>
+
+                        <select id="placa" required>
+                            <option value="">
+                                Seleccione un vehículo
+                            </option>
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="empleado">
+                            Empleado responsable
+                        </label>
+
+                        <select id="empleado" required>
+                            <option value="">
+                                Seleccione un empleado
+                            </option>
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="fechaServicio">
+                            Fecha del servicio
+                        </label>
+
+                        <input type="date" id="fechaServicio" required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="horaServicio">
+                            Hora del servicio
+                        </label>
+
+                        <input type="time" id="horaServicio" required>
+
+                    </div>
+
+
+                    <div class="form-group form-group-full">
+
+                        <label for="descripcionServicio">
+                            Descripción del servicio
+                        </label>
+
+                        <textarea id="descripcionServicio" rows="4" placeholder="Ej: Cambio de aceite y revisión de frenos" required></textarea>
+
+                    </div>
+
+
+                    <div class="form-actions form-group-full">
+
+                        <button type="submit" class="btn btn-primary" id="submitBtn">
+                            Registrar servicio
+                        </button>
+
+                        <button type="button" class="btn btn-secondary" id="cancelBtn" hidden>
+                            Cancelar edición
+                        </button>
+
+                    </div>
+
+                </form>
+
+                <p id="formMessage" class="form-message"></p>
+
+            </section>
+
+    </main>
+
+
+
+
 </body>
 
 </html>
