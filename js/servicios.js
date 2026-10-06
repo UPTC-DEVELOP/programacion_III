@@ -136,8 +136,13 @@ const formMessage = document.getElementById("formMessage");
 // Arreglo donde se almacenarán los servicios
 const servicios = [];
 
-// Contador para generar identificadores únicos
 let siguienteId = 1;
+
+// Guarda el ID del servicio que se está editando
+let servicioEditandoId = null;
+
+const submitBtn = document.getElementById("submitBtn");
+const cancelBtn = document.getElementById("cancelBtn");
 
 // REGISTRAR SERVICIO
 
@@ -390,3 +395,47 @@ function mostrarServicios() {
 
 // Mostrar estado inicial de la tabla
 mostrarServicios();
+
+function editarServicio(idServicio) {
+
+    const servicio = servicios.find(
+        (servicio) => servicio.idServicio === idServicio
+    );
+
+    if (!servicio) {
+        return;
+    }
+
+    servicioEditandoId = idServicio;
+
+    // Cargar cliente
+    clienteSelect.value = servicio.idCliente;
+
+    // Cargar vehículos correspondientes al cliente
+    cargarVehiculos(servicio.idCliente);
+
+    // Seleccionar vehículo
+    placaSelect.value = servicio.placa;
+
+    // Cargar demás datos
+    empleadoSelect.value = servicio.idEmpleado;
+    descripcionInput.value = servicio.descripcionServicio;
+    fechaInput.value = servicio.fechaServicio;
+    horaInput.value = servicio.horaServicio;
+
+    // Cambiar botón principal
+    submitBtn.textContent = "Guardar cambios";
+
+    // Mostrar botón cancelar
+    cancelBtn.hidden = false;
+
+    mostrarMensaje(
+        "Editando servicio #" + idServicio,
+        "exito"
+    );
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
