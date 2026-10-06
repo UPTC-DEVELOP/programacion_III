@@ -161,3 +161,42 @@
 .services-table tbody tr:hover {
     background: var(--light);
 }
+
+
+/* botones de la tabla */
+
+.table-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-edit,
+.btn-delete {
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-edit {
+    color: var(--primary-dark);
+    background: #e0e7ff;
+}
+
+.btn-edit:hover {
+    background: var(--primary);
+    color: var(--white);
+}
+
+.btn-delete {
+    color: #dc2626;
+    background: #fee2e2;
+}
+
+.btn-delete:hover {
+    color: var(--white);
+    background: #dc2626;
+}
