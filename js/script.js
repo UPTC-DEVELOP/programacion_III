@@ -1,4 +1,4 @@
-//menu
+//menu movil
 
 
 const menuToggle = document.getElementById("menuToggle");
@@ -16,4 +16,27 @@ links.forEach((link) => {
     link.addEventListener("click", () => {
         navLinks.classList.remove("active");
     });
+});
+
+// formulario
+
+const contactForm = document.getElementById("contactForm");
+const formMessage = document.getElementById("formMessage");
+
+contactForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+
+    if (!name || !email) {
+        formMessage.textContent = "Por favor completa todos los campos.";
+        formMessage.style.color = "#dc2626";
+        return;
+    }
+
+    formMessage.textContent = "¡Gracias! Hemos recibido tus datos.";
+    formMessage.style.color = "#16a34a";
+
+    contactForm.reset();
 });
