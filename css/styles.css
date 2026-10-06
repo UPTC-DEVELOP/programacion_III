@@ -333,3 +333,14 @@ ul {
     min-height: 25px;
     font-size: 0.9rem;
 }
+
+
+/* footer */
+
+.footer {
+    background: var(--dark);
+    color: #9ca3af;
+    padding: 30px 0;
+    text-align: center;
+    font-size: 0.9rem;
+}
