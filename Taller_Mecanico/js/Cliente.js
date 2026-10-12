@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", () => {
 
     const STORAGE_KEY = "lja_clientes_db";
