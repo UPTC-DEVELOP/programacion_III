@@ -4396,3 +4396,134 @@ section.spotlight .image.anim-icon-container:hover i.anim-icon {
     50% { transform: translateY(-20px); } 
     100% { transform: translateY(0px); } 
 }
+
+/* ========================================================
+   GLOBAL CALL TO ACTION STYLING (A.SPECIAL)
+   ======================================================== */
+/* 1. Estilo global base para todos los enlaces "special" */
+a.special {
+    color: #60a5fa !important; 
+    font-weight: 700 !important;
+    text-shadow: 0 0 8px rgba(96, 165, 250, 0.4); 
+    transition: all 0.3s ease !important;
+}
+
+/* 2. Animación global del pseudo-elemento (círculo de la flecha) */
+a.special::before {
+    color: #ffffff !important; 
+    box-shadow: inset 0 0 0 1px #60a5fa !important; 
+    background-color: rgba(37, 99, 235, 0.2); 
+    animation: pulse-ring-effect 2s infinite !important;
+    transition: all 0.3s ease !important;
+}
+
+/* ========================================================
+   EFECTO HOVER POTENCIADO (ALTA INTERACCIÓN)
+   ======================================================== */
+/* 3. El texto se ilumina a blanco puro con un resplandor azul fuerte */
+a.special:hover {
+    color: #ffffff !important;
+    text-shadow: 0 0 12px rgba(96, 165, 250, 1), 0 0 24px rgba(59, 130, 246, 0.8) !important;
+}
+
+/* 4. El círculo crece, se vuelve más brillante y emite una luz exterior intensa */
+a.special:hover::before {
+    background-color: #3b82f6 !important; /* Azul más vivo */
+    animation: none !important; /* Detenemos el latido para fijar la luz */
+    transform: scale(1.15); /* Aumenta su tamaño un 15% */
+    
+    /* Doble sombra: un borde interno más claro + un halo exterior difuminado */
+    box-shadow: inset 0 0 0 2px #93c5fd, 0 0 20px 8px rgba(59, 130, 246, 0.7) !important; 
+}
+
+/* ========================================================
+   KEYFRAMES (LATIDO BASE)
+   ======================================================== */
+@keyframes pulse-ring-effect {
+    0% {
+        box-shadow: inset 0 0 0 1px #60a5fa, 0 0 0 0 rgba(96, 165, 250, 0.7);
+    }
+    70% {
+        box-shadow: inset 0 0 0 1px #60a5fa, 0 0 0 15px rgba(96, 165, 250, 0); 
+    }
+    100% {
+        box-shadow: inset 0 0 0 1px #60a5fa, 0 0 0 0 rgba(96, 165, 250, 0);
+    }
+}
+
+/* ========================================================
+   LOGOS VECTORIALES PARA TARJETAS DE SERVICIOS
+   ======================================================== */
+/* Contenedor del logo: fondo oscuro, tamaño uniforme y centrado perfecto */
+.features article .image.icon-card-container {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    background-color: #0f172a !important; /* Azul marino muy oscuro */
+    height: 200px !important; /* Altura uniforme para que ninguna tarjeta se descuadre */
+    border-radius: 8px 8px 0 0 !important;
+    border-bottom: 2px solid #2563EB !important; /* Línea de acento azul */
+}
+
+/* Estilo del ícono vectorial (El "Logo") */
+.features article .image.icon-card-container i {
+    font-size: 6em !important; /* Tamaño grande y detallado */
+    color: #2563EB !important; /* Tu color corporativo */
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+    transition: transform 0.4s ease, color 0.4s ease !important;
+}
+
+/* Efecto Hover: Al pasar el mouse, el logo crece y se ilumina */
+.features article:hover .image.icon-card-container i {
+    transform: scale(1.2) !important;
+    color: #60a5fa !important; /* Azul brillante */
+}
+
+/* ========================================================
+    ADN INSTITUCIONAL
+   ======================================================== */
+#adn-simple .features article {
+    background-color: rgba(255, 255, 255, 0.03) !important; /* Fondo un poco más claro que la plantilla */
+    border: 1px solid rgba(255, 255, 255, 0.1) !important; /* Borde muy sutil */
+    border-radius: 8px !important;
+    padding: 2em !important;
+}
+
+/*  contraste del texto para que sea legible */
+#adn-simple .features article p,
+#adn-simple .features article ul li,
+#adn-simple .features article h3,
+#adn-simple .features article strong {
+    color: #f8fafc !important; /* Texto claro */
+}
+
+/* ========================================================
+   FONDO DIFUMINADO Y CENTRADO - ADN INSTITUCIONAL
+   ======================================================== */
+
+/* 1. Imagen de fondo con degradado oscuro (efecto difuminado/blend) */
+#adn-simple {
+    background-image: 
+        /* El gradiente oscuro funciona como un filtro para no tapar el texto */
+        linear-gradient(to bottom, rgba(30, 37, 45, 0.95) 0%, rgba(30, 37, 45, 0.75) 50%, rgba(30, 37, 45, 0.95) 100%),
+        /* Cambia esta ruta por la imagen que prefieras (ej. el escáner o el taller) */
+        url('/plantilla/images/Mechanics_working_on_car_engine_nosotros.jpg') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-attachment: fixed !important; /* Efecto Parallax */
+}
+
+/* 2. Forzar que las tarjetas se centren (Arregla el hueco de la tercera tarjeta) */
+#adn-simple .features {
+    justify-content: center !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+}
+
+/* Opcional: Hacer que las tarjetas sean un poco más translúcidas 
+   para que dejen ver sutilmente la imagen de fondo a través de ellas */
+#adn-simple .features article {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(4px) !important; /* Efecto cristal suave */
+    -webkit-backdrop-filter: blur(4px) !important;
+}
