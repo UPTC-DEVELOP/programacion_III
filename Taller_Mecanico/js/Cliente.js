@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-   
+
     function guardarClientes(clientes) {
 
         localStorage.setItem(
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-   
+
     function abrirModal() {
 
         modalCliente.classList.remove("d-none");
@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
 
-     
+
         if (clientesFiltrados.length === 0) {
 
             tablaContainer.classList.add("d-none");
@@ -251,7 +251,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     formCliente.addEventListener(
         "submit",
-        function(event) {
+        function (event) {
 
             event.preventDefault();
 
@@ -272,163 +272,163 @@ document.addEventListener("DOMContentLoaded", () => {
                 inputDireccion.value.trim();
 
 
-// Validar campos vacíos
-if (
-    !cedula ||
-    !nombres ||
-    !apellidos ||
-    !telefono ||
-    !direccion
-) {
+            // Validar campos vacíos
+            if (
+                !cedula ||
+                !nombres ||
+                !apellidos ||
+                !telefono ||
+                !direccion
+            ) {
 
-    alert(
-        "Por favor completa todos los campos."
-    );
+                alert(
+                    "Por favor completa todos los campos."
+                );
 
-    return;
-}
-
-
-// Validar cédula
-const soloNumeros = /^[0-9]+$/;
-
-if (!soloNumeros.test(cedula)) {
-
-    alert(
-        "La cédula solo debe contener números."
-    );
-
-    return;
-}
+                return;
+            }
 
 
-if (
-    cedula.length < 5 ||
-    cedula.length > 12
-) {
+            // Validar cédula
+            const soloNumeros = /^[0-9]+$/;
 
-    alert(
-        "La cédula debe tener entre 5 y 12 dígitos."
-    );
+            if (!soloNumeros.test(cedula)) {
 
-    return;
-}
+                alert(
+                    "La cédula solo debe contener números."
+                );
 
-
-// Validar nombres
-const soloLetras =
-    /^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/;
+                return;
+            }
 
 
-if (!soloLetras.test(nombres)) {
+            if (
+                cedula.length < 5 ||
+                cedula.length > 12
+            ) {
 
-    alert(
-        "Los nombres solo deben contener letras y espacios."
-    );
+                alert(
+                    "La cédula debe tener entre 5 y 12 dígitos."
+                );
 
-    return;
-}
-
-
-if (
-    nombres.length < 2 ||
-    nombres.length > 50
-) {
-
-    alert(
-        "Los nombres deben tener entre 2 y 50 caracteres."
-    );
-
-    return;
-}
+                return;
+            }
 
 
-// Validar apellidos
-if (!soloLetras.test(apellidos)) {
-
-    alert(
-        "Los apellidos solo deben contener letras y espacios."
-    );
-
-    return;
-}
+            // Validar nombres
+            const soloLetras =
+                /^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/;
 
 
-if (
-    apellidos.length < 2 ||
-    apellidos.length > 50
-) {
+            if (!soloLetras.test(nombres)) {
 
-    alert(
-        "Los apellidos deben tener entre 2 y 50 caracteres."
-    );
+                alert(
+                    "Los nombres solo deben contener letras y espacios."
+                );
 
-    return;
-}
+                return;
+            }
 
 
-// Validar teléfono
-if (!soloNumeros.test(telefono)) {
+            if (
+                nombres.length < 2 ||
+                nombres.length > 50
+            ) {
 
-    alert(
-        "El teléfono solo debe contener números."
-    );
+                alert(
+                    "Los nombres deben tener entre 2 y 50 caracteres."
+                );
 
-    return;
-}
-
-
-if (
-    telefono.length < 7 ||
-    telefono.length > 15
-) {
-
-    alert(
-        "El teléfono debe tener entre 7 y 15 dígitos."
-    );
-
-    return;
-}
+                return;
+            }
 
 
-// Validar dirección
-if (
-    direccion.length < 5 ||
-    direccion.length > 100
-) {
+            // Validar apellidos
+            if (!soloLetras.test(apellidos)) {
 
-    alert(
-        "La dirección debe tener entre 5 y 100 caracteres."
-    );
+                alert(
+                    "Los apellidos solo deben contener letras y espacios."
+                );
 
-    return;
-}
+                return;
+            }
 
 
-const clientes =
-    obtenerClientes();
+            if (
+                apellidos.length < 2 ||
+                apellidos.length > 50
+            ) {
+
+                alert(
+                    "Los apellidos deben tener entre 2 y 50 caracteres."
+                );
+
+                return;
+            }
 
 
-// Validar cédula duplicada
-const cedulaDuplicada =
-    clientes.some(cliente => {
+            // Validar teléfono
+            if (!soloNumeros.test(telefono)) {
 
-        return (
-            String(cliente.cedula) === String(cedula) &&
-            String(cliente.id) !== String(inputId.value)
-        );
+                alert(
+                    "El teléfono solo debe contener números."
+                );
 
-    });
+                return;
+            }
 
 
-if (cedulaDuplicada) {
+            if (
+                telefono.length < 7 ||
+                telefono.length > 15
+            ) {
 
-    alert(
-        "Ya existe un cliente registrado con esta cédula."
-    );
+                alert(
+                    "El teléfono debe tener entre 7 y 15 dígitos."
+                );
 
-    return;
-}
+                return;
+            }
+
+
+            // Validar dirección
+            if (
+                direccion.length < 5 ||
+                direccion.length > 100
+            ) {
+
+                alert(
+                    "La dirección debe tener entre 5 y 100 caracteres."
+                );
+
+                return;
+            }
+
+
+            const clientes =
+                obtenerClientes();
+
+
+            // Validar cédula duplicada
+            const cedulaDuplicada =
+                clientes.some(cliente => {
+
+                    return (
+                        String(cliente.cedula) === String(cedula) &&
+                        String(cliente.id) !== String(inputId.value)
+                    );
+
+                });
+
+
+            if (cedulaDuplicada) {
+
+                alert(
+                    "Ya existe un cliente registrado con esta cédula."
+                );
+
+                return;
+            }
 
             if (inputId.value) {
 
@@ -517,7 +517,7 @@ if (cedulaDuplicada) {
 
     listaClientes.addEventListener(
         "click",
-        function(event) {
+        function (event) {
 
             const boton =
                 event.target;
@@ -657,7 +657,7 @@ if (cedulaDuplicada) {
 
     inputBusqueda.addEventListener(
         "input",
-        function() {
+        function () {
 
             renderizarClientes(
                 this.value

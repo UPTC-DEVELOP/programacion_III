@@ -1,133 +1,116 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LJA MOTORS - Vehículos</title>
-
-  <!-- Librerías de Bootstrap 5 -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  
-  <!-- Tu hoja de estilos principal con la identidad LJA Motors -->
-  <link rel="stylesheet" href="assets/css/main.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehículos</title>
+    <link rel="stylesheet" href="assets/libs/bootstrap-icons/bootstrap-icons.css">
+    <link href="assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <!-- Opcional: puedes crear un vehiculo.css o seguir usando cliente.css si comparten los mismos estilos exactos -->
+    <link rel="stylesheet" href="css/cliente.css">
 </head>
-<body class="bg-light">
+<body class="bg-dark-panel">
 
-  <div class="main-wrapper">
-    <!-- Cabecera de la página -->
-    <header class="top-navbar bg-white p-3 border-bottom d-flex justify-content-between align-items-center">
-      <div>
-        <span class="text-muted small">Gestión de Taller</span>
-        <h1 class="h4 mb-0 fw-bold">Vehículos Registrados</h1>
-      </div>
-    </header>
+    <div id="sidebar-component"></div>
 
-    <main class="container-fluid p-4">
-      
-      <!-- CONTROLES: Buscador y Botón Nuevo -->
-      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
-        
-        <!-- Buscador -->
-        <div class="input-group" style="max-width: 400px;">
-          <span class="input-group-text bg-white"><i class="bi bi-search text-muted"></i></span>
-          <input type="text" id="input-busqueda-vehiculos" class="form-control border-start-0" placeholder="Buscar por placa, marca o modelo...">
-        </div>
+    <div class="main-wrapper">
+        <div id="header-component"></div>
 
-        <!-- Botón que abre el modal (usa atributos data-bs-target nativos de Bootstrap) -->
-        <button class="btn btn-lja-primary" data-bs-toggle="modal" data-bs-target="#modalVehiculo" id="btn-nuevo-vehiculo">
-          <i class="bi bi-plus-lg"></i> Nuevo Vehículo
-        </button>
-      </div>
+        <main class="content-body">
+            <h2>Vehículos</h2>
 
-      <!-- ESTADO VACÍO: Se muestra cuando no hay datos -->
-      <div id="empty-state-vehiculos" class="text-center py-5 d-none">
-        <i class="bi bi-car-front text-muted" style="font-size: 3rem;"></i>
-        <h5 class="mt-3 fw-bold">No hay vehículos registrados</h5>
-        <p class="text-muted">Haz clic en "Nuevo Vehículo" para comenzar.</p>
-      </div>
-
-      <!-- TABLA DE DATOS -->
-      <div class="card border-0 shadow-sm rounded-3" id="tabla-vehiculos-container">
-        <div class="table-responsive p-3">
-          <table class="table table-hover align-middle mb-0">
-            <thead class="table-light text-muted small text-uppercase">
-              <tr>
-                <th>Placa</th>
-                <th>Marca / Modelo</th>
-                <th>Año</th>
-                <th>Cliente (Dueño)</th>
-                <th class="text-end pe-3">Acciones</th>
-              </tr>
-            </thead>
-            <tbody id="lista-vehiculos">
-              <!-- Aquí inyectaremos los <tr> desde JavaScript -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-    </main>
-  </div>
-
-  <!-- MODAL PARA CREAR/EDITAR VEHÍCULO -->
-  <!-- Las clases 'modal fade' permiten la animación de entrada suave -->
-  <div class="modal fade" id="modalVehiculo" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content border-0 shadow-lg">
-        
-        <div class="modal-header border-bottom-0">
-          <h5 class="modal-title fw-bold" id="modalVehiculoLabel">Registrar Vehículo</h5>
-          <!-- Botón nativo para cerrar -->
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-        </div>
-
-        <!-- El formulario interceptará el evento 'submit' en JS -->
-        <form id="form-vehiculo">
-          <div class="modal-body">
-            <!-- CAMPO OCULTO: Vital para saber si estamos creando (vacío) o editando (tiene un ID) -->
-            <input type="hidden" id="vehiculo-id">
-
-            <div class="row g-3">
-              <div class="col-md-6">
-                <label class="form-label small text-muted">Placa *</label>
-                <!-- required obliga al navegador a validar antes de enviar -->
-                <input type="text" class="form-control text-uppercase" id="vehiculo-placa" required>
-              </div>
-              <div class="col-md-6">
-                <label class="form-label small text-muted">Año *</label>
-                <input type="number" class="form-control" id="vehiculo-anio" required>
-              </div>
-              <div class="col-md-6">
-                <label class="form-label small text-muted">Marca *</label>
-                <input type="text" class="form-control" id="vehiculo-marca" required>
-              </div>
-              <div class="col-md-6">
-                <label class="form-label small text-muted">Modelo *</label>
-                <input type="text" class="form-control" id="vehiculo-modelo" required>
-              </div>
-              
-              <!-- SELECT DE CLIENTES: Este campo se llenará leyendo la base de datos de tu compañero -->
-              <div class="col-12">
-                <label class="form-label small text-muted">Propietario *</label>
-                <select class="form-select" id="vehiculo-cliente" required>
-                  <option value="" disabled selected>Seleccione un cliente...</option>
-                </select>
-              </div>
+            <div>
+                <button type="button" id="btn-abrir-modal">
+                    + Nuevo vehículo
+                </button>
             </div>
-          </div>
 
-          <div class="modal-footer border-top-0">
-            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
-            <button type="submit" class="btn btn-lja-primary">Guardar Vehículo</button>
-          </div>
-        </form>
+            <div class="barra-busqueda">
+                <input type="text" id="input-busqueda" placeholder="Buscar por placa, marca o cliente...">
+                <button type="button">Buscar</button>
+            </div>
 
-      </div>
+            <div class="Estado d-none" id="empty-state">
+                <p>Aún no hay vehículos registrados.</p>
+                <p>Haz clic en <strong>+ Nuevo vehículo</strong></p>
+            </div>
+
+            <div class="tabla" id="tabla-container">
+                <table class="tabla_cliente"> <!-- Mantuve la clase por si tu CSS depende de ella -->
+                    <thead>
+                        <tr>
+                            <th>Placa</th>
+                            <th>Marca</th>
+                            <th>Modelo</th>
+                            <th>Año</th>
+                            <th>Propietario (Cliente)</th>
+                            <th class="acciones">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="lista_cliente" id="lista-vehiculos">
+                    </tbody>
+                </table>
+            </div>
+        </main>
     </div>
-  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/vehiculos.js"></script>
+    <!-- MODAL PARA REGISTRAR VEHÍCULO -->
+    <div class="modal-overlay d-none" id="modal-vehiculo">
+        <div class="modal-card">
+            
+            <div class="modal-header">
+                <h3 id="modal-titulo">Registrar nuevo vehículo</h3>
+                <button type="button" class="btn-close-modal" id="btn-cerrar-modal">×</button>
+            </div>
+
+            <form id="form-vehiculo">
+                <input type="hidden" id="vehiculo-id">
+
+                <div class="form-group">
+                    <label for="vehiculo-placa">Placa <span class="required">*</span></label>
+                    <input type="text" id="vehiculo-placa" placeholder="Ej. ABC-123" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-6">
+                        <label for="vehiculo-marca">Marca <span class="required">*</span></label>
+                        <input type="text" id="vehiculo-marca" placeholder="Ej. Toyota, Chevrolet" required>
+                    </div>
+
+                    <div class="form-group col-6">
+                        <label for="vehiculo-modelo">Modelo <span class="required">*</span></label>
+                        <input type="text" id="vehiculo-modelo" placeholder="Ej. Corolla, Spark" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="vehiculo-anio">Año <span class="required">*</span></label>
+                    <!-- Cambiado a tipo number para el año -->
+                    <input type="number" id="vehiculo-anio" placeholder="Ej. 2022" required>
+                </div>
+
+                <!-- Propietario (Desplegable) -->
+                <div class="form-group">
+                    <label for="vehiculo-propietario">Propietario (Cliente) <span class="required">*</span></label>
+                    <!-- Usamos un select para que el JS cargue los clientes existentes -->
+                    <select id="vehiculo-propietario" class="form-control" required>
+                        <option value="">Seleccione un cliente registrado...</option>
+                        <!-- Aquí tu JS (Vehiculo.js) insertará las opciones de los clientes -->
+                    </select>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="btn-cancelar">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="btn-guardar">Registrar vehículo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/header_nav.js"></script>
+    <!-- ¡OJO! Aquí vinculamos el nuevo archivo JS que deberás crear -->
+    <script src="js/Vehiculos.js"></script>
 </body>
 </html>

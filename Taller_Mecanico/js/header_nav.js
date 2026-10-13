@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <i class="bi bi-people-fill text-purple"></i>
               <span>Clientes</span>
             </a>
-            <a href="ui-forms.html" class="nav-item-link" id="nav-vehiculos">
+            <a href="Vehiculos.html" class="nav-item-link" id="nav-vehiculos">
               <i class="bi bi-car-front-fill text-danger"></i>
               <span>Vehículos</span>
             </a>
@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <ul class="dropdown-menu dropdown-menu-quick dropdown-menu-end shadow-sm py-2" aria-labelledby="navbarActionDropdown">
               <li class="dropdown-header">OPERACIONES RÁPIDAS</li>
               <li><a class="dropdown-item" href="ui-forms.html"><i class="bi bi-wrench text-primary"></i> Ingresar Orden de Trabajo</a></li>
-              <li><a class="dropdown-item" href="ui-forms.html"><i class="bi bi-car-front text-danger"></i> Registrar Vehículo</a></li>
+              <li><a class="dropdown-item" href="Vehiculos.html"><i class="bi bi-car-front text-danger"></i> Registrar Vehículo</a></li>
               <li><a class="dropdown-item" href="Cliente.html"><i class="bi bi-person-plus text-purple"></i> Registrar Cliente</a></li>
               <li><hr class="dropdown-divider my-1"></li>
               <li class="dropdown-header">ADMINISTRACIÓN</li>
@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       </header>
     `;
-    
+
     // Ajustar el título del Header según el documento actual
     updateHeaderTitle();
   }
@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function highlightActiveLink() {
   const currentPath = window.location.pathname.split("/").pop() || "index.html";
   const links = document.querySelectorAll(".sidebar-nav .nav-item-link");
-  
+
   links.forEach(link => {
     if (link.getAttribute("href") === currentPath) {
       link.classList.add("active");
