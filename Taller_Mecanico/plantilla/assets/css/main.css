@@ -4241,3 +4241,158 @@ input, select, textarea {
     max-width: 320px !important; 
     object-fit: contain !important; 
 }
+
+/* ========================================================
+   HERO Y CONTINUIDAD  - LJA MOTORS 
+   ======================================================== */
+
+/* 1. Imagen anclada al fondo general de la sección */
+#wrapper {
+    background-image: url('/assets/imagenes/scanner.jpeg') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-attachment: fixed !important; 
+    background-color: transparent !important;
+}
+
+/* 2. Encabezado superior (Hero) - Degradado azul translúcido */
+#wrapper > header.hero-nosotros {
+    background: linear-gradient(135deg, rgba(9, 19, 34, 0.85), rgba(30, 58, 109, 0.65)) !important;
+    padding-bottom: 6em !important;
+    /* Reseteamos recortes previos para evitar choques */
+    clip-path: none !important; 
+    -webkit-clip-path: none !important;
+}
+
+/* 3. Caja de texto inferior - Degradado muy oscuro con UN SOLO CORTE diagonal */
+#wrapper > .wrapper {
+    background: linear-gradient(to bottom, rgba(15, 23, 42, 0.95), rgba(9, 19, 34, 0.99)) !important;
+    /* Tijera: Cortamos solo la parte superior izquierda de esta caja para hacer la diagonal */
+    clip-path: polygon(0 5vw, 100% 0, 100% 100%, 0 100%) !important;
+    -webkit-clip-path: polygon(0 5vw, 100% 0, 100% 100%, 0 100%) !important;
+    
+    /* Subimos la caja para que el corte tape la línea recta del encabezado */
+    margin-top: -5vw !important; 
+    padding-top: 8vw !important;
+    position: relative;
+    z-index: 1;
+}
+
+/* 4. LA CLAVE: Ocultar los triángulos nativos intrusos de la plantilla */
+#wrapper > header.hero-nosotros::before,
+#wrapper > header.hero-nosotros::after,
+#wrapper > .wrapper::before,
+#wrapper > .wrapper::after {
+    display: none !important;
+}
+
+/* Tipografía del título */
+#wrapper > header.hero-nosotros h2 {
+    font-weight: 800 !important;
+    letter-spacing: 0.05em;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); 
+}
+
+/* ========================================================
+   DISEÑO DE TARJETAS BLANCAS (SOLO ADN INSTITUCIONAL)
+   ======================================================== */
+/* Convertimos los artículos del ADN en tarjetas blancas */
+#wrapper .adn-cards article {
+    background-color: #ffffff !important;
+    border-radius: 16px !important;
+    padding: 3em 2.5em !important;
+    border: none !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#wrapper .adn-cards article:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Forzamos textos oscuros solo en estas tarjetas blancas */
+#wrapper .adn-cards article h3,
+#wrapper .adn-cards article p,
+#wrapper .adn-cards article ul li,
+#wrapper .adn-cards article strong {
+    color: #1e293b !important; 
+}
+
+#wrapper .adn-cards article ul.alt li {
+    border-top-color: #e2e8f0 !important; 
+}
+
+
+/* ========================================================
+   FONDO CON IMAGEN PARA EL CIERRE (FOOTER / CTA)
+   ======================================================== */
+/*  damos vida al bloque final con una imagen de fondo y efecto parallax */
+#footer {
+    /* Gradiente oscuro que se funde con la imagen para que el texto resalte */
+    background-image: 
+        linear-gradient(to bottom, rgba(15, 23, 42, 1) 0%, rgba(15, 23, 42, 0.7) 40%, rgba(9, 19, 34, 0.9) 100%),
+        url('../../images/Mechanical_engineer_scanning_car_2K.jpeg') !important; 
+        
+    background-size: cover !important;
+    background-position: center !important;
+    background-attachment: fixed !important; /* Mantiene el efecto Parallax */
+    
+    padding: 8em 0 6em 0 !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.05); /* Línea sutil de separación */
+}
+
+/*  título final sea más grande e impactante */
+#footer h2.major {
+    font-weight: 800 !important;
+    font-size: 2.5em !important;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+    color: #ffffff !important;
+}
+
+#footer p {
+    color: #cbd5e1 !important;
+}
+/* ========================================================
+   ÍCONOS ANIMADOS (CORRECCIÓN DEFINITIVA) - LJA MOTORS
+   ======================================================== */
+section.spotlight .image.anim-icon-container {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+    min-height: 300px !important; 
+    width: 100% !important;
+    max-width: 400px !important;
+}
+
+/* Ocultamos los círculos grises intrusos de la plantilla */
+section.spotlight .image.anim-icon-container::before,
+section.spotlight .image.anim-icon-container::after {
+    display: none !important; 
+}
+
+/* Forzamos el tamaño y color del icono */
+section.spotlight .image.anim-icon-container i.anim-icon {
+    font-size: 9em !important; /* Aún más grande */
+    color: #2563EB !important; /* Azul corporativo */
+    text-shadow: 0 10px 20px rgba(0, 0, 0, 0.5) !important;
+    animation: flotar 3.5s ease-in-out infinite !important;
+    transition: all 0.4s ease !important;
+    display: block !important;
+}
+
+/* Efecto Hover */
+section.spotlight .image.anim-icon-container:hover i.anim-icon {
+    color: #60a5fa !important;
+    transform: scale(1.15) !important;
+    text-shadow: 0 15px 30px rgba(37, 99, 235, 0.7) !important;
+    animation-play-state: paused !important;
+}
+
+@keyframes flotar {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); } 
+    100% { transform: translateY(0px); } 
+}
