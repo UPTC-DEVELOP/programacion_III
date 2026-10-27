@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Llave inglesa">
+  <rect width="64" height="64" rx="12" fill="#EE2524"/>
+  <!-- Mango de la llave -->
+  <path d="M28 28 L50 50" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/>
+  <!-- Cabeza de la llave -->
+  <circle cx="22" cy="22" r="10" fill="none" stroke="#FFFFFF" stroke-width="7"/>
+  <!-- Abertura de la boca: recorta la cabeza con el color del fondo -->
+  <path d="M22 22 L0 16 L0 0 L16 0 Z" fill="#EE2524"/>
+</svg>

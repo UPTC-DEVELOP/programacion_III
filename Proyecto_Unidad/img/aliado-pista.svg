@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="140" height="44" viewBox="0 0 140 44" fill="none" role="img" aria-label="Pista">
+  <rect x="2" y="2" width="40" height="40" rx="12" fill="#223239"/>
+  <circle cx="22" cy="22" r="11" fill="none" stroke="#fff" stroke-width="3.2"/>
+  <circle cx="22" cy="22" r="4.2" fill="#fff"/>
+  <path d="M22 11.2v3.2M22 29.6v3.2M11.2 22h3.2M29.6 22h3.2" stroke="#223239" stroke-width="1.8" stroke-linecap="round"/>
+  <text x="52" y="28" fill="#223239" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="0.8">PISTA</text>
+</svg>
