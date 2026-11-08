@@ -21,20 +21,20 @@ document.addEventListener("DOMContentLoaded", () => {
 /* =========================================================
    INICIO DE SESIÓN DE DEMOSTRACIÓN.
 ========================================================= */
-
 function inicializarLogin(formulario) {
     const campoUsuario = document.getElementById("username");
     const campoPassword = document.getElementById("password");
     const recordarUsuario = document.getElementById("recordarUsuario");
     const mensajeLogin = document.getElementById("mensajeLogin");
     const usuarioGuardado = localStorage.getItem("usuarioRecordadoServiAuto");
+    const botonIngresar = formulario.querySelector('[type="submit"]');
 
     if (usuarioGuardado && campoUsuario && recordarUsuario) {
         campoUsuario.value = usuarioGuardado;
         recordarUsuario.checked = true;
     }
 
-    formulario.addEventListener("submit", (evento) => {
+    formulario.addEventListener("submit", async (evento) => {
         evento.preventDefault();
 
         const username = campoUsuario.value.trim();
@@ -45,34 +45,101 @@ function inicializarLogin(formulario) {
             return;
         }
 
-        // Credenciales de demostración; no usar esta validación en producción.
-        if (username.toLowerCase() !== "admin" || password !== "234") {
-            mostrarMensajeLogin(mensajeLogin, "❌ Usuario o contraseña incorrectos.", "error");
-            campoPassword.focus();
-            return;
-        }
+        if (botonIngresar) botonIngresar.disabled = true;
+        mostrarMensajeLogin(mensajeLogin, "Validando credenciales...", "info");
 
         try {
-            if (recordarUsuario?.checked) {
+            let nombreSesion = username;
+            let tokenConPrefijo = "";
+
+
+            // 1. VALIDACIÓN LOCAL (Admin / 234)
+
+            if (username.toLowerCase() === "admin" && password === "234") {
+                nombreSesion = "admin";
+                tokenConPrefijo = "";
+            }
+            // 2. VALIDACIÓN REMOTA (API Clarisacloud)
+            else {
+                const username = campoUsuario.value.trim();
+                const password = campoPassword.value;
+                console.log({
+                    usuario: username,
+                    contrasenia: password
+                });
+                const response = await fetch(
+                    "https://pru.clarisacloud.com:8443/seguridad/rest/api/v1/login",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        },
+                        body: JSON.stringify({
+                            usuario: username,
+                            contrasenia: password
+                        })
+                    }
+                );
+
+                const resultado = await response.json();
+                console.log("response.ok =", response.ok);
+                console.log("response.status =", response.status);
+                console.log(resultado);
+
+                // Validar la estructura de éxito que retorna Clarisa
+                if (!response.ok || !resultado.success || !resultado.data) {
+                    const detalle = resultado.textResponse || "Credenciales inválidas.";
+                    mostrarMensajeLogin(
+                        mensajeLogin,
+                        `❌ ${detalle}`,
+                        "error"
+                    );
+                    campoPassword.focus();
+                    if (botonIngresar) botonIngresar.disabled = false;
+                    return;
+                }
+
+                //  datos de la respuesta de Clarisacloud
+                nombreSesion = resultado.data.usuario?.userName || username;
+
+                const tokenRaw = resultado.data.token || "";
+                // prefijo de token "Bearer " 
+                tokenConPrefijo = tokenRaw.startsWith("Bearer") ? tokenRaw : `Bearer ${tokenRaw}`;
+            }
+
+            // Guardar preferencias de usuario 
+            if (recordarUsuario.checked) {
                 localStorage.setItem("usuarioRecordadoServiAuto", username);
             } else {
                 localStorage.removeItem("usuarioRecordadoServiAuto");
             }
 
-            localStorage.setItem("sesionServiAuto", JSON.stringify({ username }));
-        } catch (error) {
-            console.error("No se pudo guardar la sesión:", error);
-            mostrarMensajeLogin(mensajeLogin, "No se pudo iniciar la sesión en este navegador.", "error");
-            return;
-        }
+            // Almacenar token y sesión para las siguientes vistas (Facturas)
+            if (tokenConPrefijo) {
+                localStorage.setItem("tokenWithPrefix", tokenConPrefijo);
+            } else {
+                localStorage.removeItem("tokenWithPrefix");
+            }
 
-        mostrarMensajeLogin(mensajeLogin, "✅ Inicio de sesión correcto. Abriendo el sistema...", "exito");
-        window.setTimeout(() => {
-            window.location.href = "sistema.html";
-        }, 500);
+            localStorage.setItem("sesionServiAuto", JSON.stringify({ username: nombreSesion }));
+
+            mostrarMensajeLogin(mensajeLogin, " Inicio de sesión correcto. Abriendo el sistema...", "exito");
+            window.setTimeout(() => {
+                window.location.href = "sistema.html";
+            }, 500);
+
+        } catch (error) {
+            console.error("No se pudo iniciar la sesión:", error);
+            mostrarMensajeLogin(
+                mensajeLogin,
+                "Error de red al conectar con el servidor de Clarisacloud.",
+                "error"
+            );
+            if (botonIngresar) botonIngresar.disabled = false;
+        }
     });
 }
-
 
 function mostrarMensajeLogin(elemento, texto, tipo) {
     if (!elemento) return;
@@ -81,23 +148,19 @@ function mostrarMensajeLogin(elemento, texto, tipo) {
     elemento.className = `mensaje-login ${tipo}`;
 }
 
-
 function inicializarMostrarPassword() {
     const boton = document.getElementById("togglePassword");
-    const password = document.getElementById("password");
+    const campoPassword = document.getElementById("password");
 
-    if (!boton || !password) return;
+    if (!boton || !campoPassword) return;
 
-    boton.textContent = "👁️";
     boton.addEventListener("click", () => {
-        const mostrar = password.type === "password";
-        password.type = mostrar ? "text" : "password";
-        boton.textContent = mostrar ? "🙈" : "👁️";
+        const mostrar = campoPassword.type === "password";
+        campoPassword.type = mostrar ? "text" : "password";
         boton.setAttribute("aria-label", mostrar ? "Ocultar contraseña" : "Mostrar contraseña");
         boton.setAttribute("aria-pressed", String(mostrar));
     });
 }
-
 
 /* =========================================================
    SESIÓN Y USUARIO
@@ -161,7 +224,7 @@ function inicializarCerrarSesion() {
             localStorage.removeItem("sesionServiAuto");
         } catch (error) {
             console.error("No se pudo cerrar la sesión:", error);
-            mostrarEstado("⚠️ No se pudo cerrar la sesión. Inténtalo de nuevo.");
+            mostrarEstado(" No se pudo cerrar la sesión. Inténtalo de nuevo.");
             return;
         }
 
