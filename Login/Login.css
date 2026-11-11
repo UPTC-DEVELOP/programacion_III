@@ -1,0 +1,56 @@
+* { 
+    box-sizing: border-box;
+}
+body{
+    margin:0;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding:  1rem;
+    font-family: system-ui, sans-serif;
+}
+.tarjeta{
+    width: 100%;
+    max-width: 400px;
+    padding: clamp(1.25rem, 5vw, 2rem);
+    border-radius:12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+h1{
+    margin: 0 0 1.5rem;
+    font-size: 1.5rem;
+    text-align: center;
+}
+label{
+    display: block;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+input{
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+}
+button{
+    width: 100%;
+    padding: 0.85rem;
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+button:disabled{
+    opacity: 0.6;
+    cursor: wait;
+}
+#mensaje{
+    min-height: 1.25rem;
+    margin: 0 0 1rem;
+    color: #c92a2a;
+    font-size: 0.9rem;
+}

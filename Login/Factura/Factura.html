@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear factura | Taller Pro</title>
+    <link rel="stylesheet" href="Factura.css">
+</head>
+<body>
+    <header class="barra">
+        <span>Usuario: <strong id="nombreUsuario"></strong></span>
+        <button type="button" id="btnSalir">Cerrar sesión</button>
+    </header>
+
+    <main class="contenedor">
+        <h1>Crear factura</h1>
+
+        <form id="formFactura" novalidate>
+
+            <fieldset>
+                <legend>Documento</legend>
+                <div class="campos">
+                    <label>NIT
+                        <input id="nit" type="text" value="12345" required>
+                    </label>
+                    <label>Número de resolución
+                        <input id="numeroResolucion" type="text" value="18760000001" required>
+                    </label>
+                    <label>Prefijo
+                        <input id="prefijoDcto" type="text" value="SETP" maxlength="4">
+                    </label>
+                    <label>Consecutivo
+                        <input id="consecutivoDcto" type="text" inputmode="numeric" pattern="[0-9]{1,9}" required>
+                    </label>
+                    <label>Fecha de vencimiento
+                        <input id="fechaVencimiento" type="date" required>
+                    </label>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Pago</legend>
+                <div class="campos">
+                    <label>Forma de pago
+                        <select id="formaPago" required>
+                            <option value="1">Contado</option>
+                            <option value="2">Crédito</option>
+                        </select>
+                    </label>
+                    <label>Medio de pago
+                        <select id="medioPago" required>
+                            <option value="10">Efectivo</option>
+                            <option value="30">Tarjeta de crédito</option>
+                            <option value="49">Tarjeta débito</option>
+                        </select>
+                    </label>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Cliente</legend>
+                <div class="campos">
+                    <label>Nombre o razón social
+                        <input id="nombreRazonSocial" type="text" required>
+                    </label>
+                    <label>Tipo de identificación
+                        <select id="tipoIdentificacion" required>
+                            <option value="CC">Cédula de ciudadanía</option>
+                            <option value="NI">NIT</option>
+                            <option value="CE">Cédula de extranjería</option>
+                            <option value="PA">Pasaporte</option>
+                        </select>
+                    </label>
+                    <label>Número de identificación
+                        <input id="numIdentificacion" type="text" inputmode="numeric" required>
+                    </label>
+                    <label>Naturaleza
+                        <select id="naturaleza" required>
+                            <option value="NATURAL">Natural</option>
+                            <option value="JURIDICA">Jurídica</option>
+                        </select>
+                    </label>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Producto o servicio</legend>
+                <div class="campos">
+                    <label>Código
+                        <input id="codigo" type="text" required>
+                    </label>
+                    <label>Descripción
+                        <input id="nombreItem" type="text" required>
+                    </label>
+                    <label>Cantidad
+                        <input id="cantidad" type="number" min="1" step="1" value="1" required>
+                    </label>
+                    <label>Precio unitario (sin IVA)
+                        <input id="precioBaseUnitario" type="number" min="0" step="0.01" required>
+                    </label>
+                    <label>Unidad
+                        <select id="unidad" required>
+                            <option value="94">Unidad</option>
+                        </select>
+                    </label>
+                    <label>IVA
+                        <select id="tarifaTributo" required>
+                            <option value="19">19 %</option>
+                            <option value="5">5 %</option>
+                        </select>
+                    </label>
+                </div>
+            </fieldset>
+
+            <p class="total">Total: <strong id="total">$ 0</strong></p>
+            <div id="mensaje" role="alert"></div>
+            <button type="submit" id="btnEnviar">Crear factura</button>
+        </form>
+    </main>
+
+    <script src="Factura.js"></script>
+</body>
+</html>
