@@ -8,13 +8,21 @@ if (!token) {
 
 const form = document.getElementById('formFactura');
 const mensaje = document.getElementById('mensaje');
-const boto = document.getElementById('btnEnviar');
+const boton = document.getElementById('btnEnviar');
 const textoTotal = document.getElementById('total');
 
-function valor(id){
-    return document.getElementById(id).value.trim();
+function valor(id) {
+    const el = document.getElementById(id);
+    return el ? el.value.trim() : '';
 }
-
+function leerImpuesto() {
+    const v = valor('tarifaTributo');
+    if (v.includes(':')) {
+        const [tipo, tarifa] = v.split(':');
+        return { tipo, tarifa: Number(tarifa) };
+    }
+    return { tipo: 'IVA', tarifa: Number(v) };
+}
 function mostrarMensaje(tipo, texto) {
     mensaje.className = tipo;
     mensaje.textContent = texto;
@@ -43,7 +51,7 @@ inputFecha.value = fechaHoy;
 function calcularTotal() {
     const cantidad = Number(valor('cantidad'));
     const precio = Number(valor('precioBaseUnitario'));
-    const tarifa = Number(valor('tarifaTributo'));
+    const tarifa = leerImpuesto().tarifa;
 
     const subtotal = cantidad * precio;
     const total = subtotal + subtotal * tarifa / 100;
@@ -63,38 +71,61 @@ form.addEventListener('submit', async (e) => {
         return;
     }
 
+    const imp = leerImpuesto();
+    const cliente = {
+        nombreRazonSocial: valor('nombreRazonSocial'),
+        tipoIdentificacion: valor('tipoIdentificacion'),
+        numIdentificacion: valor('numIdentificacion'),
+        naturaleza: valor('naturaleza'),
+        respFiscales: valor('respFiscales'),
+        respTributarias: valor('respTributarias'),
+    };
+    ['email', 'direccion', 'ciudad', 'telefono'].forEach((id) => {
+        if (valor(id)) cliente[id] = valor(id);
+    });
+    const subtotal = Number(valor('cantidad')) * Number(valor('precioBaseUnitario'));
+
     const factura = {
-        nit: valor('nit'),
+        NIT: valor('nit'),
         numeroResolucion: valor('numeroResolucion'),
-        consecutivoDcto: valor('consecutivoDcto'),
-        prefijoDcto: valor('prefijoDcto'),
+        consecutivoDcto: Number(valor('consecutivoDcto')),
         fechaVencimiento: valor('fechaVencimiento'),
         formaPago: valor('formaPago'),
-        mediosPago: valor('mediosPago'),
-        cliente: {
-            nombreRazonSocial: valor('nombreRazonSocial'),
-            tipoIdentificacion: valor('tipoIdentificacion'),
-            numeroIdentificacion: valor('numeroIdentificacion'),
-            naturaleza: valor('naturaleza'),
+        mediosPago: [valor('medioPago')],
+        extensiones: {
+            dianExtension: {
+                beneficiosComprador: { codigo: cliente.numIdentificacion, nombreApellido: cliente.nombreRazonSocial, puntos: '0' },
+                puntoVenta: {
+                    placaCaja: 'CAJA1', ubicacionCaja: 'WEB',
+                    cajero: sessionStorage.getItem('clarisa_usuario') || 'Cajero',
+                    tipoCaja: 'VIRTUAL', codigoVenta: String(Date.now()).slice(-9),
+                    subTotal: String(subtotal),
+                },
+            },
         },
+        cliente: cliente,
+        total: calcularTotal(),
         items: [
             {
                 codigo: valor('codigo'),
-                nombreItem: valor('nombreItem'),
+                nombreItemVenta: valor('nombreItem'),
                 precioBaseUnitario: Number(valor('precioBaseUnitario')),
                 cantidad: Number(valor('cantidad')),
                 unidad: valor('unidad'),
-                impuesto: [
-                    {
-                        tipo: 'IVA',
-                        claseImpuesto: 'PO',
-                        tarifaTributo: Number(valor('tarifaTributo')),
-                    }
-                ]
+                valorDescuento: 0,
+                observacion: '',
+                impuestos: [
+                    { tipo: imp.tipo, claseImpuesto: 'PO', tarifaTributo: imp.tarifa }
+                ],
             }
         ]
     };
-    const numeroFactura = factura.prefijoDcto + factura.consecutivoDcto;
+    if (valor('prefijoDcto')) factura.prefijoDcto = valor('prefijoDcto');
+
+
+
+
+    const numeroFactura = valor('prefijoDcto') + valor('consecutivoDcto');
     boton.disabled = true;
     boton.textContent = 'Enviando...';
 
@@ -115,14 +146,15 @@ form.addEventListener('submit', async (e) => {
     const json = await res.json();
     console.log(json);
 
-    if (json.success9) {
+    
+        if (json.success) {
        mostrarMensaje('exito', 'Factura ' + numeroFactura + ' creada correctamente.');
             document.getElementById('consecutivoDcto').value = '';
         } else if (json.data?.estadoClarisa === 'VERIFICANDO') {
             mostrarMensaje('aviso', 'Factura ' + numeroFactura + ' enviada. La DIAN la está validando.');
             document.getElementById('consecutivoDcto').value = '';
         } else {
-            const errores = json.data?.errores || [];
+            const errores = json.data?.errores || json.errores?.errores || [];
             const texto = errores.map((err) => err.errorMessage).join(' | ');
             mostrarMensaje('error', texto || json.textResponse || 'No se pudo crear la factura');
         }
