@@ -1,67 +1,144 @@
-// Comportamiento de la pantalla de inicio de sesion.
-document.addEventListener('DOMContentLoaded', function () {
+// Inicio de sesion contra el API de pruebas de Clarisa.
+const URL_LOGIN = 'https://pru.clarisacloud.com:8443/seguridad/rest/api/v1/login/';
+const PERMISO_FACTURACION = 'GESTIONAR_FACTURACION_ELECTRONICA';
+const CLAVE_USUARIO_RECORDADO = 'autotech-usuario';
+
+document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('form-login');
-    const correo = document.getElementById('correo');
+    const usuario = document.getElementById('usuario');
     const contrasena = document.getElementById('contrasena');
     const recordarme = document.getElementById('recordarme');
+    const btnSesion = document.getElementById('btn-sesion');
+    const btnTexto = btnSesion.querySelector('.btn-texto');
+    const alerta = document.getElementById('login-alerta');
 
-    // Si el usuario pidio que lo recordaran, recuperamos su correo.
-    const correoGuardado = localStorage.getItem('autotech-correo');
-    if (correoGuardado) {
-        correo.value = correoGuardado;
+    if (sessionStorage.getItem('authToken')) {
+        window.location.replace('factura.html');
+        return;
+    }
+
+    const usuarioGuardado = localStorage.getItem(CLAVE_USUARIO_RECORDADO);
+    if (usuarioGuardado) {
+        usuario.value = usuarioGuardado;
         recordarme.checked = true;
     }
 
-    // Mostrar u ocultar la contrasena.
+    function mostrarAlerta(mensaje, tipo) {
+        alerta.className = 'login-alerta ' + tipo;
+        alerta.setAttribute('role', tipo === 'error' ? 'alert' : 'status');
+        alerta.textContent = mensaje;
+        alerta.hidden = false;
+    }
+
+    function ocultarAlerta() {
+        alerta.hidden = true;
+        alerta.textContent = '';
+    }
+
+    function estadoCargando(cargando) {
+        btnSesion.disabled = cargando;
+        btnSesion.classList.toggle('cargando', cargando);
+        btnSesion.setAttribute('aria-busy', String(cargando));
+        btnTexto.textContent = cargando ? 'Validando credenciales...' : 'Iniciar Sesión';
+    }
+
+    // Clarisa envia `errores` como arreglo o como { errores: [{ codError, errorMessage }] }.
+    function mensajeDeError(data) {
+        const lista = Array.isArray(data?.errores) ? data.errores : data?.errores?.errores;
+        const primero = Array.isArray(lista) ? lista[0] : null;
+        const textoError = typeof primero === 'string'
+            ? primero
+            : primero?.errorMessage || primero?.mensaje || primero?.message;
+        return textoError || data?.textResponse || 'Credenciales incorrectas.';
+    }
+
+    async function leerJson(response) {
+        try {
+            return await response.json();
+        } catch {
+            return null;
+        }
+    }
+
     document.getElementById('toggle-contrasena').addEventListener('click', function () {
         const visible = contrasena.type === 'text';
         contrasena.type = visible ? 'password' : 'text';
         this.setAttribute('aria-label', visible ? 'Mostrar contraseña' : 'Ocultar contraseña');
     });
 
-    document.getElementById('olvide-contrasena').addEventListener('click', function (e) {
+    document.getElementById('olvide-contrasena').addEventListener('click', (e) => {
         e.preventDefault();
-        alert('Te enviaremos un enlace a tu correo para restablecer la contraseña.');
+        mostrarAlerta('Comunícate con el administrador de Clarisa para restablecer tu contraseña.', 'info');
     });
 
-    ['btn-google', 'btn-apple'].forEach(function (id) {
-        document.getElementById(id).addEventListener('click', function () {
-            alert('El inicio de sesión con ' + this.textContent.trim() + ' estará disponible pronto.');
+    ['btn-google', 'btn-apple'].forEach((id) => {
+        const boton = document.getElementById(id);
+        boton.addEventListener('click', () => {
+            mostrarAlerta('El inicio de sesión con ' + boton.textContent.trim() + ' estará disponible pronto.', 'info');
         });
     });
 
-    form.addEventListener('submit', function (e) {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        ocultarAlerta();
 
-        const valorCorreo = correo.value.trim();
-        const valorContrasena = contrasena.value.trim();
+        const valorUsuario = usuario.value.trim();
+        const valorContrasena = contrasena.value;
 
-        if (!valorCorreo || !valorContrasena) {
-            alert('Ingresa tu correo y tu contraseña.');
+        if (!valorUsuario || !valorContrasena.trim()) {
+            mostrarAlerta('Ingresa tu usuario y tu contraseña.', 'error');
+            (valorUsuario ? contrasena : usuario).focus();
             return;
         }
 
-        // Validacion simple de formato: debe contener @ y un punto despues.
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valorCorreo)) {
-            alert('El correo electrónico no tiene un formato válido.');
-            return;
-        }
+        estadoCargando(true);
 
-        if (valorContrasena.length < 6) {
-            alert('La contraseña debe tener al menos 6 caracteres.');
-            return;
-        }
+        try {
+            const response = await fetch(URL_LOGIN, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ usuario: valorUsuario, contrasenia: valorContrasena })
+            });
+            const data = await leerJson(response);
 
-        if (recordarme.checked) {
-            localStorage.setItem('autotech-correo', valorCorreo);
-        } else {
-            localStorage.removeItem('autotech-correo');
-        }
+            if (!response.ok || data?.success !== true) {
+                throw new Error(mensajeDeError(data));
+            }
 
-        alert('Bienvenido a AutoTech. Inicio de sesión simulado correctamente.');
-        form.reset();
-        if (correoGuardado && recordarme.checked) {
-            correo.value = valorCorreo;
+            const rawToken = data.data?.token;
+            if (!rawToken) {
+                throw new Error('El servidor no devolvió un token de autenticación.');
+            }
+
+            const permisos = data.data?.permisos || [];
+            if (!permisos.includes(PERMISO_FACTURACION)) {
+                throw new Error('El usuario no cuenta con permisos de facturación electrónica.');
+            }
+
+            const authToken = rawToken.startsWith('Bearer ') ? rawToken : `Bearer ${rawToken}`;
+            const userName = data.data?.usuario?.userName || valorUsuario;
+
+            sessionStorage.setItem('authToken', authToken);
+            sessionStorage.setItem('userLogged', userName);
+
+            if (recordarme.checked) {
+                localStorage.setItem(CLAVE_USUARIO_RECORDADO, valorUsuario);
+            } else {
+                localStorage.removeItem(CLAVE_USUARIO_RECORDADO);
+            }
+
+            mostrarAlerta(`${data.textResponse || 'Bienvenido'}, ${userName}. Redirigiendo a facturación...`, 'success');
+            btnTexto.textContent = 'Ingresando...';
+            setTimeout(() => window.location.assign('factura.html'), 800);
+        } catch (error) {
+            const sinConexion = error instanceof TypeError;
+            mostrarAlerta(
+                sinConexion
+                    ? 'No fue posible conectar con el servidor de Clarisa. Verifica tu conexión e inténtalo de nuevo.'
+                    : error.message,
+                'error'
+            );
+            estadoCargando(false);
         }
     });
 });

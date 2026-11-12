@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emitir factura electrónica - AutoTech</title>
+    <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/clientes.css">
+    <link rel="stylesheet" href="css/factura.css">
+    <script src="js/factura.js"></script>
+</head>
+<body>
+
+    <header class="factura-header">
+        <div class="header-logo">
+            <a href="index.html">
+                <img src="img/Logo.jpeg" alt="AutoTech - Sistema de Gestión para Talleres" class="logo">
+            </a>
+        </div>
+        <div class="factura-sesion">
+            <span class="usuario-badge" title="Usuario autenticado en Clarisa">
+                <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-4.4 0-8 2.2-8 5v3h16v-3c0-2.8-3.6-5-8-5z"/></svg>
+                <span class="sr-only">Usuario activo:</span>
+                <span id="usuario-activo">—</span>
+            </span>
+            <button type="button" class="btn-cerrar-sesion" id="btn-cerrar-sesion">Cerrar sesión</button>
+        </div>
+    </header>
+
+    <main class="crud-main factura-main">
+        <h1 class="crud-titulo">Emitir factura electrónica</h1>
+        <div id="notificacion-factura" class="crud-notificacion" role="status" aria-live="polite"></div>
+
+        <form id="form-factura" class="factura-form" novalidate>
+
+            <fieldset class="factura-bloque">
+                <legend>Documento y pago</legend>
+                <div class="factura-grid">
+                    <div class="crud-form-group">
+                        <label for="doc-nit">NIT del emisor (sin DV) <span>*</span></label>
+                        <input type="text" id="doc-nit" inputmode="numeric" value="12345" maxlength="13" required>
+                    </div>
+                    <div class="crud-form-group">
+                        <label for="doc-resolucion">Número de resolución DIAN <span>*</span></label>
+                        <input type="text" id="doc-resolucion" inputmode="numeric" value="18760000001" maxlength="14" required>
+                    </div>
+                    <div class="crud-form-group">
+                        <label for="doc-prefijo">Prefijo</label>
+                        <input type="text" id="doc-prefijo" value="SETP" maxlength="4">
+                    </div>
+                    <div class="crud-form-group">
+                        <label for="doc-consecutivo">Consecutivo <span>*</span></label>
+                        <input type="text" id="doc-consecutivo" inputmode="numeric" maxlength="9" required>
+                    </div>
+                    <div class="crud-form-group">
+                        <label for="doc-vencimiento">Fecha de vencimiento <span>*</span></label>
+                        <input type="date" id="doc-vencimiento" required>
+                    </div>
+                    <div class="crud-form-group">
+                        <label for="doc-forma-pago">Forma de pago <span>*</span></label>
+                        <select id="doc-forma-pago" required>
+                            <option value="1" selected>1 - Contado</option>
+                            <option value="2">2 - Crédito</option>
+                        </select>
+                    </div>
+                    <div class="crud-form-group">
+                        <label for="doc-medio-pago">Medio de pago <span>*</span></label>
+                        <select id="doc-medio-pago" required>
+                            <option value="10" selected>10 - Efectivo</option>
+                            <option value="47">47 - Transferencia débito bancaria</option>
+                            <option value="48">48 - Tarjeta crédito</option>
+                            <option value="49">49 - Tarjeta débito</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="factura-bloque">
+                <legend>Cliente / adquiriente</legend>
+                <div class="factura-grid">
+                    <div class="crud-form-group">
+                        <label for="cli-tipo-id">Tipo de identificación <span>*</span></label>
+                        <select id="cli-tipo-id" required>
+                            <option value="CC" selected>CC - Cédula de ciudadanía</option>
+                            <option value="NI">NI - NIT</option>
+                            <option value="CE">CE - Cédula de extranjería</option>
+                            <option value="PA">PA - Pasaporte</option>
+                        </select>
+                    </div>
+                    <div class="crud-form-group">
+                        <label for="cli-naturaleza">Naturaleza <span>*</span></label>
+                        <select id="cli-naturaleza" required>
+                            <option value="NATURAL" selected>Persona natural</option>
+                            <option value="JURIDICA">Persona jurídica</option>
+                        </select>
+                    </div>
+                    <div class="crud-form-group">
+                        <label for="cli-documento">Número de identificación <span>*</span></label>
+                        <input type="text" id="cli-documento" inputmode="numeric" placeholder="79123456" required>
+                    </div>
+                    <div class="crud-form-group">
+                        <label for="cli-nombre">Nombres y apellidos / razón social <span>*</span></label>
+                        <input type="text" id="cli-nombre" placeholder="Carlos Rodríguez" autocomplete="name" required>
+                    </div>
+                    <div class="crud-form-group">
+                        <label for="cli-email">Correo electrónico <span>*</span></label>
+                        <input type="email" id="cli-email" placeholder="cliente@correo.com" autocomplete="email" required>
+                    </div>
+                    <div class="crud-form-group">
+                        <label for="cli-telefono">Teléfono <span>*</span></label>
+                        <input type="tel" id="cli-telefono" placeholder="3201234567" autocomplete="tel" required>
+                    </div>
+                    <div class="crud-form-group">
+                        <label for="cli-direccion">Dirección <span>*</span></label>
+                        <input type="text" id="cli-direccion" placeholder="Cra 7 # 45-10" autocomplete="street-address" required>
+                    </div>
+                    <div class="crud-form-group">
+                        <label for="cli-municipio">Ciudad / municipio (DANE) <span>*</span></label>
+                        <select id="cli-municipio" required>
+                            <option value="15001" selected>15001 - Tunja</option>
+                            <option value="11001">11001 - Bogotá D.C.</option>
+                            <option value="15238">15238 - Duitama</option>
+                            <option value="15759">15759 - Sogamoso</option>
+                            <option value="05001">05001 - Medellín</option>
+                            <option value="76001">76001 - Cali</option>
+                            <option value="08001">08001 - Barranquilla</option>
+                        </select>
+                    </div>
+                    <div class="crud-form-group">
+                        <label for="cli-resp-fiscales">Responsabilidad fiscal <span>*</span></label>
+                        <select id="cli-resp-fiscales" required>
+                            <option value="NOA" selected>NOA - No aplica / Otros</option>
+                            <option value="GRC">GRC - Gran contribuyente</option>
+                            <option value="ART">ART - Autorretenedor</option>
+                            <option value="RIV">RIV - Agente de retención IVA</option>
+                            <option value="RST">RST - Régimen simple</option>
+                        </select>
+                    </div>
+                    <div class="crud-form-group">
+                        <label for="cli-resp-tributarias">Responsabilidad tributaria <span>*</span></label>
+                        <select id="cli-resp-tributarias" required>
+                            <option value="NOA" selected>NOA - No aplica</option>
+                            <option value="IVA">IVA - Impuesto al valor agregado</option>
+                            <option value="INC">INC - Impuesto nacional al consumo</option>
+                            <option value="IEC">IEC - IVA + INC</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="factura-bloque">
+                <legend>Vehículo y orden de servicio</legend>
+                <div class="factura-grid">
+                    <div class="crud-form-group">
+                        <label for="veh-placa">Placa <span>*</span></label>
+                        <input type="text" id="veh-placa" placeholder="ABC123" maxlength="7" required>
+                    </div>
+                    <div class="crud-form-group">
+                        <label for="veh-modelo">Modelo / línea <span>*</span></label>
+                        <input type="text" id="veh-modelo" placeholder="Toyota Corolla 2020" required>
+                    </div>
+                    <div class="crud-form-group">
+                        <label for="veh-color">Color <span>*</span></label>
+                        <input type="text" id="veh-color" placeholder="Gris" required>
+                    </div>
+                    <div class="crud-form-group">
+                        <label for="veh-ingreso">Fecha / hora de ingreso <span>*</span></label>
+                        <input type="datetime-local" id="veh-ingreso" required>
+                    </div>
+                    <div class="crud-form-group">
+                        <label for="mecanico">Mecánico responsable <span>*</span></label>
+                        <input type="text" id="mecanico" placeholder="Juan Pérez" required>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="factura-bloque">
+                <legend>Repuestos utilizados</legend>
+                <div class="crud-tabla-container repuestos-tabla-container">
+                    <table class="crud-tabla repuestos-tabla">
+                        <thead>
+                            <tr>
+                                <th scope="col">Referencia</th>
+                                <th scope="col">Descripción</th>
+                                <th scope="col">Marca</th>
+                                <th scope="col">Cantidad</th>
+                                <th scope="col">Precio unitario</th>
+                                <th scope="col">Desc. unitario</th>
+                                <th scope="col">Base ítem</th>
+                                <th scope="col"><span class="sr-only">Acciones</span></th>
+                            </tr>
+                        </thead>
+                        <tbody id="repuestos-body"></tbody>
+                    </table>
+                </div>
+                <button type="button" class="btn-agregar-linea" id="btn-agregar-repuesto">+ Agregar repuesto</button>
+            </fieldset>
+
+            <fieldset class="factura-bloque">
+                <legend>Mano de obra y utilidad</legend>
+                <div class="factura-grid">
+                    <div class="crud-form-group">
+                        <label for="horas">Horas empleadas <span>*</span></label>
+                        <input type="number" id="horas" min="0.5" step="0.5" placeholder="4" required>
+                    </div>
+                    <div class="crud-form-group">
+                        <label for="valor-hora">Valor por hora ($) <span>*</span></label>
+                        <input type="number" id="valor-hora" min="1" step="1" value="35000" required>
+                    </div>
+                    <div class="crud-form-group">
+                        <label for="utilidad">Utilidad estimada del taller ($) <span>*</span></label>
+                        <input type="number" id="utilidad" min="0" step="1" value="0" required>
+                    </div>
+                </div>
+            </fieldset>
+
+            <aside class="factura-resumen" aria-live="polite" aria-label="Resumen de la factura">
+                <p><span>Subtotal repuestos</span><strong id="res-repuestos">$ 0</strong></p>
+                <p><span>Mano de obra + utilidad</span><strong id="res-mano">$ 0</strong></p>
+                <p class="descuento"><span>Total descuentos</span><strong id="res-descuentos">$ 0</strong></p>
+                <p><span>Base gravable</span><strong id="res-base">$ 0</strong></p>
+                <p><span>IVA 19%</span><strong id="res-iva">$ 0</strong></p>
+                <p class="total"><span>Total factura</span><strong id="res-total">$ 0</strong></p>
+            </aside>
+
+            <div class="crud-form-actions">
+                <button type="reset" class="btn-cancelar">Limpiar</button>
+                <button type="submit" class="btn-guardar" id="btn-emitir">Emitir factura</button>
+            </div>
+        </form>
+
+        <article class="respuesta-api" id="respuesta-api" hidden aria-labelledby="respuesta-titulo">
+            <div class="respuesta-api-header">
+                <h2 id="respuesta-titulo">Respuesta de Clarisa</h2>
+                <span class="respuesta-estado" id="respuesta-estado"></span>
+            </div>
+            <pre id="respuesta-json" tabindex="0"></pre>
+            <div class="respuesta-api-acciones" id="consulta-estado" hidden>
+                <p>Documento <strong id="consulta-documento"></strong> en validación por la DIAN.</p>
+                <button type="button" class="btn-agregar-linea" id="btn-consultar-estado">Consultar estado DIAN</button>
+            </div>
+        </article>
+    </main>
+
+</body>
+</html>
