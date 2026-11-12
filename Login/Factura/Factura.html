@@ -74,12 +74,44 @@
                     <label>Número de identificación
                         <input id="numIdentificacion" type="text" inputmode="numeric" required>
                     </label>
+
                     <label>Naturaleza
                         <select id="naturaleza" required>
                             <option value="NATURAL">Natural</option>
                             <option value="JURIDICA">Jurídica</option>
                         </select>
                     </label>
+
+<label>Responsabilidad fiscal
+    <select id="respFiscales" required>
+        <option value="NOA">No aplica – Otros</option>
+        <option value="GRC">Gran contribuyente</option>
+        <option value="ART">Autorretenedor</option>
+        <option value="RIV">Agente de retención IVA</option>
+        <option value="RST">Régimen SIMPLE</option>
+    </select>
+</label>
+<label>Responsabilidad tributaria
+    <select id="respTributarias" required>
+        <option value="NOA">No aplica</option>
+        <option value="IVA">IVA</option>
+        <option value="INC">INC</option>
+        <option value="IEC">IVA + INC</option>
+    </select>
+</label>
+<label>Correo electrónico
+    <input id="email" type="email" maxlength="100">
+</label>
+<label>Dirección
+    <input id="direccion" type="text" maxlength="100">
+</label>
+<label>Ciudad (código DANE)
+    <input id="ciudad" type="text" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" placeholder="15001">
+</label>
+<label>Teléfono
+    <input id="telefono" type="tel" inputmode="numeric" maxlength="15">
+</label>
+
                 </div>
             </fieldset>
 
@@ -107,6 +139,10 @@
                         <select id="tarifaTributo" required>
                             <option value="19">19 %</option>
                             <option value="5">5 %</option>
+                            <option value="IVA:0">0 %</option>
+                            <option value="EXE:0">Exento</option>
+                            <option value="EXC:0">Excluido</option>
+
                         </select>
                     </label>
                 </div>
