@@ -86,7 +86,7 @@ form.addEventListener('submit', async (e) => {
     const subtotal = Number(valor('cantidad')) * Number(valor('precioBaseUnitario'));
 
     const factura = {
-        NIT: valor('nit'),
+        nit: valor('nit'),
         numeroResolucion: valor('numeroResolucion'),
         consecutivoDcto: Number(valor('consecutivoDcto')),
         fechaVencimiento: valor('fechaVencimiento'),
@@ -108,7 +108,7 @@ form.addEventListener('submit', async (e) => {
         items: [
             {
                 codigo: valor('codigo'),
-                nombreItemVenta: valor('nombreItem'),
+                nombreItem: valor('nombreItem'),
                 precioBaseUnitario: Number(valor('precioBaseUnitario')),
                 cantidad: Number(valor('cantidad')),
                 unidad: valor('unidad'),
