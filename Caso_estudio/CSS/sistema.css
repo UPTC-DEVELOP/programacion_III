@@ -10,7 +10,7 @@
     --line: #e0e2df;
     --paper: #ffffff;
     --accent: #95edee;
-    --danger: #cfc1c1;
+    --danger: #b42318;
 }
 
 * {
@@ -192,7 +192,7 @@ button {
 
 .resumen-dashboard {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 260px));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 14px;
     margin-top: 32px;
 }
@@ -296,8 +296,8 @@ button {
 }
 
 .boton-principal:hover {
-    background: #d73e02;
-    border-color: #e3b70c;
+    background: #d8f6f6;
+    border-color: #59bfc0;
 }
 
 .boton-secundario {
@@ -318,11 +318,13 @@ button {
 
 .campo-busqueda input,
 .campo-formulario input,
-.campo-formulario select {
+.campo-formulario select,
+.campo-formulario textarea {
     width: 100%;
     min-height: 42px;
     padding: 9px 11px;
     color: var(--ink);
+    font: inherit;
     background: #fff;
     border: 1px solid #cfd3d0;
     border-radius: 4px;
@@ -331,9 +333,14 @@ button {
 
 .campo-busqueda input:focus,
 .campo-formulario input:focus,
-.campo-formulario select:focus {
+.campo-formulario select:focus,
+.campo-formulario textarea:focus {
     border-color: #49463a;
     box-shadow: 0 0 0 3px rgb(245 197 24 / 22%);
+}
+
+.campo-formulario textarea {
+    resize: vertical;
 }
 
 .tabla-contenedor {
@@ -431,6 +438,8 @@ td button+button {
 
 .campo-formulario {
     display: grid;
+    min-width: 0;
+    align-content: start;
     gap: 6px;
     color: #454a4d;
     font-size: 12px;
@@ -438,7 +447,8 @@ td button+button {
 }
 
 .campo-formulario.invalido input,
-.campo-formulario.invalido select {
+.campo-formulario.invalido select,
+.campo-formulario.invalido textarea {
     border-color: var(--danger);
 }
 
@@ -540,6 +550,14 @@ td button+button {
     .estadisticas-dashboard {
         grid-template-columns: 1fr;
     }
+
+    .modal-servicio form {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-servicio form>* {
+        grid-column: 1;
+    }
 }
 
 @media (max-width: 420px) {
@@ -562,5 +580,812 @@ td button+button {
 
     .acciones-modal button {
         width: 100%;
+    }
+}
+
+.filtros-servicios {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin-bottom: 22px;
+}
+
+.filtro-servicio {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-height: 46px;
+    padding: 10px 13px;
+    color: #454a4d;
+    background: #f7f8f6;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: left;
+}
+
+.filtro-servicio:hover {
+    border-color: #8a9693;
+}
+
+.filtro-servicio.activo {
+    color: var(--ink);
+    background: #e8fafa;
+    border-color: #59bfc0;
+}
+
+.filtro-servicio span {
+    display: grid;
+    min-width: 24px;
+    min-height: 24px;
+    place-items: center;
+    padding: 0 5px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 11px;
+}
+
+.estado-servicio,
+.etiqueta-facturable,
+.etiqueta-no-facturable {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    padding: 5px 9px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.estado-pendiente {
+    color: #174a86;
+    background: #e8f2ff;
+}
+
+.estado-proceso {
+    color: #805500;
+    background: #fff4d6;
+}
+
+.estado-finalizado {
+    color: #176444;
+    background: #e2f6ec;
+}
+
+.etiqueta-facturable {
+    color: #176444;
+    background: #e2f6ec;
+}
+
+.etiqueta-no-facturable {
+    color: #555b5e;
+    background: #f0f1ef;
+}
+
+.ayuda-formulario {
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.modal-servicio {
+    width: min(760px, calc(100% - 28px));
+}
+
+.modal-servicio form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-content: start;
+    align-items: start;
+    gap: 16px 20px;
+    max-height: min(85vh, 820px);
+    padding: 26px;
+    overflow-y: auto;
+}
+
+.modal-servicio form > .cabecera-modal,
+.modal-servicio form > .acciones-modal,
+.modal-servicio form > input[type="hidden"] {
+    grid-column: 1 / -1;
+}
+
+.modal-servicio .campo-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+    width: 100%;
+}
+
+.modal-servicio select[multiple] {
+    display: block;
+    min-width: 0;
+    width: 100%;
+    min-height: 120px;
+    padding: 8px 10px;
+    color: var(--ink);
+    font: inherit;
+    background: #fff;
+    border: 1px solid #cfd3d0;
+    border-radius: 4px;
+    outline: none;
+    resize: vertical;
+}
+
+.modal-servicio select[multiple]:focus {
+    border-color: #49463a;
+    box-shadow: 0 0 0 3px rgb(245 197 24 / 22%);
+}
+
+.modal-servicio .cabecera-modal {
+    width: 100%;
+}
+
+.modal-servicio .acciones-modal {
+    padding-top: 4px;
+}
+
+.modal-servicio #servicio-descripcion,
+.modal-servicio #servicio-observaciones {
+    width: 100%;
+    min-height: 90px;
+}
+
+.tabla-contenedor td:first-child {
+    white-space: nowrap;
+}
+
+#tabla-servicios-body td:nth-child(2) {
+    min-width: 200px;
+    max-width: 360px;
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 520px) {
+    .modal-servicio form {
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+
+    .modal-servicio form>* {
+        grid-column: 1;
+    }
+
+    .modal-servicio form > .cabecera-modal,
+    .modal-servicio form > .acciones-modal,
+    .modal-servicio form > input[type="hidden"] {
+        grid-column: 1;
+    }
+}
+
+.filtros-empleados {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filtro-empleado {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 44px;
+    padding: 9px 13px;
+    color: #454a4d;
+    background: #f7f8f6;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.filtro-empleado:hover,
+.filtro-empleado.activo {
+    color: var(--ink);
+    background: #e8fafa;
+    border-color: #59bfc0;
+}
+
+.filtro-empleado span {
+    display: grid;
+    min-width: 25px;
+    min-height: 25px;
+    place-items: center;
+    padding: 0 6px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 11px;
+}
+
+.contenedor-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(100px, 1fr));
+    gap: 9px;
+    flex: 1;
+    max-width: 480px;
+}
+
+.card-resumen {
+    display: grid;
+    gap: 7px;
+    min-width: 0;
+    padding: 12px 14px;
+    background: #f7f8f6;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+}
+
+.card-resumen .titulo {
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.card-resumen .valor {
+    color: var(--ink);
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.card-resumen .valor.rojo {
+    color: var(--danger);
+}
+
+.card-resumen .valor.verde {
+    color: #176444;
+}
+
+.etiqueta-empleado,
+.etiqueta-stock {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 5px 9px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.estado-disponible,
+.stock-disponible {
+    color: #176444;
+    background: #e2f6ec;
+}
+
+.estado-ocupado,
+.stock-bajo {
+    color: #805500;
+    background: #fff4d6;
+}
+
+.estado-no-disponible,
+.stock-agotado {
+    color: #a32820;
+    background: #fff1f0;
+}
+
+.modal-empleado,
+.modal-repuesto {
+    width: min(680px, calc(100% - 28px));
+}
+
+.modal-empleado form,
+.modal-repuesto form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-height: min(88vh, 820px);
+    overflow-y: auto;
+}
+
+.modal-empleado .cabecera-modal,
+.modal-empleado .acciones-modal,
+.modal-repuesto .cabecera-modal,
+.modal-repuesto .acciones-modal {
+    grid-column: 1 / -1;
+}
+
+@media (max-width: 760px) {
+    .contenedor-cards {
+        width: 100%;
+        max-width: none;
+    }
+
+    .modal-empleado form,
+    .modal-repuesto form {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-empleado .cabecera-modal,
+    .modal-empleado .acciones-modal,
+    .modal-repuesto .cabecera-modal,
+    .modal-repuesto .acciones-modal {
+        grid-column: 1;
+    }
+}
+
+@media (max-width: 420px) {
+    .contenedor-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+.modulo-facturas .encabezado-modulo {
+    margin-bottom: 20px;
+}
+
+.facturas-vacio {
+    display: grid;
+    min-height: 260px;
+    place-content: center;
+    justify-items: center;
+    padding: 32px;
+    text-align: center;
+    background: #f7f9fc;
+    border: 1px dashed #cbd6e2;
+    border-radius: 6px;
+}
+
+.facturas-vacio > span {
+    display: grid;
+    width: 48px;
+    aspect-ratio: 1;
+    place-items: center;
+    color: #176fae;
+    background: #e7f2fa;
+    border-radius: 50%;
+    font-size: 24px;
+}
+
+.facturas-vacio h3 {
+    margin: 15px 0 5px;
+    font-size: 18px;
+}
+
+.facturas-vacio p {
+    max-width: 470px;
+    margin: 0 0 18px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.modal-factura {
+    width: min(1060px, calc(100% - 32px));
+    max-width: none;
+    max-height: min(94vh, 960px);
+    overflow: hidden;
+    color: #202b38;
+    border: 1px solid #d5dce5;
+    border-radius: 4px;
+}
+
+.modal-factura form {
+    display: block;
+    padding: 0;
+}
+
+.factura-cabecera {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 25px 30px 18px;
+    border-bottom: 1px solid #dfe4ea;
+}
+
+.factura-cabecera h2 {
+    margin: 4px 0 0;
+    color: #17283b;
+    font-size: clamp(20px, 3vw, 27px);
+}
+
+.factura-identificador {
+    display: grid;
+    gap: 2px;
+    margin: 4px 48px 0 auto;
+    text-align: center;
+}
+
+.factura-identificador span {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.factura-identificador strong {
+    color: #176fae;
+    font-size: 19px;
+}
+
+.factura-cabecera .boton-cerrar {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 34px;
+    font-size: 25px;
+}
+
+.factura-cuerpo {
+    display: grid;
+    gap: 20px;
+    max-height: calc(94vh - 150px);
+    padding: 20px 30px;
+    overflow-y: auto;
+}
+
+.datos-factura {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: clamp(20px, 5vw, 60px);
+    padding-bottom: 19px;
+    border-bottom: 1px solid #dfe4ea;
+}
+
+.datos-cliente,
+.datos-emision {
+    min-width: 0;
+}
+
+.datos-emision {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-content: start;
+    gap: 12px 16px;
+}
+
+.modal-factura .campo-formulario,
+.modal-item-venta .campo-formulario {
+    gap: 5px;
+    color: #535c67;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.modal-factura .campo-formulario input,
+.modal-factura .campo-formulario select,
+.modal-factura .campo-formulario textarea,
+.modal-item-venta .campo-formulario input,
+.modal-item-venta .campo-formulario select,
+.modal-item-venta .campo-formulario textarea,
+.campo-compuesto input,
+.campo-compuesto select {
+    min-height: 38px;
+    padding: 7px 10px;
+    border-color: #d3d9e0;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.modal-factura .campo-formulario input:focus,
+.modal-factura .campo-formulario select:focus,
+.modal-factura .campo-formulario textarea:focus,
+.modal-item-venta .campo-formulario input:focus,
+.modal-item-venta .campo-formulario select:focus,
+.modal-item-venta .campo-formulario textarea:focus,
+.campo-compuesto input:focus,
+.campo-compuesto select:focus {
+    border-color: #2681bd;
+    box-shadow: 0 0 0 3px rgb(38 129 189 / 13%);
+}
+
+.requerido {
+    color: #d53b45;
+}
+
+.titulo-campo {
+    display: block;
+}
+
+.detalle-cliente {
+    display: grid;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.detalle-cliente p {
+    margin: 0;
+    color: #344253;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.items-factura {
+    min-width: 0;
+}
+
+.titulo-seccion-factura {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.titulo-seccion-factura h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.titulo-seccion-factura span {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.modal-factura .tabla-contenedor {
+    border: 1px solid #dbe1e8;
+    border-radius: 4px;
+}
+
+.modal-factura table {
+    min-width: 720px;
+}
+
+.modal-factura th {
+    color: #fff;
+    background: #2782bd;
+    font-size: 12px;
+    text-align: center;
+}
+
+.modal-factura td {
+    color: #344253;
+    text-align: center;
+}
+
+.modal-factura td:first-child {
+    min-width: 150px;
+    text-align: left;
+    white-space: normal;
+}
+
+.modal-factura td:last-child {
+    min-width: 115px;
+}
+
+.modal-factura td button {
+    color: #176fae;
+    border: 0;
+    font-size: 16px;
+}
+
+.modal-factura td button + button {
+    color: #d53b45;
+    background: transparent;
+}
+
+.modal-factura td .fila-items-vacia,
+.fila-items-vacia {
+    color: #75808c;
+    text-align: center !important;
+}
+
+.acciones-items {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 9px;
+}
+
+.modal-factura .boton-principal,
+.modal-item-venta .boton-principal {
+    min-height: 38px;
+    padding: 8px 13px;
+    color: #fff;
+    background: #176fae;
+    border-color: #176fae;
+    font-size: 13px;
+}
+
+.modal-factura .boton-principal:hover,
+.modal-item-venta .boton-principal:hover {
+    background: #105d96;
+    border-color: #105d96;
+}
+
+.resumen-factura {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(220px, 0.8fr);
+    gap: 30px;
+    padding-top: 18px;
+    border-top: 1px solid #dfe4ea;
+}
+
+.opciones-factura {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-content: start;
+    gap: 13px 16px;
+}
+
+.descuento-general {
+    display: grid;
+    gap: 5px;
+}
+
+.campo-compuesto {
+    display: flex;
+    min-width: 0;
+}
+
+.campo-compuesto input {
+    min-width: 0;
+    border-radius: 4px 0 0 4px;
+}
+
+.campo-compuesto select {
+    width: 120px;
+    border-left: 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.observacion-factura {
+    grid-column: 1 / -1;
+}
+
+.modal-factura .observacion-factura textarea,
+.modal-item-venta .campo-item-observacion textarea {
+    min-height: 68px;
+    resize: vertical;
+}
+
+.totales-factura {
+    display: grid;
+    align-content: start;
+    gap: 8px;
+    margin: 0;
+    font-size: 14px;
+}
+
+.totales-factura > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.totales-factura dt,
+.totales-factura dd {
+    margin: 0;
+}
+
+.totales-factura dd {
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+}
+
+.totales-factura .total-destacado {
+    padding-top: 8px;
+    border-top: 1px solid #dfe4ea;
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.aviso-borrador {
+    margin: 0;
+    color: #697887;
+    font-size: 11px;
+}
+
+.factura-acciones {
+    margin: 0;
+    padding: 13px 30px;
+    border-top: 1px solid #dfe4ea;
+}
+
+.modal-item-venta {
+    width: min(760px, calc(100% - 28px));
+}
+
+.modal-item-venta form {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: start;
+    gap: 13px 15px;
+    max-height: min(90vh, 800px);
+    overflow-y: auto;
+}
+
+.modal-item-venta .cabecera-modal,
+.modal-item-venta .acciones-modal,
+.campo-item-nombre,
+.campo-item-observacion,
+.resumen-item {
+    grid-column: 1 / -1;
+}
+
+.modal-item-venta .campo-formulario {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.modal-item-venta .ayuda-formulario {
+    font-size: 10px;
+}
+
+.resumen-item {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    padding: 12px;
+    background: #f5f8fb;
+    border: 1px solid #e0e6ed;
+    border-radius: 4px;
+}
+
+.resumen-item span {
+    display: grid;
+    gap: 4px;
+    color: #586574;
+    font-size: 12px;
+}
+
+.resumen-item strong {
+    color: #283748;
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 760px) {
+    .factura-cabecera {
+        display: grid;
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+
+    .factura-identificador {
+        margin: 0;
+        text-align: left;
+    }
+
+    .factura-cuerpo {
+        max-height: calc(94vh - 180px);
+        padding: 18px 20px;
+    }
+
+    .datos-factura,
+    .resumen-factura {
+        grid-template-columns: 1fr;
+    }
+
+    .datos-emision {
+        gap: 10px;
+    }
+
+    .factura-acciones {
+        padding: 12px 20px;
+    }
+
+    .modal-item-venta form {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-factura {
+        width: calc(100% - 16px);
+    }
+
+    .datos-emision,
+    .opciones-factura,
+    .modal-item-venta form,
+    .resumen-item {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-item-venta .cabecera-modal,
+    .modal-item-venta .acciones-modal,
+    .campo-item-nombre,
+    .campo-item-observacion,
+    .resumen-item,
+    .observacion-factura {
+        grid-column: 1;
+    }
+
+    .facturas-vacio {
+        padding: 22px 16px;
     }
 }
