@@ -1,0 +1,240 @@
+/* Sin esto, el atributo "hidden" no ocultaría elementos que tienen su propio display */
+[hidden] { display: none !important; }
+
+.boton:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+/* Oculta una etiqueta a la vista, pero la deja disponible para lectores de pantalla */
+.etiqueta-oculta {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+
+/* Estructura de la página */
+.panel-factura {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.panel-factura > * { width: 100%; max-width: 980px; }
+
+.ubicacion-taller { color: var(--text-dim); font-size: 13px; margin-top: 4px; }
+
+
+/* Conexión con Clarisa */
+.caja-conexion-clarisa {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left-width: 4px;
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.caja-conexion-clarisa.conexion-activa { border-left-color: var(--success); }
+.caja-conexion-clarisa.conexion-pendiente { border-left-color: var(--warning); }
+.texto-estado-conexion { font-size: 14px; color: var(--text-muted); }
+
+.formulario-conexion-clarisa {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 12px 16px;
+  align-items: start;
+}
+.formulario-conexion-clarisa .boton { margin-top: 27px; }
+.formulario-conexion-clarisa .estado-formulario { grid-column: 1 / -1; }
+
+
+/* Formulario de la factura */
+.formulario-factura { display: flex; flex-direction: column; gap: 20px; }
+
+.bloque-factura {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+.bloque-factura > legend {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  padding: 0 8px;
+}
+.nota-bloque { font-size: 13px; color: var(--text-dim); }
+
+.cuadricula-campos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+/* La lista desplegable usa el mismo estilo que los demás campos */
+.campo-formulario select {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+}
+.campo-formulario select:focus { outline: none; border-color: var(--accent); }
+.campo-formulario input[type="date"] { color-scheme: dark; }
+
+/* Medios de pago: casillas en una fila */
+.grupo-medios-pago {
+  border: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+}
+.titulo-grupo { width: 100%; font-size: 13px; font-weight: 500; color: var(--text-muted); margin-bottom: 4px; }
+.etiqueta-medio-pago {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.etiqueta-medio-pago input { width: 16px; height: 16px; accent-color: var(--accent); }
+
+
+/* Tabla de ítems */
+.contenedor-tabla-items { overflow-x: auto; }
+
+.tabla-items-factura { width: 100%; min-width: 820px; border-collapse: collapse; }
+.tabla-items-factura th {
+  text-align: left;
+  padding: 8px 6px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-dim);
+}
+.tabla-items-factura td { padding: 8px 6px; vertical-align: middle; }
+
+.tabla-items-factura input,
+.tabla-items-factura select {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 9px 10px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+}
+.tabla-items-factura input:focus,
+.tabla-items-factura select:focus { outline: none; border-color: var(--accent); }
+.tabla-items-factura input.invalid { border-color: #d84a4a; }
+
+.campo-codigo-item { min-width: 90px; }
+.campo-cantidad-item { min-width: 80px; }
+.campo-precio-item { min-width: 130px; }
+
+.texto-total-item { font-family: var(--font-mono); font-size: 13px; white-space: nowrap; }
+
+.boton-quitar-item {
+  background: none;
+  border: none;
+  color: #f08080;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.boton-quitar-item:hover { color: #d84a4a; }
+.boton-quitar-item:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+
+/* Resumen de valores */
+.resumen-factura {
+  align-self: flex-end;
+  width: min(100%, 360px);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px 16px;
+  font-size: 14px;
+}
+.resumen-factura dt { color: var(--text-muted); }
+.resumen-factura dd { font-family: var(--font-mono); text-align: right; }
+.resumen-factura .etiqueta-total,
+.resumen-factura .valor-total {
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+  font-size: 18px;
+}
+.resumen-factura .valor-total { color: var(--accent); font-weight: 600; }
+
+.botones-formulario-factura { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; }
+
+
+/* Mensajes y respuesta de Clarisa */
+.estado-formulario.exito { color: var(--success); }
+.estado-formulario.info { color: var(--text-muted); }
+
+.detalle-respuesta-clarisa summary { cursor: pointer; font-size: 13px; color: var(--accent-2); }
+.detalle-respuesta-clarisa pre {
+  margin-top: 10px;
+  padding: 14px 16px;
+  max-height: 320px;
+  overflow: auto;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+
+/* Facturas emitidas */
+.bloque-facturas-emitidas h2 { font-size: 20px; margin-bottom: 14px; }
+
+.tabla-facturas-emitidas {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.tabla-facturas-emitidas th,
+.tabla-facturas-emitidas td {
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.tabla-facturas-emitidas th {
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.tabla-facturas-emitidas tbody tr:last-child td { border-bottom: none; }
+
+.mensaje-sin-resultados { color: var(--text-dim); font-size: 14px; padding: 16px 0; text-align: center; }
+
+
+/* Pantallas pequeñas */
+@media (max-width: 760px) {
+  .formulario-conexion-clarisa { grid-template-columns: 1fr; }
+  .formulario-conexion-clarisa .boton { margin-top: 0; }
+  .bloque-factura { padding: 18px 16px; }
+}

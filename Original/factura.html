@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Facturación electrónica — TallerMax</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/factura.css">
+  <link rel="stylesheet" href="css/barraLateral.css">
+
+  <!-- Guardia: hace falta haber iniciado sesión para ver esta página -->
+  <script src="js/sesion.js"></script>
+  <script>protegerPagina();</script>
+</head>
+
+<body>
+  <div id="contenedorBarraLateral"></div>
+
+  <!-- Encabezado del sitio (igual al de las otras páginas del administrador) -->
+  <header class="encabezado-sitio">
+    <p class="logo">
+      <img src="img/Tuerca_encabezado.jpg" alt="" width="28" height="28">
+      <span>TALLER<span class="resaltado">MAX</span></span>
+    </p>
+
+    <nav class="menu-principal" aria-label="Navegación principal">
+      <ul>
+        <li><a href="index.html#servicios">Servicios</a></li>
+        <li><a href="index.html#nosotros">Nosotros</a></li>
+        <li><a href="index.html#beneficios">Beneficios</a></li>
+        <li><a href="index.html#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <!-- Menú desplegable para registrar autos, clientes o empleados -->
+    <nav class="menu-registro" aria-label="Menú de registro">
+      <button type="button" class="boton boton-secundario boton-pequeno boton-registro"
+        id="botonRegistro" aria-expanded="false" aria-controls="listaRegistro">
+        Registro <span class="icono-flecha" aria-hidden="true">▾</span>
+      </button>
+
+      <ul class="lista-registro" id="listaRegistro" hidden>
+        <li><a href="autos.html">Registrar auto</a></li>
+        <li><a href="clientes.html">Registrar cliente</a></li>
+        <li><a href="empleados.html">Registrar empleado</a></li>
+      </ul>
+    </nav>
+
+    <!-- Zona de sesión: aquí aparecen "Mi panel" y "Cerrar sesión" -->
+    <nav class="acciones-encabezado" aria-label="Cuenta de usuario">
+      <span id="zonaSesion" class="zona-sesion"></span>
+      <a href="index.html#contacto" class="boton boton-primario boton-pequeno">Prueba gratis 15 días</a>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <section class="seccion panel-factura" id="facturacion" aria-labelledby="facturacion-title">
+
+      <header class="encabezado-factura">
+        <h1 id="facturacion-title">Facturación electrónica</h1>
+        <p class="ubicacion-taller">Taller · Tunja, Boyacá</p>
+      </header>
+
+      <!-- Estado de la conexión con Clarisa (el login ya la hizo) -->
+      <aside class="caja-conexion-clarisa conexion-activa" id="cajaConexionClarisa" aria-label="Conexión con Clarisa">
+        <p class="texto-estado-conexion" id="textoEstadoConexion" role="status"></p>
+      </aside>
+
+      <!-- FORMULARIO DE LA FACTURA -->
+      <form id="formularioFactura" class="formulario-factura" novalidate>
+
+        <!-- Bloque 1: datos generales de la factura -->
+        <fieldset class="bloque-factura">
+          <legend>Datos de la factura</legend>
+          <p class="nota-bloque">Los valores de NIT, resolución, prefijo y consecutivo vienen con los datos de prueba de la guía de Clarisa. Cámbialos por los del taller cuando uses datos reales.</p>
+
+          <section class="cuadricula-campos" aria-label="Datos generales">
+            <p class="campo-formulario">
+              <label for="campoNit">NIT del taller</label>
+              <input type="text" id="campoNit" name="nit" inputmode="numeric" maxlength="15" value="12345" autocomplete="off">
+              <span class="error-campo" data-error-for="campoNit"></span>
+            </p>
+
+            <p class="campo-formulario">
+              <label for="campoNumeroResolucion">Número de resolución</label>
+              <input type="text" id="campoNumeroResolucion" name="numeroResolucion" inputmode="numeric" maxlength="20" value="18760000001" autocomplete="off">
+              <span class="error-campo" data-error-for="campoNumeroResolucion"></span>
+            </p>
+
+            <p class="campo-formulario">
+              <label for="campoPrefijo">Prefijo</label>
+              <input type="text" id="campoPrefijo" name="prefijo" maxlength="10" value="SETP" autocomplete="off">
+              <span class="error-campo" data-error-for="campoPrefijo"></span>
+            </p>
+
+            <p class="campo-formulario">
+              <label for="campoConsecutivo">Consecutivo</label>
+              <input type="text" id="campoConsecutivo" name="consecutivo" inputmode="numeric" maxlength="15" value="990000001" autocomplete="off">
+              <span class="error-campo" data-error-for="campoConsecutivo"></span>
+            </p>
+
+            <p class="campo-formulario">
+              <label for="campoFechaVencimiento">Fecha de vencimiento</label>
+              <input type="date" id="campoFechaVencimiento" name="fechaVencimiento">
+              <span class="error-campo" data-error-for="campoFechaVencimiento"></span>
+            </p>
+
+            <p class="campo-formulario">
+              <label for="campoFormaPago">Forma de pago</label>
+              <select id="campoFormaPago" name="formaPago">
+                <option value="1" selected>Contado</option>
+                <option value="2">Crédito</option>
+              </select>
+              <span class="error-campo" data-error-for="campoFormaPago"></span>
+            </p>
+          </section>
+
+          <fieldset class="grupo-medios-pago" id="grupoMediosPago">
+            <legend class="titulo-grupo">Medios de pago (elige uno o varios)</legend>
+            <label class="etiqueta-medio-pago"><input type="checkbox" name="medioPago" value="10" checked> Efectivo</label>
+            <label class="etiqueta-medio-pago"><input type="checkbox" name="medioPago" value="20"> Cheque</label>
+            <label class="etiqueta-medio-pago"><input type="checkbox" name="medioPago" value="30"> Transferencia</label>
+            <label class="etiqueta-medio-pago"><input type="checkbox" name="medioPago" value="48"> Tarjeta crédito</label>
+            <label class="etiqueta-medio-pago"><input type="checkbox" name="medioPago" value="49"> Tarjeta débito</label>
+          </fieldset>
+          <p class="error-campo" id="errorMediosPago"></p>
+        </fieldset>
+
+        <!-- Bloque 2: datos del cliente -->
+        <fieldset class="bloque-factura">
+          <legend>Cliente</legend>
+
+          <section class="cuadricula-campos" aria-label="Datos del cliente">
+            <p class="campo-formulario">
+              <label for="campoNombreCliente">Nombre o razón social</label>
+              <input type="text" id="campoNombreCliente" name="nombreCliente" maxlength="120" placeholder="Ej. Juan Pérez" autocomplete="off">
+              <span class="error-campo" data-error-for="campoNombreCliente"></span>
+            </p>
+
+            <p class="campo-formulario">
+              <label for="campoTipoIdentificacion">Tipo de identificación</label>
+              <select id="campoTipoIdentificacion" name="tipoIdentificacion">
+                <option value="NI" selected>NI · NIT</option>
+                <option value="CC">CC · Cédula de ciudadanía</option>
+                <option value="CE">CE · Cédula de extranjería</option>
+                <option value="PA">PA · Pasaporte</option>
+              </select>
+              <span class="error-campo" data-error-for="campoTipoIdentificacion"></span>
+            </p>
+
+            <p class="campo-formulario">
+              <label for="campoNumeroIdentificacion">Número de identificación</label>
+              <input type="text" id="campoNumeroIdentificacion" name="numeroIdentificacion" inputmode="numeric" maxlength="15" placeholder="Ej. 1000123456" autocomplete="off">
+              <span class="error-campo" data-error-for="campoNumeroIdentificacion"></span>
+            </p>
+
+            <p class="campo-formulario">
+              <label for="campoNaturaleza">Naturaleza</label>
+              <select id="campoNaturaleza" name="naturaleza">
+                <option value="NATURAL" selected>Persona natural</option>
+                <option value="JURIDICA">Persona jurídica</option>
+              </select>
+              <span class="error-campo" data-error-for="campoNaturaleza"></span>
+            </p>
+          </section>
+
+          <p>
+            <button type="button" class="boton boton-secundario boton-pequeno" id="botonUsarConsumidorFinal">Usar consumidor final</button>
+          </p>
+        </fieldset>
+
+        <!-- Bloque 3: servicios y repuestos facturados -->
+        <fieldset class="bloque-factura">
+          <legend>Servicios y repuestos</legend>
+          <p class="nota-bloque">El IVA del 19 % se calcula solo sobre cada ítem.</p>
+
+          <section class="contenedor-tabla-items" aria-label="Ítems de la factura">
+            <table class="tabla-items-factura" id="tablaItemsFactura">
+              <thead>
+                <tr>
+                  <th scope="col">Código</th>
+                  <th scope="col">Descripción</th>
+                  <th scope="col">Unidad</th>
+                  <th scope="col">Cantidad</th>
+                  <th scope="col">Precio unitario (sin IVA)</th>
+                  <th scope="col">Total con IVA</th>
+                  <th scope="col"><span class="etiqueta-oculta">Quitar</span></th>
+                </tr>
+              </thead>
+              <tbody id="cuerpoTablaItems">
+                <!-- Las filas se generan desde js/factura.js -->
+              </tbody>
+            </table>
+          </section>
+          <p class="error-campo" id="errorItems"></p>
+
+          <p>
+            <button type="button" class="boton boton-secundario boton-pequeno" id="botonAgregarItem">+ Agregar ítem</button>
+          </p>
+        </fieldset>
+
+        <!-- Observación, resumen de valores y botones -->
+        <p class="campo-formulario">
+          <label for="campoObservacion">Observación (opcional)</label>
+          <textarea id="campoObservacion" name="observacion" rows="2" maxlength="250"
+            placeholder="Ej. Revisión general del vehículo"></textarea>
+        </p>
+
+        <dl class="resumen-factura" aria-label="Resumen de la factura">
+          <dt>Subtotal</dt>
+          <dd id="textoSubtotal">$ 0</dd>
+          <dt>IVA (19 %)</dt>
+          <dd id="textoIva">$ 0</dd>
+          <dt class="etiqueta-total">Total a pagar</dt>
+          <dd class="valor-total" id="textoTotal">$ 0</dd>
+        </dl>
+
+        <p class="botones-formulario-factura">
+          <button type="button" class="boton boton-secundario boton-pequeno" id="botonCargarEjemploGuia">Cargar ejemplo de la guía</button>
+          <button type="button" class="boton boton-secundario boton-pequeno" id="botonLimpiarFactura">Limpiar</button>
+          <button type="button" class="boton boton-secundario" id="botonGuardarFactura">Guardar factura</button>
+          <button type="submit" class="boton boton-primario" id="botonEnviarAClarisa">Enviar a Clarisa</button>
+        </p>
+
+        <p class="estado-formulario" id="estadoFactura" role="alert" aria-live="polite"></p>
+
+        <details class="detalle-respuesta-clarisa" id="detalleRespuestaClarisa" hidden>
+          <summary>Ver respuesta completa de Clarisa</summary>
+          <pre id="textoRespuestaClarisa"></pre>
+        </details>
+      </form>
+
+      <!-- Facturas emitidas desde este navegador -->
+      <section class="bloque-facturas-emitidas" aria-labelledby="titulo-facturas-emitidas">
+        <h2 id="titulo-facturas-emitidas">Facturas emitidas en este equipo</h2>
+
+        <table class="tabla-facturas-emitidas" id="tablaFacturasEmitidas">
+          <thead>
+            <tr>
+              <th scope="col">Factura</th>
+              <th scope="col">Cliente</th>
+              <th scope="col">Total</th>
+              <th scope="col">Fecha</th>
+            </tr>
+          </thead>
+          <tbody id="cuerpoTablaFacturasEmitidas">
+            <!-- Las filas se generan desde js/factura.js -->
+          </tbody>
+        </table>
+
+        <p class="mensaje-sin-resultados" id="mensajeSinFacturasEmitidas">Aún no has emitido facturas desde este navegador.</p>
+      </section>
+
+    </section>
+
+  </main>
+
+  <!-- Pie de página (igual al de las otras páginas) -->
+  <footer class="pie-de-pagina" id="footer">
+    <p class="marca-footer">
+      <span class="texto-logo">TALLER<span class="resaltado">MAX</span></span><br>
+      Software de gestión para talleres mecánicos.
+    </p>
+
+    <nav class="columna-footer" aria-label="Mapa del sitio">
+      <ul>
+        <li class="titulo-columna">Mapa del sitio</li>
+        <li><a href="index.html#servicios">Servicios</a></li>
+        <li><a href="index.html#nosotros">Nosotros</a></li>
+        <li><a href="index.html#beneficios">Beneficios</a></li>
+        <li><a href="index.html#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <p class="linea-copyright">© <span id="year"></span> TallerMax. Todos los derechos reservados - Calidad y servicio garantizado.</p>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script src="js/factura.js"></script>
+  <script src="js/barraLateral.js"></script>
+</body>
+
+</html>
