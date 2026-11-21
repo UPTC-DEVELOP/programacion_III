@@ -1,52 +1,23 @@
+/* CRUD de Empleados - TallerPro, conectado a Panther (recurso "empleados") */
+
 document.addEventListener('DOMContentLoaded', function () {
 
-  const CLAVE = 'tallerpro_empleados';
+  if (!Panther.exigirSesion()) return;
+
+  const RECURSO = 'empleados';
   const $ = (id) => document.getElementById(id);
 
-  /* ---------- Datos de ejemplo ---------- */
-  function datosEjemplo() {
-    return [
-      { 
-        id: 1, 
-        nombre: 'Juan Carlos Rodríguez Pérez', 
-        cedula: '1001234567', 
-        cargo: 'Mecánico', 
-        telefono: '300 123 4567' 
-      },
-      { 
-        id: 2, 
-        nombre: 'María Fernanda Gómez López', 
-        cedula: '1007654321', 
-        cargo: 'Recepcionista', 
-        telefono: '310 987 6543' 
-      }
-    ];
-  }
-
-  /* ---------- Cargar y guardar ---------- */
-  function cargar() {
+  /* ---------- Cargar desde el servidor ---------- */
+  async function cargar() {
     try {
-      const guardado = localStorage.getItem(CLAVE);
-      if (guardado) return JSON.parse(guardado);
-    } catch (e) { }
-    const ejemplo = datosEjemplo();
-    guardar(ejemplo);
-    return ejemplo;
-  }
-
-  function guardar(lista) {
-    try {
-      localStorage.setItem(CLAVE, JSON.stringify(lista));
-    } catch (e) {
-      avisar('No se pudo guardar en este navegador.');
+      empleados = await Panther.listar(RECURSO);
+    } catch (error) {
+      avisar(error.message);
     }
+    pintarTabla();
   }
 
-  function siguienteId() {
-    return empleados.reduce((max, e) => Math.max(max, e.id), 0) + 1;
-  }
-
-  let empleados = cargar();
+  let empleados = [];
   let idAEliminar = null;
 
   /* ---------- Elementos del DOM ---------- */
@@ -182,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /* ---------- Guardar ---------- */
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (!validar()) return;
 
@@ -194,18 +165,21 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const idActual = Number(campos.id.value);
-    if (idActual) {
-      empleados = empleados.map((e) => (e.id === idActual ? { ...e, ...datos } : e));
-      avisar('Empleado actualizado ✅');
-    } else {
-      datos.id = siguienteId();
-      empleados.push(datos);
-      avisar('Empleado registrado ✅');
+    try {
+      if (idActual) {
+        await Panther.actualizar(RECURSO, idActual, datos);
+        avisar('Empleado actualizado ✅');
+      } else {
+        await Panther.crear(RECURSO, datos);
+        avisar('Empleado registrado ✅');
+      }
+    } catch (error) {
+      avisar(error.message);
+      return;
     }
 
-    guardar(empleados);
     cerrarModal(modalEmpleado);
-    pintarTabla();
+    cargar();
   });
 
   /* ---------- Botones ---------- */
@@ -222,13 +196,17 @@ document.addEventListener('DOMContentLoaded', function () {
     abrirModal(modalEliminar, $('cancelarElim'));
   }
 
-  $('confirmarElim').addEventListener('click', () => {
-    empleados = empleados.filter((e) => e.id !== idAEliminar);
+  $('confirmarElim').addEventListener('click', async () => {
+    const id = idAEliminar;
     idAEliminar = null;
-    guardar(empleados);
     cerrarModal(modalEliminar);
-    pintarTabla();
-    avisar('Empleado eliminado ✅');
+    try {
+      await Panther.eliminar(RECURSO, id);
+      avisar('Empleado eliminado ✅');
+    } catch (error) {
+      avisar(error.message);
+    }
+    cargar();
   });
   $('cancelarElim').addEventListener('click', () => cerrarModal(modalEliminar));
 
@@ -254,6 +232,9 @@ document.addEventListener('DOMContentLoaded', function () {
     else if (!modalEmpleado.hidden) cerrarModal(modalEmpleado);
   });
 
+  /* ---------- Cerrar sesión ---------- */
+  $('cerrarSesion').addEventListener('click', () => Panther.cerrarSesion());
+
   /* ---------- Iniciar ---------- */
-  pintarTabla();
+  cargar();
 });

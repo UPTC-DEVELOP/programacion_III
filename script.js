@@ -1,3 +1,5 @@
+const URL_SCRIPT = 'http://localhost/panther/rest/useraction/Script.php';
+
 const navToggle = document.getElementById('navToggle');
 const nav = document.getElementById('nav');
 

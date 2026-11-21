@@ -1,5 +1,5 @@
 const URL_FACTURA = 'https://pru.clarisacloud.com:8443/api/factura/rest/v1/factura/nacional';
-const PAGINA_LOGIN = '../Login/Login.html';
+const PAGINA_LOGIN = '../Login.html';
 
 const token = sessionStorage.getItem('clarisa_token');
 if (!token) {
@@ -8,7 +8,7 @@ if (!token) {
 
 const form = document.getElementById('formFactura');
 const mensaje = document.getElementById('mensaje');
-const boto = document.getElementById('btnEnviar');
+const boton =document.getElementById('btnEnviar');
 const textoTotal = document.getElementById('total');
 
 function valor(id){
@@ -70,12 +70,15 @@ form.addEventListener('submit', async (e) => {
         prefijoDcto: valor('prefijoDcto'),
         fechaVencimiento: valor('fechaVencimiento'),
         formaPago: valor('formaPago'),
-        mediosPago: valor('mediosPago'),
+        mediosPago: [valor('medioPago')],
+        total: calcularTotal(),
         cliente: {
             nombreRazonSocial: valor('nombreRazonSocial'),
             tipoIdentificacion: valor('tipoIdentificacion'),
-            numeroIdentificacion: valor('numeroIdentificacion'),
+            numIdentificacion: valor('numIdentificacion'),
             naturaleza: valor('naturaleza'),
+            respFiscales: valor('respFiscales'),
+            respTributarias: valor('respTributarias'),
         },
         items: [
             {
@@ -84,7 +87,7 @@ form.addEventListener('submit', async (e) => {
                 precioBaseUnitario: Number(valor('precioBaseUnitario')),
                 cantidad: Number(valor('cantidad')),
                 unidad: valor('unidad'),
-                impuesto: [
+                impuestos: [
                     {
                         tipo: 'IVA',
                         claseImpuesto: 'PO',
@@ -115,7 +118,7 @@ form.addEventListener('submit', async (e) => {
     const json = await res.json();
     console.log(json);
 
-    if (json.success9) {
+    if (json.success) {
        mostrarMensaje('exito', 'Factura ' + numeroFactura + ' creada correctamente.');
             document.getElementById('consecutivoDcto').value = '';
         } else if (json.data?.estadoClarisa === 'VERIFICANDO') {

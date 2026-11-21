@@ -1,0 +1,40 @@
+/* Login contra Panther: guarda la keyAPI y vuelve a la página que la pidió */
+
+const form = document.getElementById('formLogin');
+const inputUsuario = document.getElementById('usuario');
+const inputPassword = document.getElementById('contrasenia');
+const mensaje = document.getElementById('mensaje');
+const boton = document.getElementById('btnEntrar');
+
+// Solo se vuelve a páginas de este mismo sitio
+function destino() {
+  const volver = new URLSearchParams(window.location.search).get('volver');
+  try {
+    const url = new URL(volver, window.location.href);
+    if (url.origin === window.location.origin) return url.href;
+  } catch (e) { /* parámetro inválido */ }
+  return '../index.html';
+}
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  mensaje.textContent = '';
+
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    return;
+  }
+
+  boton.disabled = true;
+  boton.textContent = 'Iniciando sesión...';
+
+  try {
+    await Panther.login(inputUsuario.value.trim(), inputPassword.value);
+    window.location.href = destino();
+  } catch (error) {
+    mensaje.textContent = error.message;
+  } finally {
+    boton.disabled = false;
+    boton.textContent = 'Iniciar sesión';
+  }
+});

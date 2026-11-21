@@ -1,26 +1,39 @@
-// Datos iniciales de prueba
-const datosIniciales = [
-  { id: 1, nombre: 'Daniela Osorio', cedula: '1056777098', email: 'daniela.osorio@gmail.com', telefono: '3137826573', empresa: 'Quest', estado: 'Activo' },
-  { id: 2, nombre: 'María Fernanda Gómez López', cedula: '1007654321', email: 'maria@tallerpro.com', telefono: '310 987 6543', empresa: 'Logística S.A.', estado: 'Activo' },
-  { id: 3, nombre: 'Paula García', cedula: '1012345678', email: 'paula@tallerpro.com', telefono: '320 555 1234', empresa: 'Independiente', estado: 'Inactivo' }
-];
+// CRUD de clientes conectado a Panther (recurso "clientes")
+const RECURSO = 'clientes';
 
-// Cargar desde localStorage o usar iniciales
-let clientes = JSON.parse(localStorage.getItem('tallerpro_clientes')) || datosIniciales;
-
+let clientes = [];
 let modalCliente;
 
 document.addEventListener('DOMContentLoaded', () => {
-  modalCliente = new bootstrap.Modal(document.getElementById('clientModal'));
-  guardarEnLocalStorage();
-  renderizarTabla(clientes);
+  if (!Panther.exigirSesion()) return;
 
+  modalCliente = new bootstrap.Modal(document.getElementById('clientModal'));
   document.getElementById('clientForm').addEventListener('submit', guardarCliente);
+  cargarClientes();
 });
 
-// Guardar en localStorage
-function guardarEnLocalStorage() {
-  localStorage.setItem('tallerpro_clientes', JSON.stringify(clientes));
+// Evita que lo que escribe el usuario se interprete como HTML
+function esc(texto) {
+  return String(texto ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function mostrarError(error) {
+  Swal.fire({ icon: 'error', title: 'Error', text: error.message });
+}
+
+// Traer clientes del servidor
+async function cargarClientes() {
+  try {
+    clientes = await Panther.listar(RECURSO);
+    renderizarTabla(clientes);
+  } catch (error) {
+    mostrarError(error);
+  }
 }
 
 // Renderizar tabla
@@ -41,14 +54,14 @@ function renderizarTabla(lista) {
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td class="fw-bold">${cliente.id}</td>
-      <td>${cliente.nombre}</td>
-      <td>${cliente.cedula}</td>
-      <td>${cliente.email}</td>
-      <td>${cliente.telefono}</td>
-      <td>${cliente.empresa || '-'}</td>
+      <td>${esc(cliente.nombre)}</td>
+      <td>${esc(cliente.cedula)}</td>
+      <td>${esc(cliente.email)}</td>
+      <td>${esc(cliente.telefono)}</td>
+      <td>${esc(cliente.empresa) || '-'}</td>
       <td>
         <span class="badge ${cliente.estado === 'Activo' ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger'} rounded-pill px-3 py-1">
-          ${cliente.estado}
+          ${esc(cliente.estado)}
         </span>
       </td>
       <td class="text-end pe-3">
@@ -87,7 +100,7 @@ function abrirModalEditar(id) {
   document.getElementById('cedulaInput').value = cliente.cedula;
   document.getElementById('emailInput').value = cliente.email;
   document.getElementById('phoneInput').value = cliente.telefono;
-  document.getElementById('companyInput').value = cliente.empresa;
+  document.getElementById('companyInput').value = cliente.empresa || '';
   document.getElementById('statusSelect').value = cliente.estado;
 
   document.getElementById('modalTitle').textContent = 'Editar cliente';
@@ -106,22 +119,24 @@ function validarCampos(nombre, cedula, email, telefono) {
   return true;
 }
 
-// Guardar cliente
-function guardarCliente(e) {
+// Guardar cliente (crear o actualizar en el servidor)
+async function guardarCliente(e) {
   e.preventDefault();
   const form = document.getElementById('clientForm');
 
   const id = document.getElementById('clientId').value;
-  const nombre = document.getElementById('nameInput').value.trim();
-  const cedula = document.getElementById('cedulaInput').value.trim();
-  const email = document.getElementById('emailInput').value.trim();
-  const telefono = document.getElementById('phoneInput').value.trim();
-  const empresa = document.getElementById('companyInput').value.trim();
-  const estado = document.getElementById('statusSelect').value;
+  const datos = {
+    nombre: document.getElementById('nameInput').value.trim(),
+    cedula: document.getElementById('cedulaInput').value.trim(),
+    email: document.getElementById('emailInput').value.trim(),
+    telefono: document.getElementById('phoneInput').value.trim(),
+    empresa: document.getElementById('companyInput').value.trim(),
+    estado: document.getElementById('statusSelect').value
+  };
 
   form.classList.add('was-validated');
 
-  if (!validarCampos(nombre, cedula, email, telefono)) {
+  if (!validarCampos(datos.nombre, datos.cedula, datos.email, datos.telefono)) {
     Swal.fire({
       icon: 'error',
       title: 'Datos Incompletos',
@@ -130,33 +145,27 @@ function guardarCliente(e) {
     return;
   }
 
-  if (id) {
-    const index = clientes.findIndex(c => c.id == id);
-    if (index !== -1) {
-      clientes[index] = { id: Number(id), nombre, cedula, email, telefono, empresa, estado };
+  try {
+    if (id) {
+      await Panther.actualizar(RECURSO, id, datos);
+    } else {
+      await Panther.crear(RECURSO, datos);
     }
-    Swal.fire({
-      icon: 'success',
-      title: '¡Actualizado!',
-      text: 'El cliente ha sido modificado con éxito.',
-      timer: 1500,
-      showConfirmButton: false
-    });
-  } else {
-    const nuevoId = clientes.length > 0 ? Math.max(...clientes.map(c => c.id)) + 1 : 1;
-    clientes.push({ id: nuevoId, nombre, cedula, email, telefono, empresa, estado });
-    Swal.fire({
-      icon: 'success',
-      title: '¡Registrado!',
-      text: 'Cliente guardado correctamente.',
-      timer: 1500,
-      showConfirmButton: false
-    });
+  } catch (error) {
+    mostrarError(error);
+    return;
   }
 
-  guardarEnLocalStorage();
+  Swal.fire({
+    icon: 'success',
+    title: id ? '¡Actualizado!' : '¡Registrado!',
+    text: id ? 'El cliente ha sido modificado con éxito.' : 'Cliente guardado correctamente.',
+    timer: 1500,
+    showConfirmButton: false
+  });
+
   modalCliente.hide();
-  renderizarTabla(clientes);
+  cargarClientes();
 }
 
 // Eliminar cliente
@@ -170,18 +179,21 @@ function eliminarCliente(id) {
     cancelButtonColor: '#6c757d',
     confirmButtonText: 'Sí, eliminar',
     cancelButtonText: 'Cancelar'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      clientes = clientes.filter(c => c.id !== id);
-      guardarEnLocalStorage();
-      renderizarTabla(clientes);
-      Swal.fire({
-        icon: 'success',
-        title: 'Eliminado',
-        text: 'El cliente ha sido eliminado.',
-        timer: 1500,
-        showConfirmButton: false
-      });
+  }).then(async (result) => {
+    if (!result.isConfirmed) return;
+    try {
+      await Panther.eliminar(RECURSO, id);
+    } catch (error) {
+      mostrarError(error);
+      return;
     }
+    await cargarClientes();
+    Swal.fire({
+      icon: 'success',
+      title: 'Eliminado',
+      text: 'El cliente ha sido eliminado.',
+      timer: 1500,
+      showConfirmButton: false
+    });
   });
 }

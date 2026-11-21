@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesion | Taller Pro</title>
+    <link rel="stylesheet" href="Login.css">
+</head>
+<body>
+    <main class="tarjeta">
+        <h1>Iniciar Sesion</h1>
+
+        <form id="formLogin" novalidate>
+            <label for="usuario">Usuario</label>
+            <input id="usuario" type="text" maxlength="254" required autocomplete="username">
+
+            <label for="contrasenia">Contraseña</label>
+            <input id="contrasenia" type="password" maxlength="255" required autocomplete="current-password">
+
+            <p id="mensaje" role="alert"></p>
+            <button type="submit" id="btnEntrar">Iniciar Sesion</button>
+        </form>
+    </main>
+
+<script src="../api/panther.js"></script>
+<script src="LoginPanther.js"></script>
+</body>
+</html>

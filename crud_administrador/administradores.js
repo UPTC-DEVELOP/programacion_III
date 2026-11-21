@@ -1,46 +1,25 @@
 /* CRUD de Administradores - TallerPro
-   Los datos se guardan en el navegador (localStorage).
-   Cuando tengas servidor, cambia cargar() y guardar() por llamadas a tu API. */
+   Los datos se guardan en MySQL a través de Panther (recurso "administradores"). */
 
 document.addEventListener('DOMContentLoaded', function () {
 
-  const CLAVE = 'tallerpro_admins';
+  if (!Panther.exigirSesion()) return;
+
+  const RECURSO = 'administradores';
   const $ = (id) => document.getElementById(id);
 
   /* ---------- Datos ---------- */
 
-  function datosEjemplo() {
-    return [
-      { id: 1, nombre: 'Laura Gómez',  usuario: 'lauraadmin', correo: 'laura@tallerpro.com',  rol: 'SuperAdmin' },
-      { id: 2, nombre: 'Camilo Pérez', usuario: 'camilo',     correo: 'camilo@tallerpro.com', rol: 'Administrador' },
-      { id: 3, nombre: 'Paula García', usuario: 'paula',      correo: 'paula@tallerpro.com',  rol: 'Administrador' },
-      { id: 4, nombre: 'Andrés López', usuario: 'andres',     correo: 'andres@tallerpro.com', rol: 'Administrador' }
-    ];
-  }
-
-  function cargar() {
+  async function cargar() {
     try {
-      const guardado = localStorage.getItem(CLAVE);
-      if (guardado) return JSON.parse(guardado);
-    } catch (e) { /* si falla se usan los datos de ejemplo */ }
-    const ejemplo = datosEjemplo();
-    guardar(ejemplo);
-    return ejemplo;
-  }
-
-  function guardar(lista) {
-    try {
-      localStorage.setItem(CLAVE, JSON.stringify(lista));
-    } catch (e) {
-      avisar('No se pudo guardar en este navegador.');
+      admins = await Panther.listar(RECURSO);
+    } catch (error) {
+      avisar(error.message);
     }
+    pintarTabla();
   }
 
-  function siguienteId() {
-    return admins.reduce((max, a) => Math.max(max, a.id), 0) + 1;
-  }
-
-  let admins = cargar();
+  let admins = [];
   let idAEliminar = null;
 
   /* ---------- Elementos ---------- */
@@ -178,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function () {
     return true;
   }
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (!validar()) return;
 
@@ -190,17 +169,21 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const idActual = Number(campos.id.value);
-    if (idActual) {
-      admins = admins.map((a) => (a.id === idActual ? Object.assign({}, a, datos) : a));
-      avisar('Administrador actualizado.');
-    } else {
-      admins.push(Object.assign({ id: siguienteId() }, datos));
-      avisar('Administrador registrado.');
+    try {
+      if (idActual) {
+        await Panther.actualizar(RECURSO, idActual, datos);
+        avisar('Administrador actualizado.');
+      } else {
+        await Panther.crear(RECURSO, datos);
+        avisar('Administrador registrado.');
+      }
+    } catch (error) {
+      avisar(error.message);
+      return;
     }
 
-    guardar(admins);
     cerrarModal(modalAdmin);
-    pintarTabla();
+    cargar();
   });
 
   $('btnRegistrar').addEventListener('click', nuevo);
@@ -217,13 +200,17 @@ document.addEventListener('DOMContentLoaded', function () {
     abrirModal(modalEliminar, $('cancelarElim'));
   }
 
-  $('confirmarElim').addEventListener('click', () => {
-    admins = admins.filter((a) => a.id !== idAEliminar);
+  $('confirmarElim').addEventListener('click', async () => {
+    const id = idAEliminar;
     idAEliminar = null;
-    guardar(admins);
     cerrarModal(modalEliminar);
-    pintarTabla();
-    avisar('Administrador eliminado.');
+    try {
+      await Panther.eliminar(RECURSO, id);
+      avisar('Administrador eliminado.');
+    } catch (error) {
+      avisar(error.message);
+    }
+    cargar();
   });
   $('cancelarElim').addEventListener('click', () => cerrarModal(modalEliminar));
 
@@ -255,9 +242,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   $('cerrarSesion').addEventListener('click', () => {
     try { sessionStorage.removeItem('tallerpro_rol'); } catch (e) { /* sin acceso */ }
+    Panther.cerrarSesion();
   });
 
   /* ---------- Inicio ---------- */
 
-  pintarTabla();
+  cargar();
 });
