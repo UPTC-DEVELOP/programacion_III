@@ -219,11 +219,6 @@ formOrden.addEventListener('submit', function (evento) {
 });
 
 function eliminarOrden(numero) {
-    const facturas = leerLista(CLAVE_FACTURAS, []);
-    if (facturas.some(function (factura) { return factura.ordenNumero === numero; })) {
-        mostrarNotificacion('No se puede eliminar: esta orden ya tiene una factura.', 'error');
-        return;
-    }
     if (!confirm('¿Estás seguro de que deseas eliminar esta orden?')) return;
     ordenes = ordenes.filter(function (orden) { return orden.numero !== numero; });
     guardarOrdenes(ordenes);

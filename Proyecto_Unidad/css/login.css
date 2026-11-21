@@ -215,6 +215,59 @@ body {
     text-decoration: underline;
 }
 
+/* --- Registro: términos y errores de campo --- */
+.login-card--registro {
+    max-width: 460px;
+    padding: 28px 28px 32px;
+}
+
+.login-card--registro .login-subtitulo {
+    margin-bottom: 18px;
+}
+
+.login-card--registro .campo {
+    margin-bottom: 14px;
+}
+
+.login-opciones--terminos {
+    justify-content: flex-start;
+    margin: 4px 0 14px;
+    align-items: flex-start;
+}
+
+.login-opciones--terminos .recordarme {
+    align-items: flex-start;
+    line-height: 1.4;
+    font-size: 0.88rem;
+}
+
+.login-opciones--terminos .recordarme input {
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.login-opciones--terminos a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-opciones--terminos a:hover {
+    text-decoration: underline;
+}
+
+.campo-error {
+    margin-top: 6px;
+    font-size: 0.8rem;
+    color: #721c24;
+    font-weight: 500;
+}
+
+.campo input.campo-invalido {
+    border-color: var(--color-primary);
+    background-color: #fff8f8;
+}
+
 .btn-sesion {
     width: 100%;
     background-color: var(--color-primary);
@@ -382,5 +435,9 @@ body {
         gap: 12px;
         text-align: center;
         padding: 18px 20px;
+    }
+
+    .login-card--registro {
+        padding: 24px 20px;
     }
 }

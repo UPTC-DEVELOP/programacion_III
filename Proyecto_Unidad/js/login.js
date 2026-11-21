@@ -1,9 +1,13 @@
 // Inicio de sesion contra el API de pruebas de Clarisa.
-const URL_LOGIN = 'https://pru.clarisacloud.com:8443/seguridad/rest/api/v1/login/';
-const PERMISO_FACTURACION = 'GESTIONAR_FACTURACION_ELECTRONICA';
-const CLAVE_USUARIO_RECORDADO = 'autotech-usuario';
+// Depende de js/servicios/clarisa.js (Sesion y ClarisaApi).
 
+// --- Constantes ---
+const CLAVE_USUARIO_RECORDADO = 'autotech-usuario';
+const PAGINA_FACTURACION = 'pages/factura.html';
+
+// --- Ciclo de vida ---
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Referencias del DOM ---
     const form = document.getElementById('form-login');
     const usuario = document.getElementById('usuario');
     const contrasena = document.getElementById('contrasena');
@@ -12,8 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnTexto = btnSesion.querySelector('.btn-texto');
     const alerta = document.getElementById('login-alerta');
 
-    if (sessionStorage.getItem('authToken')) {
-        window.location.replace('factura.html');
+    if (Sesion.activa()) {
+        window.location.replace(PAGINA_FACTURACION);
         return;
     }
 
@@ -23,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         recordarme.checked = true;
     }
 
+    // --- Funciones auxiliares ---
     function mostrarAlerta(mensaje, tipo) {
         alerta.className = 'login-alerta ' + tipo;
         alerta.setAttribute('role', tipo === 'error' ? 'alert' : 'status');
@@ -42,24 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btnTexto.textContent = cargando ? 'Validando credenciales...' : 'Iniciar Sesión';
     }
 
-    // Clarisa envia `errores` como arreglo o como { errores: [{ codError, errorMessage }] }.
-    function mensajeDeError(data) {
-        const lista = Array.isArray(data?.errores) ? data.errores : data?.errores?.errores;
-        const primero = Array.isArray(lista) ? lista[0] : null;
-        const textoError = typeof primero === 'string'
-            ? primero
-            : primero?.errorMessage || primero?.mensaje || primero?.message;
-        return textoError || data?.textResponse || 'Credenciales incorrectas.';
-    }
-
-    async function leerJson(response) {
-        try {
-            return await response.json();
-        } catch {
-            return null;
-        }
-    }
-
+    // --- Manejadores de eventos ---
     document.getElementById('toggle-contrasena').addEventListener('click', function () {
         const visible = contrasena.type === 'text';
         contrasena.type = visible ? 'password' : 'text';
@@ -94,15 +82,10 @@ document.addEventListener('DOMContentLoaded', () => {
         estadoCargando(true);
 
         try {
-            const response = await fetch(URL_LOGIN, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ usuario: valorUsuario, contrasenia: valorContrasena })
-            });
-            const data = await leerJson(response);
+            const { ok, data } = await ClarisaApi.login(valorUsuario, valorContrasena);
 
-            if (!response.ok || data?.success !== true) {
-                throw new Error(mensajeDeError(data));
+            if (!ok || data?.success !== true) {
+                throw new Error(ClarisaApi.mensajeDeError(data) || 'Credenciales incorrectas.');
             }
 
             const rawToken = data.data?.token;
@@ -111,15 +94,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const permisos = data.data?.permisos || [];
-            if (!permisos.includes(PERMISO_FACTURACION)) {
+            if (!permisos.includes(ClarisaApi.PERMISO_FACTURACION)) {
                 throw new Error('El usuario no cuenta con permisos de facturación electrónica.');
             }
 
-            const authToken = rawToken.startsWith('Bearer ') ? rawToken : `Bearer ${rawToken}`;
             const userName = data.data?.usuario?.userName || valorUsuario;
-
-            sessionStorage.setItem('authToken', authToken);
-            sessionStorage.setItem('userLogged', userName);
+            Sesion.iniciar(rawToken, userName);
 
             if (recordarme.checked) {
                 localStorage.setItem(CLAVE_USUARIO_RECORDADO, valorUsuario);
@@ -129,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             mostrarAlerta(`${data.textResponse || 'Bienvenido'}, ${userName}. Redirigiendo a facturación...`, 'success');
             btnTexto.textContent = 'Ingresando...';
-            setTimeout(() => window.location.assign('factura.html'), 800);
+            setTimeout(() => window.location.assign(PAGINA_FACTURACION), 800);
         } catch (error) {
             const sinConexion = error instanceof TypeError;
             mostrarAlerta(

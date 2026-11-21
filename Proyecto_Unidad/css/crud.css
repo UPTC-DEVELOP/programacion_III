@@ -1,6 +1,12 @@
-/* 
-   CRUD DE CLIENTES 
-  */
+/*
+   ESTILOS COMPARTIDOS DE LOS CRUD
+   (clientes, vehículos, empleados, proveedores, productos, órdenes y facturación)
+*/
+
+header nav ul li a.active {
+    color: var(--color-primary);
+    font-weight: 700;
+}
 
 /* ---------- LAYOUT GENERAL ---------- */
 .crud-main {

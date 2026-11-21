@@ -1,8 +1,9 @@
 // Emision de factura electronica nacional contra el API de pruebas de Clarisa.
 // Estructura segun https://ayuda.clarisa.co/guia-tecnica-para-consumo-api-factura-electronica/
-const URL_FACTURA = 'https://pru.clarisacloud.com:8443/api/factura/rest/v1/factura/nacional';
-const URL_VALIDACION = 'https://pru.clarisacloud.com:8443/api/factura/rest/v1/factura/validacion';
-const TIPO_DOCUMENTO_FACTURA = '01';
+// Depende de ../servicios/clarisa.js (Sesion y ClarisaApi). Página: pages/factura.html
+
+// --- Constantes ---
+const PAGINA_LOGIN = '../login.html';
 const SEGUNDOS_ENTRE_CONSULTAS = 5;
 const TARIFA_IVA = 19;
 const FACTOR_IVA = 0.19;
@@ -15,10 +16,12 @@ const FORMAS_PAGO = ['1', '2'];
 const MEDIOS_PAGO = ['10', '47', '48', '49'];
 const TIPOS_ID = ['CC', 'NI', 'CE', 'PA'];
 
-if (!sessionStorage.getItem('authToken')) {
-    window.location.replace('login.html');
+// --- Control de acceso ---
+if (!Sesion.activa()) {
+    window.location.replace(PAGINA_LOGIN);
 }
 
+// --- Funciones auxiliares ---
 const redondear = (valor) => Math.round(((Number(valor) || 0) + Number.EPSILON) * 100) / 100;
 const sumar = (lista, campo) => redondear(lista.reduce((suma, item) => suma + campo(item), 0));
 
@@ -50,7 +53,7 @@ function siguienteConsecutivo() {
     return String(ultimo > 0 ? ultimo + 1 : CONSECUTIVO_INICIAL);
 }
 
-// ---------- Items e impuestos ----------
+// --- Items e impuestos ---
 // Clarisa calcula base y valor del impuesto; solo espera tipo, clase y tarifa.
 function impuestoIva() {
     return { tipo: 'IVA', claseImpuesto: 'PO', tarifaTributo: TARIFA_IVA };
@@ -124,10 +127,12 @@ function itemParaClarisa({ codigo, nombreItem, precioBaseUnitario, cantidad, uni
     return item;
 }
 
+// --- Ciclo de vida ---
 document.addEventListener('DOMContentLoaded', () => {
-    const token = sessionStorage.getItem('authToken');
-    if (!token) return;
+    if (!Sesion.activa()) return;
+    const api = new ClarisaApi();
 
+    // --- Referencias del DOM ---
     const form = document.getElementById('form-factura');
     const repuestosBody = document.getElementById('repuestos-body');
     const btnEmitir = document.getElementById('btn-emitir');
@@ -138,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const campo = (id) => document.getElementById(id);
     const valor = (id) => campo(id).value.trim();
 
-    campo('usuario-activo').textContent = sessionStorage.getItem('userLogged') || 'Usuario';
+    campo('usuario-activo').textContent = Sesion.usuario || 'Usuario';
 
     function valoresPorDefecto() {
         campo('doc-consecutivo').value = siguienteConsecutivo();
@@ -147,6 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     valoresPorDefecto();
 
+    // --- Manejadores de eventos ---
     campo('doc-forma-pago').addEventListener('change', (evento) => {
         campo('doc-vencimiento').value = fechaMasDias(evento.target.value === '2' ? 30 : 0);
     });
@@ -156,10 +162,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     campo('btn-cerrar-sesion').addEventListener('click', () => {
-        sessionStorage.clear();
-        window.location.replace('login.html');
+        Sesion.cerrar();
+        window.location.replace(PAGINA_LOGIN);
     });
 
+    // --- Notificaciones ---
     let temporizadorNotificacion;
     function mostrarNotificacion(mensaje, tipo) {
         clearTimeout(temporizadorNotificacion);
@@ -175,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // ---------- Repuestos ----------
+    // --- Repuestos ---
     function agregarRepuesto() {
         const fila = document.createElement('tr');
         fila.className = 'repuesto-fila';
@@ -207,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const filaVacia = (rep) => !rep.referencia && !rep.descripcion && !rep.marca && !rep.precio;
 
-    // ---------- Formulario ----------
+    // --- Formulario ---
     function leerFormulario() {
         return {
             nit: valor('doc-nit'),
@@ -338,7 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return payload;
     }
 
-    // ---------- Calculos en tiempo real ----------
+    // --- Calculos en tiempo real ---
     function actualizarResumen() {
         leerRepuestos().forEach((rep) => {
             rep.fila.querySelector('.rep-subtotal').textContent = formatoPesos((rep.precio - rep.descuento) * rep.cantidad);
@@ -381,7 +388,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ---------- Envio a Clarisa ----------
+    // --- Envio a Clarisa ---
     // estado: 'exito' | 'pendiente' | 'fallo'
     function mostrarRespuesta(status, contenido, estado) {
         tarjetaRespuesta.hidden = false;
@@ -390,27 +397,9 @@ document.addEventListener('DOMContentLoaded', () => {
         jsonRespuesta.textContent = typeof contenido === 'string' ? contenido : JSON.stringify(contenido, null, 2);
     }
 
-    async function leerRespuesta(response) {
-        const texto = await response.text();
-        try {
-            return texto ? JSON.parse(texto) : {};
-        } catch {
-            return texto;
-        }
-    }
-
-    // La factura quedo creada en Clarisa y espera la respuesta de la DIAN.
-    const estaVerificando = (data) => data?.data?.estadoClarisa === 'VERIFICANDO';
-
-    // Clarisa envia los errores en data.errores (arreglo u objeto) o en data.data.errores.
     function mensajeDeError(data, status) {
-        const contenedor = data?.data?.errores ?? data?.errores;
-        const lista = Array.isArray(contenedor) ? contenedor : contenedor?.errores;
-        const mensajes = (Array.isArray(lista) ? lista : [])
-            .map((error) => (typeof error === 'string' ? error : error?.errorMessage || error?.mensaje || error?.message))
-            .filter(Boolean);
-        if (mensajes.length) return mensajes.join(' · ');
-        if (data?.textResponse) return data.textResponse;
+        const mensaje = ClarisaApi.mensajeDeError(data);
+        if (mensaje) return mensaje;
         if (status === 401 || status === 403) return 'La sesión expiró o no tiene autorización. Cierra sesión e ingresa de nuevo.';
         if (status === 400 || status === 422) return `Clarisa encontró errores de validación (HTTP ${status}). Revisa la respuesta.`;
         return `Clarisa rechazó la factura (HTTP ${status}).`;
@@ -450,7 +439,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
     }
 
-    // ---------- Consulta de estado ante la DIAN ----------
+    // --- Consulta de estado ante la DIAN ---
     const panelConsulta = campo('consulta-estado');
     const btnConsultar = campo('btn-consultar-estado');
     let documentoEnValidacion = null;
@@ -485,23 +474,15 @@ document.addEventListener('DOMContentLoaded', () => {
     btnConsultar.addEventListener('click', async () => {
         if (!documentoEnValidacion || btnConsultar.disabled) return;
         const { nit, numeroDocumento } = documentoEnValidacion;
-        const parametros = new URLSearchParams({ nit, tipoDocumento: TIPO_DOCUMENTO_FACTURA, numeroDocumento });
         btnConsultar.disabled = true;
         btnConsultar.textContent = 'Consultando...';
 
         try {
-            const response = await fetch(`${URL_VALIDACION}?${parametros}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': token
-                }
-            });
-            const data = await leerRespuesta(response);
+            const { status, data } = await api.consultarEstado(nit, numeroDocumento);
             const info = data?.data;
             const aprobada = data?.success === true && info?.estadoDIAN === 'APROBADA';
-            const sigueVerificando = estaVerificando(data) || info?.estadoDIAN === 'PENDIENTE';
-            mostrarRespuesta(response.status, data, aprobada ? 'exito' : sigueVerificando ? 'pendiente' : 'fallo');
+            const sigueVerificando = ClarisaApi.estaVerificando(data) || info?.estadoDIAN === 'PENDIENTE';
+            mostrarRespuesta(status, data, aprobada ? 'exito' : sigueVerificando ? 'pendiente' : 'fallo');
 
             if (aprobada) {
                 ocultarConsulta();
@@ -509,7 +490,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (sigueVerificando) {
                 mostrarNotificacion(`La factura ${numeroDocumento} sigue en validación con la DIAN. Intenta de nuevo en unos segundos.`, 'warning');
             } else {
-                mostrarNotificacion(mensajeDeError(typeof data === 'object' ? data : null, response.status), 'error');
+                mostrarNotificacion(mensajeDeError(data, status), 'error');
             }
         } catch {
             mostrarNotificacion('No fue posible consultar el estado en Clarisa. Verifica tu conexión e inténtalo de nuevo.', 'error');
@@ -518,6 +499,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // --- Emision del documento ---
     form.addEventListener('submit', async (evento) => {
         evento.preventDefault();
         if (enEspera || btnEmitir.disabled) return;
@@ -543,24 +525,15 @@ document.addEventListener('DOMContentLoaded', () => {
         bloquearEnvio('Emitiendo...');
 
         try {
-            const response = await fetch(URL_FACTURA, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': token
-                },
-                body: JSON.stringify(payload)
-            });
-
-            const data = await leerRespuesta(response);
+            const { status, data } = await api.emitirFactura(payload);
 
             // Clarisa responde HTTP 206 con success: false cuando la validacion falla.
-            const exito = response.status === 200 && data?.success === true;
-            const pendiente = !exito && estaVerificando(data);
-            mostrarRespuesta(response.status, data, exito ? 'exito' : pendiente ? 'pendiente' : 'fallo');
+            const exito = status === 200 && data?.success === true;
+            const pendiente = !exito && ClarisaApi.estaVerificando(data);
+            mostrarRespuesta(status, data, exito ? 'exito' : pendiente ? 'pendiente' : 'fallo');
 
             if (!exito && !pendiente) {
-                throw new Error(mensajeDeError(typeof data === 'object' ? data : null, response.status));
+                throw new Error(mensajeDeError(data, status));
             }
 
             const numeroDocumento = `${datos.prefijo}${datos.consecutivo}`;
@@ -588,6 +561,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // --- Inicializacion ---
     agregarRepuesto();
     actualizarResumen();
 });

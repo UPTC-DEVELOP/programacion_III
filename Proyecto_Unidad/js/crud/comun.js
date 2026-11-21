@@ -1,8 +1,7 @@
-// Funciones compartidas por Órdenes y Facturas.
-// El diseño visual se reutiliza desde clientes.css.
+// Datos y funciones compartidas por los CRUD que usan localStorage (Órdenes).
+// El diseño visual se reutiliza desde css/crud.css.
 
 const CLAVE_ORDENES = 'autotech-ordenes';
-const CLAVE_FACTURAS = 'autotech-facturas';
 
 const CATALOGO = {
     clientes: [
@@ -56,14 +55,6 @@ function escapar(texto) {
         .replace(/"/g, '&quot;');
 }
 
-function formatoPesos(valor) {
-    return new Intl.NumberFormat('es-CO', {
-        style: 'currency',
-        currency: 'COP',
-        maximumFractionDigits: 0
-    }).format(Number(valor) || 0);
-}
-
 function formatoIngreso(valor) {
     if (!valor) return '—';
     const fecha = new Date(valor);
@@ -79,28 +70,6 @@ function nombreCliente(documento) {
 function nombreEmpleado(documento) {
     const empleado = CATALOGO.empleados.find(function (item) { return item.documento === documento; });
     return empleado ? empleado.nombres + ' ' + empleado.apellidos : '—';
-}
-
-function buscarOrden(numero) {
-    return obtenerOrdenes().find(function (orden) { return orden.numero === numero; });
-}
-
-function calcularFactura(orden, tarifaHora, utilidad) {
-    const repuestos = (orden.repuestos || []).reduce(function (suma, repuesto) {
-        return suma + (Number(repuesto.precio) || 0);
-    }, 0);
-    const manoObra = (Number(orden.horas) || 0) * (Number(tarifaHora) || 0);
-    const utilidadN = Number(utilidad) || 0;
-    const subtotal = repuestos + manoObra + utilidadN;
-    const iva = Math.round(subtotal * 0.19);
-    return {
-        repuestos: repuestos,
-        manoObra: manoObra,
-        utilidad: utilidadN,
-        subtotal: subtotal,
-        iva: iva,
-        total: subtotal + iva
-    };
 }
 
 function leerLista(clave, semilla) {
