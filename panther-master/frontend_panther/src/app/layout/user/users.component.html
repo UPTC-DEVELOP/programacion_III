@@ -1,0 +1,75 @@
+<div [@routerTransition]>
+    <div class="row">
+        <div class="col-lg-1">
+            <div >
+            </div>
+        </div>
+        <div class="col-lg-10" *ngIf="!editUser">
+            <div class="card mb-3">
+                <div class="card-header">Usuarios</div>
+                <div class="col text-right">
+                    <button type="submit" class="btn" (click)="create()" *ngIf="!editUser">Nuevo</button>&nbsp;
+                </div>
+                <div class="card-body table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Telefono</th>
+                            <th>Opciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr *ngFor="let row of users?.data">
+                            <td>{{ row.name }}</td>
+                            <td>{{ row.lastName }}</td>
+                            <td>{{ row.phone }}</td>
+                            <td>
+                                <button class="btn" (click)="edit(row)">Editar</button>&nbsp;
+                                <button class="btn btn-danger" (click)="delete(row.id)">Borrar</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2"></div>
+        <div class="col-lg-6" *ngIf="editUser">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h4 *ngIf="!data.id">Crear usuario</h4>
+                    <h4 *ngIf="data.id">Editar usuario</h4>
+                </div>
+                <div class="card-body">
+                    <form role="form">
+                        <fieldset class="form-group">
+                            <label>Nombre</label>
+                            <input class="form-control" [(ngModel)]="data.name" [ngModelOptions]="{standalone: true}">
+                        </fieldset>
+
+                        <fieldset class="form-group">
+                            <label>Apellido</label>
+                            <input class="form-control" [(ngModel)]="data.lastName" [ngModelOptions]="{standalone: true}">
+                        </fieldset>
+
+                        <fieldset class="form-group">
+                            <label>Telefono</label>
+                            <input type="number" class="form-control" [(ngModel)]="data.phone" [ngModelOptions]="{standalone: true}">
+                        </fieldset>
+
+                        <button class="btn btn-success" (click)="save()" type="submit">Guardar</button>&nbsp;
+                        <button class="btn" (click)="back()"type="reset">Cancelar</button>&nbsp;
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
