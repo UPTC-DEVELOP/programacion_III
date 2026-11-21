@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     inicializarCRUDEmpleados();
     inicializarCRUDRepuestos();
     inicializarFacturacion();
+    inicializarConfiguracion();
     inicializarCerrarSesion();
     mostrarNombreUsuario();
 });
@@ -123,10 +124,10 @@ function inicializarLogin(formulario) {
 
             let loginExitoso = false;
 
-            // Conserva el acceso de demostración aunque las APIs no estén disponibles.
-            if (username.toLowerCase() === "admin" && password === "234") {
-                loginExitoso = true;
-                nombreSesion = "admin";
+            // Acceso de demostración con credenciales configuradas.
+            if (await verificarCredencialesConfiguracion(username, password)) {
+               loginExitoso = true;
+               nombreSesion = username;
             }
 
             /* ===========================
@@ -342,7 +343,7 @@ function inicializarLogin(formulario) {
 ========================================================= */
 
 function inicializarNavegacionSistema() {
-    const secciones = ["dashboard", "clientes", "vehiculo", "servicios", "empleados", "repuestos", "facturas"];
+    const secciones = ["dashboard", "clientes", "vehiculo", "servicios", "empleados", "repuestos", "facturas", "configuracion"];
     const enlaces = [...document.querySelectorAll(".menu-sistema a")];
     const titulo = document.querySelector(".topbar-sistema h1");
     const subtitulo = document.querySelector(".subtitulo-sistema");
@@ -353,7 +354,8 @@ function inicializarNavegacionSistema() {
         servicios: ["Servicios", "Órdenes de trabajo y facturación"],
         empleados: ["Empleados", "Registro, disponibilidad y consulta del personal"],
         repuestos: ["Repuestos", "Inventario, existencias y precios"],
-        facturas: ["Facturas", "Generación y consulta de facturas"]
+        facturas: ["Facturas", "Generación y consulta de facturas"],
+        configuracion: ["Configuración", "Administración de los parámetros del sistema"]
     };
 
     function navegarA(id) {
@@ -391,6 +393,274 @@ function mostrarEstado(texto) {
     window.setTimeout(() => {
         estado.textContent = "";
     }, 4000);
+}
+
+
+/* =========================================================
+   CONFIGURACION DEL SISTEMA
+========================================================= */
+
+const CLAVE_CONFIGURACION = "configuracionServiAuto";
+
+function leerConfiguracionServiAuto() {
+    const guardada = localStorage.getItem(CLAVE_CONFIGURACION);
+
+    const valoresIniciales = {
+        porcentajeUtilidad: 20,
+        porcentajeIva: 19,
+        valorManoObra: 50000,
+        usuario: "admin",
+        credenciales: null
+    };
+
+    if (!guardada) {
+        return valoresIniciales;
+    }
+
+    try {
+        return {
+            ...valoresIniciales,
+            ...JSON.parse(guardada)
+        };
+    } catch (error) {
+        console.error("Error leyendo configuración:", error);
+        return valoresIniciales;
+    }
+}
+
+// Convierte texto a Base64.
+function convertirBase64(datos) {
+    let texto = "";
+
+    datos.forEach((byte) => {
+        texto += String.fromCharCode(byte);
+    });
+
+    return btoa(texto);
+}
+
+// Genera un hash seguro para la contraseña.
+async function generarHashPassword(password, salt) {
+    const encoder = new TextEncoder();
+
+    const clave = await crypto.subtle.importKey(
+        "raw",
+        encoder.encode(password),
+        "PBKDF2",
+        false,
+        ["deriveBits"]
+    );
+
+    const resultado = await crypto.subtle.deriveBits(
+        {
+            name: "PBKDF2",
+            salt: salt,
+            iterations: 100000,
+            hash: "SHA-256"
+        },
+        clave,
+        256
+    );
+
+    return convertirBase64(new Uint8Array(resultado));
+}
+
+// Comprueba el usuario y la contraseña del acceso de demostración.
+async function verificarCredencialesConfiguracion(usuario, password) {
+    const configuracion = leerConfiguracionServiAuto();
+
+    if (configuracion.credenciales) {
+        const credenciales = configuracion.credenciales;
+
+        if (usuario !== credenciales.usuario) {
+            return false;
+        }
+
+        const salt = Uint8Array.from(
+            atob(credenciales.salt),
+            caracter => caracter.charCodeAt(0)
+        );
+
+        const hash = await generarHashPassword(password, salt);
+
+        return hash === credenciales.hash;
+    }
+
+    return usuario.toLowerCase() === "admin" && password === "234";
+}
+
+// Carga y guarda la configuración.
+function inicializarConfiguracion() {
+    const formulario = document.getElementById("formulario-configuracion");
+
+    if (!formulario) return;
+
+    const utilidad = document.getElementById("config-utilidad");
+    const iva = document.getElementById("config-iva");
+    const manoObra = document.getElementById("config-mano-obra");
+
+    const usuario = document.getElementById("config-usuario");
+    const password = document.getElementById("config-password");
+    const confirmarPassword = document.getElementById("config-confirmar-password");
+
+    const configuracion = leerConfiguracionServiAuto();
+
+    // Mostrar los valores guardados.
+    utilidad.value = configuracion.porcentajeUtilidad;
+    iva.value = configuracion.porcentajeIva;
+    manoObra.value = configuracion.valorManoObra;
+
+    usuario.placeholder = `Usuario actual: ${configuracion.usuario}`;
+
+    formulario.addEventListener("submit", async (evento) => {
+        evento.preventDefault();
+
+        const porcentajeUtilidad = Number(utilidad.value);
+        const porcentajeIva = Number(iva.value);
+        const valorManoObra = Number(manoObra.value);
+
+        const nuevoUsuario = usuario.value.trim();
+        const nuevaPassword = password.value;
+        const confirmacion = confirmarPassword.value;
+
+        // Validar utilidad.
+        if (
+            !Number.isFinite(porcentajeUtilidad) ||
+            porcentajeUtilidad < 0 ||
+            porcentajeUtilidad > 100
+        ) {
+            mostrarEstado("⚠️ La utilidad debe estar entre 0 y 100 %.");
+            return;
+        }
+
+        // Validar IVA.
+        if (
+            !Number.isFinite(porcentajeIva) ||
+            porcentajeIva <= 0
+        ) {
+            mostrarEstado("⚠️ El IVA debe ser mayor que cero.");
+            return;
+        }
+
+        // Validar mano de obra.
+        if (
+            !Number.isFinite(valorManoObra) ||
+            valorManoObra <= 0
+        ) {
+            mostrarEstado("⚠️ El valor de mano de obra debe ser mayor que cero.");
+            return;
+        }
+
+        // Validar nombre de usuario.
+        if (nuevoUsuario.length > 50) {
+            mostrarEstado("⚠️ El usuario no puede superar 50 caracteres.");
+            return;
+        }
+
+        // Validar contraseña solamente si se escribió una nueva.
+        if (nuevaPassword) {
+            const contraseñaValida =
+                nuevaPassword.length >= 8 &&
+                /[A-Z]/.test(nuevaPassword) &&
+                /[a-z]/.test(nuevaPassword) &&
+                /[0-9]/.test(nuevaPassword) &&
+                /[^A-Za-z0-9]/.test(nuevaPassword);
+
+            if (!contraseñaValida) {
+                mostrarEstado(
+                    "⚠️ La contraseña debe tener mínimo 8 caracteres, mayúsculas, minúsculas, números y símbolos."
+                );
+                return;
+            }
+
+            if (nuevaPassword !== confirmacion) {
+                mostrarEstado("⚠️ Las contraseñas no coinciden.");
+                return;
+            }
+        } else if (confirmacion) {
+            mostrarEstado("⚠️ Escribiste una confirmación, pero no una nueva contraseña.");
+            return;
+        }
+
+        const configuracionActual = leerConfiguracionServiAuto();
+
+        const nuevaConfiguracion = {
+            ...configuracionActual,
+            porcentajeUtilidad,
+            porcentajeIva,
+            valorManoObra
+        };
+
+        if (nuevoUsuario) {
+            nuevaConfiguracion.usuario = nuevoUsuario;
+        }
+
+        // Si se cambia usuario o contraseña, actualizar las credenciales.
+        if (nuevoUsuario || nuevaPassword) {
+            const usuarioFinal = nuevoUsuario || configuracionActual.usuario;
+
+            if (!window.crypto || !crypto.subtle) {
+                mostrarEstado(
+                    "⚠️ No se puede proteger la contraseña en este navegador. Ejecuta el proyecto en localhost o HTTPS."
+                );
+                return;
+            }
+
+            const salt = crypto.getRandomValues(new Uint8Array(16));
+            const hash = await generarHashPassword(
+                nuevaPassword || "",
+                salt
+            );
+
+            let credencialesAnteriores = configuracionActual.credenciales;
+
+            // Si solamente cambia el usuario, conserva la contraseña anterior.
+            if (!nuevaPassword && credencialesAnteriores) {
+                nuevaConfiguracion.credenciales = {
+                    usuario: usuarioFinal,
+                    salt: credencialesAnteriores.salt,
+                    hash: credencialesAnteriores.hash
+                };
+            } else if (!nuevaPassword && !credencialesAnteriores) {
+                mostrarEstado(
+                    "⚠️ Para cambiar el usuario por primera vez, también debes establecer una nueva contraseña."
+                );
+                return;
+            } else {
+                nuevaConfiguracion.credenciales = {
+                    usuario: usuarioFinal,
+                    salt: convertirBase64(salt),
+                    hash
+                };
+            }
+        }
+
+        const confirmar = window.confirm(
+            "¿Estás seguro de que deseas guardar la configuración?"
+        );
+
+        if (!confirmar) return;
+
+        try {
+            localStorage.setItem(
+                CLAVE_CONFIGURACION,
+                JSON.stringify(nuevaConfiguracion)
+            );
+
+            formulario.reset();
+
+            utilidad.value = nuevaConfiguracion.porcentajeUtilidad;
+            iva.value = nuevaConfiguracion.porcentajeIva;
+            manoObra.value = nuevaConfiguracion.valorManoObra;
+            usuario.placeholder = `Usuario actual: ${nuevaConfiguracion.usuario}`;
+
+            mostrarEstado("✅ Configuración guardada correctamente.");
+
+        } catch (error) {
+            console.error("Error guardando configuración:", error);
+            mostrarEstado("❌ No se pudo guardar la configuración.");
+        }
+    });
 }
 
 
@@ -2049,10 +2319,16 @@ function inicializarFacturacion() {
     }
 
     function tasaImpuesto(tipo) {
-        if (tipo === "iva-19") return 0.19;
-        if (tipo === "iva-5") return 0.05;
-        return 0;
+       const configuracion = leerConfiguracionServiAuto();
+
+       if (tipo === "iva-19") {
+       return Number(configuracion.porcentajeIva) / 100;
     }
+
+    if (tipo === "iva-5") return 0.05;
+
+    return 0;
+}
 
     function redondear(valor) {
         return Math.round((valor + Number.EPSILON) * 100) / 100;

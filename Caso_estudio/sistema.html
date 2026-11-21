@@ -33,6 +33,7 @@
                 <a href="#empleados">Empleados</a>
                 <a href="#repuestos">Repuestos</a>
                 <a href="#facturas"> Facturacion</a>
+                <a href="#configuracion">Configuración</a>
             </nav>
 
             <footer>
@@ -697,6 +698,108 @@
                     </footer>
                 </form>
             </dialog>
+
+            <!-- =========================================
+     MODULO DE CONFIGURACION
+========================================= -->
+
+<section id="configuracion" class="modulo-sistema"
+    aria-labelledby="titulo-configuracion" hidden>
+
+    <header class="encabezado-modulo">
+        <div>
+            <p class="eyebrow-sistema">Administración</p>
+            <h2 id="titulo-configuracion">Configuración del sistema</h2>
+            <p class="contador-sistema">
+                Administra los valores generales de SERVI-AUTO.
+            </p>
+        </div>
+    </header>
+
+    <form id="formulario-configuracion">
+
+        <h3>Configuración financiera</h3>
+
+        <label class="campo-formulario" for="config-utilidad">
+            Porcentaje de utilidad (%)
+            <input
+                type="number"
+                id="config-utilidad"
+                min="0"
+                max="100"
+                step="0.01"
+                required
+                placeholder="Ejemplo: 20"
+            />
+        </label>
+
+        <label class="campo-formulario" for="config-iva">
+            Porcentaje de IVA (%)
+            <input
+                type="number"
+                id="config-iva"
+                min="0.01"
+                step="0.01"
+                required
+                placeholder="Ejemplo: 19"
+            />
+        </label>
+
+        <label class="campo-formulario" for="config-mano-obra">
+            Valor de mano de obra por hora (COP)
+            <input
+                type="number"
+                id="config-mano-obra"
+                min="0.01"
+                step="1"
+                required
+                placeholder="Ejemplo: 50000"
+            />
+        </label>
+
+        <hr>
+
+        <h3>Configuración de acceso</h3>
+
+        <label class="campo-formulario" for="config-usuario">
+            Nuevo nombre de usuario
+            <input
+                type="text"
+                id="config-usuario"
+                maxlength="50"
+                placeholder="Deja vacío para conservar el actual"
+            />
+        </label>
+
+        <label class="campo-formulario" for="config-password">
+            Nueva contraseña
+            <input
+                type="password"
+                id="config-password"
+                placeholder="Deja vacío para conservar la actual"
+            />
+        </label>
+
+        <label class="campo-formulario" for="config-confirmar-password">
+            Confirmar nueva contraseña
+            <input
+                type="password"
+                id="config-confirmar-password"
+                placeholder="Repite la nueva contraseña"
+            />
+        </label>
+
+        <footer class="acciones-modal">
+            <button type="submit" class="boton-principal">
+                Guardar configuración
+            </button>
+        </footer>
+
+    </form>
+
+</section>
+
+<!-- FIN MODULO DE CONFIGURACION -->
 
             <section id="facturas" class="modulo-sistema modulo-facturas" aria-labelledby="titulo-facturas" hidden>
                 <header class="encabezado-modulo">
