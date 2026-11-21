@@ -1,56 +1,124 @@
-* { 
+* {
     box-sizing: border-box;
 }
-body{
-    margin:0;
+
+body {
+    margin: 0;
     min-height: 100vh;
-    display: grid;
-    place-items: center;
-    padding:  1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
     font-family: system-ui, sans-serif;
+    background: #e9eaf6;
 }
-.tarjeta{
-    width: 100%;
-    max-width: 400px;
-    padding: clamp(1.25rem, 5vw, 2rem);
-    border-radius:12px;
+
+.tarjeta {
+    width: 900px;
+    height: 480px;
+    background: #fff;
+    border-radius: 20px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+    display: flex;
 }
-h1{
+
+/* Panel izquierdo - sin tocar tu HTML */
+.tarjeta::before {
+    content: "¡Hola, Bienvenido!\A¿Ya tienes una cuenta?";
+    white-space: pre;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 45%;
+    height: 100%;
+    background: #2563eb;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 1.25rem;
+    line-height: 1.8;
+    padding: 1rem;
+}
+
+/* Contenido del formulario */
+.form-contenido {
+    position: relative;
+    z-index: 1;
+    margin-left: 45%;
+    width: 55%;
+    padding: 2rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h1 {
     margin: 0 0 1.5rem;
     font-size: 1.5rem;
     text-align: center;
+    color: #1e293b;
 }
-label{
+
+label {
     display: block;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.5rem;
     font-weight: 600;
+    color: #334155;
 }
-input{
+
+input {
     width: 100%;
     padding: 0.75rem;
     margin-bottom: 1rem;
     border: 1px solid #ced4da;
     border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
 }
-button{
+
+input:focus {
+    border-color: #2563eb;
+}
+
+button {
     width: 100%;
     padding: 0.85rem;
     font-size: 1rem;
     font-weight: 600;
-    background-color: #007bff;
-    color: #ffffff;
+    background-color: #2563eb;
+    color: white;
     border: none;
     border-radius: 8px;
     cursor: pointer;
+    transition: background 0.3s;
 }
-button:disabled{
-    opacity: 0.6;
-    cursor: wait;
+
+button:hover {
+    background-color: #1d4ed8;
 }
-#mensaje{
-    min-height: 1.25rem;
-    margin: 0 0 1rem;
-    color: #c92a2a;
-    font-size: 0.9rem;
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .tarjeta {
+        flex-direction: column;
+        height: auto;
+        max-width: 420px;
+    }
+    .tarjeta::before {
+        position: relative;
+        width: 100%;
+        padding: 2rem;
+        font-size: 1.1rem;
+    }
+    .form-contenido {
+        margin-left: 0;
+        width: 100%;
+        padding: 2rem 1.5rem;
+    }
 }
