@@ -1,6 +1,6 @@
 // login.js — es el que consume la API de autenticación de Clarisa
 const URL_LOGIN = 'https://pru.clarisacloud.com:8443/seguridad/rest/api/v1/login/';
-const PAGINA_DESTINO = 'factura.html';
+const PAGINA_DESTINO = 'clientes.html';
 
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('formLogin');
