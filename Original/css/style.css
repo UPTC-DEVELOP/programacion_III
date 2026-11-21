@@ -166,6 +166,30 @@ h3 { font-size: 16px; }
 }
 .lista-registro a:hover { background: var(--bg); color: var(--text); }
 
+/*MODIFICACION PARA ESTILO BOTON INICIO SESION*/
+.boton-borde-naranja {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+.boton-borde-naranja:hover {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.acciones-encabezado { 
+  display: flex; 
+  align-items: center; 
+  gap: 12px; 
+  margin: 0; 
+}
+
+@media (max-width: 560px) {
+  .acciones-encabezado .boton {
+    width: auto;
+    }
+}
+
 /* PORTADA / HERO*/
 .portada {
   padding-block: 72px 88px;

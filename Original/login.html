@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <title>TallerMax | Iniciar sesión</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body class="pagina-login">
+
+  <a class="enlace-saltar" href="#main">Saltar al contenido</a>
+
+  <header class="encabezado-sitio">
+    <p class="logo">
+      <img src="img/Tuerca_encabezado.jpg" alt="" width="28" height="28">
+      <span>TALLER<span class="resaltado">MAX</span></span>
+    </p>
+    <a href="index.html" class="boton boton-secundario boton-pequeno">← Volver al inicio</a>
+  </header>
+
+  <main id="main" class="contenedor-login">
+
+    <section class="tarjeta-login" aria-labelledby="login-title">
+      <h1 id="login-title">Iniciar sesión</h1>
+      <p class="texto-login">Ingresa con tu usuario y contraseña para crear facturas.</p>
+
+     <form id="formLogin" class="formulario-login" novalidate>
+
+        <p class="campo-formulario">
+          <label for="usuario">Usuario</label>
+          <input type="text" id="usuario" name="usuario"
+                 minlength="5" maxlength="255" required
+                 autocomplete="username" placeholder="Tu usuario">
+          <span class="error-campo" data-error-for="usuario"></span>
+        </p>
+
+        <p class="campo-formulario">
+          <label for="contrasenia">Contraseña</label>
+          <input type="password" id="contrasenia" name="contrasenia"
+                 minlength="5" maxlength="255" required
+                 autocomplete="current-password" placeholder="Tu contraseña">
+          <span class="error-campo" data-error-for="contrasenia"></span>
+        </p>
+
+        <button type="submit" id="btnLogin" class="boton boton-primario boton-ancho-completo">
+          <span class="boton__texto">Ingresar</span>
+        </button>
+
+        <!-- Aquí el JS mostrará "credenciales incorrectas", "servidor no disponible", etc. -->
+        <p class="estado-formulario" id="estadoLogin" role="status" aria-live="polite"></p>
+      </form>
+
+      <p class="nota-login">Acceso para usuarios autorizados.</p>
+    </section>
+
+  </main>
+
+  <footer class="pie-de-pagina">
+    <p class="linea-copyright">© <span id="year"></span> TallerMax. Todos los derechos reservados.</p>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script src="js/sesion.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</body>
+</html>
