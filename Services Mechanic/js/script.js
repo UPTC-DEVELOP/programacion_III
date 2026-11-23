@@ -250,7 +250,11 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
 
   const botonLoginHeader = document.querySelector(".btn-login-header");
-  const botonLogin = document.querySelector(".btn-login");
+  const botonLogin = document.getElementById("btn-autenticar");
+  const formularioLogin = document.getElementById("form-login");
+  const usuarioLogin = document.getElementById("usuario-login");
+  const contrasenaLogin = document.getElementById("contrasena-login");
+  const errorLogin = document.getElementById("login-error");
 
   const sistema = document.getElementById("sistema");
   const login = document.getElementById("login");
@@ -261,6 +265,81 @@ document.addEventListener("DOMContentLoaded", () => {
   const menuUsuario = document.getElementById("menu-usuario");
   const btnCerrarSesion = document.getElementById("btn-cerrar-sesion");
   const btnVolverLanding = document.querySelector(".btn-volver-landing");
+  const nombreUsuario = document.querySelector(".nombre-usuario");
+
+  const LOGIN_ENDPOINT = "panther/rest/useraction/login";
+  const PANTHER_TOKEN_KEY = "servicesMechanic.pantherToken";
+  let autenticacionConfirmada = false;
+
+  const mostrarErrorLogin = (mensaje) => {
+    if (!errorLogin) {
+      return;
+    }
+
+    errorLogin.textContent = mensaje;
+    errorLogin.hidden = false;
+  };
+
+  const limpiarErrorLogin = () => {
+    if (!errorLogin) {
+      return;
+    }
+
+    errorLogin.textContent = "";
+    errorLogin.hidden = true;
+  };
+
+  const limpiarAutenticacion = () => {
+    try {
+      sessionStorage.removeItem(PANTHER_TOKEN_KEY);
+    } catch (error) {
+      // No hay estado local que conservar si el navegador bloquea sessionStorage.
+    }
+  };
+
+  const guardarToken = (token) => {
+    try {
+      sessionStorage.setItem(PANTHER_TOKEN_KEY, token);
+    } catch (error) {
+      throw new Error(
+        "El navegador no permitió guardar temporalmente la sesión."
+      );
+    }
+  };
+
+  const mostrarSistema = () => {
+    if (!autenticacionConfirmada) {
+      sistema.hidden = true;
+      return;
+    }
+
+    main.querySelectorAll(":scope > section").forEach((seccion) => {
+      seccion.hidden = true;
+    });
+
+    login.hidden = true;
+    sistema.hidden = false;
+
+    if (headerPrincipal) {
+      headerPrincipal.hidden = true;
+    }
+
+    if (footer) {
+      footer.hidden = true;
+    }
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  };
+
+  // No se restaura una sesión solo porque exista un token local sin validar.
+  limpiarAutenticacion();
+
+  if (sistema) {
+    sistema.hidden = true;
+  }
 
   // Mostrar pantalla de login desde el landing
   if (botonLoginHeader && login && main) {
@@ -288,29 +367,108 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Entrar al aplicativo desde el login
-  if (botonLogin && sistema && login && main) {
-    botonLogin.addEventListener("click", () => {
+  // Autenticar con Panther antes de entrar al aplicativo
+  if (
+    formularioLogin &&
+    botonLogin &&
+    usuarioLogin &&
+    contrasenaLogin &&
+    sistema &&
+    login &&
+    main
+  ) {
+    formularioLogin.addEventListener("submit", async (evento) => {
+      evento.preventDefault();
+      limpiarErrorLogin();
 
-      main.querySelectorAll(":scope > section").forEach((seccion) => {
-        seccion.hidden = true;
-      });
+      const user = usuarioLogin.value.trim();
+      const password = contrasenaLogin.value;
 
-      login.hidden = true;
-      sistema.hidden = false;
-
-      if (headerPrincipal) {
-        headerPrincipal.hidden = true;
+      if (!user || !password) {
+        mostrarErrorLogin("Ingresa el usuario y la contraseña.");
+        return;
       }
 
-      if (footer) {
-        footer.hidden = true;
-      }
+      botonLogin.disabled = true;
+      botonLogin.textContent = "Ingresando...";
+      autenticacionConfirmada = false;
+      sistema.hidden = true;
 
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
+      try {
+        limpiarAutenticacion();
+
+        const respuesta = await fetch(LOGIN_ENDPOINT, {
+          method: "POST",
+          cache: "no-store",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify({ user, password })
+        });
+
+        let contenido;
+
+        try {
+          contenido = await respuesta.json();
+        } catch (error) {
+          throw new Error("Panther devolvió una respuesta que no es JSON válido.");
+        }
+
+        const codigoPanther = Number(contenido && contenido.code);
+
+        if (!respuesta.ok) {
+          if (
+            respuesta.status === 401 ||
+            respuesta.status === 403 ||
+            codigoPanther === 401 ||
+            codigoPanther === 403
+          ) {
+            mostrarErrorLogin("El usuario o la contraseña son incorrectos.");
+            return;
+          }
+
+          throw new Error("No fue posible iniciar sesión con Panther.");
+        }
+
+        const datosUsuario = contenido && contenido.data;
+        const token = datosUsuario && datosUsuario.keyAPI;
+        const respuestaValida =
+          contenido &&
+          respuesta.status === 200 &&
+          contenido.state === "OK" &&
+          codigoPanther === 200 &&
+          typeof token === "string" &&
+          token.trim() !== "";
+
+        if (!respuestaValida) {
+          throw new Error("Panther devolvió una autenticación incompleta.");
+        }
+
+        guardarToken(token);
+        autenticacionConfirmada = true;
+
+        if (nombreUsuario && typeof datosUsuario.user === "string") {
+          nombreUsuario.textContent = datosUsuario.user;
+        }
+
+        formularioLogin.reset();
+        mostrarSistema();
+      } catch (error) {
+        autenticacionConfirmada = false;
+        sistema.hidden = true;
+        limpiarAutenticacion();
+        mostrarErrorLogin(
+          error instanceof TypeError
+            ? "No fue posible conectar con Panther."
+            : error instanceof Error
+            ? error.message
+            : "No fue posible conectar con Panther."
+        );
+      } finally {
+        botonLogin.disabled = false;
+        botonLogin.textContent = "Iniciar sesión";
+      }
     });
   }
 
@@ -350,6 +508,16 @@ if (btnUsuario && menuUsuario) {
 // Cerrar sesión y volver al landing page
 if (btnCerrarSesion && sistema && main) {
   btnCerrarSesion.addEventListener("click", () => {
+    // El cierre local no revoca el token que Panther conserva en el servidor.
+    autenticacionConfirmada = false;
+    limpiarAutenticacion();
+    limpiarErrorLogin();
+    formularioLogin?.reset();
+
+    if (nombreUsuario) {
+      nombreUsuario.textContent = "Usuario";
+    }
+
     sistema.hidden = true;
     login.hidden = true;
 
@@ -486,392 +654,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
- // CRUD CLIENTES 
+// CRUD CLIENTES: integración REST implementada en js/clientes.js.
 
-document.addEventListener("DOMContentLoaded", () => {
- const clientes = datosTaller.clientes;
-  const btnNuevoCliente = document.querySelector(".btn-nuevo-cliente");
-  const modalCliente = document.getElementById("modal-cliente");
-  const btnCerrarCliente = document.querySelector(".cerrar-modal-cliente");
-  const btnCancelarCliente = document.querySelector(".btn-cancelar-cliente");
-
-  const formularioCliente = document.getElementById("formulario-cliente");
-  const tablaClientes = document.getElementById("lista-clientes");
-  const cantidadClientes = document.getElementById("cantidad-clientes");
-  const buscarCliente = document.getElementById("buscar-cliente");
-
-  const modalEliminarCliente = document.getElementById("modal-eliminar-cliente");
-  const cancelarEliminarCliente = document.getElementById("cancelar-eliminar-cliente");
-  const confirmarEliminarCliente = document.getElementById("confirmar-eliminar-cliente");
-
-  const eliminarIdCliente = document.getElementById("eliminar-id-cliente");
-  const eliminarCedulaCliente = document.getElementById("eliminar-cedula-cliente");
-  const eliminarNombreCliente = document.getElementById("eliminar-nombre-cliente");
-
-let idClienteEliminar = null;
-
-  const idCliente = document.getElementById("id-cliente");
-  const cedulaCliente = document.getElementById("cedula-cliente");
-  const nombresCliente = document.getElementById("nombres-cliente");
-  const apellidosCliente = document.getElementById("apellidos-cliente");
-  const telefonoCliente = document.getElementById("telefono-cliente");
-  const direccionCliente = document.getElementById("direccion-cliente");
-  const tituloModalCliente =
-  document.getElementById("titulo-modal-cliente");
-
-const descripcionModalCliente =
-  document.getElementById("descripcion-modal-cliente");
-
-const guardarCliente =
-  document.getElementById("guardar-cliente");
-
-  function generarIdCliente() {
-  if (clientes.length === 0) {
-    return "0001";
-  }
-
-  const mayorId = Math.max(
-    ...clientes.map((cliente) => Number(cliente.id))
-  );
-
-  if (mayorId >= 9999) {
-    return null;
-  }
-
-  return String(mayorId + 1).padStart(4, "0");
-}
-
-  function mostrarClientes(lista = clientes) {
-  tablaClientes.innerHTML = "";
-
-  if (lista.length === 0) {
-  const fila = document.createElement("tr");
-  const celda = document.createElement("td");
-
-  celda.colSpan = 7;
-  celda.textContent =
-    clientes.length === 0
-      ? "Todavía no existen clientes registrados."
-      : "No se encontraron clientes.";
-
-  fila.appendChild(celda);
-  tablaClientes.appendChild(fila);
-}
-
-  lista.forEach((cliente) => {
-    const fila = document.createElement("tr");
-
-    const datosCliente = [
-  cliente.id,
-  cliente.cedula,
-  cliente.nombres,
-  cliente.apellidos,
-  cliente.telefono,
-  cliente.direccion
-];
-
-datosCliente.forEach((dato) => {
-  const celda = document.createElement("td");
-  celda.textContent = dato;
-  fila.appendChild(celda);
-});
-
-const celdaAcciones = document.createElement("td");
-
-const botonEditar = document.createElement("button");
-botonEditar.type = "button";
-botonEditar.className = "btn-editar-cliente";
-botonEditar.dataset.id = cliente.id;
-botonEditar.textContent = "Editar";
-
-const botonEliminar = document.createElement("button");
-botonEliminar.type = "button";
-botonEliminar.className = "btn-eliminar-cliente";
-botonEliminar.dataset.id = cliente.id;
-botonEliminar.textContent = "Eliminar";
-
-celdaAcciones.appendChild(botonEditar);
-celdaAcciones.appendChild(botonEliminar);
-
-fila.appendChild(celdaAcciones);
-
-tablaClientes.appendChild(fila);
-  });
-
-  cantidadClientes.textContent =
-    `${lista.length} ${lista.length === 1 ? "cliente" : "clientes"}`;
-}
-
-  function aplicarFiltroClientes() {
-  const texto = buscarCliente.value.toLowerCase().trim();
-
-  const resultados = clientes.filter((cliente) => {
-    return (
-      cliente.cedula.toLowerCase().includes(texto) ||
-      cliente.nombres.toLowerCase().includes(texto) ||
-      cliente.apellidos.toLowerCase().includes(texto)
-    );
-  });
-
-  mostrarClientes(resultados);
-}
-
-buscarCliente.addEventListener("input", aplicarFiltroClientes);
-
-
-  function abrirModalEditar(id) {
-  const cliente = clientes.find((item) => item.id === id);
-
-  if (!cliente) {
-    return;
-  }
-
-  modoEdicionCliente = true;
-
-  idCliente.value = cliente.id;
-  cedulaCliente.value = cliente.cedula;
-  nombresCliente.value = cliente.nombres;
-  apellidosCliente.value = cliente.apellidos;
-  telefonoCliente.value = cliente.telefono;
-  direccionCliente.value = cliente.direccion;
-
-  tituloModalCliente.textContent = "Editar cliente";
-  descripcionModalCliente.textContent =
-    "Modifica la información del cliente.";
-  guardarCliente.textContent = "Actualizar cliente";
-
-  modalCliente.hidden = false;
-
-  cedulaCliente.focus();
-}
-  btnNuevoCliente.addEventListener("click", () => {
-  formularioCliente.reset();
-
-   modoEdicionCliente = false;
-
-  const nuevoId = generarIdCliente();
-
-if (nuevoId === null) {
-  alert("No es posible registrar más clientes. Se alcanzó el límite de 9999 registros.");
-  return;
-}
-
-idCliente.value = nuevoId;
-
-  tituloModalCliente.textContent = "Registrar cliente";
-  descripcionModalCliente.textContent =
-    "Ingresa la información del nuevo cliente.";
-  guardarCliente.textContent = "Guardar cliente";
-
-  modalCliente.hidden = false;
-
-  cedulaCliente.focus();
-});
-
-  tablaClientes.addEventListener("click", (evento) => {
-  const botonEditar = evento.target.closest(".btn-editar-cliente");
-  const botonEliminar = evento.target.closest(".btn-eliminar-cliente");
-
-  if (botonEditar) {
-    abrirModalEditar(botonEditar.dataset.id);
-    return;
-  }
- if (botonEliminar) {
-  const id = botonEliminar.dataset.id;
-
-  const cliente = clientes.find(
-    (cliente) => cliente.id === id
-  );
-
-  if (!cliente) {
-    return;
-  }
-
-  idClienteEliminar = cliente.id;
-
-  eliminarIdCliente.textContent = cliente.id;
-  eliminarCedulaCliente.textContent = cliente.cedula;
-  eliminarNombreCliente.textContent =
-    `${cliente.nombres} ${cliente.apellidos}`;
-
-  modalEliminarCliente.hidden = false;
-}
-});
-
-cancelarEliminarCliente.addEventListener("click", () => {
-  modalEliminarCliente.hidden = true;
-  idClienteEliminar = null;
-
-  alert("Eliminación cancelada. El cliente se conserva.");
-});
-
-confirmarEliminarCliente.addEventListener("click", () => {
-  const posicion = clientes.findIndex(
-    (cliente) => cliente.id === idClienteEliminar
-  );
-
-  if (posicion === -1) {
-  alert("El cliente seleccionado ya no existe.");
-  modalEliminarCliente.hidden = true;
-  idClienteEliminar = null;
-  return;
-}
-
- // No se puede eliminar un cliente que todavía tiene vehículos registrados
- const tieneVehiculos = datosTaller.vehiculos.some(
-   (vehiculo) => vehiculo.idCliente === idClienteEliminar
- );
-
- if (tieneVehiculos) {
-   alert("No se puede eliminar: el cliente tiene vehículos registrados. Elimina primero sus vehículos.");
-   modalEliminarCliente.hidden = true;
-   idClienteEliminar = null;
-   return;
- }
- 
- clientes.splice(posicion, 1);
-
- aplicarFiltroClientes();
-
- modalEliminarCliente.hidden = true;
-  idClienteEliminar = null;
-
-  alert("Cliente eliminado correctamente.");
-});
- function validarDatosCliente() {
-  const cedula = cedulaCliente.value.trim();
-  const nombres = nombresCliente.value.trim();
-  const apellidos = apellidosCliente.value.trim();
-  const telefono = telefonoCliente.value.trim();
-  const direccion = direccionCliente.value.trim();
-  const patronNombre = /^[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s'-]+$/;
-
-  if (!cedula || !nombres || !apellidos || !telefono || !direccion) {
-    alert("Todos los campos son obligatorios.");
-    return false;
-  }
-
-  if (!/^\d+$/.test(cedula)) {
-    alert("La cédula debe contener únicamente números.");
-    cedulaCliente.focus();
-    return false;
-  }
-
-  if (cedula.length > 10) {
-    alert("La cédula debe tener máximo 10 dígitos.");
-    cedulaCliente.focus();
-    return false;
-  }
-
-  const cedulaDuplicada = clientes.some(
-  (cliente) =>
-    cliente.cedula === cedula &&
-    cliente.id !== idCliente.value
-);
-
-  if (cedulaDuplicada) {
-  alert("La cédula ya está registrada.");
-  cedulaCliente.focus();
-  return false;
-}
-
- if (!patronNombre.test(nombres)) {
-  alert("Los nombres solo deben contener letras.");
-  nombresCliente.focus();
-  return false;
-}
-
-if (!patronNombre.test(apellidos)) {
-  alert("Los apellidos solo deben contener letras.");
-  apellidosCliente.focus();
-  return false;
-}
-  if (nombres.length > 40) {
-  alert("Los nombres deben tener máximo 40 caracteres.");
-  nombresCliente.focus();
-  return false;
-}
-
-if (apellidos.length > 40) {
-  alert("Los apellidos deben tener máximo 40 caracteres.");
-  apellidosCliente.focus();
-  return false;
-}
-
-if (direccion.length > 80) {
-  alert("La dirección debe tener máximo 80 caracteres.");
-  direccionCliente.focus();
-  return false;
-}
- 
-
-  if (!/^\d{10}$/.test(telefono)) {
-    alert("El teléfono debe contener exactamente 10 dígitos.");
-    telefonoCliente.focus();
-    return false;
-  }
-
-  return true;
-}
- 
-  let modoEdicionCliente = false;
-
-  formularioCliente.addEventListener("submit", (evento) => {
-  evento.preventDefault();
-
-  if (!validarDatosCliente()) {
-  return;
-}
-
-  const clienteExistente = clientes.find(
-    (cliente) => cliente.id === idCliente.value
-  );
-  if (modoEdicionCliente && !clienteExistente) {
-  alert("El cliente seleccionado ya no existe.");
-  return;
-}
-
-  if (clienteExistente) {
-    clienteExistente.cedula = cedulaCliente.value.trim();
-    clienteExistente.nombres = nombresCliente.value.trim();
-    clienteExistente.apellidos = apellidosCliente.value.trim();
-    clienteExistente.telefono = telefonoCliente.value.trim();
-    clienteExistente.direccion = direccionCliente.value.trim();
-
-    alert("Cliente actualizado correctamente.");
-  } else {
-    const nuevoCliente = {
-      id: idCliente.value,
-      cedula: cedulaCliente.value.trim(),
-      nombres: nombresCliente.value.trim(),
-      apellidos: apellidosCliente.value.trim(),
-      telefono: telefonoCliente.value.trim(),
-      direccion: direccionCliente.value.trim()
-    };
-
-    clientes.push(nuevoCliente);
-
-    alert("Cliente registrado correctamente.");
-  }
-
-  aplicarFiltroClientes();
-
-  formularioCliente.reset();
-
-  modalCliente.hidden = true;
-});
-  btnCerrarCliente.addEventListener("click", () => {
-    formularioCliente.reset();
-    modalCliente.hidden = true;
-  });
-
-  btnCancelarCliente.addEventListener("click", () => {
-    formularioCliente.reset();
-    modalCliente.hidden = true;
-  });
-
-    mostrarClientes();
-});
   // CRUD EMPLEADOS
     document.addEventListener("DOMContentLoaded", () => {
     const empleados = [];

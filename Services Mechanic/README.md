@@ -102,6 +102,44 @@ La tipografía principal utilizada es Manrope.
 - Git
 - GitHub
 
+## Configuracion de la conexion de Panther
+
+El backend conserva las constantes que utiliza `panther/rest/cxn/Connection.php`,
+pero sus valores pueden configurarse mediante variables de entorno:
+
+| Variable | Valor local de respaldo | Descripcion |
+| --- | --- | --- |
+| `PANTHER_DB_HOST` | `127.0.0.1` | Host de MySQL |
+| `PANTHER_DB_PORT` | `3307` | Puerto de MySQL |
+| `PANTHER_DB_NAME` | `panther` | Nombre de la base de datos |
+| `PANTHER_DB_USER` | `root` | Usuario de MySQL |
+| `PANTHER_DB_PASSWORD` | vacio | Contrasena de MySQL |
+
+Con la configuracion actual de XAMPP no es necesario definir variables: los
+valores de respaldo reproducen la conexion local existente. Si la instalacion
+local usa otros valores, se deben crear las variables de entorno en Windows y
+reiniciar Apache desde el panel de XAMPP para que el proceso las reciba. Para
+una ejecucion temporal desde PowerShell se pueden definir en la sesion actual:
+
+```powershell
+$env:PANTHER_DB_HOST = '127.0.0.1'
+$env:PANTHER_DB_PORT = '3307'
+$env:PANTHER_DB_NAME = 'panther'
+$env:PANTHER_DB_USER = 'root'
+$env:PANTHER_DB_PASSWORD = ''
+```
+
+En un servidor futuro se deben definir las cinco variables en la configuracion
+del servicio que ejecute PHP o Apache, preferiblemente mediante el gestor de
+secretos del proveedor. La contrasena de produccion no debe escribirse en este
+repositorio, en el `README.md` ni en un archivo `.env` versionado. Despues de
+cambiar variables, se debe reiniciar el proceso del servidor web o PHP-FPM.
+
+La documentacion del primer recurso REST se encuentra en
+[`panther/rest/docs/clients-api.md`](panther/rest/docs/clients-api.md).
+La instalacion unificada de la base y la creacion local de un administrador se
+documentan en [`panther/sql/README.md`](panther/sql/README.md).
+
 ## Estructura del proyecto
 
 

@@ -2292,7 +2292,7 @@ footer#contacto .mapa-footer iframe {
 }
 
 
-#login .btn-login {
+#login #btn-autenticar {
     width: 100%;
 
     padding: 13px;
@@ -2317,8 +2317,19 @@ footer#contacto .mapa-footer iframe {
 }
 
 
-#login .btn-login:hover {
+#login #btn-autenticar:hover {
     background-color: #ddb012;
+}
+
+#login #btn-autenticar:disabled {
+    cursor: wait;
+    opacity: 0.7;
+}
+
+#login .login-error {
+    margin: 0 0 16px;
+    color: #ff9b9b;
+    font-size: 14px;
 }
 
 #login .btn-volver-landing {
@@ -3869,7 +3880,7 @@ footer#contacto .mapa-footer iframe {
     font-size: 0.9375em;
   }
 
-  #login .btn-login {
+  #login #btn-autenticar {
     padding: 0.8125em;
     border-radius: 0.5em;
     font-size: 1em;

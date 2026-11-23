@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/styles.css?v=btn-autenticar-2" />
   </head>
 
   <body>
@@ -793,10 +793,16 @@
 
             <p class="login-text">Ingresa tus datos para acceder.</p>
 
-            <form>
+            <form id="form-login">
               <div class="campo-login">
-                <label for="correo-login">Usuario</label>
-                <input type="text" id="usuario-login" name="usuario-login" />
+                <label for="usuario-login">Usuario</label>
+                <input
+                  type="text"
+                  id="usuario-login"
+                  name="usuario-login"
+                  autocomplete="username"
+                  required
+                />
                 
               </div>
 
@@ -807,10 +813,14 @@
                   id="contrasena-login"
                   name="contrasena-login"
                   placeholder="Ingresa tu contraseña"
+                  autocomplete="current-password"
+                  required
                 />
               </div>
 
-              <button type="button" class="btn-login">Iniciar sesión</button>
+              <p class="login-error" id="login-error" role="alert" hidden></p>
+
+              <button type="submit" id="btn-autenticar">Iniciar sesión</button>
               <button type="button" class="btn-volver-landing">
               ← Volver al inicio
               </button>
@@ -1461,6 +1471,7 @@
         &copy; 2026 Services Mechanic. Todos los derechos reservados.
       </p>
     </footer>
-    <script src="js/script.js"></script>
+    <script src="js/script.js?v=panther-clients-1"></script>
+    <script src="js/clientes.js?v=panther-clients-1"></script>
   </body>
 </html>
