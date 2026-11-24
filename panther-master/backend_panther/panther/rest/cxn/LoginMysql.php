@@ -2,7 +2,15 @@
 /**<b>Descripcion:</b> Clase que <br/> Contiene los datos de conexión a base de datos
  * <b>Caso de Uso:</b> PANTHER-Seguridad <br/>
  * @author Josué Nicolás Pinzón Villamil <a href = "mailto:jpinzon@j4sysol.com">jpinzon@j4sysol.com</a>
+ *
+ * En producción (InfinityFree u otro hosting) crea el archivo
+ * cxn/LoginMysql.prod.php copiando LoginMysql.prod.example.php y pon ahí
+ * los datos del hosting. Ese archivo no se sube a git.
  */
+if (file_exists(__DIR__ . '/LoginMysql.prod.php')) {
+    require __DIR__ . '/LoginMysql.prod.php';
+    return;
+}
 
 /**
  * Provee las constantes del nombre del host para conectarse a la base de datos

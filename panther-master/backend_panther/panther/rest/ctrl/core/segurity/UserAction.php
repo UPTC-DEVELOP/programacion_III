@@ -27,7 +27,7 @@ class UserAction implements IRequest
      * {@inheritdoc}
      * @see IRequest::get()
      */
-    public  static function get()
+    public static function get()
     {}
     
     /**
@@ -68,8 +68,22 @@ class UserAction implements IRequest
      */
     public static function authenticator()
     {
-        $heads = apache_request_headers();
-        if (isset($heads[AUTHORIZATION])) {
+        // Los navegadores pueden enviar "Authorization" o "authorization":
+        // se normalizan las cabeceras a minúsculas para no depender de eso
+        $heads = function_exists('apache_request_headers')
+            ? array_change_key_case(apache_request_headers(), CASE_LOWER)
+            : array();
+        // Respaldo para hostings que no tienen apache_request_headers()
+        // o que solo entregan la cabecera como variable de entorno (.htaccess)
+        if (empty($heads[AUTHORIZATION])) {
+            foreach (array('HTTP_AUTHORIZATION', 'REDIRECT_HTTP_AUTHORIZATION') as $var) {
+                if (! empty($_SERVER[$var])) {
+                    $heads[AUTHORIZATION] = $_SERVER[$var];
+                    break;
+                }
+            }
+        }
+        if (! empty($heads[AUTHORIZATION])) {
             $keyAPI = $heads[AUTHORIZATION];
             
             if (UserAction::validateKeyAPI($keyAPI)) {
@@ -127,8 +141,9 @@ class UserAction implements IRequest
         $statement->bindParam(1, $userA);
         $statement->execute();
         $user = $statement->fetch();
-        
-        if (password_verify($passwordPlain, $user["password"])) {
+
+        // Usuario inexistente: fetch() devuelve false
+        if ($user && password_verify((string) $passwordPlain, $user["password"])) {
             return $user;
         } else
             return null;

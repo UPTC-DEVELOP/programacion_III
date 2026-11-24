@@ -5,7 +5,11 @@
    - Login:  POST /useraction/login  { user, password }  -> data.keyAPI
    - Resto:  cabecera "authorization: <keyAPI>" */
 
-const PANTHER_URL = 'http://localhost/panther/rest';
+// En local (archivo abierto directo, Live Server o XAMPP) se usa el Panther de XAMPP.
+// En producción el backend se publica en el mismo dominio, en /panther/rest.
+const PANTHER_URL = ['', 'localhost', '127.0.0.1'].includes(window.location.hostname)
+  ? 'http://localhost/panther/rest'
+  : window.location.origin + '/panther/rest';
 const PANTHER_CLAVE = 'panther_keyAPI';
 const PANTHER_USUARIO = 'panther_usuario';
 
