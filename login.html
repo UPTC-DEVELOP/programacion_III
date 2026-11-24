@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="base-uri 'none'; object-src 'none'; form-action 'self'; img-src 'self' data:; connect-src 'self'">
+    <meta name="description" content="Inicio de sesión de AutoGestión ERP para acceder a los módulos del taller.">
+    <meta name="referrer" content="no-referrer">
+    <title>Iniciar sesión - AutoGestión ERP</title>
+    <link rel="stylesheet" href="css/login.css">
+    <script defer src="js/config.js"></script>
+    <script defer src="js/utilidades.js"></script>
+    <script defer src="js/sesion.js"></script>
+    <script defer src="js/login.js"></script>
+</head>
+<body>
+    <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+        <header class="header-principal">
+        <div class="header-logo">
+            <img src="img/logo.jpeg" alt="Logo de AutoGestión ERP">
+        </div>
+        <nav aria-label="Principal">
+            <a href="index.html" class="btn-nav">Inicio</a>
+        </nav>
+    </header>
+
+    <main id="contenido" class="login-main">
+        <section class="login-card" aria-labelledby="tituloLogin">
+            <h1 id="tituloLogin">Iniciar sesión</h1>
+            <p class="login-sub">Ingresa con tu usuario y contraseña, todos los campos son obligatorios.</p>
+
+            <form id="formLogin" novalidate>
+                <label for="usuario">Usuario</label>
+                <input type="text" id="usuario" autocomplete="username" autocapitalize="off" spellcheck="false" required aria-required="true">
+
+                <label for="clave">Contraseña</label>
+                <div class="campo-clave">
+                    <input type="password" id="clave" autocomplete="current-password" required aria-required="true" aria-describedby="ayudaClave">
+                    <button type="button" id="verClave" aria-label="Mostrar contraseña">Ver</button>
+                </div>
+                <p id="ayudaClave" class="ayuda">Tu contraseña no se guarda en el navegador.</p>
+
+                <div id="mensajeLogin" class="mensaje" role="alert" aria-live="polite"></div>
+
+                <button type="submit" id="btnIngresar" class="btn-principal">Ingresar</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
