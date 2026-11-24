@@ -1,0 +1,5 @@
+# Carpeta generada por despliegue/preparar_despliegue.ps1
+dist/
+
+# Datos de MySQL del hosting (nunca subir contraseñas)
+panther-master/backend_panther/panther/rest/cxn/LoginMysql.prod.php

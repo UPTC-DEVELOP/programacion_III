@@ -1,0 +1,2197 @@
+{
+  "info": {
+    "name": "TallerPro - Pruebas CRUD (Panther)",
+    "description": "Pruebas de programador de los CRUD de TallerPro sobre el backend Panther (PHP).\n\nEjecutar en orden con el Collection Runner. Cambia `baseUrl` para probar en local o en producción.\nCada ejecución crea sus propios registros de prueba y los elimina al final.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost/panther/rest"
+    },
+    {
+      "key": "usuario",
+      "value": "admin"
+    },
+    {
+      "key": "password",
+      "value": "12345"
+    },
+    {
+      "key": "keyAPI",
+      "value": ""
+    },
+    {
+      "key": "sello",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "01 Seguridad y login",
+      "item": [
+        {
+          "name": "Login correcto (admin / 12345)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.collectionVariables.set(\"sello\", String(Date.now()).slice(-8));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Respuesta con formato Panther {state, code, data}\", () => {",
+                  "  const j = pm.response.json();",
+                  "  pm.expect(j).to.have.all.keys(\"state\", \"code\", \"data\");",
+                  "  pm.expect(j.code).to.eql(pm.response.code);",
+                  "});",
+                  "pm.test(\"Entrega keyAPI y no expone la contraseña\", () => {",
+                  "  const d = pm.response.json().data;",
+                  "  pm.expect(d.keyAPI).to.be.a(\"string\").and.not.empty;",
+                  "  pm.expect(d.user).to.eql(pm.variables.get(\"usuario\"));",
+                  "  pm.expect(d.password).to.be.null;",
+                  "  pm.collectionVariables.set(\"keyAPI\", d.keyAPI);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/useraction/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "useraction",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user\": \"{{usuario}}\",\n  \"password\": \"{{password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Login con contraseña incorrecta",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 403\", () => pm.response.to.have.status(403));",
+                  "pm.test(\"Mensaje de credenciales inválidas\", () => pm.expect(pm.response.json().data).to.include(\"no son validos\"));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/useraction/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "useraction",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user\": \"admin\",\n  \"password\": \"incorrecta\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Login con usuario inexistente",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 403 y JSON válido (sin warnings de PHP)\", () => {",
+                  "  pm.response.to.have.status(403);",
+                  "  pm.expect(() => pm.response.json()).to.not.throw();",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/useraction/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "useraction",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user\": \"no_existe_xyz\",\n  \"password\": \"x\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Listar clientes sin token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 400: se exige token\", () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/clientes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clientes"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Listar clientes con token inválido",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 401: token rechazado\", () => pm.response.to.have.status(401));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "token-invalido"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/clientes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clientes"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Token con cabecera \"Authorization\" en mayúscula",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200: la cabecera no distingue mayúsculas\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/clientes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clientes"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Recurso inexistente",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404\", () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/noexiste",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "noexiste"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Preflight CORS (OPTIONS)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Permite PUT y DELETE desde el navegador\", () => {",
+                  "  const m = pm.response.headers.get(\"Access-Control-Allow-Methods\") || \"\";",
+                  "  pm.expect(m).to.include(\"PUT\");",
+                  "  pm.expect(m).to.include(\"DELETE\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "OPTIONS",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/clientes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clientes"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 CRUD Clientes",
+      "item": [
+        {
+          "name": "Crear clientes (POST)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 201 creado\", () => pm.response.to.have.status(201));",
+                  "pm.test(\"Respuesta con formato Panther {state, code, data}\", () => {",
+                  "  const j = pm.response.json();",
+                  "  pm.expect(j).to.have.all.keys(\"state\", \"code\", \"data\");",
+                  "  pm.expect(j.code).to.eql(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/clientes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clientes"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Cliente Prueba\",\n  \"cedula\": \"T{{sello}}\",\n  \"email\": \"prueba@tallerpro.com\",\n  \"telefono\": \"3001234567\",\n  \"empresa\": \"Pruebas S.A.\",\n  \"estado\": \"Activo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Listar clientes (GET)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "const lista = pm.response.json().data;",
+                  "pm.test(\"Devuelve una lista\", () => pm.expect(lista).to.be.an(\"array\"));",
+                  "pm.test(\"Incluye el registro recién creado\", () => {",
+                  "  const valor = \"T{{sello}}\".replace(\"{{sello}}\", pm.collectionVariables.get(\"sello\"));",
+                  "  const r = lista.find((x) => x[\"cedula\"] === valor);",
+                  "  pm.expect(r, \"registro creado\").to.exist;",
+                  "  pm.collectionVariables.set(\"clientes_id\", r.id);",
+                  "});",
+                  "pm.test(\"No muestra registros eliminados\", () => lista.forEach((x) => pm.expect(x.dateDelete).to.be.null));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/clientes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clientes"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Consultar por id (GET)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Los datos guardados son los enviados\", () => {",
+                  "  const r = pm.response.json().data[0];",
+                  "  const resolver = (v) => String(v).replace(/{{(\\w+)}}/g, (_, n) => pm.collectionVariables.get(n));",
+                  "  pm.expect(String(r[\"nombre\"]), \"nombre\").to.eql(resolver(\"Cliente Prueba\"));",
+                  "  pm.expect(String(r[\"cedula\"]), \"cedula\").to.eql(resolver(\"T{{sello}}\"));",
+                  "  pm.expect(String(r[\"email\"]), \"email\").to.eql(resolver(\"prueba@tallerpro.com\"));",
+                  "  pm.expect(String(r[\"telefono\"]), \"telefono\").to.eql(resolver(\"3001234567\"));",
+                  "  pm.expect(String(r[\"empresa\"]), \"empresa\").to.eql(resolver(\"Pruebas S.A.\"));",
+                  "  pm.expect(String(r[\"estado\"]), \"estado\").to.eql(resolver(\"Activo\"));",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/clientes/{{clientes_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clientes",
+                "{{clientes_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Actualizar (PUT)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/clientes/{{clientes_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clientes",
+                "{{clientes_id}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Cliente Prueba Editado\",\n  \"cedula\": \"T{{sello}}\",\n  \"email\": \"editado@tallerpro.com\",\n  \"telefono\": \"3109876543\",\n  \"empresa\": \"Editada S.A.\",\n  \"estado\": \"Inactivo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Verificar actualización (GET)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Los cambios quedaron guardados\", () => {",
+                  "  const r = pm.response.json().data[0];",
+                  "  const resolver = (v) => String(v).replace(/{{(\\w+)}}/g, (_, n) => pm.collectionVariables.get(n));",
+                  "  pm.expect(String(r[\"nombre\"]), \"nombre\").to.eql(resolver(\"Cliente Prueba Editado\"));",
+                  "  pm.expect(String(r[\"cedula\"]), \"cedula\").to.eql(resolver(\"T{{sello}}\"));",
+                  "  pm.expect(String(r[\"email\"]), \"email\").to.eql(resolver(\"editado@tallerpro.com\"));",
+                  "  pm.expect(String(r[\"telefono\"]), \"telefono\").to.eql(resolver(\"3109876543\"));",
+                  "  pm.expect(String(r[\"empresa\"]), \"empresa\").to.eql(resolver(\"Editada S.A.\"));",
+                  "  pm.expect(String(r[\"estado\"]), \"estado\").to.eql(resolver(\"Inactivo\"));",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/clientes/{{clientes_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clientes",
+                "{{clientes_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Actualizar sin cambios (PUT)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200 aunque los datos sean iguales\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/clientes/{{clientes_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clientes",
+                "{{clientes_id}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Cliente Prueba Editado\",\n  \"cedula\": \"T{{sello}}\",\n  \"email\": \"editado@tallerpro.com\",\n  \"telefono\": \"3109876543\",\n  \"empresa\": \"Editada S.A.\",\n  \"estado\": \"Inactivo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Actualizar id inexistente (PUT)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404: no existe\", () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/clientes/999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clientes",
+                "999999"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Cliente Prueba Editado\",\n  \"cedula\": \"T{{sello}}\",\n  \"email\": \"editado@tallerpro.com\",\n  \"telefono\": \"3109876543\",\n  \"empresa\": \"Editada S.A.\",\n  \"estado\": \"Inactivo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Eliminar (DELETE)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/clientes/{{clientes_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clientes",
+                "{{clientes_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Consultar eliminado (GET)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404: ya no se encuentra\", () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/clientes/{{clientes_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clientes",
+                "{{clientes_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Eliminar sin id (DELETE) no borra la tabla",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 400: se exige id\", () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/clientes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clientes"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 CRUD Empleados",
+      "item": [
+        {
+          "name": "Crear empleados (POST)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 201 creado\", () => pm.response.to.have.status(201));",
+                  "pm.test(\"Respuesta con formato Panther {state, code, data}\", () => {",
+                  "  const j = pm.response.json();",
+                  "  pm.expect(j).to.have.all.keys(\"state\", \"code\", \"data\");",
+                  "  pm.expect(j.code).to.eql(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/empleados",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "empleados"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Empleado Prueba\",\n  \"cedula\": \"T{{sello}}\",\n  \"cargo\": \"Mecánico\",\n  \"telefono\": \"3001234567\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Listar empleados (GET)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "const lista = pm.response.json().data;",
+                  "pm.test(\"Devuelve una lista\", () => pm.expect(lista).to.be.an(\"array\"));",
+                  "pm.test(\"Incluye el registro recién creado\", () => {",
+                  "  const valor = \"T{{sello}}\".replace(\"{{sello}}\", pm.collectionVariables.get(\"sello\"));",
+                  "  const r = lista.find((x) => x[\"cedula\"] === valor);",
+                  "  pm.expect(r, \"registro creado\").to.exist;",
+                  "  pm.collectionVariables.set(\"empleados_id\", r.id);",
+                  "});",
+                  "pm.test(\"No muestra registros eliminados\", () => lista.forEach((x) => pm.expect(x.dateDelete).to.be.null));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/empleados",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "empleados"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Consultar por id (GET)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Los datos guardados son los enviados\", () => {",
+                  "  const r = pm.response.json().data[0];",
+                  "  const resolver = (v) => String(v).replace(/{{(\\w+)}}/g, (_, n) => pm.collectionVariables.get(n));",
+                  "  pm.expect(String(r[\"nombre\"]), \"nombre\").to.eql(resolver(\"Empleado Prueba\"));",
+                  "  pm.expect(String(r[\"cedula\"]), \"cedula\").to.eql(resolver(\"T{{sello}}\"));",
+                  "  pm.expect(String(r[\"cargo\"]), \"cargo\").to.eql(resolver(\"Mecánico\"));",
+                  "  pm.expect(String(r[\"telefono\"]), \"telefono\").to.eql(resolver(\"3001234567\"));",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/empleados/{{empleados_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "empleados",
+                "{{empleados_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Actualizar (PUT)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/empleados/{{empleados_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "empleados",
+                "{{empleados_id}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Empleado Prueba Editado\",\n  \"cedula\": \"T{{sello}}\",\n  \"cargo\": \"Jefe de taller\",\n  \"telefono\": \"3109876543\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Verificar actualización (GET)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Los cambios quedaron guardados\", () => {",
+                  "  const r = pm.response.json().data[0];",
+                  "  const resolver = (v) => String(v).replace(/{{(\\w+)}}/g, (_, n) => pm.collectionVariables.get(n));",
+                  "  pm.expect(String(r[\"nombre\"]), \"nombre\").to.eql(resolver(\"Empleado Prueba Editado\"));",
+                  "  pm.expect(String(r[\"cedula\"]), \"cedula\").to.eql(resolver(\"T{{sello}}\"));",
+                  "  pm.expect(String(r[\"cargo\"]), \"cargo\").to.eql(resolver(\"Jefe de taller\"));",
+                  "  pm.expect(String(r[\"telefono\"]), \"telefono\").to.eql(resolver(\"3109876543\"));",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/empleados/{{empleados_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "empleados",
+                "{{empleados_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Actualizar sin cambios (PUT)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200 aunque los datos sean iguales\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/empleados/{{empleados_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "empleados",
+                "{{empleados_id}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Empleado Prueba Editado\",\n  \"cedula\": \"T{{sello}}\",\n  \"cargo\": \"Jefe de taller\",\n  \"telefono\": \"3109876543\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Actualizar id inexistente (PUT)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404: no existe\", () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/empleados/999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "empleados",
+                "999999"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Empleado Prueba Editado\",\n  \"cedula\": \"T{{sello}}\",\n  \"cargo\": \"Jefe de taller\",\n  \"telefono\": \"3109876543\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Eliminar (DELETE)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/empleados/{{empleados_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "empleados",
+                "{{empleados_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Consultar eliminado (GET)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404: ya no se encuentra\", () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/empleados/{{empleados_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "empleados",
+                "{{empleados_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Eliminar sin id (DELETE) no borra la tabla",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 400: se exige id\", () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/empleados",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "empleados"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 CRUD Administradores",
+      "item": [
+        {
+          "name": "Crear administradores (POST)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 201 creado\", () => pm.response.to.have.status(201));",
+                  "pm.test(\"Respuesta con formato Panther {state, code, data}\", () => {",
+                  "  const j = pm.response.json();",
+                  "  pm.expect(j).to.have.all.keys(\"state\", \"code\", \"data\");",
+                  "  pm.expect(j.code).to.eql(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/administradores",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "administradores"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Admin Prueba\",\n  \"usuario\": \"t{{sello}}\",\n  \"correo\": \"admin.prueba@tallerpro.com\",\n  \"rol\": \"Administrador\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Listar administradores (GET)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "const lista = pm.response.json().data;",
+                  "pm.test(\"Devuelve una lista\", () => pm.expect(lista).to.be.an(\"array\"));",
+                  "pm.test(\"Incluye el registro recién creado\", () => {",
+                  "  const valor = \"t{{sello}}\".replace(\"{{sello}}\", pm.collectionVariables.get(\"sello\"));",
+                  "  const r = lista.find((x) => x[\"usuario\"] === valor);",
+                  "  pm.expect(r, \"registro creado\").to.exist;",
+                  "  pm.collectionVariables.set(\"administradores_id\", r.id);",
+                  "});",
+                  "pm.test(\"No muestra registros eliminados\", () => lista.forEach((x) => pm.expect(x.dateDelete).to.be.null));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/administradores",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "administradores"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Consultar por id (GET)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Los datos guardados son los enviados\", () => {",
+                  "  const r = pm.response.json().data[0];",
+                  "  const resolver = (v) => String(v).replace(/{{(\\w+)}}/g, (_, n) => pm.collectionVariables.get(n));",
+                  "  pm.expect(String(r[\"nombre\"]), \"nombre\").to.eql(resolver(\"Admin Prueba\"));",
+                  "  pm.expect(String(r[\"usuario\"]), \"usuario\").to.eql(resolver(\"t{{sello}}\"));",
+                  "  pm.expect(String(r[\"correo\"]), \"correo\").to.eql(resolver(\"admin.prueba@tallerpro.com\"));",
+                  "  pm.expect(String(r[\"rol\"]), \"rol\").to.eql(resolver(\"Administrador\"));",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/administradores/{{administradores_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "administradores",
+                "{{administradores_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Actualizar (PUT)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/administradores/{{administradores_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "administradores",
+                "{{administradores_id}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Admin Prueba Editado\",\n  \"usuario\": \"t{{sello}}\",\n  \"correo\": \"admin.editado@tallerpro.com\",\n  \"rol\": \"SuperAdmin\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Verificar actualización (GET)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Los cambios quedaron guardados\", () => {",
+                  "  const r = pm.response.json().data[0];",
+                  "  const resolver = (v) => String(v).replace(/{{(\\w+)}}/g, (_, n) => pm.collectionVariables.get(n));",
+                  "  pm.expect(String(r[\"nombre\"]), \"nombre\").to.eql(resolver(\"Admin Prueba Editado\"));",
+                  "  pm.expect(String(r[\"usuario\"]), \"usuario\").to.eql(resolver(\"t{{sello}}\"));",
+                  "  pm.expect(String(r[\"correo\"]), \"correo\").to.eql(resolver(\"admin.editado@tallerpro.com\"));",
+                  "  pm.expect(String(r[\"rol\"]), \"rol\").to.eql(resolver(\"SuperAdmin\"));",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/administradores/{{administradores_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "administradores",
+                "{{administradores_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Actualizar sin cambios (PUT)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200 aunque los datos sean iguales\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/administradores/{{administradores_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "administradores",
+                "{{administradores_id}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Admin Prueba Editado\",\n  \"usuario\": \"t{{sello}}\",\n  \"correo\": \"admin.editado@tallerpro.com\",\n  \"rol\": \"SuperAdmin\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Actualizar id inexistente (PUT)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404: no existe\", () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/administradores/999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "administradores",
+                "999999"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Admin Prueba Editado\",\n  \"usuario\": \"t{{sello}}\",\n  \"correo\": \"admin.editado@tallerpro.com\",\n  \"rol\": \"SuperAdmin\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Eliminar (DELETE)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/administradores/{{administradores_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "administradores",
+                "{{administradores_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Consultar eliminado (GET)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404: ya no se encuentra\", () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/administradores/{{administradores_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "administradores",
+                "{{administradores_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Eliminar sin id (DELETE) no borra la tabla",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 400: se exige id\", () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/administradores",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "administradores"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 CRUD Autos",
+      "item": [
+        {
+          "name": "Obtener un cliente para asociar el auto",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const lista = pm.response.json().data;",
+                  "pm.test(\"Hay al menos un cliente\", () => pm.expect(lista.length).to.be.above(0));",
+                  "pm.collectionVariables.set(\"cliente_base\", lista[0].id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/clientes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clientes"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Crear autos (POST)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 201 creado\", () => pm.response.to.have.status(201));",
+                  "pm.test(\"Respuesta con formato Panther {state, code, data}\", () => {",
+                  "  const j = pm.response.json();",
+                  "  pm.expect(j).to.have.all.keys(\"state\", \"code\", \"data\");",
+                  "  pm.expect(j.code).to.eql(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/autos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "autos"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"placa\": \"T{{sello}}\",\n  \"marca\": \"Renault\",\n  \"modelo\": \"Logan\",\n  \"anio\": 2020,\n  \"color\": \"Gris\",\n  \"kilometraje\": 30000,\n  \"id_cliente\": {{cliente_base}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Listar autos (GET)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "const lista = pm.response.json().data;",
+                  "pm.test(\"Devuelve una lista\", () => pm.expect(lista).to.be.an(\"array\"));",
+                  "pm.test(\"Incluye el registro recién creado\", () => {",
+                  "  const valor = \"T{{sello}}\".replace(\"{{sello}}\", pm.collectionVariables.get(\"sello\"));",
+                  "  const r = lista.find((x) => x[\"placa\"] === valor);",
+                  "  pm.expect(r, \"registro creado\").to.exist;",
+                  "  pm.collectionVariables.set(\"autos_id\", r.id);",
+                  "});",
+                  "pm.test(\"No muestra registros eliminados\", () => lista.forEach((x) => pm.expect(x.dateDelete).to.be.null));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/autos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "autos"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Consultar por id (GET)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Los datos guardados son los enviados\", () => {",
+                  "  const r = pm.response.json().data[0];",
+                  "  const resolver = (v) => String(v).replace(/{{(\\w+)}}/g, (_, n) => pm.collectionVariables.get(n));",
+                  "  pm.expect(String(r[\"placa\"]), \"placa\").to.eql(resolver(\"T{{sello}}\"));",
+                  "  pm.expect(String(r[\"marca\"]), \"marca\").to.eql(resolver(\"Renault\"));",
+                  "  pm.expect(String(r[\"modelo\"]), \"modelo\").to.eql(resolver(\"Logan\"));",
+                  "  pm.expect(String(r[\"anio\"]), \"anio\").to.eql(resolver(2020));",
+                  "  pm.expect(String(r[\"color\"]), \"color\").to.eql(resolver(\"Gris\"));",
+                  "  pm.expect(String(r[\"kilometraje\"]), \"kilometraje\").to.eql(resolver(30000));",
+                  "  pm.expect(String(r[\"id_cliente\"]), \"id_cliente\").to.eql(resolver(\"{{cliente_base}}\"));",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/autos/{{autos_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "autos",
+                "{{autos_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Actualizar (PUT)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/autos/{{autos_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "autos",
+                "{{autos_id}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"placa\": \"T{{sello}}\",\n  \"marca\": \"Renault\",\n  \"modelo\": \"Logan Life\",\n  \"anio\": 2021,\n  \"color\": \"Blanco\",\n  \"kilometraje\": 35000,\n  \"id_cliente\": {{cliente_base}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Verificar actualización (GET)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Los cambios quedaron guardados\", () => {",
+                  "  const r = pm.response.json().data[0];",
+                  "  const resolver = (v) => String(v).replace(/{{(\\w+)}}/g, (_, n) => pm.collectionVariables.get(n));",
+                  "  pm.expect(String(r[\"placa\"]), \"placa\").to.eql(resolver(\"T{{sello}}\"));",
+                  "  pm.expect(String(r[\"marca\"]), \"marca\").to.eql(resolver(\"Renault\"));",
+                  "  pm.expect(String(r[\"modelo\"]), \"modelo\").to.eql(resolver(\"Logan Life\"));",
+                  "  pm.expect(String(r[\"anio\"]), \"anio\").to.eql(resolver(2021));",
+                  "  pm.expect(String(r[\"color\"]), \"color\").to.eql(resolver(\"Blanco\"));",
+                  "  pm.expect(String(r[\"kilometraje\"]), \"kilometraje\").to.eql(resolver(35000));",
+                  "  pm.expect(String(r[\"id_cliente\"]), \"id_cliente\").to.eql(resolver(\"{{cliente_base}}\"));",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/autos/{{autos_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "autos",
+                "{{autos_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Actualizar sin cambios (PUT)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200 aunque los datos sean iguales\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/autos/{{autos_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "autos",
+                "{{autos_id}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"placa\": \"T{{sello}}\",\n  \"marca\": \"Renault\",\n  \"modelo\": \"Logan Life\",\n  \"anio\": 2021,\n  \"color\": \"Blanco\",\n  \"kilometraje\": 35000,\n  \"id_cliente\": {{cliente_base}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Actualizar id inexistente (PUT)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404: no existe\", () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/autos/999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "autos",
+                "999999"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"placa\": \"T{{sello}}\",\n  \"marca\": \"Renault\",\n  \"modelo\": \"Logan Life\",\n  \"anio\": 2021,\n  \"color\": \"Blanco\",\n  \"kilometraje\": 35000,\n  \"id_cliente\": {{cliente_base}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Crear auto con cliente inexistente (POST)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Se rechaza (llave foránea a cliente)\", () => pm.expect(pm.response.code).to.be.at.least(400));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/autos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "autos"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"placa\": \"X{{sello}}\",\n  \"marca\": \"Mazda\",\n  \"modelo\": \"3\",\n  \"anio\": 2019,\n  \"color\": \"Azul\",\n  \"kilometraje\": 1,\n  \"id_cliente\": 999999\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Eliminar (DELETE)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/autos/{{autos_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "autos",
+                "{{autos_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Consultar eliminado (GET)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404: ya no se encuentra\", () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/autos/{{autos_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "autos",
+                "{{autos_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Eliminar sin id (DELETE) no borra la tabla",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 400: se exige id\", () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "authorization",
+                "value": "{{keyAPI}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/autos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "autos"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

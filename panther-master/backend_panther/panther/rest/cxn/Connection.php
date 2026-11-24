@@ -57,7 +57,10 @@ class Connection
     {
         if (self::$pdo == null) {
             self::$pdo = new PDO('mysql:dbname=' . DATA_BASE . ';host=' . HOST_NAME . ";", USER, PASSWORD, array(
-                PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES UTF8"
+                PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES UTF8",
+                // rowCount() cuenta filas encontradas aunque no cambien sus valores,
+                // así un PUT sin cambios no responde "recurso no encontrado"
+                PDO::MYSQL_ATTR_FOUND_ROWS => true
             ));
             
             // Habilitar excepciones

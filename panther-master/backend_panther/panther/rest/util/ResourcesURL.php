@@ -12,7 +12,13 @@ define("RESOURCES_URL", array(
     'useraction',
     'roles',
     //Business
-    'persons'
+    'persons',
+    'factura',
+    // TallerPro
+    'clientes',
+    'empleados',
+    'administradores',
+    'autos'
 ));
 
 /**

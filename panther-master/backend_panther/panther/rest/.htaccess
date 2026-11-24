@@ -1,11 +1,21 @@
 RewriteEngine on
+
+# Algunos hostings (PHP como CGI/FastCGI) no le pasan a PHP la cabecera
+# Authorization: se copia a una variable de entorno para leerla igual
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
 RewriteCond %{REQUEST_METHOD} OPTIONS
 RewriteRule ^(.*)$ blank.php [QSA,L]
-Header set Access-Control-Allow-Origin "*"
+
+# Si el hosting no tiene mod_headers no se rompe el sitio (error 500)
+<IfModule mod_headers.c>
+Header always set Access-Control-Allow-Origin "*"
 Header always set Access-Control-Allow-Credentials "true"
 Header always set Access-Control-Max-Age "1000"
 Header always set Access-Control-Allow-Headers "X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding"
 Header always set Access-Control-Allow-Methods "POST, GET, OPTIONS, DELETE, PUT"
+</IfModule>
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?PATH_INFO=$1 [L,QSA]

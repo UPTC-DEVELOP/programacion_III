@@ -21,6 +21,8 @@ class Roles extends Request
         parent::$nameTable = self::NAME_TABLE;
         parent::$queryInsert = INTSERT_ROL;
         parent::$queryUpdate = UPDATE_ROL;
+        // j4rol no tiene columna dateDelete
+        parent::$softDelete = false;
     }
 
     /**

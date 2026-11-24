@@ -31,9 +31,17 @@ abstract class Request
     protected static $queryUpdate = "update";
 
     /**
+     * Indica si la tabla tiene la columna dateDelete (borrado suave).
+     * Las tablas sin esa columna se borran de forma física.
+     *
+     * @var boolean
+     */
+    protected static $softDelete = true;
+
+    /**
      * Función que permite insertar dinamicamente el nombre de la tabla
      */
-    abstract public static function init();
+    abstract static function init();
 
     /**
      * Inserta los parametros en el statement y realiza
@@ -44,7 +52,7 @@ abstract class Request
      * @param unknown $statement
      *            Sentencia para ejecutar en base de datos
      */
-    abstract public static function insertParameter($object, $statement);
+    abstract static function insertParameter($object, $statement);
 
     /**
      * Inserta los parametros en el statement y realiza
@@ -55,7 +63,7 @@ abstract class Request
      * @param unknown $statement
      *            Sentencia para ejecutar en base de datos
      */
-    abstract public static function updateParameter($object, $statement, $id);
+    abstract static function updateParameter($object, $statement, $id);
 
     /**
      * Método que invoca a las funciones tipo get
@@ -105,7 +113,8 @@ abstract class Request
         if ($tempo > 0) {
             return $bodyAnswer = new ContentBody(OK, ST200, sucessful);
         } else {
-            throw new ExcepcionApi(NO_CONTENT, ST204, error_notExist);
+            // Antes respondía 204 (sin contenido) y el navegador no podía leer el error
+            throw new ExcepcionApi(NOT_FOUND, ST404, error_notExist);
         }
     }
 
@@ -123,15 +132,17 @@ abstract class Request
      * @throws ExcepcionApi
      * @return ContentBody
      */
-    private static  function getRequest($id)
+    private static function getRequest($id)
     {
         try {
+            // No devolver los registros eliminados de forma suave
+            $filtro = self::$softDelete ? " WHERE dateDelete IS NULL" : " WHERE 1=1";
             if (empty($id)) {
-                $query = "SELECT * FROM " . self::$nameTable;
+                $query = "SELECT * FROM " . self::$nameTable . $filtro;
                 // Preparar sentencia
                 $statement = Connection::getInstance()->getConnection()->prepare($query);
             } else {
-                $query = "SELECT * FROM " . self::$nameTable . " WHERE id=?";
+                $query = "SELECT * FROM " . self::$nameTable . $filtro . " AND id=?";
                 // Preparar statement
                 $statement = Connection::getInstance()->getConnection()->prepare($query);
                 // Ligar id
@@ -142,12 +153,15 @@ abstract class Request
             $statement->execute();
             $tempo = $statement->fetchAll(PDO::FETCH_ASSOC);
             
-            if (count($tempo) > 0) {
+            if (count($tempo) > 0 || empty($id)) {
+                // Una lista vacía también es una respuesta válida (200 con [])
                 $bodyAnswer = new ContentBody(OK, ST200, $tempo);
                 return $bodyAnswer;
             } else {
-                throw new ExcepcionApi(NO_CONTENT, ST204, no_result);
+                throw new ExcepcionApi(NOT_FOUND, ST404, error_notExist);
             }
+        } catch (ExcepcionApi $e) {
+            throw $e;
         } catch (Exception $e) {
             throw new ExcepcionApi(INTERNAL_SERVER_ERROR, ST500, $e->getMessage());
         }
@@ -214,11 +228,12 @@ abstract class Request
         try {
             
             if (empty($id[0])) {
-                $query = "UPDATE " . self::$nameTable . " SET dateDelete = ? ";
-                // Preparar sentencia
+                // Sin id se borraba la tabla completa: ahora se exige el id
+                throw new ExcepcionApi(BAD_REQUEST, ST400, error_noParameter);
+            } elseif (! self::$softDelete) {
+                $query = "DELETE FROM " . self::$nameTable . " WHERE id=?";
                 $statement = Connection::getInstance()->getConnection()->prepare($query);
-                $dateDelete = date('Y-m-d H:i:s');
-                $statement->bindParam(1, $dateDelete, PDO::PARAM_STR);
+                $statement->bindParam(1, $id[0], PDO::PARAM_INT);
             } else {
                 $query = "UPDATE " . self::$nameTable . " SET dateDelete = ? WHERE id=?";
                 // Preparar statement
@@ -229,8 +244,10 @@ abstract class Request
             }
             
             $statement->execute();
-            
+
             return $statement->rowCount();
+        } catch (ExcepcionApi $e) {
+            throw $e;
         } catch (Exception $e) {
             throw new ExcepcionApi(INTERNAL_SERVER_ERROR, ST500, $e->getMessage());
         }

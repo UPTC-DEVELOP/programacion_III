@@ -29,6 +29,12 @@ require 'querys/core/SegurityQuery.php';
 require 'ctrl/business/Persons.php';
 require 'model/business/Person.php';
 require 'querys/business/BusinessQuery.php';
+require 'ctrl/business/factura.php';
+// TallerPro
+require 'ctrl/business/Clientes.php';
+require 'ctrl/business/Empleados.php';
+require 'ctrl/business/Administradores.php';
+require 'ctrl/business/Autos.php';
 
 // Preparar manejo de excepciones
 /**
