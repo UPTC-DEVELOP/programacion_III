@@ -1,86 +1,221 @@
+// CRUD DE VEHÍCULOS - Conectado a Panther (MariaDB)
 
-// CRUD DE VEHÍCULOS 
+const TOKEN_PANTHER = '750e8b43e5ed564462c90ef0d382db26'; 
+const BASE_URL = 'http://localhost/panther/backend_panther/panther/rest/vehiculos';
 
-
-// ---------- DATOS DE PRUEBA ----------
-let vehiculos = [
-    { 
-        placa: 'ABC123', 
-        marca: 'Toyota', 
-        modelo: 'Corolla', 
-        anio: '2022', 
-        color: 'Gris', 
-        propietario: 'Carlos Rodríguez' 
-    },
-    { 
-        placa: 'XYZ789', 
-        marca: 'Mazda', 
-        modelo: '3', 
-        anio: '2020', 
-        color: 'Rojo', 
-        propietario: 'María López' 
-    },
-    { 
-        placa: 'DEF456', 
-        marca: 'Chevrolet', 
-        modelo: 'Spark', 
-        anio: '2023', 
-        color: 'Azul', 
-        propietario: 'Taller El Motor S.A.S' 
-    }
-];
-
-// ---------- VARIABLES DE ESTADO ----------
 let editando = false;
-let placaEditando = null;
+let idEditando = null;
 
-// ---------- REFERENCIAS AL DOM ----------
 const tablaBody = document.getElementById('tabla-vehiculos-body');
 const contador = document.getElementById('contador-vehiculos');
 const buscador = document.getElementById('buscar-vehiculo');
 const formVehiculo = document.getElementById('form-vehiculo');
 const modalTitulo = document.getElementById('modal-titulo');
 
-// ---------- RENDERIZAR TABLA (Read) ----------
-function renderizarTabla(filtro = '') {
-    tablaBody.innerHTML = '';
+// ---------- 1. LEER DATOS (GET) ----------
+async function obtenerVehiculos() {
+    try {
+        const response = await fetch(BASE_URL, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': TOKEN_PANTHER 
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Error en la petición');
+        }
+
+        const data = await response.json();
+        
+        // BLINDAJE: Si Panther devuelve un error en lugar de una lista, lo atrapamos
+        if (data.state && data.state !== 'OK') {
+            console.error("Error de Panther:", data.data);
+            return [];
+        }
+
+        // Si viene dentro de data.data (común en Panther) o si ya es un arreglo directo
+        return Array.isArray(data) ? data : (data.data || []);
+        
+    } catch (error) {
+        console.error("Error al conectar con Panther:", error);
+        mostrarNotificacion('No se pudo obtener la lista de vehículos.', 'error');
+        return [];
+    }
+}
+// ---------- 2. RENDERIZAR TABLA ----------
+async function renderizarTabla(filtro = '') {
+    tablaBody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Cargando vehículos...</td></tr>';
     
-    const filtrados = vehiculos.filter(v => 
-        v.placa.toLowerCase().includes(filtro.toLowerCase()) ||
-        v.marca.toLowerCase().includes(filtro.toLowerCase()) ||
-        v.modelo.toLowerCase().includes(filtro.toLowerCase()) ||
-        v.propietario.toLowerCase().includes(filtro.toLowerCase())
-    );
+    const vehiculos = await obtenerVehiculos();
+    tablaBody.innerHTML = '';
+
+    const filtrados = vehiculos.filter(v => {
+        const busqueda = filtro.toLowerCase();
+        return (v.placa || '').toLowerCase().includes(busqueda) || 
+               (v.marca || '').toLowerCase().includes(busqueda) || 
+               (v.propietario || '').toLowerCase().includes(busqueda);
+    });
 
     if (filtrados.length === 0) {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td colspan="7" class="sin-resultados">No se encontraron vehículos</td>`;
-        tablaBody.appendChild(tr);
+        tablaBody.innerHTML = `<tr><td colspan="7" class="sin-resultados" style="text-align:center;">No se encontraron vehículos</td></tr>`;
     } else {
-        filtrados.forEach(vehiculo => {
+        filtrados.forEach(v => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
-                <td>${vehiculo.placa}</td>
-                <td>${vehiculo.marca}</td>
-                <td>${vehiculo.modelo}</td>
-                <td>${vehiculo.anio}</td>
-                <td>${vehiculo.color}</td>
-                <td>${vehiculo.propietario}</td>
+                <td>${v.placa}</td>
+                <td>${v.marca}</td>
+                <td>${v.modelo}</td>
+                <td>${v.anio}</td>
+                <td>${v.color}</td>
+                <td>${v.propietario}</td>
                 <td>
                     <div class="crud-acciones-tabla">
-                        <button class="btn-accion btn-editar" onclick="editarVehiculo('${vehiculo.placa}')">Editar</button>
-                        <button class="btn-accion btn-eliminar" onclick="eliminarVehiculo('${vehiculo.placa}')">Eliminar</button>
+                        <button class="btn-accion btn-editar" onclick="prepararEdicion(${v.id})">Editar</button>
+                        <button class="btn-accion btn-eliminar" onclick="eliminarVehiculo(${v.id})">Eliminar</button>
                     </div>
                 </td>
             `;
             tablaBody.appendChild(tr);
         });
     }
-
     contador.textContent = filtrados.length + ' registro(s)';
 }
 
-// ---------- MOSTRAR NOTIFICACIÓN ----------
+// ---------- 3. GUARDAR (POST / PUT) ----------
+formVehiculo.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const placa = document.getElementById('placa').value.trim().toUpperCase();
+    const marca = document.getElementById('marca').value.trim();
+    const modelo = document.getElementById('modelo').value.trim();
+    const anio = document.getElementById('anio').value.trim();
+    const color = document.getElementById('color').value.trim();
+    const propietario = document.getElementById('propietario').value.trim();
+
+    // Validaciones
+    if (!placa || !/^[A-Z]{3}[0-9]{3}$/.test(placa)) return mostrarNotificacion('Placa inválida (ABC123).', 'error');
+    if (!marca || marca.length < 2) return mostrarNotificacion('Marca inválida.', 'error');
+    if (!modelo) return mostrarNotificacion('Modelo obligatorio.', 'error');
+    if (!anio || !/^[0-9]{4}$/.test(anio)) return mostrarNotificacion('Año inválido.', 'error');
+    if (!color || color.length < 3) return mostrarNotificacion('Color inválido.', 'error');
+    if (!propietario) return mostrarNotificacion('Propietario obligatorio.', 'error');
+
+    const payload = { placa, marca, modelo, anio, color, propietario };
+    const metodo = editando ? 'PUT' : 'POST';
+    const url = editando ? `${BASE_URL}/${idEditando}` : BASE_URL;
+
+    try {
+        const response = await fetch(url, {
+            method: metodo,
+            headers: { 
+                'Content-Type': 'application/json',
+                'authorization': TOKEN_PANTHER 
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+            mostrarNotificacion(`Vehículo ${editando ? 'actualizado' : 'registrado'} correctamente.`, 'success');
+            cerrarModal('modal-vehiculo');
+            renderizarTabla();
+        } else {
+            throw new Error('Error al guardar en la base de datos');
+        }
+    } catch (error) {
+        mostrarNotificacion('Error al guardar: ' + error.message, 'error');
+    }
+});
+
+// ---------- 4. EDITAR ----------
+async function prepararEdicion(id) {
+    const vehiculos = await obtenerVehiculos();
+    const v = vehiculos.find(item => item.id == id);
+    if (!v) return;
+
+    editando = true;
+    idEditando = id;
+    modalTitulo.textContent = 'Editar Vehículo';
+
+    document.getElementById('placa').value = v.placa;
+    document.getElementById('placa').disabled = true; 
+    document.getElementById('marca').value = v.marca;
+    document.getElementById('modelo').value = v.modelo;
+    document.getElementById('anio').value = v.anio;
+    document.getElementById('color').value = v.color;
+    document.getElementById('propietario').value = v.propietario;
+
+    abrirModal('modal-vehiculo');
+}
+
+// ---------- 5. ELIMINAR ----------
+async function eliminarVehiculo(id) {
+    if (!confirm('¿Estás seguro de que deseas eliminar este vehículo?')) return;
+    
+    try {
+        const response = await fetch(`${BASE_URL}/${id}`, { 
+            method: 'DELETE',
+            headers: { 'authorization': TOKEN_PANTHER }
+        });
+        
+        if (response.ok) {
+            mostrarNotificacion('Vehículo eliminado correctamente.', 'success');
+            renderizarTabla();
+        } else {
+            throw new Error('No se pudo eliminar');
+        }
+    } catch (error) {
+        mostrarNotificacion('Error al eliminar.', 'error');
+    }
+}
+
+// ---------- EVENTOS DE LA UI ----------
+document.getElementById('btn-nuevo-vehiculo').addEventListener('click', function() {
+    editando = false;
+    idEditando = null;
+    modalTitulo.textContent = 'Nuevo Vehículo';
+    formVehiculo.reset();
+    document.getElementById('placa').disabled = false;
+    abrirModal('modal-vehiculo');
+});
+
+buscador.addEventListener('input', function() {
+    renderizarTabla(this.value);
+});
+
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('crud-modal')) {
+        e.target.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+});
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        document.querySelectorAll('.crud-modal.active').forEach(modal => {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    }
+});
+
+function abrirModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function cerrarModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
 function mostrarNotificacion(mensaje, tipo) {
     const notificacion = document.getElementById('notificacion-crud');
     if (!notificacion) return;
@@ -94,167 +229,6 @@ function mostrarNotificacion(mensaje, tipo) {
         notificacion.textContent = '';
     }, 4000);
 }
-
-// ---------- ABRIR MODAL ----------
-function abrirModal(id) {
-    const modal = document.getElementById(id);
-    if (modal) {
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-// ---------- CERRAR MODAL ----------
-function cerrarModal(id) {
-    const modal = document.getElementById(id);
-    if (modal) {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-}
-
-// ---------- ABRIR MODAL NUEVO (Create) ----------
-document.getElementById('btn-nuevo-vehiculo').addEventListener('click', function() {
-    editando = false;
-    placaEditando = null;
-    modalTitulo.textContent = 'Nuevo Vehículo';
-    formVehiculo.reset();
-    document.getElementById('placa').disabled = false;
-    
-    formVehiculo.querySelectorAll('input').forEach(input => {
-        input.classList.remove('is-invalid', 'is-valid');
-    });
-    
-    abrirModal('modal-vehiculo');
-});
-
-// ---------- EDITAR VEHÍCULO (Update) ----------
-function editarVehiculo(placa) {
-    const vehiculo = vehiculos.find(v => v.placa === placa);
-    if (!vehiculo) return;
-
-    editando = true;
-    placaEditando = placa;
-    modalTitulo.textContent = 'Editar Vehículo';
-
-    document.getElementById('placa').value = vehiculo.placa;
-    document.getElementById('placa').disabled = true;
-    document.getElementById('marca').value = vehiculo.marca;
-    document.getElementById('modelo').value = vehiculo.modelo;
-    document.getElementById('anio').value = vehiculo.anio;
-    document.getElementById('color').value = vehiculo.color;
-    document.getElementById('propietario').value = vehiculo.propietario;
-
-    abrirModal('modal-vehiculo');
-}
-
-// ---------- GUARDAR (Create / Update) ----------
-formVehiculo.addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    const placa = document.getElementById('placa').value.trim().toUpperCase();
-    const marca = document.getElementById('marca').value.trim();
-    const modelo = document.getElementById('modelo').value.trim();
-    const anio = document.getElementById('anio').value.trim();
-    const color = document.getElementById('color').value.trim();
-    const propietario = document.getElementById('propietario').value.trim();
-
-    if (!placa || !/^[A-Z]{3}[0-9]{3}$/.test(placa)) {
-        mostrarNotificacion(' La placa debe tener formato ABC123 (3 letras + 3 números).', 'error');
-        return;
-    }
-
-    if (!marca || marca.length < 2) {
-        mostrarNotificacion(' La marca debe tener al menos 2 caracteres.', 'error');
-        return;
-    }
-
-    if (!modelo) {
-        mostrarNotificacion(' El modelo es obligatorio.', 'error');
-        return;
-    }
-
-    if (!anio || !/^[0-9]{4}$/.test(anio)) {
-        mostrarNotificacion(' El año debe tener 4 dígitos.', 'error');
-        return;
-    }
-
-    if (!color || color.length < 3) {
-        mostrarNotificacion(' El color debe tener al menos 3 caracteres.', 'error');
-        return;
-    }
-
-    if (!propietario) {
-        mostrarNotificacion(' El propietario es obligatorio.', 'error');
-        return;
-    }
-
-    if (editando) {
-        const index = vehiculos.findIndex(v => v.placa === placaEditando);
-        if (index !== -1) {
-            vehiculos[index] = { placa: placaEditando, marca, modelo, anio, color, propietario };
-            mostrarNotificacion(' Vehículo actualizado correctamente.', 'success');
-        }
-    } else {
-        if (vehiculos.some(v => v.placa === placa)) {
-            mostrarNotificacion(' Ya existe un vehículo con esa placa.', 'error');
-            return;
-        }
-        vehiculos.push({ placa, marca, modelo, anio, color, propietario });
-        mostrarNotificacion(' Vehículo registrado correctamente.', 'success');
-    }
-
-    cerrarModal('modal-vehiculo');
-    renderizarTabla();
-});
-
-// ---------- ELIMINAR VEHÍCULO (Delete) ----------
-function eliminarVehiculo(placa) {
-    if (!confirm('¿Estás seguro de que deseas eliminar este vehículo?')) return;
-    
-    vehiculos = vehiculos.filter(v => v.placa !== placa);
-    mostrarNotificacion(' Vehículo eliminado correctamente.', 'success');
-    renderizarTabla();
-}
-
-// ---------- BUSCADOR ----------
-buscador.addEventListener('input', function() {
-    renderizarTabla(this.value);
-});
-
-// ---------- CERRAR MODAL AL HACER CLIC FUERA ----------
-document.addEventListener('click', function(e) {
-    if (e.target.classList.contains('crud-modal')) {
-        e.target.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-});
-
-// ---------- CERRAR MODAL CON ESC ----------
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        const modalesAbiertos = document.querySelectorAll('.crud-modal.active');
-        modalesAbiertos.forEach(modal => {
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        });
-    }
-});
-
-// ---------- VALIDACIÓN DE PLACA EN TIEMPO REAL ----------
-document.getElementById('placa').addEventListener('input', function() {
-    this.value = this.value.toUpperCase();
-    const regex = /^[A-Z]{3}[0-9]{3}$/;
-    if (this.value.length > 0) {
-        if (!regex.test(this.value)) {
-            this.classList.add('is-invalid');
-            this.classList.remove('is-valid');
-        } else {
-            this.classList.remove('is-invalid');
-            this.classList.add('is-valid');
-        }
-    }
-});
 
 // ---------- INICIALIZAR ----------
 renderizarTabla();
