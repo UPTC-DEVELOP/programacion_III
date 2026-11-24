@@ -13,7 +13,15 @@ define("RESOURCES_URL", array(
     'roles',
     //Business
     'persons',
-    'clients'
+    'clients',
+    'spareparts'
+));
+
+/**
+ * Relaciona endpoints que conservan su nombre publico con su controlador.
+ */
+define("RESOURCE_CONTROLLERS", array(
+    'spareparts' => 'Repuestos'
 ));
 
 /**

@@ -44,15 +44,6 @@ class User
      */
     public $keyAPI;
 
-    // function __construct($id,$roles,$password,$keyAPI, $user)
-    // {
-    // $this->id = $id;
-    // $this->user = $user;
-    // $this->password = $password;
-    // $this->keyAPI = $keyAPI;
-    // $this->roles = $roles;
-    // }
-
     /**
      *
      * @return the $user

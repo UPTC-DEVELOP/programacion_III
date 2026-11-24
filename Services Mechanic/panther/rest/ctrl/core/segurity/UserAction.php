@@ -63,8 +63,8 @@ class UserAction implements IRequest
     /**
      * Otorga los permisos a un usuario para que acceda a los recursos
      *
-     * @return null o el id del usuario autorizado
-     * @throws Exception
+     * @return bool true cuando el token es válido
+     * @throws ExcepcionApi si el token está ausente o no es válido
      */
     public static function authenticator()
     {
@@ -177,7 +177,7 @@ class UserAction implements IRequest
     }
 
     /**
-     * Protege la contraseña con un algoritmo de encriptado
+     * Genera un hash seguro para la contraseña
      *
      * @param unknown $passwordPlain
      * @return string|NULL

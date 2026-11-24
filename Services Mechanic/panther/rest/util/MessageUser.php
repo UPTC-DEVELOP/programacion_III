@@ -5,7 +5,7 @@
  */
 
 /**
- * Estado exitoso de la transacción
+ * Mensajes generales de respuesta de Panther
  */
 define("error_url_not", "La solicitud esta mal formada la clase no existe");
 define("error_url", "La solicitud esta mal formada");

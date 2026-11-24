@@ -22,25 +22,25 @@ define("NO_CONTENT", "NO_CONTENT");
 define("ST204", 204);
 
 /**
- * Estado exitoso de la transacción no procesada por error cliente
+ * Solicitud incorrecta por datos o parámetros inválidos
  */
 define("BAD_REQUEST", "BAD_REQUEST");
 define("ST400", 400);
 
 /**
- * Estado exitoso de la transacción no procesada por error cliente
+ * Solicitud sin autenticación válida
  */
 define("UNAUTHORIZED", "UNAUTHORIZED");
 define("ST401", 401);
 
 /**
- * Estado exitoso de la transacción no procesada por error cliente
+ * Acceso prohibido al recurso
  */
 define("FORBIDDEN", "FORBIDDEN");
 define("ST403", 403);
 
 /**
- * Estado exitoso de la transacción no encontrado
+ * Recurso no encontrado
  */
 define("NOT_FOUND", "NOT_FOUND");
 define("ST404", 404);
@@ -50,7 +50,7 @@ define("ST404", 404);
 define("CONFLICT", "CONFLICT");
 define("ST409", 409);
 /**
- * Estado exitoso de la transacción con error interno
+ * Error interno del servidor
  */
 define("INTERNAL_SERVER_ERROR", "INTERNAL_SERVER_ERROR");
 define("ST500", 500);

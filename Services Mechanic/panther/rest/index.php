@@ -30,7 +30,11 @@ require 'ctrl/business/Persons.php';
 require 'model/business/Person.php';
 require 'ctrl/business/Clients.php';
 require 'model/business/Client.php';
+require 'ctrl/business/Repuestos.php';
+require 'model/business/Repuesto.php';
 require 'querys/business/BusinessQuery.php';
+require 'querys/business/ClienteQuery.php';
+require 'querys/business/RepuestoQuery.php';
 
 // Preparar manejo de excepciones
 /**
@@ -76,8 +80,6 @@ set_exception_handler(function (Throwable $exception) use ($view) {
 // Extraer segmento de la url
 if (isset($_GET['PATH_INFO'])){
     $request = explode('/', $_GET['PATH_INFO']);
-    //Descomentariar para saber url
-   // print_r($request);
 }
 else{
     throw new ExcepcionAPI(BAD_REQUEST, ST400, error_url);
@@ -94,6 +96,9 @@ if (! in_array($resource, $resourcesExisting)) {
 }
 
 $method = strtolower($_SERVER['REQUEST_METHOD']);
+$controllerClass = isset(RESOURCE_CONTROLLERS[$resource])
+    ? RESOURCE_CONTROLLERS[$resource]
+    : $resource;
 
 // Filtrar método
 
@@ -104,10 +109,10 @@ switch ($method) {
     case 'put':
     case 'delete':
 
-        if (method_exists($resource, $method)) {
+        if (method_exists($controllerClass, $method)) {
 
             // Crear una instancia del controlador
-            $controller = new $resource();
+            $controller = new $controllerClass();
 
             // Inicializar el recurso
             call_user_func(array(

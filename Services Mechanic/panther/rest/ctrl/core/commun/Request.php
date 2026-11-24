@@ -24,7 +24,7 @@ abstract class Request
     protected static $queryInsert = "insert";
 
     /**
-     * Comando para insertar en base de datos
+     * Comando para actualizar en base de datos
      *
      * @var string
      */
@@ -48,7 +48,7 @@ abstract class Request
 
     /**
      * Inserta los parametros en el statement y realiza
-     * validaciones previas antes de insertar
+     * validaciones previas antes de actualizar
      *
      * @param unknown $object
      *            Objeto insertar o actualizar
@@ -74,7 +74,7 @@ abstract class Request
     }
 
     /**
-     * Método que invoca a las funciones tipo get
+     * Método que invoca a las funciones tipo post
      *
      * @param unknown $request
      * @return ContentBody

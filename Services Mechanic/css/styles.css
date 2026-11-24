@@ -2377,7 +2377,7 @@ footer#contacto .mapa-footer iframe {
     }
 
 }
-/* APLICATIVO / DASHBOA*/
+/* APLICATIVO / DASHBOARD */
 #sistema {
   min-height: 100vh;
   display: grid;
@@ -4091,5 +4091,308 @@ footer#contacto .mapa-footer iframe {
     max-height: calc(100vh - 3em);
     padding: 1.5625em;
     overflow-y: auto;
+  }
+}
+
+/* ============================================================
+   MÓDULO REPUESTOS
+   ============================================================ */
+
+#sistema .repuestos-sistema {
+  margin: 32px;
+  padding: 26px;
+  border: 1px solid #dddddd;
+  border-radius: 14px;
+  background-color: #ffffff;
+  box-sizing: border-box;
+}
+
+#sistema .repuestos-sistema[hidden],
+#sistema .modal-repuesto[hidden] {
+  display: none;
+}
+
+#sistema .encabezado-repuestos {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+#sistema .encabezado-repuestos h2,
+#sistema .contenido-modal-repuesto h2 {
+  margin: 0;
+  color: #111111;
+  font-size: 20px;
+}
+
+#sistema .encabezado-repuestos p,
+#sistema .cabecera-modal-repuesto p,
+#sistema .contenido-eliminar-repuesto > p {
+  margin: 6px 0 0;
+  color: #6b7075;
+  font-size: 13px;
+}
+
+#sistema #btn-nuevo-repuesto,
+#sistema #guardar-repuesto {
+  padding: 13px 20px;
+  border: none;
+  border-radius: 10px;
+  background-color: #fbc515;
+  color: #111111;
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#sistema #btn-nuevo-repuesto:hover,
+#sistema #guardar-repuesto:hover {
+  background-color: #eeb900;
+}
+
+#sistema .repuestos-sistema button:disabled,
+#sistema .modal-repuesto button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+#sistema .busqueda-repuestos {
+  margin-bottom: 16px;
+}
+
+#sistema .busqueda-repuestos input {
+  width: 420px;
+  max-width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid #d5d9df;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+#sistema .busqueda-repuestos input:focus,
+#sistema .grupo-formulario-repuesto input:focus {
+  border-color: #fbc515;
+}
+
+#sistema .mensaje-repuestos {
+  margin: 0 0 16px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background-color: #f3f3f1;
+  color: #333333;
+  font-size: 13px;
+}
+
+#sistema .mensaje-repuestos.error {
+  background-color: #fde2e2;
+  color: #a61b14;
+}
+
+#sistema .mensaje-repuestos.exito {
+  background-color: #e6f4ea;
+  color: #176b32;
+}
+
+#sistema .tabla-repuestos {
+  width: 100%;
+  overflow-x: auto;
+}
+
+#sistema .tabla-repuestos table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#sistema .tabla-repuestos th {
+  padding: 13px 12px;
+  background-color: #f3f3f1;
+  color: #555555;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: left;
+}
+
+#sistema .tabla-repuestos td {
+  padding: 15px 12px;
+  border-bottom: 1px solid #dddddd;
+  color: #222222;
+  font-size: 13px;
+  vertical-align: top;
+}
+
+#sistema .btn-editar-repuesto,
+#sistema .btn-eliminar-repuesto {
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#sistema .btn-editar-repuesto {
+  border: 1px solid #d8dde3;
+  background-color: #ffffff;
+  color: #111315;
+}
+
+#sistema .btn-eliminar-repuesto {
+  margin-left: 6px;
+  border: none;
+  background-color: #fde2e2;
+  color: #d93025;
+}
+
+#sistema .btn-editar-repuesto:hover {
+  background-color: #f4f4f4;
+}
+
+#sistema .btn-eliminar-repuesto:hover {
+  background-color: #f8cccc;
+}
+
+#sistema .modal-repuesto {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.45);
+}
+
+#sistema .contenido-modal-repuesto {
+  width: 460px;
+  max-width: calc(100% - 30px);
+  max-height: calc(100vh - 30px);
+  padding: 25px;
+  overflow-y: auto;
+  border-radius: 14px;
+  background-color: #ffffff;
+  box-sizing: border-box;
+}
+
+#sistema .cabecera-modal-repuesto {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+#sistema .cerrar-modal-repuesto {
+  border: none;
+  background: transparent;
+  color: #555555;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+#sistema .grupo-formulario-repuesto {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+#sistema .grupo-formulario-repuesto label {
+  margin-bottom: 6px;
+  color: #333333;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+#sistema .grupo-formulario-repuesto input {
+  height: 42px;
+  padding: 0 11px;
+  border: 1px solid #d5d9df;
+  border-radius: 7px;
+  background-color: #ffffff;
+  color: #202124;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+#sistema .grupo-formulario-repuesto input[readonly] {
+  background-color: #f3f3f1;
+  color: #666666;
+}
+
+#sistema .botones-formulario-repuesto {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+#sistema #cancelar-formulario-repuesto,
+#sistema #cancelar-eliminar-repuesto,
+#sistema #confirmar-eliminar-repuesto {
+  padding: 11px 17px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#sistema #cancelar-formulario-repuesto,
+#sistema #cancelar-eliminar-repuesto {
+  border: 1px solid #d5d9df;
+  background-color: #ffffff;
+  color: #222222;
+}
+
+#sistema #confirmar-eliminar-repuesto {
+  border: none;
+  background-color: #e52424;
+  color: #ffffff;
+}
+
+#sistema .contenido-eliminar-repuesto > p {
+  margin-bottom: 22px;
+}
+
+#sistema .datos-repuesto-eliminar {
+  padding: 16px 18px;
+  border-radius: 10px;
+  background-color: #f7f7f5;
+}
+
+#sistema .datos-repuesto-eliminar p {
+  margin: 6px 0;
+  color: #202124;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 700px) {
+  #sistema .repuestos-sistema {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  #sistema .encabezado-repuestos {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #sistema #btn-nuevo-repuesto {
+    width: 100%;
+  }
+
+  #sistema .botones-formulario-repuesto {
+    flex-direction: column-reverse;
+  }
+
+  #sistema .botones-formulario-repuesto button {
+    width: 100%;
   }
 }

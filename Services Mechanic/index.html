@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/styles.css?v=btn-autenticar-2" />
+    <link rel="stylesheet" href="css/styles.css?v=panther-spareparts-2" />
   </head>
 
   <body>
@@ -849,6 +849,7 @@
             <a href="#clientes"> Clientes </a>
             <a href="#vehiculos"> Vehículos </a>
             <a href="#empleados"> Empleados </a>
+            <a href="#repuestos"> Repuestos </a>
           </nav>
         </aside>
 
@@ -1384,6 +1385,167 @@
               </form>
             </div>
           </div>
+
+          <!-- Repuestos -->
+          <section id="repuestos" class="repuestos-sistema" hidden>
+            <div class="encabezado-repuestos">
+              <div>
+                <h2>Repuestos registrados</h2>
+                <p id="cantidad-repuestos">0 repuestos</p>
+              </div>
+
+              <button type="button" id="btn-nuevo-repuesto">
+                + Registrar repuesto
+              </button>
+            </div>
+
+            <div class="busqueda-repuestos">
+              <input
+                type="search"
+                id="buscar-repuesto"
+                maxlength="100"
+                placeholder="Buscar por referencia, descripción o marca..."
+                aria-label="Buscar repuestos"
+              />
+            </div>
+
+            <p
+              id="mensaje-repuestos"
+              class="mensaje-repuestos"
+              role="status"
+              aria-live="polite"
+              hidden
+            ></p>
+
+            <div class="tabla-repuestos">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Referencia</th>
+                    <th>Descripción</th>
+                    <th>Marca</th>
+                    <th>Precio</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="lista-repuestos"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Modal registrar / editar repuesto -->
+          <div id="modal-repuesto" class="modal-repuesto" hidden>
+            <div class="contenido-modal-repuesto">
+              <div class="cabecera-modal-repuesto">
+                <div>
+                  <h2 id="titulo-modal-repuesto">Registrar repuesto</h2>
+                  <p id="descripcion-modal-repuesto">
+                    Ingresa la información del nuevo repuesto.
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  id="cerrar-modal-repuesto"
+                  class="cerrar-modal-repuesto"
+                  aria-label="Cerrar formulario"
+                >
+                  ×
+                </button>
+              </div>
+
+              <form id="formulario-repuesto" novalidate>
+                <div class="grupo-formulario-repuesto">
+                  <label for="id-repuesto">ID Repuesto</label>
+                  <input type="text" id="id-repuesto" readonly />
+                </div>
+
+                <div class="grupo-formulario-repuesto">
+                  <label for="referencia-repuesto">Referencia</label>
+                  <input
+                    type="text"
+                    id="referencia-repuesto"
+                    maxlength="20"
+                    required
+                  />
+                </div>
+
+                <div class="grupo-formulario-repuesto">
+                  <label for="descripcion-repuesto">Descripción</label>
+                  <input
+                    type="text"
+                    id="descripcion-repuesto"
+                    maxlength="100"
+                    required
+                  />
+                </div>
+
+                <div class="grupo-formulario-repuesto">
+                  <label for="marca-repuesto">Marca</label>
+                  <input
+                    type="text"
+                    id="marca-repuesto"
+                    maxlength="40"
+                    required
+                  />
+                </div>
+
+                <div class="grupo-formulario-repuesto">
+                  <label for="precio-repuesto">Precio</label>
+                  <input
+                    type="number"
+                    id="precio-repuesto"
+                    min="0.01"
+                    max="99999999.99"
+                    step="0.01"
+                    inputmode="decimal"
+                    required
+                  />
+                </div>
+
+                <div class="botones-formulario-repuesto">
+                  <button type="button" id="cancelar-formulario-repuesto">
+                    Cancelar
+                  </button>
+                  <button type="submit" id="guardar-repuesto">
+                    Guardar repuesto
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Modal eliminar repuesto -->
+          <div id="modal-eliminar-repuesto" class="modal-repuesto" hidden>
+            <div class="contenido-modal-repuesto contenido-eliminar-repuesto">
+              <h2>¿Eliminar repuesto?</h2>
+              <p>Confirma la operación después de revisar la información.</p>
+
+              <div class="datos-repuesto-eliminar">
+                <p><strong>ID:</strong> <span id="eliminar-id-repuesto"></span></p>
+                <p>
+                  <strong>Referencia:</strong>
+                  <span id="eliminar-referencia-repuesto"></span>
+                </p>
+                <p>
+                  <strong>Descripción:</strong>
+                  <span id="eliminar-descripcion-repuesto"></span>
+                </p>
+                <p><strong>Marca:</strong> <span id="eliminar-marca-repuesto"></span></p>
+                <p><strong>Precio:</strong> <span id="eliminar-precio-repuesto"></span></p>
+              </div>
+
+              <div class="botones-formulario-repuesto">
+                <button type="button" id="cancelar-eliminar-repuesto">
+                  No, conservar
+                </button>
+                <button type="button" id="confirmar-eliminar-repuesto">
+                  Sí, eliminar
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1473,5 +1635,6 @@
     </footer>
     <script src="js/script.js?v=panther-clients-1"></script>
     <script src="js/clientes.js?v=panther-clients-1"></script>
+    <script src="js/repuestos.js?v=panther-spareparts-1"></script>
   </body>
 </html>

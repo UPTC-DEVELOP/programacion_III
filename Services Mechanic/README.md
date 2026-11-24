@@ -15,20 +15,23 @@ Actualmente el proyecto incluye:
 - Landing Page institucional.
 - Pantalla de inicio de sesión.
 - Panel principal del aplicativo.
-- CRUD de Clientes.
+- Gestión de Clientes integrada con Panther y MySQL/MariaDB.
 - CRUD de Empleados.
 - CRUD de Vehículos.
+- CRUD de Repuestos integrado con Panther y MySQL/MariaDB.
 - Relación entre Clientes y Vehículos.
-- Validaciones mediante JavaScript.
+- Validaciones en JavaScript y en el backend para los módulos integrados.
 - Diseño responsive para diferentes tamaños de pantalla.
 
-El proyecto corresponde a un prototipo frontend, por lo que la información se administra temporalmente mediante estructuras de datos en JavaScript y no utiliza todavía una base de datos o backend.
+El inicio de sesión y los módulos Clientes y Repuestos utilizan el backend REST
+de Panther y la base de datos `services_mechanic`. Empleados y Vehículos todavía
+administran sus datos en memoria mediante JavaScript y no tienen persistencia.
 
 ## Módulos desarrollados
 
 ### Clientes
 
-Permite registrar, consultar, actualizar y eliminar clientes.
+Permite registrar, consultar y actualizar clientes mediante Panther.
 
 Incluye validaciones para:
 
@@ -39,7 +42,17 @@ Incluye validaciones para:
 - Dirección.
 - Generación automática de identificadores de cuatro dígitos.
 
-También se controla que un cliente con vehículos asociados no pueda eliminarse directamente.
+La eliminación permanece bloqueada hasta que el esquema permita comprobar las
+relaciones con vehículos, servicios y facturas.
+
+### Repuestos
+
+Permite registrar, consultar y actualizar repuestos mediante Panther. Incluye
+búsqueda por referencia, descripción o marca y validaciones de referencia única,
+longitudes y precio.
+
+La eliminación permanece bloqueada hasta que el módulo Servicios defina una
+relación verificable con los repuestos.
 
 ### Empleados
 
@@ -98,6 +111,8 @@ La tipografía principal utilizada es Manrope.
 - HTML5
 - CSS3
 - JavaScript
+- PHP y Panther REST
+- MySQL/MariaDB
 - Google Fonts - Manrope
 - Git
 - GitHub
@@ -135,8 +150,9 @@ secretos del proveedor. La contrasena de produccion no debe escribirse en este
 repositorio, en el `README.md` ni en un archivo `.env` versionado. Despues de
 cambiar variables, se debe reiniciar el proceso del servidor web o PHP-FPM.
 
-La documentacion del primer recurso REST se encuentra en
-[`panther/rest/docs/clients-api.md`](panther/rest/docs/clients-api.md).
+La documentación de los recursos REST se encuentra en
+[`panther/rest/docs/clients-api.md`](panther/rest/docs/clients-api.md) y
+[`panther/rest/docs/repuestos-api.md`](panther/rest/docs/repuestos-api.md).
 La instalacion unificada de la base y la creacion local de un administrador se
 documentan en [`panther/sql/README.md`](panther/sql/README.md).
 
@@ -148,6 +164,11 @@ Services Mechanic/
 │   └── styles.css
 ├── img/
 ├── js/
-│   └── script.js
+│   ├── script.js
+│   ├── clientes.js
+│   └── repuestos.js
+├── panther/
+│   ├── rest/
+│   └── sql/
 ├── index.html
 └── README.md

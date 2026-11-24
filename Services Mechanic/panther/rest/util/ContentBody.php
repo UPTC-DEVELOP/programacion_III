@@ -36,8 +36,8 @@ class ContentBody
     public $code;
 
     /**
-     * Respesta de datos de la petición
-     * * @var string date
+     * Respuesta de datos de la petición
+     * @var mixed data
      */
     public $data;
 

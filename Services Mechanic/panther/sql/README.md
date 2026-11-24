@@ -71,3 +71,18 @@ $securePassword = $null
 $passwordHash = $null
 $apiToken = $null
 ```
+
+## Instalacion incremental de Repuestos
+
+El archivo `services_mechanic_repuestos.sql` agrega la tabla `repuestos` a una
+base `services_mechanic` existente. No elimina ni reconstruye otras tablas y no
+inserta datos.
+
+1. Abra `services_mechanic` en phpMyAdmin.
+2. Seleccione **Importar**.
+3. Elija `services_mechanic_repuestos.sql` y ejecute el archivo como SQL.
+4. Compruebe la tabla `repuestos` y el trigger `trg_repuestos_limite_id`.
+
+La eliminacion desde Panther permanece bloqueada hasta que el modulo Servicios
+defina una relacion verificable con `repuestos.id_repuesto`. Consulte el contrato
+en `../rest/docs/repuestos-api.md`.
