@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="base-uri 'none'; object-src 'none'; form-action 'self'; img-src 'self' data:; connect-src 'self' https://pru.clarisacloud.com:8443 ws://127.0.0.1:5500 ws://localhost:5500">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta name="description" content="Formulario para crear facturas electrónicas de servicio del taller con IVA del 19%.">
+    <meta name="referrer" content="no-referrer">
+    <title>Crear factura - AutoGestión ERP</title>
+    <link rel="preconnect" href="https://pru.clarisacloud.com:8443">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/factura.css">
+    <script defer src="js/config.js"></script>
+    <script defer src="js/utilidades.js"></script>
+    <script defer src="js/sesion.js"></script>
+    <script defer src="js/accesoClarisa.js"></script>
+    <script defer src="js/factura.js"></script>
+</head>
+<body>
+    <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+    <header class="header-principal">
+        <div class="header-logo">
+            <img src="img/logo.jpeg" alt="Logo de AutoGestión ERP">
+        </div>
+        <nav aria-label="Sesión">
+            <a href="modulos.html">Volver a módulos</a>
+            <span class="sesion-info" id="usuarioSesion"></span>
+            <button type="button" class="btn-salir" id="btnSalir">Cerrar sesión</button>
+        </nav>
+    </header>
+
+    <main id="contenido" class="factura-main">
+        <h1>Crear factura</h1>
+        <p class="login-sub" id="emisor"></p>
+        <p class="ayuda">Los campos marcados con * son obligatorios.</p>
+
+        <form id="formFactura" novalidate>
+            <fieldset>
+                <legend>Documento</legend>
+                <div class="grid">
+                    <div>
+                        <label for="consecutivo">Consecutivo *</label>
+                        <input id="consecutivo" inputmode="numeric" maxlength="9" required aria-required="true">
+                    </div>
+                    <div>
+                        <label for="vencimiento">Fecha de vencimiento *</label>
+                        <input id="vencimiento" type="date" required aria-required="true">
+                    </div>
+                    <div>
+                        <label for="formaPago">Forma de pago</label>
+                        <select id="formaPago">
+                            <option value="1">Contado</option>
+                            <option value="2">Crédito</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="medios" role="group" aria-label="Medios de pago (elige al menos uno)">
+                    <label>
+                        <input type="checkbox" name="medio" value="10" checked> Efectivo
+                    </label>
+                    <label>
+                        <input type="checkbox" name="medio" value="48"> Tarjeta crédito
+                    </label>
+                    <label>
+                        <input type="checkbox" name="medio" value="49"> Tarjeta débito
+                    </label>
+                    <label>
+                        <input type="checkbox" name="medio" value="45"> Transferencia
+                    </label>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Cliente</legend>
+                <div class="grid">
+                    <div>
+                        <label for="tipoId">Tipo de documento</label>
+                        <select id="tipoId">
+                            <option value="CC">Cédula de ciudadanía</option>
+                            <option value="CE">Cédula de extranjería</option>
+                            <option value="NI">NIT</option>
+                            <option value="PA">Pasaporte</option>
+                        </select>
+                    </div>
+                    <div><label for="numId">Número de documento *</label>
+                        <input id="numId" inputmode="numeric" maxlength="13" required aria-required="true">
+                    </div>
+                    <div><label for="nombre">Nombres y apellidos / razón social *</label>
+                        <input id="nombre" maxlength="255" required aria-required="true">
+                    </div>
+                    <div><label for="naturaleza">Naturaleza</label>
+                        <select id="naturaleza">
+                            <option value="NATURAL">Persona natural</option>
+                            <option value="JURIDICA">Persona jurídica</option>
+                        </select>
+                    </div>
+                    <div><label for="telefono">Teléfono (opcional)</label>
+                        <input id="telefono" inputmode="numeric" maxlength="15">
+                    </div>
+                    <div><label for="direccion">Dirección (opcional)</label>
+                        <input id="direccion" maxlength="100">
+                    </div>
+                    <div><label for="respFiscales">Responsabilidad fiscal</label>
+                        <select id="respFiscales">
+                            <option value="NOA">No aplica – Otros</option>
+                            <option value="RST">Régimen SIMPLE</option>
+                            <option value="RIV">Agente de retención de IVA</option>
+                            <option value="ART">Autorretenedor</option>
+                            <option value="GRC">Gran contribuyente</option>
+                        </select>
+                    </div>
+                    <div><label for="respTributarias">Responsabilidad tributaria</label>
+                        <select id="respTributarias">
+                            <option value="NOA">No aplica</option>
+                            <option value="IVA">IVA</option>
+                            <option value="INC">Impuesto al consumo</option>
+                            <option value="IEC">IVA + consumo</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Vehículo y servicio</legend>
+                <div class="grid">
+                    <div>
+                        <label for="placa">Placa</label>
+                        <input id="placa" maxlength="10">
+                    </div>
+                    <div>
+                        <label for="modelo">Modelo</label>
+                        <input id="modelo" maxlength="40">
+                    </div>
+                    <div>
+                        <label for="color">Color</label>
+                        <input id="color" maxlength="30">
+                    </div>
+                    <div>
+                        <label for="ingreso">Fecha y hora de ingreso</label>
+                        <input id="ingreso" type="datetime-local">
+                    </div>
+                    <div>
+                        <label for="empleado">Empleado a cargo</label>
+                        <input id="empleado" maxlength="60">
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Repuestos y mano de obra</legend>
+                <div id="items"></div>
+                <button type="button" class="btn-secundario" id="btnAgregarItem">+ Agregar ítem</button>
+                <div class="grid utilidad">
+                    <div>
+                        <label for="utilidad">Utilidad estimada (%)</label>
+                        <input id="utilidad" type="number" min="0" step="any" value="0">
+                    </div>
+                </div>
+            </fieldset>
+
+            <section class="resumen" aria-label="Resumen de la factura" aria-live="polite">
+                <div>
+                    <span>Subtotal</span>
+                    <strong id="resBase">$ 0</strong>
+                </div>
+                <div>
+                    <span>IVA 19%</span>
+                    <strong id="resIva">$ 0</strong>
+                </div>
+                <div class="total">
+                    <span>Total</span>
+                    <strong id="resTotal">$ 0</strong>
+                </div>
+            </section>
+
+            <div id="mensajeFactura" class="mensaje" role="alert" aria-live="polite"></div>
+
+            <div class="acciones-factura">
+                <button type="button" id="btnLimpiar" class="btn-secundario">Limpiar Formulario</button>
+                <button type="submit" id="btnEnviar" class="btn-principal">Guardar en Panther</button>
+            </div>
+        </form>
+
+        <section class="facturas-guardadas" aria-labelledby="tituloGuardadas">
+            <h2 id="tituloGuardadas">Facturas guardadas</h2>
+
+            <label for="facturasGuardadas">Factura de Panther</label>
+            <div class="controles-envio">
+                <select id="facturasGuardadas"></select>
+
+                <button type="button" id="abrirEnvio" class="btn-principal" disabled>
+                    Enviar factura a Clarisa
+                </button>
+            </div>
+
+            <p id="estadoEnvio" role="status"></p>
+        </section>
+        <dialog id="dialogoClarisa" aria-labelledby="tituloClarisa">
+            <form id="formClarisa">
+                <h2 id="tituloClarisa">Acceso a Clarisa</h2>
+                <p id="resumenEnvio"></p>
+                <p class="ayuda-envio">Confirma el envío al entorno de pruebas de Clarisa.</p>                <label for="usuarioClarisa">Usuario de Clarisa</label>
+                <input id="usuarioClarisa" value="Demo_api" autocomplete="off" required>
+                <label for="claveClarisa">Contraseña de Clarisa</label>
+                <input id="claveClarisa" type="password" autocomplete="off" required>
+                <p role="status" id="mensajeClarisa"></p>
+                <div class="acciones">
+                    <button type="button" id="cancelarClarisa">Cancelar</button>
+                    <button type="submit" id="verificarClarisa">Confirmar envío</button>
+                </div>
+            </form>
+        </dialog>
+    </main>
+</body>
+</html>

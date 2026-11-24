@@ -1,0 +1,351 @@
+/* Formulario de factura */
+.factura-main { 
+    max-width: 920px; 
+    margin: 0 auto; 
+    padding: 24px 16px 48px; 
+}
+
+.factura-main h1 { 
+    margin: 0 0 6px; 
+}
+
+fieldset { 
+    border: 1px solid #33353a; 
+    border-radius: 8px; 
+    background: #1a1b20; 
+    margin: 0 0 18px; 
+    padding: 16px; 
+}
+
+legend { 
+    padding: 0 8px; 
+    color: #ff5a60; 
+    font-weight: bold; 
+}
+
+.grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); 
+    gap: 0 16px; 
+}
+
+form select {
+    width: 100%; 
+    min-height: 44px; 
+    padding: 12px 14px; 
+    font-size: 16px; 
+    color: #f2f2f2;
+    background-color: #111216; 
+    border: 1px solid #6b7280; 
+    border-radius: 6px;
+}
+form input[type="checkbox"] { 
+    width: 22px; 
+    min-height: 22px; 
+    height: 22px; 
+    margin-right: 8px; 
+    accent-color: #e3262e; 
+}
+
+.medios { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 6px 20px; 
+    margin-top: 14px;
+}
+
+.medios label { 
+    margin: 0; 
+    display: flex; 
+    align-items: center; 
+    min-height: 44px; 
+}
+
+.item { 
+    display: grid; 
+    grid-template-columns: 130px 110px 1fr 90px 120px 120px 44px; 
+    gap: 8px; 
+    align-items: center; 
+    margin-bottom: 10px; 
+}
+
+.item input, .item select { 
+    padding: 10px; 
+}
+
+.i-subtotal { 
+    text-align: right; 
+    color: #c9ced6; 
+    font-size: 14px; 
+}
+
+.i-quitar { 
+    background: none; 
+    border: 1px solid #6b7280; 
+    color: #c9ced6; 
+    border-radius: 6px; 
+    min-height: 44px; 
+    cursor: pointer; 
+}
+
+.i-quitar:hover { 
+    border-color: #ff5a60; 
+    color: #ff5a60;
+}
+
+.btn-secundario { 
+    min-height: 44px; 
+    background: none; 
+    color: #f2f2f2; 
+    border: 1px dashed #c9ced6; 
+    border-radius: 6px; 
+    padding: 10px 16px; 
+    font-size: 14px; 
+    cursor: pointer; 
+}
+
+.btn-secundario:hover { 
+    border-color: #ff5a60; 
+    color: #ff5a60; 
+}
+
+.utilidad { 
+    margin-top: 8px; 
+    max-width: 260px; 
+}
+
+.resumen { 
+    background: #1a1b20; 
+    border: 1px solid #33353a; 
+    border-radius: 8px; 
+    padding: 14px 18px; 
+    margin-bottom: 8px; 
+}
+
+.resumen div { 
+    display: flex; 
+    justify-content: space-between; 
+    padding: 5px 0; 
+    color: #c9ced6; 
+}
+
+.resumen .total { 
+    border-top: 1px solid #33353a; 
+    margin-top: 6px; 
+    padding-top: 10px; 
+    color: #fff; 
+    font-size: 20px; 
+}
+
+.resumen .total strong { 
+    color: #ff5a60; 
+}
+
+.resultado { 
+    background: #1a1b20; 
+    border: 1px solid #6fcf97; 
+    border-radius: 8px; 
+    padding: 16px 20px; 
+    margin-top: 20px; 
+    display: grid; 
+    grid-template-columns: max-content 1fr; 
+    gap: 6px 16px; 
+}
+
+.resultado[hidden] { 
+    display: none; 
+}
+
+.resultado dt { 
+    color: #c9ced6; 
+} .resultado dd { 
+    margin: 0; word-break: break-all; 
+}
+
+.resultado a { 
+    color: #ff8a90; 
+}
+
+@media (max-width: 720px) {
+    .item { grid-template-columns: 1fr 1fr; padding: 10px; border: 1px solid #33353a; border-radius: 6px; }
+    .item .i-nombre { grid-column: 1 / -1; }
+    .i-subtotal { text-align: left; }
+}
+
+#dialogoClarisa {
+    padding: clamp(20px, 4vw, 36px);
+    border: 1px solid #37383e;
+    border-top: 3px solid #e3262e;
+    background: #1a1b20;
+    color: #f4f4f4;
+}
+#dialogoClarisa { width: min(90%, 440px); margin: auto; }
+#dialogoClarisa::backdrop { background: rgba(0, 0, 0, 0.72); }
+#dialogoClarisa p { line-height: 1.55; margin: 12px 0 18px; }
+#dialogoClarisa label { display: block; margin: 16px 0 5px; }
+#dialogoClarisa input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #888;
+    border-radius: 4px;
+    background: #111216;
+    color: white;
+    font: inherit;
+}
+#dialogoClarisa button {
+    border: 0;
+    border-radius: 5px;
+    padding: 10px 16px;
+    font: inherit;
+    font-weight: 600;
+    color: white;
+    background: #b92029;
+    cursor: pointer;
+}
+#dialogoClarisa button:disabled { opacity: .65; cursor: wait; }
+#dialogoClarisa #resumenEnvio {
+    margin: 16px 0 8px;
+    padding: 12px 14px;
+    border-left: 3px solid #e3262e;
+    border-radius: 4px;
+    font-variant-numeric: tabular-nums;
+}
+
+#dialogoClarisa .ayuda-envio {
+    margin: 0 0 18px;
+    color: #c9ced6;
+    font-size: 14px;
+}
+
+#dialogoClarisa .acciones {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+#dialogoClarisa .acciones button {
+    min-height: 44px;
+    padding: 10px 18px;
+}
+
+@media (max-width: 480px) {
+    #dialogoClarisa .acciones button {
+        flex: 1 1 auto;
+    }
+}
+#dialogoClarisa #cancelarClarisa { background: #40424a; }
+#dialogoClarisa :focus-visible { outline: 2px solid white; outline-offset: 3px; }
+
+/* Acciones del formulario */
+.acciones-factura,
+.controles-envio {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.acciones-factura {
+    justify-content: flex-end;
+    margin: 16px 0 32px;
+}
+
+.acciones-factura .btn-principal,
+.controles-envio .btn-principal {
+    width: auto;
+    min-height: 46px;
+    margin: 0;
+    padding: 12px 20px;
+}
+
+.acciones-factura .btn-secundario {
+    min-height: 46px;
+    border: 1px solid #52555e;
+}
+
+/* Panel de facturas guardadas */
+.facturas-guardadas {
+    padding: clamp(18px, 3vw, 28px);
+    background-color: #1a1b20;
+    border: 1px solid #37383e;
+    border-top: 3px solid #e3262e;
+    border-radius: 8px;
+}
+
+.facturas-guardadas h2 {
+    margin: 0 0 20px;
+    font-size: 24px;
+}
+
+.facturas-guardadas label {
+    display: block;
+    margin-bottom: 7px;
+    color: #c9ced6;
+    font-size: 14px;
+}
+
+#facturasGuardadas {
+    flex: 1;
+    min-width: 0;
+    min-height: 46px;
+    padding: 10px 12px;
+    border: 1px solid #606470;
+    border-radius: 6px;
+    background-color: #111216;
+    color: #f4f4f4;
+    font: inherit;
+    color-scheme: dark;
+}
+
+#abrirEnvio:disabled {
+    background-color: #33353b;
+    color: #c4c6cc;
+    opacity: 1;
+    cursor: default;
+}
+
+/* Respuesta de Panther o Clarisa */
+#estadoEnvio:not(:empty),
+#resumenEnvio {
+    display: block;
+    margin: 16px 0 0;
+    padding: 12px 14px;
+    background-color: #121317;
+    border-left: 3px solid #858b96;
+    overflow-wrap: anywhere;
+}
+
+#mensajeFactura:empty,
+#estadoEnvio:empty,
+#mensajeClarisa:empty {
+    display: none;
+}
+
+/* Ventana de acceso a Clarisa */
+#dialogoClarisa {
+    border-radius: 10px;
+    box-shadow: 0 18px 60px #09090b;
+}
+
+#dialogoClarisa h2 {
+    margin: 0;
+}
+
+.facturas-guardadas :focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+    .acciones-factura,
+    .controles-envio {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #facturasGuardadas {
+        width: 100%;
+    }
+}
