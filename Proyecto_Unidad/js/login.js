@@ -4,6 +4,7 @@
 // --- Constantes ---
 const CLAVE_USUARIO_RECORDADO = 'autotech-usuario';
 const PAGINA_FACTURACION = 'pages/factura.html';
+const PAGINA_TALLER = 'pages/clientes.html';
 
 // --- Ciclo de vida ---
 document.addEventListener('DOMContentLoaded', () => {
@@ -82,34 +83,49 @@ document.addEventListener('DOMContentLoaded', () => {
         estadoCargando(true);
 
         try {
-            const { ok, data } = await ClarisaApi.login(valorUsuario, valorContrasena);
-
-            if (!ok || data?.success !== true) {
-                throw new Error(ClarisaApi.mensajeDeError(data) || 'Credenciales incorrectas.');
-            }
-
-            const rawToken = data.data?.token;
-            if (!rawToken) {
-                throw new Error('El servidor no devolvió un token de autenticación.');
-            }
-
-            const permisos = data.data?.permisos || [];
-            if (!permisos.includes(ClarisaApi.PERMISO_FACTURACION)) {
-                throw new Error('El usuario no cuenta con permisos de facturación electrónica.');
-            }
-
-            const userName = data.data?.usuario?.userName || valorUsuario;
-            Sesion.iniciar(rawToken, userName);
-
             if (recordarme.checked) {
                 localStorage.setItem(CLAVE_USUARIO_RECORDADO, valorUsuario);
             } else {
                 localStorage.removeItem(CLAVE_USUARIO_RECORDADO);
             }
 
-            mostrarAlerta(`${data.textResponse || 'Bienvenido'}, ${userName}. Redirigiendo a facturación...`, 'success');
+            // demo_api entra por Clarisa y va a facturación. El resto entra por Panther.
+            if (valorUsuario.toLowerCase() === 'demo_api') {
+                const { ok, data } = await ClarisaApi.login(valorUsuario, valorContrasena);
+                if (!ok || data?.success !== true) {
+                    throw new Error(ClarisaApi.mensajeDeError(data) || 'Credenciales incorrectas de facturación.');
+                }
+                const rawToken = data.data?.token;
+                if (!rawToken) {
+                    throw new Error('El servidor no devolvió un token de autenticación.');
+                }
+                const permisos = data.data?.permisos || [];
+                if (!permisos.includes(ClarisaApi.PERMISO_FACTURACION)) {
+                    throw new Error('El usuario no cuenta con permisos de facturación electrónica.');
+                }
+                const userName = data.data?.usuario?.userName || valorUsuario;
+                Sesion.iniciar(rawToken, userName);
+                mostrarAlerta(`${data.textResponse || 'Bienvenido'}, ${userName}. Redirigiendo a facturación...`, 'success');
+                btnTexto.textContent = 'Ingresando...';
+                setTimeout(() => window.location.assign(PAGINA_FACTURACION), 800);
+                return;
+            }
+
+            const respuesta = await pantherApi.post('useraction/login', {
+                user: valorUsuario,
+                password: valorContrasena
+            });
+            const usuarioPanther = respuesta.data && respuesta.data.data;
+            if (!respuesta.ok || !usuarioPanther || !usuarioPanther.keyAPI) {
+                throw new Error(respuesta.mensaje || 'Usuario o contraseña incorrectos.');
+            }
+
+            PantherApi.setKeyAPI(usuarioPanther.keyAPI);
+            sessionStorage.setItem('userRole', usuarioPanther.roles);
+            sessionStorage.setItem('userName', usuarioPanther.user);
+            mostrarAlerta(`Bienvenido, ${usuarioPanther.user}. Redirigiendo al taller...`, 'success');
             btnTexto.textContent = 'Ingresando...';
-            setTimeout(() => window.location.assign(PAGINA_FACTURACION), 800);
+            setTimeout(() => window.location.assign(PAGINA_TALLER), 800);
         } catch (error) {
             const sinConexion = error instanceof TypeError;
             mostrarAlerta(

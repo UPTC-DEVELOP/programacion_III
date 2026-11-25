@@ -10,11 +10,10 @@
 </head>
 <body>
 
-    <!-- HEADER -->
-    <header>
+    <header class="factura-header">
         <div class="header-logo">
             <a href="../index.html">
-                <img src="../img/Logo.jpeg" alt="AutoTech" class="logo">
+                <img src="../img/Logo.jpeg" alt="AutoTech - Sistema de Gestión para Talleres" class="logo">
             </a>
         </div>
         <nav aria-label="Navegación principal">
@@ -26,9 +25,16 @@
                 <li><a href="productos.html">Productos</a></li>
                 <li><a href="ordenes.html">Órdenes</a></li>
                 <li><a href="factura.html">Facturación</a></li>
-                <li><a href="../index.html">← Volver </a></li>
             </ul>
         </nav>
+        <div class="factura-sesion">
+            <span class="usuario-badge" title="Usuario autenticado">
+                <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-4.4 0-8 2.2-8 5v3h16v-3c0-2.8-3.6-5-8-5z"/></svg>
+                <span class="sr-only">Usuario activo:</span>
+                <span id="usuario-activo">DEMO_API</span>
+            </span>
+            <button type="button" class="btn-cerrar-sesion" id="btn-cerrar-sesion">Cerrar sesión</button>
+        </div>
     </header>
 
     <!-- CONTENIDO -->
@@ -89,5 +95,7 @@
             </table>
         </div>
     </main>
+    <script src="../js/servicios/clarisa.js"></script>
+    <script src="../js/crud/comun.js"></script>
 </body>
 </html>

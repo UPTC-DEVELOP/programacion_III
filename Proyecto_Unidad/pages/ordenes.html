@@ -11,7 +11,7 @@
 </head>
 <body>
 
-    <header>
+    <header class="factura-header">
         <div class="header-logo">
             <a href="../index.html">
                 <img src="../img/Logo.jpeg" alt="AutoTech - Sistema de Gestión para Talleres" class="logo">
@@ -26,9 +26,16 @@
                 <li><a href="productos.html">Productos</a></li>
                 <li><a href="ordenes.html" class="active">Órdenes</a></li>
                 <li><a href="factura.html">Facturación</a></li>
-                <li><a href="../index.html">← Volver </a></li>
             </ul>
         </nav>
+        <div class="factura-sesion">
+            <span class="usuario-badge" title="Usuario autenticado">
+                <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-4.4 0-8 2.2-8 5v3h16v-3c0-2.8-3.6-5-8-5z"/></svg>
+                <span class="sr-only">Usuario activo:</span>
+                <span id="usuario-activo">DEMO_API</span>
+            </span>
+            <button type="button" class="btn-cerrar-sesion" id="btn-cerrar-sesion">Cerrar sesión</button>
+        </div>
     </header>
 
     <main class="crud-main">
@@ -51,6 +58,7 @@
                         <th>Empleado</th>
                         <th>Ingreso</th>
                         <th>Horas</th>
+                        <th>Total</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -66,40 +74,119 @@
                 <button class="crud-modal-close" type="button" onclick="cerrarModal('modal-orden')">✕</button>
             </div>
             <form id="form-orden" novalidate>
-                <div class="crud-form-group">
-                    <label for="cliente">Cliente <span>*</span></label>
-                    <select id="cliente" required></select>
-                </div>
-                <div class="crud-form-group">
-                    <label for="placa">Vehículo <span>*</span></label>
-                    <select id="placa" required></select>
-                </div>
-                <div class="crud-form-group">
-                    <label for="ingreso">Fecha y hora de ingreso <span>*</span></label>
-                    <input type="datetime-local" id="ingreso" required>
-                </div>
-                <div class="crud-form-group">
-                    <label for="empleado">Empleado disponible <span>*</span></label>
-                    <select id="empleado" required></select>
-                </div>
-                <div class="crud-form-group">
-                    <label for="horas">Horas empleadas <span>*</span></label>
-                    <input type="number" id="horas" min="0.5" step="0.5" placeholder="Ej. 4" required>
-                </div>
-                <div class="crud-form-group">
-                    <label>Repuestos <span>*</span></label>
+
+                <fieldset class="orden-seccion">
+                    <legend>Cliente</legend>
+                    <div class="crud-form-group">
+                        <label for="cliente-catalogo">Seleccionar cliente (autocompleta)</label>
+                        <select id="cliente-catalogo">
+                            <option value="">Selecciona o escribe los datos...</option>
+                        </select>
+                    </div>
+                    <div class="orden-grid-2">
+                        <div class="crud-form-group">
+                            <label for="cliente-documento">Documento / cédula <span>*</span></label>
+                            <input type="text" id="cliente-documento" required placeholder="79123456">
+                        </div>
+                        <div class="crud-form-group">
+                            <label for="cliente-nombre">Nombres <span>*</span></label>
+                            <input type="text" id="cliente-nombre" required placeholder="Carlos Rodríguez">
+                        </div>
+                        <div class="crud-form-group">
+                            <label for="cliente-telefono">Teléfono <span>*</span></label>
+                            <input type="text" id="cliente-telefono" required placeholder="3201234567">
+                        </div>
+                        <div class="crud-form-group">
+                            <label for="cliente-email">Email</label>
+                            <input type="email" id="cliente-email" placeholder="cliente@email.com">
+                        </div>
+                    </div>
+                    <div class="crud-form-group">
+                        <label for="cliente-direccion">Dirección <span>*</span></label>
+                        <input type="text" id="cliente-direccion" required placeholder="Cra 7 # 45-10">
+                    </div>
+                </fieldset>
+
+                <fieldset class="orden-seccion">
+                    <legend>Vehículo</legend>
+                    <div class="crud-form-group">
+                        <label for="vehiculo-catalogo">Seleccionar vehículo (autocompleta)</label>
+                        <select id="vehiculo-catalogo">
+                            <option value="">Selecciona o escribe los datos...</option>
+                        </select>
+                    </div>
+                    <div class="orden-grid-3">
+                        <div class="crud-form-group">
+                            <label for="vehiculo-placa">Placa <span>*</span></label>
+                            <input type="text" id="vehiculo-placa" required placeholder="ABC123" maxlength="10">
+                        </div>
+                        <div class="crud-form-group">
+                            <label for="vehiculo-modelo">Modelo / línea <span>*</span></label>
+                            <input type="text" id="vehiculo-modelo" required placeholder="Toyota Corolla">
+                        </div>
+                        <div class="crud-form-group">
+                            <label for="vehiculo-color">Color <span>*</span></label>
+                            <input type="text" id="vehiculo-color" required placeholder="Gris">
+                        </div>
+                    </div>
+                    <div class="crud-form-group">
+                        <label for="fecha-ingreso">Fecha y hora de ingreso <span>*</span></label>
+                        <input type="datetime-local" id="fecha-ingreso" required>
+                    </div>
+                </fieldset>
+
+                <fieldset class="orden-seccion">
+                    <legend>Servicio y empleado</legend>
+                    <div class="crud-form-group">
+                        <label for="empleado-catalogo">Empleado responsable <span>*</span></label>
+                        <select id="empleado-catalogo" required></select>
+                    </div>
+                    <div class="orden-grid-3">
+                        <div class="crud-form-group">
+                            <label for="horas-empleadas">Horas empleadas <span>*</span></label>
+                            <input type="number" id="horas-empleadas" min="0.5" step="0.5" placeholder="4" required>
+                        </div>
+                        <div class="crud-form-group">
+                            <label for="valor-hora">Valor por hora ($) <span>*</span></label>
+                            <input type="number" id="valor-hora" min="0" step="1000" value="35000" required>
+                        </div>
+                        <div class="crud-form-group">
+                            <label for="utilidad-estimada">Utilidad estimada ($) <span>*</span></label>
+                            <input type="number" id="utilidad-estimada" min="0" step="1000" value="0" required>
+                        </div>
+                    </div>
+                    <input type="hidden" id="empleado-documento">
+                    <input type="hidden" id="empleado-nombre">
+                </fieldset>
+
+                <fieldset class="orden-seccion">
+                    <legend>Repuestos utilizados</legend>
                     <div class="repuestos-lista" id="lista-repuestos"></div>
                     <button type="button" class="btn-agregar-linea" id="btn-agregar-repuesto">Agregar repuesto</button>
+                </fieldset>
+
+                <div class="orden-resumen" id="orden-resumen" aria-live="polite">
+                    <h4>Resumen estimado</h4>
+                    <div class="orden-resumen-grid">
+                        <div><span>Subtotal repuestos</span><strong id="res-subtotal-repuestos">$0</strong></div>
+                        <div><span>Mano de obra + utilidad</span><strong id="res-mano-obra">$0</strong></div>
+                        <div><span>Base gravable</span><strong id="res-base">$0</strong></div>
+                        <div><span>IVA (19%)</span><strong id="res-iva">$0</strong></div>
+                        <div class="orden-resumen-total"><span>Total estimado</span><strong id="res-total">$0</strong></div>
+                    </div>
                 </div>
+
                 <div class="crud-form-actions">
                     <button type="button" class="btn-cancelar" onclick="cerrarModal('modal-orden')">Cancelar</button>
-                    <button type="submit" class="btn-guardar">Guardar</button>
+                    <button type="submit" class="btn-guardar" id="btn-guardar-orden">Guardar</button>
                 </div>
             </form>
         </div>
     </div>
 
+    <script src="../js/servicios/clarisa.js"></script>
     <script src="../js/crud/comun.js"></script>
+    <script src="../js/servicios/panther.js"></script>
     <script src="../js/crud/ordenes.js"></script>
 </body>
 </html>

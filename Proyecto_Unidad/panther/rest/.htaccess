@@ -1,0 +1,18 @@
+# Panther REST — rewrite + CORS (Apache / XAMPP / Laragon / InfinityFree)
+RewriteEngine On
+
+# Preflight CORS: responder OPTIONS sin pasar por index.php
+RewriteCond %{REQUEST_METHOD} OPTIONS
+RewriteRule ^(.*)$ blank.php [QSA,L]
+
+# Cabeceras CORS (algunos hostings ignoran Header; hay respaldo en index.php)
+Header always set Access-Control-Allow-Origin "*"
+Header always set Access-Control-Allow-Credentials "true"
+Header always set Access-Control-Max-Age "1000"
+Header always set Access-Control-Allow-Headers "X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding"
+Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+
+# Enrutar todo hacia index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?PATH_INFO=$1 [L,QSA]

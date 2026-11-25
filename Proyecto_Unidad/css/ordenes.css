@@ -1,8 +1,36 @@
-/* Complemento del popup de órdenes (lista dinámica de repuestos).
+/* Complemento del popup de órdenes (secciones, repuestos y resumen).
    El resto del diseño se reutiliza desde crud.css. */
 
 .crud-modal-amplio {
-    max-width: 760px;
+    max-width: 920px;
+}
+
+.orden-seccion {
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    padding: 16px 18px 8px;
+    margin: 0 0 18px;
+}
+
+.orden-seccion legend {
+    padding: 0 8px;
+    color: var(--color-primary);
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.orden-grid-2,
+.orden-grid-3 {
+    display: grid;
+    gap: 12px;
+}
+
+.orden-grid-2 {
+    grid-template-columns: 1fr 1fr;
+}
+
+.orden-grid-3 {
+    grid-template-columns: 1fr 1fr 1fr;
 }
 
 .repuestos-lista {
@@ -14,7 +42,7 @@
 
 .repuesto-fila {
     display: grid;
-    grid-template-columns: 0.9fr 1.4fr 0.9fr 0.8fr auto;
+    grid-template-columns: 0.85fr 1.3fr 0.85fr 0.85fr 0.7fr auto;
     gap: 8px;
     align-items: end;
 }
@@ -58,8 +86,77 @@
     color: #fff;
 }
 
-@media (max-width: 700px) {
+.orden-resumen {
+    background: var(--color-bg-light, #f7f8fa);
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 18px;
+}
+
+.orden-resumen h4 {
+    margin: 0 0 12px;
+    color: var(--color-text-dark);
+    font-size: 1rem;
+}
+
+.orden-resumen-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 18px;
+}
+
+.orden-resumen-grid div {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 0.92rem;
+    color: var(--color-text-dark);
+}
+
+.orden-resumen-total {
+    grid-column: 1 / -1;
+    padding-top: 8px;
+    border-top: 1px dashed #d0d5db;
+    font-size: 1.05rem;
+}
+
+.orden-resumen-total strong {
+    color: var(--color-primary);
+}
+
+.btn-facturar {
+    background-color: transparent;
+    color: #1b6b4a;
+    border: 1px solid #1b6b4a;
+}
+
+.btn-facturar:hover {
+    background-color: #1b6b4a;
+    color: #fff;
+}
+
+.btn-guardar:disabled {
+    opacity: 0.65;
+    cursor: wait;
+}
+
+.crud-acciones-tabla {
+    flex-wrap: wrap;
+}
+
+@media (max-width: 800px) {
+    .orden-grid-2,
+    .orden-grid-3,
+    .orden-resumen-grid {
+        grid-template-columns: 1fr;
+    }
+
     .repuesto-fila {
         grid-template-columns: 1fr 1fr;
+    }
+
+    .orden-resumen-total {
+        grid-column: auto;
     }
 }
