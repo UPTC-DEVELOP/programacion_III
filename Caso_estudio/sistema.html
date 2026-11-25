@@ -84,8 +84,11 @@
                     <button type="button" data-ir-a="repuestos">
                         <span>05</span><strong>Repuestos</strong><small>Consulta y registro de repuestos</small>
                     </button>
+                    <button type="button" data-ir-a="configuracion">
+                        <span>07</span><strong>Configuración</strong><small>Parámetros del sistema</small>
+                    </button>
                     <button type="button" data-ir-a="facturas">
-                        <span>06</span><strong>Facturación</strong><small>Generación de facturas</small>
+                        <span>08</span><strong>Facturación</strong><small>Generación de facturas</small>
                     </button>
                 </nav>
             </section>
@@ -428,14 +431,14 @@
                     <!-- FECHA FIN -->
                     <label class="campo-formulario" for="servicio-fecha-fin">
                         Fecha estimada de finalización
-                        <input type="date" id="servicio-fecha-fin">
+                        <input type="date" id="servicio-fecha-fin" required>
                         <small class="error-campo" id="error-servicio-fecha-fin"></small>
                     </label>
 
                     <!-- HORAS -->
                     <label class="campo-formulario" for="servicio-horas">
                         Horas empleadas
-                        <input type="number" id="servicio-horas" min="1" step="1" placeholder="1" required>
+                        <input type="number" id="servicio-horas" min="0" step="0.01" value="0" required>
                         <small class="error-campo" id="error-servicio-horas"></small>
                     </label>
 
@@ -703,103 +706,76 @@
      MODULO DE CONFIGURACION
 ========================================= -->
 
-<section id="configuracion" class="modulo-sistema"
-    aria-labelledby="titulo-configuracion" hidden>
+            <section id="configuracion" class="modulo-sistema" aria-labelledby="titulo-configuracion" hidden>
 
-    <header class="encabezado-modulo">
-        <div>
-            <p class="eyebrow-sistema">Administración</p>
-            <h2 id="titulo-configuracion">Configuración del sistema</h2>
-            <p class="contador-sistema">
-                Administra los valores generales de SERVI-AUTO.
-            </p>
-        </div>
-    </header>
+                <header class="encabezado-modulo">
+                    <div>
+                        <p class="eyebrow-sistema">Administración</p>
+                        <h2 id="titulo-configuracion">Configuración del sistema</h2>
+                        <p class="contador-sistema">
+                            Administra los valores generales de SERVI-AUTO.
+                        </p>
+                    </div>
+                </header>
 
-    <form id="formulario-configuracion">
+                <form id="formulario-configuracion">
 
-        <h3>Configuración financiera</h3>
+                    <h3>Configuración financiera</h3>
+                    <p id="aviso-configuracion-permisos" role="status"></p>
 
-        <label class="campo-formulario" for="config-utilidad">
-            Porcentaje de utilidad (%)
-            <input
-                type="number"
-                id="config-utilidad"
-                min="0"
-                max="100"
-                step="0.01"
-                required
-                placeholder="Ejemplo: 20"
-            />
-        </label>
+                    <label class="campo-formulario" for="config-utilidad">
+                        Porcentaje de utilidad (%)
+                        <input type="number" id="config-utilidad" min="0" max="100" step="0.01" required
+                            placeholder="Ejemplo: 20" />
+                    </label>
 
-        <label class="campo-formulario" for="config-iva">
-            Porcentaje de IVA (%)
-            <input
-                type="number"
-                id="config-iva"
-                min="0.01"
-                step="0.01"
-                required
-                placeholder="Ejemplo: 19"
-            />
-        </label>
+                    <label class="campo-formulario" for="config-iva">
+                        Porcentaje de IVA (%)
+                        <input type="number" id="config-iva" min="0.01" step="0.01" required
+                            placeholder="Ejemplo: 19" />
+                    </label>
 
-        <label class="campo-formulario" for="config-mano-obra">
-            Valor de mano de obra por hora (COP)
-            <input
-                type="number"
-                id="config-mano-obra"
-                min="0.01"
-                step="1"
-                required
-                placeholder="Ejemplo: 50000"
-            />
-        </label>
+                    <label class="campo-formulario" for="config-mano-obra">
+                        Valor de mano de obra por hora (COP)
+                        <input type="number" id="config-mano-obra" min="0.01" step="1" required
+                            placeholder="Ejemplo: 50000" />
+                    </label>
 
-        <hr>
+                    <hr>
 
-        <h3>Configuración de acceso</h3>
+                    <h3>Configuración de acceso</h3>
 
-        <label class="campo-formulario" for="config-usuario">
-            Nuevo nombre de usuario
-            <input
-                type="text"
-                id="config-usuario"
-                maxlength="50"
-                placeholder="Deja vacío para conservar el actual"
-            />
-        </label>
+                    <p id="aviso-password" role="status"></p>
 
-        <label class="campo-formulario" for="config-password">
-            Nueva contraseña
-            <input
-                type="password"
-                id="config-password"
-                placeholder="Deja vacío para conservar la actual"
-            />
-        </label>
+                    <label class="campo-formulario" for="config-password-actual">
+                        Contraseña actual
+                        <input type="password" id="config-password-actual" autocomplete="current-password"
+                            placeholder="Confirma tu contraseña actual" />
+                    </label>
 
-        <label class="campo-formulario" for="config-confirmar-password">
-            Confirmar nueva contraseña
-            <input
-                type="password"
-                id="config-confirmar-password"
-                placeholder="Repite la nueva contraseña"
-            />
-        </label>
+                    <label class="campo-formulario" for="config-password">
+                        Nueva contraseña
+                        <input type="password" id="config-password" autocomplete="new-password"
+                            placeholder="Deja vacío para conservar la actual" />
+                    </label>
 
-        <footer class="acciones-modal">
-            <button type="submit" class="boton-principal">
-                Guardar configuración
-            </button>
-        </footer>
+                    <label class="campo-formulario" for="config-confirmar-password">
+                        Confirmar nueva contraseña
+                        <input type="password" id="config-confirmar-password"
+                            placeholder="Repite la nueva contraseña" />
+                    </label>
 
-    </form>
+                    <footer class="acciones-modal">
+                        <button type="submit" class="boton-principal">
+                            Guardar configuración
+                        </button>
+                    </footer>
 
-</section>
+                </form>
 
-<!-- FIN MODULO DE CONFIGURACION -->
+            </section>
+
+            <!-- FIN MODULO DE CONFIGURACION -->
 
             <section id="facturas" class="modulo-sistema modulo-facturas" aria-labelledby="titulo-facturas" hidden>
                 <header class="encabezado-modulo">
