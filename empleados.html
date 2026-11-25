@@ -149,23 +149,23 @@
         </div>
     </div>
 
-    <!-- MODAL: Confirmar eliminación -->
+    <!-- MODAL: Confirmar cambio de estado -->
     <div class="modal-overlay modal-confirmacion" id="modalConfirmacion">
         <div class="modal-contenido">
             <h2 class="modal-titulo">¿ESTÁS SEGURO?</h2>
-            <p id="textoConfirmacion">Esta acción no se puede deshacer.</p>
+            <p id="textoConfirmacion">Puedes cambiar el estado más adelante.</p>
             <div class="modal-botones">
                 <button type="button" class="btn-modal btn-cancelar" id="btnCancelarConfirmacion">Cancelar</button>
-                <button type="button" class="btn-modal btn-guardar" id="btnConfirmarEliminar">Sí, eliminar</button>
+                <button type="button" class="btn-modal btn-guardar" id="btnConfirmarEstado">Confirmar</button>
             </div>
         </div>
     </div>
 
     <!-- TOAST / NOTIFICACIÓN -->
-    <div class="toast" id="toast">
+    <div class="toast" id="toast" role="status">
         <span id="toastMensaje">Operación exitosa</span>
     </div>
 
-    <script src="js/empleados.js"></script>
+    <script src="js/empleados.js?v=panther-1"></script>
 </body>
 </html>

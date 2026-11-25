@@ -27,9 +27,10 @@ require 'querys/core/SegurityQuery.php';
 
 //Business
 require 'ctrl/business/Persons.php';
+require_once 'ctrl/business/Facturas.php';
+require_once 'ctrl/business/Empleados.php';
 require 'model/business/Person.php';
 require 'querys/business/BusinessQuery.php';
-require_once 'ctrl/business/Facturas.php';
 
 // Preparar manejo de excepciones
 /**

@@ -2,13 +2,42 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    //  1. DATOS INICIALES (simulación frontend)
- 
-    let empleados = [
-        { cedula: "80123456", nombre: "Mateo", apellido: "Mora", rol: "Mecánico", telefono: "3011112233", correo: "mateo@taller.co", estado: "Activo" },
-        { cedula: "52987654", nombre: "Diana", apellido: "Suarez", rol: "Jefe de taller", telefono: "3022223344", correo: "diana@taller.co", estado: "Activo" },
-        { cedula: "1020304050", nombre: "Juan Pablo", apellido: "Cárdenas", rol: "Recepción", telefono: "3033334455", correo: "juan@taller.co", estado: "Inactivo" }
-    ];
+    let empleados = [];
+    let guardando = false;
+
+    async function solicitar(ruta = "", metodo = "GET", datos) {
+        if (!Sesion.activa()) {
+            Sesion.exigir();
+            throw new Error("Inicia sesión para gestionar empleados.");
+        }
+        const opciones = {
+            method: metodo,
+            headers: { Accept: "application/json", authorization: Sesion.token() },
+            cache: "no-store"
+        };
+        if (datos) {
+            opciones.headers["Content-Type"] = "application/json";
+            opciones.body = JSON.stringify(datos);
+        }
+        const respuesta = await fetch(CONFIG.API_BASE + "empleados" + ruta, opciones);
+        const json = await respuesta.json().catch(() => null);
+        if (!respuesta.ok || json?.state !== "OK") {
+            throw new Error(typeof json?.data === "string" ? json.data : "Panther no confirmó la operación. Revisa la conexión y la ruta empleados.");
+        }
+        return json.data;
+    }
+
+    async function cargar() {
+        try {
+            const lista = await solicitar();
+            if (!Array.isArray(lista)) throw new Error("Panther devolvió una lista inválida.");
+            empleados = lista;
+            filtrar();
+        } catch (error) {
+            contadorRegistros.textContent = "No se pudo actualizar la lista. Recarga para volver a consultar.";
+            mostrarToast(error.message, true);
+        }
+    }
 
     // 2. REFERENCIAS AL DOM
 
@@ -34,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const toastMensaje = document.getElementById("toastMensaje");
 
     let cedulaEditando = null; // null = creando, string = editando
-    let cedulaAEliminar = null;
+    let cedulaCambioEstado = null;
 
     // 3. RENDERIZAR TABLA
 
@@ -56,22 +85,24 @@ document.addEventListener("DOMContentLoaded", () => {
             const fila = document.createElement("tr");
             const claseBadge = emp.estado === "Activo" ? "badge-activo" : "badge-inactivo";
 
-            fila.innerHTML = `
-                <td>${emp.cedula}</td>
-                <td>${emp.nombre} ${emp.apellido}</td>
-                <td>${emp.rol}</td>
-                <td>${emp.telefono}</td>
-                <td>${emp.correo || "—"}</td>
-                <td><span class="badge-estado ${claseBadge}">${emp.estado}</span></td>
-                <td>
-                    <div class="acciones-celda">
-                        <button class="btn-accion btn-editar" data-cedula="${emp.cedula}">Editar</button>
-                        <button class="btn-accion btn-eliminar" data-cedula="${emp.cedula}">
-                            ${emp.estado === "Activo" ? "Inactivar" : "Activar"}
-                        </button>
-                    </div>
-                </td>
-            `;
+            for (const valor of [emp.cedula, emp.nombre + " " + emp.apellido, emp.rol, emp.telefono, emp.correo || "—"]) {
+                fila.insertCell().textContent = valor;
+            }
+            const badge = document.createElement("span");
+            badge.className = "badge-estado " + claseBadge;
+            badge.textContent = emp.estado;
+            fila.insertCell().appendChild(badge);
+            const acciones = document.createElement("div");
+            acciones.className = "acciones-celda";
+            for (const [clase, texto] of [["btn-editar", "Editar"], ["btn-eliminar", emp.estado === "Activo" ? "Inactivar" : "Activar"]]) {
+                const boton = document.createElement("button");
+                boton.type = "button";
+                boton.className = "btn-accion " + clase;
+                boton.dataset.cedula = emp.cedula;
+                boton.textContent = texto;
+                acciones.appendChild(boton);
+            }
+            fila.insertCell().appendChild(acciones);
             cuerpoTabla.appendChild(fila);
         });
 
@@ -90,6 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 4. ABRIR MODAL PARA CREAR
 
     function abrirModalCrear() {
+        if (guardando) return;
         cedulaEditando = null;
         formEmpleado.reset();
         modalTitulo.textContent = "NUEVO EMPLEADO";
@@ -104,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function abrirModalEdicion(cedula) {
         const emp = empleados.find((e) => e.cedula === cedula);
-        if (!emp) return;
+        if (guardando || !emp) return;
 
         cedulaEditando = cedula;
         modalTitulo.textContent = "EDITAR EMPLEADO";
@@ -304,89 +336,64 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 9. ENVÍO DEL FORMULARIO (Crear / Actualizar)
 
-    formEmpleado.addEventListener("submit", function (e) {
-        e.preventDefault();
-
-        if (!validarFormulario()) return;
-
-        const cedula = inputCedula.value.trim();
-        const nombre = inputNombre.value.trim();
-        const apellido = inputApellido.value.trim();
-        const telefono = inputTelefono.value.trim();
-        const correo = inputCorreo.value.trim();
-        const rol = inputRol.value;
-
-        if (cedulaEditando) {
-            // ACTUALIZAR
-            const index = empleados.findIndex((e) => e.cedula === cedulaEditando);
-            if (index !== -1) {
-                empleados[index] = {
-                    ...empleados[index],
-                    nombre,
-                    apellido,
-                    telefono,
-                    correo,
-                    rol
-                };
-            }
-            mostrarToast("Empleado actualizado correctamente", false);
-        } else {
-            // CREAR
-            empleados.push({
-                cedula,
-                nombre,
-                apellido,
-                telefono,
-                correo,
-                rol,
-                estado: "Activo"
-            });
-            mostrarToast("Empleado registrado correctamente", false);
+    async function guardarCambio(boton, ruta, metodo, datos, cerrar, mensaje) {
+        if (guardando) return;
+        guardando = true;
+        boton.disabled = true;
+        try {
+            await solicitar(ruta, metodo, datos);
+            cerrar();
+            mostrarToast(mensaje);
+            await cargar();
+        } catch (error) {
+            mostrarToast(error.message, true);
+        } finally {
+            boton.disabled = false;
+            guardando = false;
         }
+    }
 
-        cerrarModal();
-        renderizarTabla();
+    formEmpleado.addEventListener("submit", (evento) => {
+        evento.preventDefault();
+        if (guardando || !validarFormulario()) return;
+        const datos = {
+            cedula: inputCedula.value.trim(), nombre: inputNombre.value.trim(),
+            apellido: inputApellido.value.trim(), telefono: inputTelefono.value.trim(),
+            correo: inputCorreo.value.trim(), rol: inputRol.value
+        };
+        guardarCambio(document.getElementById("btnGuardar"), cedulaEditando ? "/" + cedulaEditando : "",
+            cedulaEditando ? "PUT" : "POST", datos, cerrarModal,
+            cedulaEditando ? "Empleado actualizado correctamente" : "Empleado registrado correctamente");
     });
 
-    // 10. CONFIRMACIÓN DE ELIMINACIÓN / INACTIVACIÓN
-    
+    const confirmar = document.getElementById("btnConfirmarEstado");
+    let estadoDestino;
     function abrirConfirmacion(cedula) {
         const emp = empleados.find((e) => e.cedula === cedula);
-        if (!emp) return;
-
-        cedulaAEliminar = cedula;
-        const accion = emp.estado === "Activo" ? "inactivar" : "activar";
-
-        textoConfirmacion.innerHTML = `
-            ¿Estás seguro que deseas <strong>${accion}</strong> al empleado
-            <strong>${emp.nombre} ${emp.apellido}</strong>?
-            Esta acción se puede revertir posteriormente.
-        `;
+        if (guardando || !emp) return;
+        cedulaCambioEstado = cedula;
+        estadoDestino = emp.estado === "Activo" ? "Inactivo" : "Activo";
+        const accion = estadoDestino === "Inactivo" ? "Inactivar" : "Activar";
+        confirmar.textContent = accion;
+        textoConfirmacion.textContent = "¿Quieres " + accion.toLowerCase() + " a " + emp.nombre + " " + emp.apellido + "?";
         modalConfirmacion.classList.add("activo");
     }
 
     function cerrarConfirmacion() {
         modalConfirmacion.classList.remove("activo");
-        cedulaAEliminar = null;
+        cedulaCambioEstado = null;
     }
 
-    document.getElementById("btnConfirmarEliminar").addEventListener("click", () => {
-        const emp = empleados.find((e) => e.cedula === cedulaAEliminar);
-        if (emp) {
-            emp.estado = emp.estado === "Activo" ? "Inactivo" : "Activo";
-            mostrarToast(
-                `Empleado ${emp.estado === "Activo" ? "activado" : "inactivado"} correctamente`,
-                false
-            );
-        }
-        cerrarConfirmacion();
-        renderizarTabla();
+    confirmar.addEventListener("click", () => {
+        if (!cedulaCambioEstado) return;
+        guardarCambio(confirmar, "/" + cedulaCambioEstado + "/estado", "PUT", { estado: estadoDestino },
+            cerrarConfirmacion, estadoDestino === "Inactivo" ? "Empleado inactivado" : "Empleado activado");
     });
 
     // 11. BÚSQUEDA EN TIEMPO REAL
 
-    inputBusqueda.addEventListener("input", function () {
-        const termino = this.value.toLowerCase().trim();
+    function filtrar() {
+        const termino = inputBusqueda.value.toLowerCase().trim();
         const filtrados = empleados.filter((e) => {
             return (
                 e.cedula.includes(termino) ||
@@ -396,7 +403,8 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         });
         renderizarTabla(filtrados);
-    });
+    }
+    inputBusqueda.addEventListener("input", filtrar);
 
     // 12. TOAST DE NOTIFICACIÓN
 
@@ -413,19 +421,19 @@ document.addEventListener("DOMContentLoaded", () => {
     // 13. EVENTOS DE BOTONES
 
     document.getElementById("btnNuevoEmpleado").addEventListener("click", abrirModalCrear);
-    document.getElementById("btnCancelar").addEventListener("click", cerrarModal);
-    document.getElementById("btnCancelarConfirmacion").addEventListener("click", cerrarConfirmacion);
+    document.getElementById("btnCancelar").addEventListener("click", () => { if (!guardando) cerrarModal(); });
+    document.getElementById("btnCancelarConfirmacion").addEventListener("click", () => { if (!guardando) cerrarConfirmacion(); });
 
     // Cerrar modal al hacer clic fuera del contenido
     modalEmpleado.addEventListener("click", (e) => {
-        if (e.target === modalEmpleado) cerrarModal();
+        if (!guardando && e.target === modalEmpleado) cerrarModal();
     });
 
     modalConfirmacion.addEventListener("click", (e) => {
-        if (e.target === modalConfirmacion) cerrarConfirmacion();
+        if (!guardando && e.target === modalConfirmacion) cerrarConfirmacion();
     });
 
     // 14. INICIALIZACIÓN
 
-    renderizarTabla();
+    cargar();
 });
