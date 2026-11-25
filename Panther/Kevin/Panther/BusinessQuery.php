@@ -18,4 +18,15 @@ define("UPDATE_VEHICULO", "UPDATE vehiculo SET placa=?, marca=?, modelo=?, anio=
 define("INSERT_EMPLEADO", "INSERT INTO empleado(nombres, apellidos, documento, rol, telefono, correo) VALUES (?,?,?,?,?,?);");
 define("UPDATE_EMPLEADO", "UPDATE empleado SET nombres=?, apellidos=?, documento=?, rol=?, telefono=?, correo=? WHERE id=?;");
 
+
+
+// Queries de Proveedores
+define("INSERT_PROVEEDOR", "INSERT INTO proveedor (nit, razon_social, contacto, telefono, correo, direccion) VALUES (?, ?, ?, ?, ?, ?)");
+define("UPDATE_PROVEEDOR", "UPDATE proveedor SET nit = ?, razon_social = ?, contacto = ?, telefono = ?, correo = ?, direccion = ? WHERE id = ?");
+
+// Queries de Repuestos
+define("INSERT_REPUESTO", "INSERT INTO repuesto (referencia, nombre, marca, precio_unitario, stock, id_proveedor) VALUES (?, ?, ?, ?, ?, ?)");
+define("UPDATE_REPUESTO", "UPDATE repuesto SET referencia = ?, nombre = ?, marca = ?, precio_unitario = ?, stock = ?, id_proveedor = ? WHERE id = ?");
+
+
 ?>

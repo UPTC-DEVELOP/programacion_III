@@ -7,10 +7,21 @@
     <link rel="icon" type="image/png" href="../img/favicon.svg">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/crud.css">
+    <style>
+        .req { color: #e53935; font-weight: bold; margin-left: 3px; }
+        .crud-form-nota { font-size: 0.85rem; color: #666; margin-bottom: 12px; }
+        .crud-grupo-form { display: flex; flex-direction: column; margin-bottom: 12px; }
+        .crud-grupo-form label { font-weight: 600; margin-bottom: 4px; color: #2d3748; }
+        .crud-grupo-form input { padding: 9px 12px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 0.95rem; }
+        .crud-grupo-form input::placeholder { color: #a0aec0; font-style: italic; }
+        .crud-modal-contenido { background: #fff; padding: 24px; border-radius: 10px; max-width: 520px; width: 92%; margin: 4% auto; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .crud-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .crud-modal-cerrar { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #666; }
+        .crud-modal-footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px; }
+    </style>
 </head>
 <body>
 
-    <!-- HEADER -->
     <header>
         <div class="header-logo">
             <a href="../index.html">
@@ -31,15 +42,14 @@
         </nav>
     </header>
 
-    <!-- CONTENIDO -->
     <main class="crud-main">
         <h1 class="crud-titulo">Proveedores</h1>
 
         <div id="notificacion-crud" class="crud-notificacion"></div>
 
         <div class="crud-acciones">
-            <input type="text" class="crud-buscar" id="buscar-proveedor" placeholder="Buscar proveedor...">
-            <span class="crud-contador" id="contador-proveedores">2 registro(s)</span>
+            <input type="text" class="crud-buscar" id="buscar-proveedor" placeholder="Buscar por empresa, NIT o contacto...">
+            <span class="crud-contador" id="contador-proveedores">0 registro(s)</span>
             <button class="btn-nuevo" id="btn-nuevo-proveedor">Nuevo Proveedor</button>
         </div>
 
@@ -47,47 +57,68 @@
             <table class="crud-tabla">
                 <thead>
                     <tr>
-                        <th>Empresa / Proveedor</th>
                         <th>NIT</th>
+                        <th>Empresa / Razón Social</th>
                         <th>Contacto</th>
                         <th>Teléfono</th>
                         <th>Correo</th>
+                        <th>Dirección</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody id="tabla-proveedores-body">
-                    <tr>
-                        <td>Distribuidora de Repuestos Andina S.A.S.</td>
-                        <td>900456789-1</td>
-                        <td>Andrés Vargas</td>
-                        <td>3104567890</td>
-                        <td>ventas@repuestosandina.com</td>
-                        <td>
-  
-                            <div class="crud-acciones-tabla">
-       
-                                <button class="btn-accion btn-editar">Editar</button>
-                                <button class="btn-accion btn-eliminar">Eliminar</button>
-                             </div>
-                    </td>
-                    </tr>
-                    <tr>
-                        <td>Lubricantes y Baterías del Centro</td>
-                        <td>800123456-3</td>
-                        <td>Lucía Torres</td>
-                        <td>3209876543</td>
-                        <td>contacto@lubicentros.com</td>
-                       <td>
-    
-                        <div class="crud-acciones-tabla">
-                            <button class="btn-accion btn-editar">Editar</button>
-                            <button class="btn-accion btn-eliminar">Eliminar</button>
-                        </div>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>
     </main>
+
+    <div id="modal-proveedor" class="crud-modal" role="dialog" aria-modal="true" aria-labelledby="modal-titulo-proveedor">
+        <div class="crud-modal-contenido">
+            <div class="crud-modal-header">
+                <h2 id="modal-titulo-proveedor">Nuevo Proveedor</h2>
+                <button type="button" class="crud-modal-cerrar" onclick="cerrarModal('modal-proveedor')">&times;</button>
+            </div>
+            <p class="crud-form-nota">Los campos marcados con <span class="req">*</span> son obligatorios.</p>
+
+            <form id="form-proveedor" novalidate>
+                <div class="crud-grupo-form">
+                    <label for="nit">NIT <span class="req">*</span></label>
+                    <input type="text" id="nit" placeholder="Ej: 900123456-1" required>
+                </div>
+
+                <div class="crud-grupo-form">
+                    <label for="razon_social">Empresa / Razón Social <span class="req">*</span></label>
+                    <input type="text" id="razon_social" placeholder="Ej: Importadora Automotriz Andina S.A.S." required>
+                </div>
+
+                <div class="crud-grupo-form">
+                    <label for="contacto">Persona de Contacto <span class="req">*</span></label>
+                    <input type="text" id="contacto" placeholder="Ej: Carlos Alberto Méndez" required>
+                </div>
+
+                <div class="crud-grupo-form">
+                    <label for="telefono">Teléfono <span class="req">*</span></label>
+                    <input type="tel" id="telefono" placeholder="Ej: 3104567890" required>
+                </div>
+
+                <div class="crud-grupo-form">
+                    <label for="correo">Correo Electrónico <span class="req">*</span></label>
+                    <input type="email" id="correo" placeholder="Ej: ventas@empresa.com" required>
+                </div>
+
+                <div class="crud-grupo-form">
+                    <label for="direccion">Dirección <span class="req">*</span></label>
+                    <input type="text" id="direccion" placeholder="Ej: Zona Industrial Bodega 4, Bogotá" required>
+                </div>
+
+                <div class="crud-modal-footer">
+                    <button type="button" class="btn-accion" onclick="cerrarModal('modal-proveedor')">Cancelar</button>
+                    <button type="submit" class="btn-nuevo">Guardar Proveedor</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/crud/proveedores.js"></script>
 </body>
 </html>

@@ -15,10 +15,10 @@ define("RESOURCES_URL", array(
     'persons',
     'facturas',
     'vehiculos',
-    'empleados'
-
+    'empleados',
+    'proveedores',
+    'repuestos'
 ));
-
 /**
  * Cabecera de autenticación del token
  */

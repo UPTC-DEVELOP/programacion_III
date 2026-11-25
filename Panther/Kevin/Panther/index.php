@@ -43,6 +43,14 @@ require 'model/business/Vehiculo.php';
 require 'ctrl/business/Empleados.php';
 require 'model/business/Empleado.php';
 
+// Proveedores
+require_once 'model/business/Proveedor.php';
+require_once 'ctrl/business/Proveedores.php';
+
+//Repuestos
+require_once 'model/business/Repuesto.php';
+require_once 'ctrl/business/Repuestos.php';
+
 // Preparar manejo de excepciones
 /**
  * *Formatos permitidos enviados por parametro

@@ -3,14 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Productos - AutoTech</title>
+    <title>Productos y Repuestos - AutoTech</title>
     <link rel="icon" type="image/png" href="../img/favicon.svg">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/crud.css">
+    <style>
+        .req { color: #e53935; font-weight: bold; margin-left: 3px; }
+        .crud-form-nota { font-size: 0.85rem; color: #666; margin-bottom: 12px; }
+        .crud-grupo-form { display: flex; flex-direction: column; margin-bottom: 12px; }
+        .crud-grupo-form label { font-weight: 600; margin-bottom: 4px; color: #2d3748; }
+        .crud-grupo-form input, .crud-grupo-form select { padding: 9px 12px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 0.95rem; background: #fff; }
+        .crud-grupo-form input::placeholder { color: #a0aec0; font-style: italic; }
+        .crud-modal-contenido { background: #fff; padding: 24px; border-radius: 10px; max-width: 520px; width: 92%; margin: 4% auto; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .crud-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .crud-modal-cerrar { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #666; }
+        .crud-modal-footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px; }
+    </style>
 </head>
 <body>
 
-    <!-- HEADER -->
     <header>
         <div class="header-logo">
             <a href="../index.html">
@@ -31,74 +42,85 @@
         </nav>
     </header>
 
-    <!-- CONTENIDO -->
     <main class="crud-main">
         <h1 class="crud-titulo">Productos y Repuestos</h1>
 
         <div id="notificacion-crud" class="crud-notificacion"></div>
 
         <div class="crud-acciones">
-            <input type="text" class="crud-buscar" id="buscar-producto" placeholder="Buscar en productos...">
-            <span class="crud-contador" id="contador-productos">3 registro(s)</span>
-            <button class="btn-nuevo" id="btn-nuevo-producto">Nuevo Producto</button>
+            <input type="text" class="crud-buscar" id="buscar-producto" placeholder="Buscar por referencia, repuesto, marca o proveedor...">
+            <span class="crud-contador" id="contador-productos">0 registro(s)</span>
+            <button class="btn-nuevo" id="btn-nuevo-producto">Nuevo Repuesto</button>
         </div>
 
         <div class="crud-tabla-container">
             <table class="crud-tabla">
                 <thead>
                     <tr>
-                        <th>Código</th>
+                        <th>Referencia</th>
                         <th>Nombre del Repuesto</th>
-                        <th>Categoría</th>
-                        <th>Stock</th>
+                        <th>Marca</th>
                         <th>Precio Unitario</th>
+                        <th>Stock</th>
+                        <th>Proveedor</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody id="tabla-productos-body">
-                    <tr>
-                        <td>REP-001</td>
-                        <td>Pastillas de Freno Delanteras</td>
-                        <td>Frenos</td>
-                        <td>12</td>
-                        <td>$ 120,000 COP</td>
-                       <td>
-   
-                        <div class="crud-acciones-tabla">
-                            <button class="btn-accion btn-editar">Editar</button>
-                            <button class="btn-accion btn-eliminar">Eliminar</button>
-                        </div>
-                    </td>
-                    </tr>
-                    <tr>
-                        <td>REP-002</td>
-                        <td>Filtro de Aceite Sintético</td>
-                        <td>Filtros</td>
-                        <td>25</td>
-                        <td>$ 35,000 COP</td>
-                        <td>
-                          <div class="crud-acciones-tabla">
-                            <button class="btn-accion btn-editar">Editar</button>
-                            <button class="btn-accion btn-eliminar">Eliminar</button>
-                        </div>
-                    </td>
-                    </tr>
-                    <tr>
-                        <td>REP-003</td>
-                        <td>Batería 12V 70Ah</td>
-                        <td>Eléctrico</td>
-                        <td>5</td>
-                        <td>$ 380,000 COP</td>
-                        <td>
-                           <div class="crud-acciones-tabla">
-                            <button class="btn-accion btn-editar">Editar</button>
-                            <button class="btn-accion btn-eliminar">Eliminar</button>
-                        </div>
-                    </td>
-                    </tr>
                 </tbody>
             </table>
         </div>
     </main>
+
+    <div id="modal-producto" class="crud-modal" role="dialog" aria-modal="true" aria-labelledby="modal-titulo-producto">
+        <div class="crud-modal-contenido">
+            <div class="crud-modal-header">
+                <h2 id="modal-titulo-producto">Nuevo Repuesto</h2>
+                <button type="button" class="crud-modal-cerrar" onclick="cerrarModal('modal-producto')">&times;</button>
+            </div>
+            <p class="crud-form-nota">Los campos marcados con <span class="req">*</span> son obligatorios.</p>
+
+            <form id="form-producto" novalidate>
+                <div class="crud-grupo-form">
+                    <label for="referencia">Referencia / Código <span class="req">*</span></label>
+                    <input type="text" id="referencia" placeholder="Ej: FR-101" required>
+                </div>
+
+                <div class="crud-grupo-form">
+                    <label for="nombre">Nombre del Repuesto <span class="req">*</span></label>
+                    <input type="text" id="nombre" placeholder="Ej: Pastillas de Freno Delanteras Cerámica" required>
+                </div>
+
+                <div class="crud-grupo-form">
+                    <label for="marca">Marca <span class="req">*</span></label>
+                    <input type="text" id="marca" placeholder="Ej: Brembo / Bosch / Valeo" required>
+                </div>
+
+                <div class="crud-grupo-form">
+                    <label for="precio_unitario">Precio Unitario (COP) <span class="req">*</span></label>
+                    <input type="number" id="precio_unitario" min="100" step="100" placeholder="Ej: 145000" required>
+                </div>
+
+                <div class="crud-grupo-form">
+                    <label for="stock">Stock Disponible <span class="req">*</span></label>
+                    <input type="number" id="stock" min="0" step="1" placeholder="Ej: 20" required>
+                </div>
+
+                <div class="crud-grupo-form">
+                    <label for="id_proveedor">Proveedor Asociado <span class="req">*</span></label>
+                    <select id="id_proveedor" required>
+                        <option value="">-- Seleccione un proveedor --</option>
+                    </select>
+                </div>
+
+                <div class="crud-modal-footer">
+                    <button type="button" class="btn-accion" onclick="cerrarModal('modal-producto')">Cancelar</button>
+                    <button type="submit" class="btn-nuevo">Guardar Repuesto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/crud/productos.js"></script>
 </body>
 </html>
