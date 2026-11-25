@@ -14,8 +14,8 @@
     <script defer src="js/config.js"></script>
     <script defer src="js/utilidades.js"></script>
     <script defer src="js/sesion.js"></script>
-    <script defer src="js/accesoClarisa.js"></script>
-    <script defer src="js/factura.js"></script>
+    <script defer src="js/accesoClarisa.js?v=emision-3"></script>
+    <script defer src="js/factura.js?v=emision-3"></script>
 </head>
 <body>
     <a class="saltar" href="#contenido">Saltar al contenido</a>
@@ -175,40 +175,27 @@
                 </div>
             </section>
 
-            <div id="mensajeFactura" class="mensaje" role="alert" aria-live="polite"></div>
+            <div id="mensajeFactura" class="mensaje" role="alert" aria-live="polite">Esperando que cargue el formulario. Si este aviso permanece, revisa que js/factura.js y js/accesoClarisa.js estén actualizados en el proyecto.</div>
 
             <div class="acciones-factura">
-                <button type="button" id="btnLimpiar" class="btn-secundario">Limpiar Formulario</button>
-                <button type="submit" id="btnEnviar" class="btn-principal">Guardar en Panther</button>
+                <button type="button" id="btnLimpiar" class="btn-secundario">Limpiar formulario</button>
+                <button type="submit" id="btnEnviar" disabled class="btn-principal">Emitir factura</button>
             </div>
         </form>
 
-        <section class="facturas-guardadas" aria-labelledby="tituloGuardadas">
-            <h2 id="tituloGuardadas">Facturas guardadas</h2>
-
-            <label for="facturasGuardadas">Factura de Panther</label>
-            <div class="controles-envio">
-                <select id="facturasGuardadas"></select>
-
-                <button type="button" id="abrirEnvio" class="btn-principal" disabled>
-                    Enviar factura a Clarisa
-                </button>
-            </div>
-
-            <p id="estadoEnvio" role="status"></p>
-        </section>
         <dialog id="dialogoClarisa" aria-labelledby="tituloClarisa">
             <form id="formClarisa">
                 <h2 id="tituloClarisa">Acceso a Clarisa</h2>
                 <p id="resumenEnvio"></p>
-                <p class="ayuda-envio">Confirma el envío al entorno de pruebas de Clarisa.</p>                <label for="usuarioClarisa">Usuario de Clarisa</label>
+                <p class="ayuda-envio">Ingresa para emitir esta factura en el entorno de pruebas.</p>
+                <label for="usuarioClarisa">Usuario de Clarisa</label>
                 <input id="usuarioClarisa" value="Demo_api" autocomplete="off" required>
                 <label for="claveClarisa">Contraseña de Clarisa</label>
                 <input id="claveClarisa" type="password" autocomplete="off" required>
                 <p role="status" id="mensajeClarisa"></p>
                 <div class="acciones">
                     <button type="button" id="cancelarClarisa">Cancelar</button>
-                    <button type="submit" id="verificarClarisa">Confirmar envío</button>
+                    <button type="submit" id="verificarClarisa">Enviar</button>
                 </div>
             </form>
         </dialog>
