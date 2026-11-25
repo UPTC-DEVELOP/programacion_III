@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             mostrarAlerta(`Bienvenido, ${dataPanther.data.user}. Redirigiendo...`, 'success');
             
-            // Los empleados van al index (sus CRUDs)
+            // Los empleados van a CRUDs
             setTimeout(() => window.location.assign(PAGINA_INDEX), 800);
 
         } catch (error) {
