@@ -133,6 +133,7 @@ class UserAction implements IRequest
             $userLogin = JSONUtil::decodeJSON();
             $userBD = self::authenticate($userLogin->user, $userLogin->password);
             if ($userBD != NULL) {
+                self::prepararContextoClarisa();
                 $user = new User();
                 $user->user = $userBD['user'];
                 $user->roles = $userBD['roles'];
@@ -145,6 +146,30 @@ class UserAction implements IRequest
             }
         } catch (Exception $e) {
             throw new ExcepcionApi(INTERNAL_SERVER_ERROR, ST500, $e->getMessage());
+        }
+    }
+
+    /**
+     * Obtiene o renueva el contexto remoto sin alterar el contrato del login.
+     *
+     * Una indisponibilidad de Clarisa no invalida la autenticación local. Los
+     * módulos de Panther continúan disponibles y una futura facturación deberá
+     * volver a solicitar el contexto antes de utilizar el servicio externo.
+     *
+     * @return void
+     */
+    private static function prepararContextoClarisa()
+    {
+        try {
+            $servicioCache = new ServicioCacheClarisa();
+            $servicioCache->obtenerContexto();
+        } catch (ExcepcionClarisa $excepcion) {
+            error_log(
+                '[Panther][Clarisa] Contexto remoto no disponible. Tipo: '
+                . $excepcion->obtenerTipoError()
+            );
+        } catch (Throwable $excepcion) {
+            error_log('[Panther][Clarisa] Contexto remoto no disponible.');
         }
     }
 

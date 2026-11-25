@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/styles.css?v=panther-spareparts-2" />
+    <link rel="stylesheet" href="css/styles.css?v=panther-facturacion-2" />
   </head>
 
   <body>
@@ -850,6 +850,7 @@
             <a href="#vehiculos"> Vehículos </a>
             <a href="#empleados"> Empleados </a>
             <a href="#repuestos"> Repuestos </a>
+            <a href="#facturacion"> Facturación </a>
           </nav>
         </aside>
 
@@ -1386,6 +1387,578 @@
             </div>
           </div>
 
+          <section id="facturacion" class="facturacion-sistema" hidden>
+            <header class="encabezado-facturacion">
+              <h2>Nueva factura</h2>
+              <p>
+                Completa la información para preparar una nueva factura. El
+                envío se realizará de forma segura mediante Panther, sin
+                exponer las credenciales de Clarisa en el navegador.
+              </p>
+              <p class="nota-campos-obligatorios">
+                Los campos marcados con <span aria-hidden="true">*</span> son
+                obligatorios
+              </p>
+            </header>
+
+            <form id="formulario-facturacion">
+              <fieldset class="tarjeta-facturacion">
+                <legend>Datos de la factura</legend>
+
+                <div class="grid-facturacion">
+                  <div class="campo-facturacion">
+                    <label for="factura-nit">
+                      NIT del emisor <span aria-hidden="true">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="factura-nit"
+                      name="nit"
+                      minlength="3"
+                      maxlength="13"
+                      autocomplete="off"
+                      aria-describedby="ayuda-factura-nit"
+                      required
+                    />
+                    <small id="ayuda-factura-nit">
+                      Sin dígito de verificación.
+                    </small>
+                  </div>
+
+                  <div class="campo-facturacion">
+                    <label for="factura-resolucion">
+                      Número de resolución <span aria-hidden="true">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="factura-resolucion"
+                      name="numeroResolucion"
+                      maxlength="14"
+                      inputmode="numeric"
+                      autocomplete="off"
+                      aria-describedby="ayuda-factura-resolucion"
+                      required
+                    />
+                    <small id="ayuda-factura-resolucion">
+                      Resolución aprobada por la DIAN.
+                    </small>
+                  </div>
+
+                  <div class="campo-facturacion">
+                    <label for="factura-consecutivo">
+                      Consecutivo <span aria-hidden="true">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="factura-consecutivo"
+                      name="consecutivoDcto"
+                      maxlength="9"
+                      inputmode="numeric"
+                      pattern="[0-9]{1,9}"
+                      autocomplete="off"
+                      required
+                    />
+                  </div>
+
+                  <div class="campo-facturacion">
+                    <label for="factura-prefijo">Prefijo</label>
+                    <input
+                      type="text"
+                      id="factura-prefijo"
+                      name="prefijoDcto"
+                      maxlength="4"
+                      autocomplete="off"
+                    />
+                  </div>
+
+                  <div class="campo-facturacion">
+                    <label for="factura-vencimiento">
+                      Fecha de vencimiento <span aria-hidden="true">*</span>
+                    </label>
+                    <input
+                      type="date"
+                      id="factura-vencimiento"
+                      name="fechaVencimiento"
+                      required
+                    />
+                  </div>
+
+                  <div class="campo-facturacion">
+                    <label for="factura-forma-pago">
+                      Forma de pago <span aria-hidden="true">*</span>
+                    </label>
+                    <select
+                      id="factura-forma-pago"
+                      name="formaPago"
+                      required
+                    >
+                      <option value="" selected disabled>Seleccione</option>
+                      <option value="1">1 — Contado</option>
+                      <option value="2">2 — Crédito</option>
+                    </select>
+                  </div>
+
+                  <div class="campo-facturacion campo-ancho-completo">
+                    <label for="factura-medios-pago">
+                      Medios de pago <span aria-hidden="true">*</span>
+                    </label>
+                    <select
+                      id="factura-medios-pago"
+                      name="mediosPago"
+                      class="selector-multiple-facturacion"
+                      size="6"
+                      multiple
+                      aria-describedby="ayuda-medios-pago"
+                      required
+                    >
+                      <option value="ZZZ">ZZZ — Acuerdo mutuo</option>
+                      <option value="10">10 — Efectivo</option>
+                      <option value="42">42 — Consignación bancaria</option>
+                      <option value="30">30 — Tarjeta crédito</option>
+                      <option value="49">49 — Tarjeta débito</option>
+                      <option value="71">71 — Bonos</option>
+                      <option value="15">15 — Bookentry crédito</option>
+                      <option value="16">16 — Bookentry débito</option>
+                      <option value="20">20 — Cheque</option>
+                      <option value="23">23 — Cheque bancario</option>
+                      <option value="25">25 — Cheque certificado</option>
+                      <option value="26">26 — Cheque local</option>
+                      <option value="92">92 — Cheque local transferible</option>
+                      <option value="97">97 — Clearing entre partners</option>
+                      <option value="9">9 — Clearing nacional o regional</option>
+                      <option value="18">18 — CCD débito</option>
+                      <option value="17">17 — CCD crédito</option>
+                      <option value="32">32 — CCD+ crédito</option>
+                      <option value="43">43 — CCD+ débito</option>
+                      <option value="33">33 — CCD+ débito</option>
+                      <option value="35">35 — CCD ahorros crédito</option>
+                      <option value="36">36 — CCD ahorros débito</option>
+                      <option value="41">41 — CCD+ crédito</option>
+                      <option value="2">2 — Crédito ACH</option>
+                      <option value="13">13 — Crédito ahorro</option>
+                      <option value="6">6 — Crédito de demanda ACH</option>
+                      <option value="28">28 — Crédito CTX</option>
+                      <option value="39">39 — Crédito CTX</option>
+                      <option value="19">19 — Crédito CTP</option>
+                      <option value="3">3 — Débito ACH</option>
+                      <option value="14">14 — Débito ahorro</option>
+                      <option value="7">7 — Débito de demanda ACH</option>
+                      <option value="40">40 — Débito CTX</option>
+                      <option value="29">29 — Débito CTX</option>
+                      <option value="27">27 — Débito CTP</option>
+                      <option value="95">95 — Giro formato abierto</option>
+                      <option value="93">93 — Giro referenciado</option>
+                      <option value="94">94 — Giro urgente</option>
+                      <option value="1">1 — Instrumento no definido</option>
+                      <option value="8">8 — Mantener</option>
+                      <option value="96">96 — Método de pago solicitado no usado</option>
+                      <option value="91">91 — Nota bancaria transferible</option>
+                      <option value="44">44 — Nota cambiaria</option>
+                      <option value="24">24 — Nota cambiaria esperando aceptación</option>
+                      <option value="60">60 — Nota promisoria</option>
+                      <option value="66">66 — Nota promisoria firmada</option>
+                      <option value="61">61 — Nota promisoria firmada por el acreedor</option>
+                      <option value="62">62 — Nota promisoria avalada por banco</option>
+                      <option value="63">63 — Nota promisoria avalada por tercero</option>
+                      <option value="64">64 — Nota promisoria firmada por banco</option>
+                      <option value="65">65 — Nota bancaria avalada por otro banco</option>
+                      <option value="67">67 — Nota de tercero avalada por banco</option>
+                      <option value="52">52 — Pago comercial urgente</option>
+                      <option value="37">37 — CTP ahorros crédito</option>
+                      <option value="38">38 — CTP ahorros débito</option>
+                      <option value="53">53 — Pago tesorería urgente</option>
+                      <option value="34">34 — Pago y depósito preacordado (PPD)</option>
+                      <option value="50">50 — Postgiro</option>
+                      <option value="21">21 — Proyecto bancario</option>
+                      <option value="22">22 — Proyecto bancario certificado</option>
+                      <option value="70">70 — Retiro de nota por el acreedor</option>
+                      <option value="74">74 — Retiro de nota sobre banco</option>
+                      <option value="75">75 — Retiro de nota avalada por banco</option>
+                      <option value="76">76 — Retiro de nota avalada por tercero</option>
+                      <option value="77">77 — Retiro de nota sobre tercero</option>
+                      <option value="78">78 — Retiro de nota sobre tercero avalada</option>
+                      <option value="11">11 — Reversión crédito ahorro</option>
+                      <option value="5">5 — Reversión crédito de demanda ACH</option>
+                      <option value="12">12 — Reversión débito ahorro</option>
+                      <option value="4">4 — Reversión débito de demanda ACH</option>
+                      <option value="48">48 — Tarjeta crédito</option>
+                      <option value="31">31 — Tarjeta débito</option>
+                      <option value="51">51 — Télex estándar bancario francés</option>
+                      <option value="45">45 — Transferencia crédito bancario</option>
+                      <option value="47">47 — Transferencia débito bancaria</option>
+                      <option value="46">46 — Transferencia débito interbancario</option>
+                      <option value="72">72 — Vales</option>
+                    </select>
+                    <small id="ayuda-medios-pago">
+                      Puede seleccionar uno o varios códigos DIAN.
+                    </small>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset class="tarjeta-facturacion">
+                <legend>Datos del cliente</legend>
+
+                <div class="grid-facturacion">
+                  <div class="campo-facturacion campo-doble">
+                    <label for="cliente-razon-social">
+                      Nombre o razón social <span aria-hidden="true">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="cliente-razon-social"
+                      name="cliente.nombreRazonSocial"
+                      data-origen-futuro="clientes"
+                      minlength="5"
+                      maxlength="255"
+                      autocomplete="name"
+                      required
+                    />
+                  </div>
+
+                  <div class="campo-facturacion">
+                    <label for="cliente-tipo-identificacion">
+                      Tipo de identificación <span aria-hidden="true">*</span>
+                    </label>
+                    <select
+                      id="cliente-tipo-identificacion"
+                      name="cliente.tipoIdentificacion"
+                      data-origen-futuro="clientes"
+                      required
+                    >
+                      <option value="" selected disabled>Seleccione</option>
+                      <option value="CC">CC — Cédula de ciudadanía</option>
+                      <option value="NI">NI — NIT</option>
+                      <option value="TI">TI — Tarjeta de identidad</option>
+                      <option value="PA">PA — Pasaporte</option>
+                      <option value="TE">TE — Tarjeta de extranjería</option>
+                      <option value="CE">CE — Cédula de extranjería</option>
+                      <option value="RC">RC — Registro civil de nacimiento</option>
+                      <option value="NO">NO — NIT de otro país</option>
+                      <option value="NU">NU — NUIP</option>
+                      <option value="PE">PE — Permiso especial de permanencia</option>
+                      <option value="DE">DE — Documento de identificación extranjero</option>
+                      <option value="PT">PT — Permiso por protección temporal</option>
+                    </select>
+                  </div>
+
+                  <div class="campo-facturacion">
+                    <label for="cliente-numero-identificacion">
+                      Número de identificación <span aria-hidden="true">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="cliente-numero-identificacion"
+                      name="cliente.numIdentificacion"
+                      data-origen-futuro="clientes"
+                      minlength="3"
+                      maxlength="13"
+                      inputmode="numeric"
+                      pattern="[0-9]{3,13}"
+                      aria-describedby="ayuda-identificacion-cliente"
+                      required
+                    />
+                    <small id="ayuda-identificacion-cliente">
+                      Sin dígito de verificación.
+                    </small>
+                  </div>
+
+                  <div class="campo-facturacion">
+                    <label for="cliente-naturaleza">
+                      Naturaleza <span aria-hidden="true">*</span>
+                    </label>
+                    <select
+                      id="cliente-naturaleza"
+                      name="cliente.naturaleza"
+                      data-origen-futuro="clientes"
+                      required
+                    >
+                      <option value="" selected disabled>Seleccione</option>
+                      <option value="NATURAL">NATURAL — Persona natural</option>
+                      <option value="JURIDICA">JURIDICA — Persona jurídica</option>
+                    </select>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset class="tarjeta-facturacion">
+                <legend>Producto o servicio</legend>
+
+                <article class="detalle-item-facturacion" aria-labelledby="titulo-item-factura-1">
+                  <h3 id="titulo-item-factura-1">Producto o servicio 1</h3>
+
+                  <div class="grid-facturacion">
+                    <div class="campo-facturacion">
+                      <label for="item-codigo">
+                        Código <span aria-hidden="true">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="item-codigo"
+                        name="items.codigo"
+                        data-origen-futuro="repuestos-servicios"
+                        maxlength="15"
+                        required
+                      />
+                    </div>
+
+                    <div class="campo-facturacion campo-triple">
+                      <label for="item-descripcion">
+                        Nombre o descripción <span aria-hidden="true">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="item-descripcion"
+                        name="items.nombreItem"
+                        data-origen-futuro="repuestos-servicios"
+                        minlength="4"
+                        maxlength="1000"
+                        required
+                      />
+                    </div>
+
+                    <div class="campo-facturacion">
+                      <label for="item-precio-unitario">
+                        Precio base unitario <span aria-hidden="true">*</span>
+                      </label>
+                      <input
+                        type="number"
+                        id="item-precio-unitario"
+                        name="items.precioBaseUnitario"
+                        data-origen-futuro="repuestos-servicios"
+                        step="0.000001"
+                        inputmode="decimal"
+                        required
+                      />
+                    </div>
+
+                    <div class="campo-facturacion">
+                      <label for="item-cantidad">
+                        Cantidad <span aria-hidden="true">*</span>
+                      </label>
+                      <input
+                        type="number"
+                        id="item-cantidad"
+                        name="items.cantidad"
+                        step="any"
+                        inputmode="decimal"
+                        required
+                      />
+                    </div>
+
+                    <div class="campo-facturacion">
+                      <label for="item-unidad">
+                        Unidad <span aria-hidden="true">*</span>
+                      </label>
+                      <select id="item-unidad" name="items.unidad" required>
+                        <option value="" selected disabled>Seleccione</option>
+                        <option value="94">94 — Unidad / Pieza / Servicio</option>
+                        <option value="CMT">CMT — Centímetro</option>
+                        <option value="MTR">MTR — Metro</option>
+                        <option value="INH">INH — Pulgada</option>
+                        <option value="CMK">CMK — Centímetro cuadrado</option>
+                        <option value="MTK">MTK — Metro cuadrado</option>
+                        <option value="INK">INK — Pulgada cuadrada</option>
+                        <option value="MLT">MLT — Mililitro</option>
+                        <option value="LTR">LTR — Litro</option>
+                        <option value="A76">A76 — Galón</option>
+                        <option value="GGR">GGR — Gramo</option>
+                        <option value="KGM">KGM — Kilogramo</option>
+                        <option value="54">54 — Tonelada</option>
+                        <option value="LBR">LBR — Libra</option>
+                        <option value="CMQ">CMQ — Centímetro cúbico</option>
+                        <option value="MTQ">MTQ — Metro cúbico</option>
+                      </select>
+                    </div>
+
+                  </div>
+
+                  <section class="impuestos-item-facturacion" aria-labelledby="titulo-impuestos-item-1">
+                    <h4 id="titulo-impuestos-item-1">Información tributaria aplicable</h4>
+
+                    <div class="grid-facturacion">
+                      <div class="campo-facturacion campo-doble">
+                        <label for="item-impuesto-tipo">
+                          Tipo de impuesto <span aria-hidden="true">*</span>
+                        </label>
+                        <select
+                          id="item-impuesto-tipo"
+                          name="items.impuestos.tipo"
+                          required
+                        >
+                          <option value="" selected disabled>Seleccione</option>
+                          <option value="IVA">IVA — Impuesto sobre las ventas</option>
+                          <option value="ICDN">ICDN — Consumo departamental nominal</option>
+                          <option value="ICA">ICA — Industria, comercio y avisos</option>
+                          <option value="INC">INC — Impuesto nacional al consumo</option>
+                          <option value="RIVA">RIVA — Retención sobre IVA</option>
+                          <option value="RRENT">RRENT — Retención sobre renta</option>
+                          <option value="RICA">RICA — Retención sobre ICA</option>
+                          <option value="ICPD">ICPD — Consumo departamental porcentual</option>
+                          <option value="FHCUL">FHCUL — Fomento hortifrutícola</option>
+                          <option value="TIM">TIM — Impuesto de timbre</option>
+                          <option value="INCB">INCB — Consumo de bolsa plástica</option>
+                          <option value="INCAR">INCAR — Impuesto nacional al carbono</option>
+                          <option value="INCOM">INCOM — Impuesto nacional a combustibles</option>
+                          <option value="STC">STC — Sobretasa a combustibles</option>
+                          <option value="SDCOM">SDCOM — Contribución minoristas</option>
+                          <option value="ICDA">ICDA — Impuesto al consumo de datos</option>
+                          <option value="ICL">ICL — Impuesto al consumo de licores</option>
+                          <option value="INPP">INPP — Productos plásticos</option>
+                          <option value="IBUA">IBUA — Bebidas azucaradas</option>
+                          <option value="ICUI">ICUI — Comestibles ultraprocesados</option>
+                          <option value="ADV">ADV — Ad valorem</option>
+                          <option value="ZZ">ZZ — Otros tributos y tasas</option>
+                          <option value="EXE">EXE — Exento</option>
+                          <option value="EXC">EXC — Excluido</option>
+                        </select>
+                      </div>
+
+                      <div class="campo-facturacion">
+                        <label for="item-impuesto-clase">
+                          Clase de impuesto <span aria-hidden="true">*</span>
+                        </label>
+                        <select
+                          id="item-impuesto-clase"
+                          name="items.impuestos.claseImpuesto"
+                          required
+                        >
+                          <option value="" selected disabled>Seleccione</option>
+                          <option value="NM">NM — Nominal</option>
+                          <option value="PO">PO — Porcentual</option>
+                        </select>
+                      </div>
+
+                      <div class="campo-facturacion">
+                        <label for="item-impuesto-tarifa">
+                          Tarifa del tributo <span aria-hidden="true">*</span>
+                        </label>
+                        <input
+                          type="number"
+                          id="item-impuesto-tarifa"
+                          name="items.impuestos.tarifaTributo"
+                          step="any"
+                          inputmode="decimal"
+                          required
+                        />
+                      </div>
+
+                    </div>
+                  </section>
+                </article>
+              </fieldset>
+
+              <fieldset class="tarjeta-facturacion resumen-facturacion">
+                <legend>Resumen</legend>
+
+                <p
+                  id="ayuda-resumen-factura"
+                  class="ayuda-resumen-factura"
+                  role="status"
+                  aria-live="polite"
+                >
+                  Completa los datos del producto y selecciona un impuesto
+                  porcentual para calcular el resumen.
+                </p>
+
+                <div class="grid-resumen-facturacion">
+                  <div class="campo-facturacion">
+                    <label for="resumen-subtotal">Subtotal</label>
+                    <input
+                      type="number"
+                      id="resumen-subtotal"
+                      step="0.000001"
+                      placeholder="0.00"
+                      readonly
+                    />
+                  </div>
+
+                  <div class="campo-facturacion">
+                    <label for="resumen-impuestos">Valor del impuesto</label>
+                    <input
+                      type="number"
+                      id="resumen-impuestos"
+                      step="0.000001"
+                      placeholder="0.00"
+                      readonly
+                    />
+                  </div>
+
+                  <div class="campo-facturacion campo-total-facturacion">
+                    <label for="factura-total">
+                      Total <span aria-hidden="true">*</span>
+                    </label>
+                    <input
+                      type="number"
+                      id="factura-total"
+                      name="total"
+                      step="0.000001"
+                      placeholder="0.00"
+                      aria-describedby="ayuda-resumen-factura"
+                      readonly
+                      required
+                    />
+                  </div>
+                </div>
+              </fieldset>
+
+              <div class="acciones-facturacion">
+                <button
+                  type="button"
+                  id="btn-vista-previa-json"
+                  class="btn-vista-previa-json"
+                >
+                  Vista previa del JSON
+                </button>
+
+                <button
+                  type="submit"
+                  class="btn-enviar-factura"
+                  title="Completa los datos requeridos para preparar la emisión"
+                  disabled
+                >
+                  Emitir factura
+                </button>
+              </div>
+
+              <p
+                id="estado-envio-factura"
+                class="estado-envio-factura"
+                role="status"
+                aria-live="polite"
+              ></p>
+
+              <section
+                id="confirmacion-factura"
+                class="confirmacion-factura"
+                aria-labelledby="titulo-confirmacion-factura"
+                hidden
+              >
+                <h3 id="titulo-confirmacion-factura">
+                  Respuesta de facturación
+                </h3>
+                <pre id="datos-confirmacion-factura" tabindex="0"></pre>
+              </section>
+
+              <p
+                id="estado-vista-previa-json"
+                class="estado-vista-previa-json"
+                role="status"
+                aria-live="polite"
+              ></p>
+
+              <section
+                id="vista-previa-json"
+                class="vista-previa-json"
+                aria-labelledby="titulo-vista-previa-json"
+                hidden
+              >
+                <h3 id="titulo-vista-previa-json">Vista previa del JSON</h3>
+                <pre id="contenido-vista-previa-json" tabindex="0"></pre>
+              </section>
+            </form>
+          </section>
+
           <!-- Repuestos -->
           <section id="repuestos" class="repuestos-sistema" hidden>
             <div class="encabezado-repuestos">
@@ -1636,5 +2209,6 @@
     <script src="js/script.js?v=panther-clients-1"></script>
     <script src="js/clientes.js?v=panther-clients-1"></script>
     <script src="js/repuestos.js?v=panther-spareparts-1"></script>
+    <script src="js/facturacion.js?v=panther-facturacion-4"></script>
   </body>
 </html>

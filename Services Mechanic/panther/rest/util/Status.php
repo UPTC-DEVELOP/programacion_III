@@ -50,9 +50,32 @@ define("ST404", 404);
 define("CONFLICT", "CONFLICT");
 define("ST409", 409);
 /**
+ * La solicitud es válida, pero sus datos no fueron aceptados.
+ */
+define("UNPROCESSABLE_ENTITY", "UNPROCESSABLE_ENTITY");
+define("ST422", 422);
+/**
  * Error interno del servidor
  */
 define("INTERNAL_SERVER_ERROR", "INTERNAL_SERVER_ERROR");
 define("ST500", 500);
+
+/**
+ * La dependencia externa devolvió una respuesta inválida.
+ */
+define("BAD_GATEWAY", "BAD_GATEWAY");
+define("ST502", 502);
+
+/**
+ * La dependencia externa no se encuentra disponible.
+ */
+define("SERVICE_UNAVAILABLE", "SERVICE_UNAVAILABLE");
+define("ST503", 503);
+
+/**
+ * La dependencia externa excedió el tiempo permitido.
+ */
+define("GATEWAY_TIMEOUT", "GATEWAY_TIMEOUT");
+define("ST504", 504);
 
 ?>

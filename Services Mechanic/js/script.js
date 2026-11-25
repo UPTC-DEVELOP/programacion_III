@@ -654,7 +654,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// CRUD CLIENTES: integración REST implementada en js/clientes.js.
+
 
   // CRUD EMPLEADOS
     document.addEventListener("DOMContentLoaded", () => {

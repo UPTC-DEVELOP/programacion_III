@@ -10,6 +10,7 @@ require 'cxn/Connection.php';
 require 'ctrl/core/commun/Request.php';
 require 'ctrl/core/commun/IRequest.php';
 require 'ctrl/core/segurity/Users.php';
+require_once 'integration/clarisa/ServicioCacheClarisa.php';
 require 'ctrl/core/segurity/UserAction.php';
 require 'ctrl/core/segurity/Roles.php';
 require 'view/ViewAPI.php';
@@ -35,6 +36,8 @@ require 'model/business/Repuesto.php';
 require 'querys/business/BusinessQuery.php';
 require 'querys/business/ClienteQuery.php';
 require 'querys/business/RepuestoQuery.php';
+require 'querys/business/FacturacionQuery.php';
+require 'ctrl/business/Facturacion.php';
 
 // Preparar manejo de excepciones
 /**
