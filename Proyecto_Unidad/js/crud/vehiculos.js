@@ -1,7 +1,4 @@
-// CRUD DE VEHÍCULOS - Conectado a Panther (MariaDB)
-
-const TOKEN_PANTHER = '750e8b43e5ed564462c90ef0d382db26'; 
-const BASE_URL = 'http://localhost/panther/backend_panther/panther/rest/vehiculos';
+// CRUD de vehículos contra Panther (recurso vehiculos).
 
 let editando = false;
 let idEditando = null;
@@ -11,81 +8,66 @@ const contador = document.getElementById('contador-vehiculos');
 const buscador = document.getElementById('buscar-vehiculo');
 const formVehiculo = document.getElementById('form-vehiculo');
 const modalTitulo = document.getElementById('modal-titulo');
+const api = typeof pantherApi !== 'undefined' ? pantherApi : new PantherApi();
 
-// ---------- 1. LEER DATOS (GET) ----------
+function filasDe(respuesta) {
+    if (!respuesta || respuesta.status === 204) return [];
+    const cuerpo = respuesta.data && Object.prototype.hasOwnProperty.call(respuesta.data, 'data')
+        ? respuesta.data.data
+        : respuesta.data;
+    return Array.isArray(cuerpo) ? cuerpo : [];
+}
+
 async function obtenerVehiculos() {
     try {
-        const response = await fetch(BASE_URL, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'authorization': TOKEN_PANTHER 
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error('Error en la petición');
+        const respuesta = await api.get('vehiculos');
+        if (!respuesta.ok && respuesta.status !== 204) {
+            throw new Error(respuesta.mensaje || 'No se pudo obtener la lista de vehículos.');
         }
-
-        const data = await response.json();
-        
-        // BLINDAJE: Si Panther devuelve un error en lugar de una lista, lo atrapamos
-        if (data.state && data.state !== 'OK') {
-            console.error("Error de Panther:", data.data);
-            return [];
-        }
-
-        // Si viene dentro de data.data (común en Panther) o si ya es un arreglo directo
-        return Array.isArray(data) ? data : (data.data || []);
-        
+        return filasDe(respuesta);
     } catch (error) {
-        console.error("Error al conectar con Panther:", error);
-        mostrarNotificacion('No se pudo obtener la lista de vehículos.', 'error');
+        mostrarNotificacion(error.message || 'No se pudo obtener la lista de vehículos.', 'error');
         return [];
     }
 }
-// ---------- 2. RENDERIZAR TABLA ----------
+
 async function renderizarTabla(filtro = '') {
-    tablaBody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Cargando vehículos...</td></tr>';
-    
+    tablaBody.innerHTML = '<tr><td colspan="7" class="sin-resultados">Cargando vehículos...</td></tr>';
     const vehiculos = await obtenerVehiculos();
+    const busqueda = (filtro || '').toLowerCase();
+    const filtrados = vehiculos.filter((vehiculo) =>
+        String(vehiculo.placa || '').toLowerCase().includes(busqueda)
+        || String(vehiculo.marca || '').toLowerCase().includes(busqueda)
+        || String(vehiculo.propietario || '').toLowerCase().includes(busqueda)
+    );
+
     tablaBody.innerHTML = '';
-
-    const filtrados = vehiculos.filter(v => {
-        const busqueda = filtro.toLowerCase();
-        return (v.placa || '').toLowerCase().includes(busqueda) || 
-               (v.marca || '').toLowerCase().includes(busqueda) || 
-               (v.propietario || '').toLowerCase().includes(busqueda);
-    });
-
-    if (filtrados.length === 0) {
-        tablaBody.innerHTML = `<tr><td colspan="7" class="sin-resultados" style="text-align:center;">No se encontraron vehículos</td></tr>`;
+    if (!filtrados.length) {
+        tablaBody.innerHTML = '<tr><td colspan="7" class="sin-resultados">No se encontraron vehículos</td></tr>';
     } else {
-        filtrados.forEach(v => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>${v.placa}</td>
-                <td>${v.marca}</td>
-                <td>${v.modelo}</td>
-                <td>${v.anio}</td>
-                <td>${v.color}</td>
-                <td>${v.propietario}</td>
+        filtrados.forEach((vehiculo) => {
+            const fila = document.createElement('tr');
+            fila.innerHTML = `
+                <td>${vehiculo.placa || '—'}</td>
+                <td>${vehiculo.marca || '—'}</td>
+                <td>${vehiculo.modelo || '—'}</td>
+                <td>${vehiculo.anio || '—'}</td>
+                <td>${vehiculo.color || '—'}</td>
+                <td>${vehiculo.propietario || '—'}</td>
                 <td>
                     <div class="crud-acciones-tabla">
-                        <button class="btn-accion btn-editar" onclick="prepararEdicion(${v.id})">Editar</button>
-                        <button class="btn-accion btn-eliminar" onclick="eliminarVehiculo(${v.id})">Eliminar</button>
+                        <button class="btn-accion btn-editar" type="button" onclick="prepararEdicion(${vehiculo.id})">Editar</button>
+                        <button class="btn-accion btn-eliminar" type="button" onclick="eliminarVehiculo(${vehiculo.id})">Eliminar</button>
                     </div>
-                </td>
-            `;
-            tablaBody.appendChild(tr);
+                </td>`;
+            tablaBody.appendChild(fila);
         });
     }
     contador.textContent = filtrados.length + ' registro(s)';
 }
 
-// ---------- 3. GUARDAR (POST / PUT) ----------
-formVehiculo.addEventListener('submit', async function(e) {
-    e.preventDefault();
+formVehiculo.addEventListener('submit', async function (evento) {
+    evento.preventDefault();
 
     const placa = document.getElementById('placa').value.trim().toUpperCase();
     const marca = document.getElementById('marca').value.trim();
@@ -94,7 +76,6 @@ formVehiculo.addEventListener('submit', async function(e) {
     const color = document.getElementById('color').value.trim();
     const propietario = document.getElementById('propietario').value.trim();
 
-    // Validaciones
     if (!placa || !/^[A-Z]{3}[0-9]{3}$/.test(placa)) return mostrarNotificacion('Placa inválida (ABC123).', 'error');
     if (!marca || marca.length < 2) return mostrarNotificacion('Marca inválida.', 'error');
     if (!modelo) return mostrarNotificacion('Modelo obligatorio.', 'error');
@@ -103,75 +84,47 @@ formVehiculo.addEventListener('submit', async function(e) {
     if (!propietario) return mostrarNotificacion('Propietario obligatorio.', 'error');
 
     const payload = { placa, marca, modelo, anio, color, propietario };
-    const metodo = editando ? 'PUT' : 'POST';
-    const url = editando ? `${BASE_URL}/${idEditando}` : BASE_URL;
+    const respuesta = editando
+        ? await api.put('vehiculos', idEditando, payload)
+        : await api.post('vehiculos', payload);
 
-    try {
-        const response = await fetch(url, {
-            method: metodo,
-            headers: { 
-                'Content-Type': 'application/json',
-                'authorization': TOKEN_PANTHER 
-            },
-            body: JSON.stringify(payload)
-        });
-
-        if (response.ok) {
-            mostrarNotificacion(`Vehículo ${editando ? 'actualizado' : 'registrado'} correctamente.`, 'success');
-            cerrarModal('modal-vehiculo');
-            renderizarTabla();
-        } else {
-            throw new Error('Error al guardar en la base de datos');
-        }
-    } catch (error) {
-        mostrarNotificacion('Error al guardar: ' + error.message, 'error');
+    if (!respuesta.ok) {
+        mostrarNotificacion(respuesta.mensaje || 'Error al guardar en la base de datos.', 'error');
+        return;
     }
+    mostrarNotificacion(editando ? 'Vehículo actualizado correctamente.' : 'Vehículo registrado correctamente.', 'success');
+    cerrarModal('modal-vehiculo');
+    renderizarTabla(buscador.value);
 });
 
-// ---------- 4. EDITAR ----------
 async function prepararEdicion(id) {
-    const vehiculos = await obtenerVehiculos();
-    const v = vehiculos.find(item => item.id == id);
-    if (!v) return;
-
+    const vehiculo = (await obtenerVehiculos()).find((item) => Number(item.id) === Number(id));
+    if (!vehiculo) return;
     editando = true;
     idEditando = id;
     modalTitulo.textContent = 'Editar Vehículo';
-
-    document.getElementById('placa').value = v.placa;
-    document.getElementById('placa').disabled = true; 
-    document.getElementById('marca').value = v.marca;
-    document.getElementById('modelo').value = v.modelo;
-    document.getElementById('anio').value = v.anio;
-    document.getElementById('color').value = v.color;
-    document.getElementById('propietario').value = v.propietario;
-
+    document.getElementById('placa').value = vehiculo.placa || '';
+    document.getElementById('placa').disabled = true;
+    document.getElementById('marca').value = vehiculo.marca || '';
+    document.getElementById('modelo').value = vehiculo.modelo || '';
+    document.getElementById('anio').value = vehiculo.anio || '';
+    document.getElementById('color').value = vehiculo.color || '';
+    document.getElementById('propietario').value = vehiculo.propietario || '';
     abrirModal('modal-vehiculo');
 }
 
-// ---------- 5. ELIMINAR ----------
 async function eliminarVehiculo(id) {
     if (!confirm('¿Estás seguro de que deseas eliminar este vehículo?')) return;
-    
-    try {
-        const response = await fetch(`${BASE_URL}/${id}`, { 
-            method: 'DELETE',
-            headers: { 'authorization': TOKEN_PANTHER }
-        });
-        
-        if (response.ok) {
-            mostrarNotificacion('Vehículo eliminado correctamente.', 'success');
-            renderizarTabla();
-        } else {
-            throw new Error('No se pudo eliminar');
-        }
-    } catch (error) {
-        mostrarNotificacion('Error al eliminar.', 'error');
+    const respuesta = await api.delete('vehiculos', id);
+    if (!respuesta.ok) {
+        mostrarNotificacion(respuesta.mensaje || 'No se pudo eliminar el vehículo.', 'error');
+        return;
     }
+    mostrarNotificacion('Vehículo eliminado correctamente.', 'success');
+    renderizarTabla(buscador.value);
 }
 
-// ---------- EVENTOS DE LA UI ----------
-document.getElementById('btn-nuevo-vehiculo').addEventListener('click', function() {
+document.getElementById('btn-nuevo-vehiculo').addEventListener('click', function () {
     editando = false;
     idEditando = null;
     modalTitulo.textContent = 'Nuevo Vehículo';
@@ -180,55 +133,8 @@ document.getElementById('btn-nuevo-vehiculo').addEventListener('click', function
     abrirModal('modal-vehiculo');
 });
 
-buscador.addEventListener('input', function() {
+buscador.addEventListener('input', function () {
     renderizarTabla(this.value);
 });
 
-document.addEventListener('click', function(e) {
-    if (e.target.classList.contains('crud-modal')) {
-        e.target.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-});
-
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        document.querySelectorAll('.crud-modal.active').forEach(modal => {
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        });
-    }
-});
-
-function abrirModal(id) {
-    const modal = document.getElementById(id);
-    if (modal) {
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-function cerrarModal(id) {
-    const modal = document.getElementById(id);
-    if (modal) {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-}
-
-function mostrarNotificacion(mensaje, tipo) {
-    const notificacion = document.getElementById('notificacion-crud');
-    if (!notificacion) return;
-    
-    notificacion.className = 'crud-notificacion ' + tipo;
-    notificacion.textContent = mensaje;
-    notificacion.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    
-    setTimeout(() => {
-        notificacion.className = 'crud-notificacion';
-        notificacion.textContent = '';
-    }, 4000);
-}
-
-// ---------- INICIALIZAR ----------
 renderizarTabla();

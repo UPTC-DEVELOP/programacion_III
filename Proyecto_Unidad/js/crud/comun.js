@@ -1,13 +1,62 @@
-// Datos y funciones compartidas por los CRUD que usan localStorage (Órdenes).
-// El diseño visual se reutiliza desde css/crud.css.
+// Utilidades compartidas por los CRUD (sesión de interfaz, catálogo, formato).
+// La API de Clarisa solo se consume en facturación; aquí Sesion solo controla el acceso.
 
-const CLAVE_ORDENES = 'autotech-ordenes';
+const PAGINA_LOGIN = '../login.html';
+
+function sesionTallerActiva() {
+    if (typeof Sesion !== 'undefined' && Sesion.activa()) return true;
+    return Boolean(
+        sessionStorage.getItem('pantherKeyAPI')
+        || sessionStorage.getItem('pantherToken')
+        || sessionStorage.getItem('userName')
+    );
+}
+
+if (!sesionTallerActiva()) {
+    window.location.replace(PAGINA_LOGIN);
+}
+
+function iniciarControlSesion() {
+    const usuarioActivo = document.getElementById('usuario-activo');
+    if (usuarioActivo) {
+        const nombre = (typeof Sesion !== 'undefined' && Sesion.usuario)
+            || sessionStorage.getItem('userName')
+            || 'DEMO_API';
+        usuarioActivo.textContent = nombre;
+    }
+
+    const btnCerrar = document.getElementById('btn-cerrar-sesion');
+    if (btnCerrar && !btnCerrar.dataset.sesionLista) {
+        btnCerrar.dataset.sesionLista = '1';
+        btnCerrar.addEventListener('click', function () {
+            if (typeof Sesion !== 'undefined' && typeof Sesion.cerrar === 'function') {
+                Sesion.cerrar();
+            }
+            if (typeof PantherApi !== 'undefined' && typeof PantherApi.clearKeyAPI === 'function') {
+                PantherApi.clearKeyAPI();
+            }
+            sessionStorage.removeItem('userRole');
+            sessionStorage.removeItem('userName');
+            sessionStorage.removeItem('pantherToken');
+            window.location.replace(PAGINA_LOGIN);
+        });
+    }
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', iniciarControlSesion);
+} else {
+    iniciarControlSesion();
+}
+
+const IVA_ORDEN = 0.19;
+const VALOR_HORA_DEFAULT = 35000;
 
 const CATALOGO = {
     clientes: [
-        { nombre: 'Carlos Rodríguez', documento: '79123456', telefono: '3201234567', direccion: 'Cra 7 # 45-10' },
-        { nombre: 'María López', documento: '52987654', telefono: '3159876543', direccion: 'Cl 80 # 12-30' },
-        { nombre: 'Taller El Motor S.A.S', documento: '900123456', telefono: '3001234567', direccion: 'Av 7 # 8-9' }
+        { nombre: 'Carlos Rodríguez', documento: '79123456', telefono: '3201234567', direccion: 'Cra 7 # 45-10', email: 'carlos.rodriguez@email.com' },
+        { nombre: 'María López', documento: '52987654', telefono: '3159876543', direccion: 'Cl 80 # 12-30', email: 'maria.lopez@email.com' },
+        { nombre: 'Taller El Motor S.A.S', documento: '900123456', telefono: '3001234567', direccion: 'Av 7 # 8-9', email: 'contacto@elmotor.com' }
     ],
     vehiculos: [
         { placa: 'ABC123', marca: 'Toyota', modelo: 'Corolla', color: 'Gris', propietario: 'Carlos Rodríguez' },
@@ -21,32 +70,6 @@ const CATALOGO = {
     ]
 };
 
-const ORDENES_SEMILLA = [
-    {
-        numero: 'ORD-001',
-        clienteDocumento: '79123456',
-        placa: 'ABC123',
-        empleadoDocumento: '79123456',
-        ingreso: '2026-03-12T08:30',
-        horas: 4,
-        repuestos: [
-            { referencia: 'FR-220', descripcion: 'Pastillas de freno', marca: 'Bosch', precio: 85000 },
-            { referencia: 'AC-110', descripcion: 'Filtro de aceite', marca: 'Mann', precio: 32000 }
-        ]
-    },
-    {
-        numero: 'ORD-002',
-        clienteDocumento: '52987654',
-        placa: 'XYZ789',
-        empleadoDocumento: '11223344',
-        ingreso: '2026-03-18T14:00',
-        horas: 2.5,
-        repuestos: [
-            { referencia: 'LL-015', descripcion: 'Bujías', marca: 'NGK', precio: 48000 }
-        ]
-    }
-];
-
 function escapar(texto) {
     return String(texto ?? '')
         .replace(/&/g, '&amp;')
@@ -57,51 +80,41 @@ function escapar(texto) {
 
 function formatoIngreso(valor) {
     if (!valor) return '—';
-    const fecha = new Date(valor);
+    const normalizado = String(valor).includes('T') ? valor : String(valor).replace(' ', 'T');
+    const fecha = new Date(normalizado);
     if (Number.isNaN(fecha.getTime())) return valor;
     return fecha.toLocaleString('es-CO', { dateStyle: 'short', timeStyle: 'short' });
 }
 
-function nombreCliente(documento) {
-    const cliente = CATALOGO.clientes.find(function (item) { return item.documento === documento; });
-    return cliente ? cliente.nombre : '—';
+function formatoPesos(valor) {
+    const numero = Number(valor) || 0;
+    return new Intl.NumberFormat('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        maximumFractionDigits: 0
+    }).format(numero);
 }
 
-function nombreEmpleado(documento) {
-    const empleado = CATALOGO.empleados.find(function (item) { return item.documento === documento; });
-    return empleado ? empleado.nombres + ' ' + empleado.apellidos : '—';
-}
-
-function leerLista(clave, semilla) {
-    try {
-        const guardado = localStorage.getItem(clave);
-        if (guardado) return JSON.parse(guardado);
-    } catch (error) {
-        return semilla.map(function (item) { return JSON.parse(JSON.stringify(item)); });
+function aDatetimeLocal(valor) {
+    if (!valor) return '';
+    const texto = String(valor).trim();
+    if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(texto)) {
+        return texto.slice(0, 16);
     }
-    const copia = semilla.map(function (item) { return JSON.parse(JSON.stringify(item)); });
-    if (copia.length) localStorage.setItem(clave, JSON.stringify(copia));
-    return copia;
+    if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}/.test(texto)) {
+        return texto.replace(' ', 'T').slice(0, 16);
+    }
+    const fecha = new Date(texto);
+    if (Number.isNaN(fecha.getTime())) return '';
+    const pad = (n) => String(n).padStart(2, '0');
+    return `${fecha.getFullYear()}-${pad(fecha.getMonth() + 1)}-${pad(fecha.getDate())}T${pad(fecha.getHours())}:${pad(fecha.getMinutes())}`;
 }
 
-function guardarLista(clave, lista) {
-    localStorage.setItem(clave, JSON.stringify(lista));
-}
-
-function obtenerOrdenes() {
-    return leerLista(CLAVE_ORDENES, ORDENES_SEMILLA);
-}
-
-function guardarOrdenes(lista) {
-    guardarLista(CLAVE_ORDENES, lista);
-}
-
-function siguienteNumero(lista, prefijo) {
-    const maximo = lista.reduce(function (mayor, item) {
-        const numero = parseInt(String(item.numero).split('-')[1], 10);
-        return Number.isFinite(numero) && numero > mayor ? numero : mayor;
-    }, 0);
-    return prefijo + '-' + String(maximo + 1).padStart(3, '0');
+function aDatetimeMysql(valor) {
+    if (!valor) return '';
+    const local = aDatetimeLocal(valor);
+    if (!local) return valor;
+    return `${local.replace('T', ' ')}:00`.slice(0, 19);
 }
 
 function mostrarNotificacion(mensaje, tipo) {
@@ -110,7 +123,6 @@ function mostrarNotificacion(mensaje, tipo) {
 
     notificacion.className = 'crud-notificacion ' + tipo;
     notificacion.textContent = mensaje;
-    notificacion.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
     setTimeout(function () {
         notificacion.className = 'crud-notificacion';

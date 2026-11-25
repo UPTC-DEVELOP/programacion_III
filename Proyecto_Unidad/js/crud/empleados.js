@@ -1,7 +1,4 @@
-// CRUD DE EMPLEADOS - Conectado a Panther (MariaDB)
-
-const TOKEN_PANTHER = '750e8b43e5ed564462c90ef0d382db26'; 
-const BASE_URL = 'http://localhost/panther/backend_panther/panther/rest/empleados';
+// CRUD de empleados contra Panther + creación de usuario de login (j4user).
 
 let editando = false;
 let idEditando = null;
@@ -11,75 +8,75 @@ const contador = document.getElementById('contador-empleados');
 const buscador = document.getElementById('buscar-empleado');
 const formEmpleado = document.getElementById('form-empleado');
 const modalTitulo = document.getElementById('modal-titulo');
+const api = typeof pantherApi !== 'undefined' ? pantherApi : new PantherApi();
 
-// ---------- 1. LEER DATOS (GET) ----------
+const NOMBRES_ROL = {
+    1: 'Administrador',
+    3: 'Recepcionista',
+    4: 'Mecánico',
+    5: 'Almacenista'
+};
+
+function filasDe(respuesta) {
+    if (!respuesta || respuesta.status === 204) return [];
+    const cuerpo = respuesta.data && Object.prototype.hasOwnProperty.call(respuesta.data, 'data')
+        ? respuesta.data.data
+        : respuesta.data;
+    return Array.isArray(cuerpo) ? cuerpo : [];
+}
+
 async function obtenerEmpleados() {
     try {
-        const response = await fetch(BASE_URL, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'authorization': TOKEN_PANTHER 
-            }
-        });
-
-        if (!response.ok) throw new Error('Error al obtener datos');
-        
-        const data = await response.json();
-        // Verificamos que no sea un error de Panther
-        if (data.state && data.state !== 'OK' && data.state !== 'GET') {
-            return [];
+        const respuesta = await api.get('empleados');
+        if (!respuesta.ok && respuesta.status !== 204) {
+            throw new Error(respuesta.mensaje || 'No se pudo obtener la lista de empleados.');
         }
-        return Array.isArray(data) ? data : (data.data || []);
+        return filasDe(respuesta);
     } catch (error) {
-        console.error("Error al conectar con Panther:", error);
-        mostrarNotificacion('No se pudo obtener la lista de empleados.', 'error');
+        mostrarNotificacion(error.message || 'No se pudo obtener la lista de empleados.', 'error');
         return [];
     }
 }
 
-// ---------- 2. RENDERIZAR TABLA ----------
 async function renderizarTabla(filtro = '') {
-    tablaBody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Cargando empleados...</td></tr>';
-    
+    tablaBody.innerHTML = '<tr><td colspan="6" class="sin-resultados">Cargando empleados...</td></tr>';
     const empleados = await obtenerEmpleados();
-    tablaBody.innerHTML = '';
-
-    const filtrados = empleados.filter(e => {
-        const nombreCompleto = `${e.nombres || ''} ${e.apellidos || ''}`.toLowerCase();
-        const busqueda = filtro.toLowerCase();
-        return nombreCompleto.includes(busqueda) || 
-               (e.documento || '').toString().includes(busqueda) ||
-               (e.rol || '').toLowerCase().includes(busqueda);
+    const busqueda = (filtro || '').toLowerCase();
+    const filtrados = empleados.filter((empleado) => {
+        const nombre = `${empleado.nombres || ''} ${empleado.apellidos || ''}`.toLowerCase();
+        const rol = String(NOMBRES_ROL[empleado.rol] || empleado.rol || '').toLowerCase();
+        return nombre.includes(busqueda)
+            || String(empleado.documento || '').includes(busqueda)
+            || rol.includes(busqueda);
     });
 
-    if (filtrados.length === 0) {
-        tablaBody.innerHTML = `<tr><td colspan="6" class="sin-resultados" style="text-align:center;">No se encontraron empleados</td></tr>`;
+    tablaBody.innerHTML = '';
+    if (!filtrados.length) {
+        tablaBody.innerHTML = '<tr><td colspan="6" class="sin-resultados">No se encontraron empleados</td></tr>';
     } else {
-        filtrados.forEach(e => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>${e.nombres} ${e.apellidos}</td>
-                <td>${e.documento}</td>
-                <td>${e.rol}</td>
-                <td>${e.telefono}</td>
-                <td>${e.correo}</td>
+        filtrados.forEach((empleado) => {
+            const nombreRol = NOMBRES_ROL[empleado.rol] || empleado.rol || '—';
+            const fila = document.createElement('tr');
+            fila.innerHTML = `
+                <td>${empleado.nombres || ''} ${empleado.apellidos || ''}</td>
+                <td>${empleado.documento || '—'}</td>
+                <td>${nombreRol}</td>
+                <td>${empleado.telefono || '—'}</td>
+                <td>${empleado.correo || '—'}</td>
                 <td>
                     <div class="crud-acciones-tabla">
-                        <button class="btn-accion btn-editar" onclick="prepararEdicion(${e.id})">Editar</button>
-                        <button class="btn-accion btn-eliminar" onclick="eliminarEmpleado(${e.id})">Eliminar</button>
+                        <button class="btn-accion btn-editar" type="button" onclick="prepararEdicion(${empleado.id})">Editar</button>
+                        <button class="btn-accion btn-eliminar" type="button" onclick="eliminarEmpleado(${empleado.id})">Eliminar</button>
                     </div>
-                </td>
-            `;
-            tablaBody.appendChild(tr);
+                </td>`;
+            tablaBody.appendChild(fila);
         });
     }
     contador.textContent = filtrados.length + ' registro(s)';
 }
 
-// ---------- 3. GUARDAR (POST / PUT) ----------
-formEmpleado.addEventListener('submit', async function(e) {
-    e.preventDefault();
+formEmpleado.addEventListener('submit', async function (evento) {
+    evento.preventDefault();
 
     const nombres = document.getElementById('nombres').value.trim();
     const apellidos = document.getElementById('apellidos').value.trim();
@@ -88,84 +85,71 @@ formEmpleado.addEventListener('submit', async function(e) {
     const telefono = document.getElementById('telefono').value.trim();
     const correo = document.getElementById('correo').value.trim();
 
-    // Validaciones
     if (!nombres || nombres.length < 3) return mostrarNotificacion('Nombres inválidos.', 'error');
     if (!apellidos || apellidos.length < 3) return mostrarNotificacion('Apellidos inválidos.', 'error');
-    if (!documento || !/^[0-9]{10,15}$/.test(documento)) return mostrarNotificacion('Documento inválido.', 'error');
+    if (!documento || !/^[0-9]{8,15}$/.test(documento)) return mostrarNotificacion('Documento inválido (8 a 15 dígitos).', 'error');
     if (!rol) return mostrarNotificacion('Selecciona un rol.', 'error');
     if (!telefono || !/^[0-9]{10,15}$/.test(telefono)) return mostrarNotificacion('Teléfono inválido.', 'error');
     if (!correo || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) return mostrarNotificacion('Correo inválido.', 'error');
 
-    const payload = { nombres, apellidos, documento, rol, telefono, correo };
-    const metodo = editando ? 'PUT' : 'POST';
-    const url = editando ? `${BASE_URL}/${idEditando}` : BASE_URL;
+    const payloadEmpleado = { nombres, apellidos, documento, rol, telefono, correo };
+    const respuesta = editando
+        ? await api.put('empleados', idEditando, payloadEmpleado)
+        : await api.post('empleados', payloadEmpleado);
 
-    try {
-        const response = await fetch(url, {
-            method: metodo,
-            headers: { 
-                'Content-Type': 'application/json',
-                'authorization': TOKEN_PANTHER 
-            },
-            body: JSON.stringify(payload)
-        });
-
-        if (response.ok) {
-            mostrarNotificacion(`Empleado ${editando ? 'actualizado' : 'registrado'} correctamente.`, 'success');
-            cerrarModal('modal-empleado');
-            renderizarTabla();
-        } else {
-            throw new Error('Error al guardar');
-        }
-    } catch (error) {
-        mostrarNotificacion('Error al guardar: ' + error.message, 'error');
+    if (!respuesta.ok) {
+        mostrarNotificacion(respuesta.mensaje || 'Error al guardar el empleado.', 'error');
+        return;
     }
+
+    if (!editando) {
+        const usuarioLogin = nombres.split(' ')[0].toLowerCase();
+        const resUser = await api.post('users', {
+            user: usuarioLogin,
+            password: documento,
+            roles: parseInt(rol, 10)
+        });
+        if (!resUser.ok) {
+            mostrarNotificacion('Empleado guardado. Nota: el usuario de login ya existía o falló.', 'warning');
+        } else {
+            mostrarNotificacion(`Empleado y usuario de acceso (${usuarioLogin}) creados correctamente.`, 'success');
+        }
+    } else {
+        mostrarNotificacion('Empleado actualizado correctamente.', 'success');
+    }
+
+    cerrarModal('modal-empleado');
+    renderizarTabla(buscador.value);
 });
 
-// ---------- 4. EDITAR ----------
 async function prepararEdicion(id) {
-    const empleados = await obtenerEmpleados();
-    const emp = empleados.find(e => e.id == id);
-    if (!emp) return;
-
+    const empleado = (await obtenerEmpleados()).find((item) => Number(item.id) === Number(id));
+    if (!empleado) return;
     editando = true;
     idEditando = id;
     modalTitulo.textContent = 'Editar Empleado';
-
-    document.getElementById('nombres').value = emp.nombres;
-    document.getElementById('apellidos').value = emp.apellidos;
-    document.getElementById('documento').value = emp.documento;
-    document.getElementById('documento').disabled = true; 
-    document.getElementById('rol').value = emp.rol;
-    document.getElementById('telefono').value = emp.telefono;
-    document.getElementById('correo').value = emp.correo;
-
+    document.getElementById('nombres').value = empleado.nombres || '';
+    document.getElementById('apellidos').value = empleado.apellidos || '';
+    document.getElementById('documento').value = empleado.documento || '';
+    document.getElementById('documento').disabled = true;
+    document.getElementById('rol').value = String(empleado.rol || '');
+    document.getElementById('telefono').value = empleado.telefono || '';
+    document.getElementById('correo').value = empleado.correo || '';
     abrirModal('modal-empleado');
 }
 
-// ---------- 5. ELIMINAR ----------
 async function eliminarEmpleado(id) {
     if (!confirm('¿Estás seguro de que deseas eliminar este empleado?')) return;
-    
-    try {
-        const response = await fetch(`${BASE_URL}/${id}`, { 
-            method: 'DELETE',
-            headers: { 'authorization': TOKEN_PANTHER }
-        });
-        
-        if (response.ok) {
-            mostrarNotificacion('Empleado eliminado correctamente.', 'success');
-            renderizarTabla();
-        } else {
-            throw new Error('No se pudo eliminar');
-        }
-    } catch (error) {
-        mostrarNotificacion('Error al eliminar.', 'error');
+    const respuesta = await api.delete('empleados', id);
+    if (!respuesta.ok) {
+        mostrarNotificacion(respuesta.mensaje || 'No se pudo eliminar el empleado.', 'error');
+        return;
     }
+    mostrarNotificacion('Empleado eliminado correctamente.', 'success');
+    renderizarTabla(buscador.value);
 }
 
-// ---------- EVENTOS DE LA UI ----------
-document.getElementById('btn-nuevo-empleado').addEventListener('click', function() {
+document.getElementById('btn-nuevo-empleado').addEventListener('click', function () {
     editando = false;
     idEditando = null;
     modalTitulo.textContent = 'Nuevo Empleado';
@@ -174,60 +158,8 @@ document.getElementById('btn-nuevo-empleado').addEventListener('click', function
     abrirModal('modal-empleado');
 });
 
-buscador.addEventListener('input', function() {
+buscador.addEventListener('input', function () {
     renderizarTabla(this.value);
 });
 
-document.addEventListener('click', function(e) {
-    if (e.target.classList.contains('crud-modal')) {
-        e.target.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-});
-
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        document.querySelectorAll('.crud-modal.active').forEach(modal => {
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        });
-    }
-});
-
-function abrirModal(id) {
-    const modal = document.getElementById(id);
-    if (modal) {
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-function cerrarModal(id) {
-    const modal = document.getElementById(id);
-    if (modal) {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-}
-
-function mostrarNotificacion(mensaje, tipo) {
-    const notificacion = document.getElementById('notificacion-crud');
-    if (!notificacion) return;
-    
-    
-    
-    notificacion.className = 'crud-notificacion';
-    void notificacion.offsetWidth; 
-    
-    notificacion.className = 'crud-notificacion ' + tipo;
-    notificacion.textContent = mensaje;
-    notificacion.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    
-    setTimeout(() => {
-        notificacion.className = 'crud-notificacion';
-        notificacion.textContent = '';
-    }, 4000);
-}
-
-// ---------- INICIALIZAR ----------
 renderizarTabla();
