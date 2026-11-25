@@ -1,7 +1,8 @@
-// CRUD DE EMPLEADOS - Conectado a Panther (MariaDB)
+// CRUD DE EMPLEADOS - Conectado a Panther (MariaDB) + Creación de Usuario para Login
 
 const TOKEN_PANTHER = '750e8b43e5ed564462c90ef0d382db26'; 
 const BASE_URL = 'http://localhost/panther/backend_panther/panther/rest/empleados';
+const URL_USUARIOS = 'http://localhost/panther/backend_panther/panther/rest/users';
 
 let editando = false;
 let idEditando = null;
@@ -26,7 +27,6 @@ async function obtenerEmpleados() {
         if (!response.ok) throw new Error('Error al obtener datos');
         
         const data = await response.json();
-        // Verificamos que no sea un error de Panther
         if (data.state && data.state !== 'OK' && data.state !== 'GET') {
             return [];
         }
@@ -50,18 +50,25 @@ async function renderizarTabla(filtro = '') {
         const busqueda = filtro.toLowerCase();
         return nombreCompleto.includes(busqueda) || 
                (e.documento || '').toString().includes(busqueda) ||
-               (e.rol || '').toLowerCase().includes(busqueda);
+               (e.rol || '').toString().includes(busqueda);
     });
 
     if (filtrados.length === 0) {
         tablaBody.innerHTML = `<tr><td colspan="6" class="sin-resultados" style="text-align:center;">No se encontraron empleados</td></tr>`;
     } else {
         filtrados.forEach(e => {
+            // Mapeamos el ID del rol a su nombre para mostrarlo bonito en la tabla
+            let nombreRol = e.rol;
+            if(e.rol == 1) nombreRol = 'Administrador';
+            if(e.rol == 3) nombreRol = 'Recepcionista';
+            if(e.rol == 4) nombreRol = 'Mecánico';
+            if(e.rol == 5) nombreRol = 'Almacenista';
+
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>${e.nombres} ${e.apellidos}</td>
                 <td>${e.documento}</td>
-                <td>${e.rol}</td>
+                <td>${nombreRol}</td>
                 <td>${e.telefono}</td>
                 <td>${e.correo}</td>
                 <td>
@@ -77,7 +84,7 @@ async function renderizarTabla(filtro = '') {
     contador.textContent = filtrados.length + ' registro(s)';
 }
 
-// ---------- 3. GUARDAR (POST / PUT) ----------
+// ---------- 3. GUARDAR (POST / PUT) + CREAR USUARIO DE LOGIN ----------
 formEmpleado.addEventListener('submit', async function(e) {
     e.preventDefault();
 
@@ -91,34 +98,66 @@ formEmpleado.addEventListener('submit', async function(e) {
     // Validaciones
     if (!nombres || nombres.length < 3) return mostrarNotificacion('Nombres inválidos.', 'error');
     if (!apellidos || apellidos.length < 3) return mostrarNotificacion('Apellidos inválidos.', 'error');
-    if (!documento || !/^[0-9]{10,15}$/.test(documento)) return mostrarNotificacion('Documento inválido.', 'error');
+    if (!documento || !/^[0-9]{8,15}$/.test(documento)) return mostrarNotificacion('Documento inválido (8 a 15 dígitos).', 'error');
     if (!rol) return mostrarNotificacion('Selecciona un rol.', 'error');
     if (!telefono || !/^[0-9]{10,15}$/.test(telefono)) return mostrarNotificacion('Teléfono inválido.', 'error');
     if (!correo || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) return mostrarNotificacion('Correo inválido.', 'error');
 
-    const payload = { nombres, apellidos, documento, rol, telefono, correo };
+    const payloadEmpleado = { nombres, apellidos, documento, rol, telefono, correo };
     const metodo = editando ? 'PUT' : 'POST';
     const url = editando ? `${BASE_URL}/${idEditando}` : BASE_URL;
 
     try {
+        // 1. GUARDAR EMPLEADO EN LA TABLA LOCAL
         const response = await fetch(url, {
             method: metodo,
             headers: { 
                 'Content-Type': 'application/json',
                 'authorization': TOKEN_PANTHER 
             },
-            body: JSON.stringify(payload)
+            body: JSON.stringify(payloadEmpleado)
         });
 
-        if (response.ok) {
-            mostrarNotificacion(`Empleado ${editando ? 'actualizado' : 'registrado'} correctamente.`, 'success');
-            cerrarModal('modal-empleado');
-            renderizarTabla();
-        } else {
-            throw new Error('Error al guardar');
+        if (!response.ok) {
+            throw new Error('Error al guardar el empleado en el sistema.');
         }
+
+        // 2. CREAR USUARIO DE LOGIN 
+        if (!editando) {
+            const usuarioLogin = nombres.split(' ')[0].toLowerCase(); // Primer nombre en minúscula
+            const contrasenaLogin = documento; // El documento es la contraseña
+            const rolLogin = parseInt(rol); // Aseguramos que sea número
+
+            const payloadUsuario = {
+                user: usuarioLogin,
+                password: contrasenaLogin,
+                roles: rolLogin
+            };
+
+            const resUser = await fetch(URL_USUARIOS, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'authorization': TOKEN_PANTHER 
+                },
+                body: JSON.stringify(payloadUsuario)
+            });
+
+            if (!resUser.ok) {
+                console.warn("El empleado se guardó, pero el usuario de login falló o ya existía.");
+                mostrarNotificacion('Empleado guardado. Nota: El usuario de login ya existía.', 'warning');
+            } else {
+                mostrarNotificacion(`Empleado y usuario de acceso (${usuarioLogin}) creados correctamente.`, 'success');
+            }
+        } else {
+            mostrarNotificacion('Empleado actualizado correctamente.', 'success');
+        }
+
+        cerrarModal('modal-empleado');
+        renderizarTabla();
+
     } catch (error) {
-        mostrarNotificacion('Error al guardar: ' + error.message, 'error');
+        mostrarNotificacion('Error: ' + error.message, 'error');
     }
 });
 
@@ -214,15 +253,10 @@ function mostrarNotificacion(mensaje, tipo) {
     const notificacion = document.getElementById('notificacion-crud');
     if (!notificacion) return;
     
-    
-    
-    notificacion.className = 'crud-notificacion';
-    void notificacion.offsetWidth; 
-    
     notificacion.className = 'crud-notificacion ' + tipo;
     notificacion.textContent = mensaje;
-    notificacion.scrollIntoView({ behavior: 'smooth', block: 'center' });
     
+    // Quitamos el scroll para que se vea como un Toast flotante (como acordamos)
     setTimeout(() => {
         notificacion.className = 'crud-notificacion';
         notificacion.textContent = '';
