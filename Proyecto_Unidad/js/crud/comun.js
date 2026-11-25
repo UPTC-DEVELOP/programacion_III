@@ -5,10 +5,14 @@ const PAGINA_LOGIN = '../login.html';
 
 function sesionTallerActiva() {
     if (typeof Sesion !== 'undefined' && Sesion.activa()) return true;
-    return Boolean(sessionStorage.getItem('pantherKeyAPI') || sessionStorage.getItem('pantherToken'));
+    return Boolean(
+        sessionStorage.getItem('pantherKeyAPI')
+        || sessionStorage.getItem('pantherToken')
+        || sessionStorage.getItem('userName')
+    );
 }
 
-if (typeof Sesion !== 'undefined' && !sesionTallerActiva()) {
+if (!sesionTallerActiva()) {
     window.location.replace(PAGINA_LOGIN);
 }
 
@@ -16,8 +20,8 @@ function iniciarControlSesion() {
     const usuarioActivo = document.getElementById('usuario-activo');
     if (usuarioActivo) {
         const nombre = (typeof Sesion !== 'undefined' && Sesion.usuario)
-            ? Sesion.usuario
-            : (sessionStorage.getItem('userName') || 'DEMO_API');
+            || sessionStorage.getItem('userName')
+            || 'DEMO_API';
         usuarioActivo.textContent = nombre;
     }
 
@@ -27,9 +31,13 @@ function iniciarControlSesion() {
         btnCerrar.addEventListener('click', function () {
             if (typeof Sesion !== 'undefined' && typeof Sesion.cerrar === 'function') {
                 Sesion.cerrar();
-            } else {
-                sessionStorage.clear();
             }
+            if (typeof PantherApi !== 'undefined' && typeof PantherApi.clearKeyAPI === 'function') {
+                PantherApi.clearKeyAPI();
+            }
+            sessionStorage.removeItem('userRole');
+            sessionStorage.removeItem('userName');
+            sessionStorage.removeItem('pantherToken');
             window.location.replace(PAGINA_LOGIN);
         });
     }

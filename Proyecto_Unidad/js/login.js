@@ -1,14 +1,10 @@
-// Inicio de sesion contra el API de pruebas de Clarisa.
-// Depende de js/servicios/clarisa.js (Sesion y ClarisaApi).
+// Login dual: demo_api → Clarisa (facturación); resto → Panther (CRUDs del taller).
 
-// --- Constantes ---
 const CLAVE_USUARIO_RECORDADO = 'autotech-usuario';
 const PAGINA_FACTURACION = 'pages/factura.html';
 const PAGINA_TALLER = 'pages/clientes.html';
 
-// --- Ciclo de vida ---
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Referencias del DOM ---
     const form = document.getElementById('form-login');
     const usuario = document.getElementById('usuario');
     const contrasena = document.getElementById('contrasena');
@@ -17,18 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnTexto = btnSesion.querySelector('.btn-texto');
     const alerta = document.getElementById('login-alerta');
 
-    if (Sesion.activa()) {
-        window.location.replace(PAGINA_FACTURACION);
-        return;
-    }
-
     const usuarioGuardado = localStorage.getItem(CLAVE_USUARIO_RECORDADO);
     if (usuarioGuardado) {
         usuario.value = usuarioGuardado;
         recordarme.checked = true;
     }
 
-    // --- Funciones auxiliares ---
     function mostrarAlerta(mensaje, tipo) {
         alerta.className = 'login-alerta ' + tipo;
         alerta.setAttribute('role', tipo === 'error' ? 'alert' : 'status');
@@ -36,47 +26,26 @@ document.addEventListener('DOMContentLoaded', () => {
         alerta.hidden = false;
     }
 
-    function ocultarAlerta() {
-        alerta.hidden = true;
-        alerta.textContent = '';
-    }
-
     function estadoCargando(cargando) {
         btnSesion.disabled = cargando;
         btnSesion.classList.toggle('cargando', cargando);
-        btnSesion.setAttribute('aria-busy', String(cargando));
-        btnTexto.textContent = cargando ? 'Validando credenciales...' : 'Iniciar Sesión';
+        btnTexto.textContent = cargando ? 'Validando...' : 'Iniciar Sesión';
     }
 
-    // --- Manejadores de eventos ---
     document.getElementById('toggle-contrasena').addEventListener('click', function () {
         const visible = contrasena.type === 'text';
         contrasena.type = visible ? 'password' : 'text';
-        this.setAttribute('aria-label', visible ? 'Mostrar contraseña' : 'Ocultar contraseña');
-    });
-
-    document.getElementById('olvide-contrasena').addEventListener('click', (e) => {
-        e.preventDefault();
-        mostrarAlerta('Comunícate con el administrador de Clarisa para restablecer tu contraseña.', 'info');
-    });
-
-    ['btn-google', 'btn-apple'].forEach((id) => {
-        const boton = document.getElementById(id);
-        boton.addEventListener('click', () => {
-            mostrarAlerta('El inicio de sesión con ' + boton.textContent.trim() + ' estará disponible pronto.', 'info');
-        });
     });
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        ocultarAlerta();
+        alerta.hidden = true;
 
         const valorUsuario = usuario.value.trim();
         const valorContrasena = contrasena.value;
 
         if (!valorUsuario || !valorContrasena.trim()) {
-            mostrarAlerta('Ingresa tu usuario y tu contraseña.', 'error');
-            (valorUsuario ? contrasena : usuario).focus();
+            mostrarAlerta('Ingresa usuario y contraseña.', 'error');
             return;
         }
 
@@ -127,13 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btnTexto.textContent = 'Ingresando...';
             setTimeout(() => window.location.assign(PAGINA_TALLER), 800);
         } catch (error) {
-            const sinConexion = error instanceof TypeError;
-            mostrarAlerta(
-                sinConexion
-                    ? 'No fue posible conectar con el servidor de Clarisa. Verifica tu conexión e inténtalo de nuevo.'
-                    : error.message,
-                'error'
-            );
+            mostrarAlerta(error.message, 'error');
             estadoCargando(false);
         }
     });

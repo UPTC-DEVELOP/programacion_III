@@ -1,5 +1,5 @@
 // CRUD de clientes contra Panther (recurso persons).
-// Integrado desde feature/grupo5 y apuntando a panther/rest.
+// Usa PantherApi (ruta relativa ../panther/rest) en lugar de URLs absolutas.
 
 let editando = false;
 let idEditando = null;
@@ -35,7 +35,7 @@ async function obtenerClientes() {
 async function renderizarTabla(filtro = '') {
     tablaBody.innerHTML = '<tr><td colspan="7" class="sin-resultados">Cargando clientes...</td></tr>';
     const clientes = await obtenerClientes();
-    const busqueda = filtro.toLowerCase();
+    const busqueda = (filtro || '').toLowerCase();
     const filtrados = clientes.filter((cliente) => {
         const nombre = `${cliente.name || ''} ${cliente.lastName || ''}`.toLowerCase();
         return nombre.includes(busqueda)
@@ -70,6 +70,7 @@ async function renderizarTabla(filtro = '') {
 
 formCliente.addEventListener('submit', async function (evento) {
     evento.preventDefault();
+
     const nombreCompleto = document.getElementById('nombre').value.trim();
     const documento = document.getElementById('documento').value.trim();
     const telefono = document.getElementById('telefono').value.trim();
