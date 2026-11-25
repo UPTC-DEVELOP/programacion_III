@@ -1,0 +1,7 @@
+English
+Restful service, with PHP programming oriented to objects,
+clean classes of Html code.
+
+Español
+Servicio restful, con prograacion PHP orientada a objetos,
+clases limpias de codigo Html.

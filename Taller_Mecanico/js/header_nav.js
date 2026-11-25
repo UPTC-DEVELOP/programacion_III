@@ -35,11 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <i class="bi bi-wrench-adjustable text-secondary"></i>
               <span>Servicios</span>
             </a>
-            <a href="page-blank.html" class="nav-item-link" id="nav-repuestos">
-              <i class="bi bi-gear-fill"></i>
-              <span>Repuestos</span>
-            </a>
-            <a href="page-blank.html" class="nav-item-link" id="nav-catalogo">
+            <a href="Productos.html" class="nav-item-link" id="nav-catalogo">
               <i class="bi bi-tags-fill text-info"></i>
               <span>Catálogo y Promociones</span>
             </a>
@@ -47,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <i class="bi bi-person-badge-fill text-primary"></i>
               <span>Empleados</span>
             </a>
-            <a href="page-404.html" class="nav-item-link" id="nav-facturacion">
+            <a href="facturacion.html" class="nav-item-link" id="nav-facturacion">
               <i class="bi bi-receipt-cutoff text-success"></i>
               <span>Facturación</span>
             </a>
