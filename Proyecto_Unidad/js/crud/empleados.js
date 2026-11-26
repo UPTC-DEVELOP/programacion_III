@@ -1,5 +1,10 @@
 // CRUD de empleados contra Panther + creación de usuario de login (j4user).
 
+const TOKEN_PANTHER = '750e8b43e5ed564462c90ef0d382db26'; 
+const BASE_URL = 'http://localhost/panther/backend_panther/panther/rest/empleados';
+const BASE_USUARIOS = 'http://localhost/panther/backend_panther/panther/rest/persons';
+
+
 let editando = false;
 let idEditando = null;
 

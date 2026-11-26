@@ -1,5 +1,9 @@
 // CRUD de vehículos contra Panther (recurso vehiculos).
 
+const TOKEN_PANTHER = '750e8b43e5ed564462c90ef0d382db26'; 
+const BASE_URL = 'http://localhost/panther/backend_panther/panther/rest/vehiculos';
+
+
 let editando = false;
 let idEditando = null;
 
