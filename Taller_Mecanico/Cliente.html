@@ -55,10 +55,11 @@
                         <thead>
                             <tr>
                                 <th>Cliente</th>
+                                <th>Tipo de documento</th>
                                 <th>Cédula</th>
                                 <th>Teléfono</th>
+                                <th>Correo</th>
                                 <th>Dirección</th>
-                                <th>Registro</th>
                                 <th class="acciones">Acciones</th>
                             </tr>
                         </thead>
@@ -91,7 +92,7 @@
 
                     <label for="cliente-cedula">Cédula<span class="required">*</span></label>
                     <input
-                        type="text" id="cliente-cedula" placeholder="Ej. 1234567890" required>
+                        id="cliente-cedula" name="identitydocument" type="text" placeholder="Ej. 1234567890" required>
 
                 </div>
 
@@ -101,21 +102,21 @@
 
                         <label for="cliente-nombres"> Nombres <span class="required">*</span> </label>
 
-                        <input type="text" id="cliente-nombres" placeholder="Ej. Carlos" required>
+                        <input id="cliente-nombres" name="name" type="text" placeholder="Ej. Carlos" required>
                     </div>
 
                     <div class="form-group col-6">
 
                         <label for="cliente-apellidos">Apellidos<span class="required">*</span></label>
 
-                        <input type="text" id="cliente-apellidos" placeholder="Ej. Mendoza" required>
+                        <input id="cliente-apellidos" name="lastName" type="text" placeholder="Ej. Mendoza" required>
                     </div>
                 </div>
                 
                 <div class="form-group">
                     <label for="cliente-telefono"> Teléfono <span class="required">*</span></label>
 
-                    <input type="text" id="cliente-telefono" placeholder="Ej. +57 300 000 0000" required>
+                    <input id="cliente-telefono" name="phone" type="text" placeholder="Ej. +57 300 000 0000" required>
                 </div>
 
 
@@ -128,24 +129,21 @@
                         <span class="required">*</span>
 
                     </label>
-                    <input type="text" id="cliente-direccion"placeholder="Ej. Calle 10 # 5-23, Barrio Centro"required>
+                    <input id="cliente-direccion" name="address" type="text" placeholder="Ej. Calle 10 # 5-23, Barrio Centro" required>
                 </div>
 
                 <div class="form-group">
                     <label for="cliente-tipo-documento">Tipo de documento</label>
-                    <select id="cliente-tipo-documento" required>
+                    <select id="cliente-tipo-documento" name="document_type_id" required>
                         <option value="">Selecciona el tipo</option>
-                        <!-- Luego se cargarán aquí los tipos de la tabla documenttype -->
+
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label for="cliente-correo">Correo</label>
                     <input
-                        type="email"
-                        id="cliente-correo"
-                        placeholder="Ej. persona@correo.com"
-                        required>
+                        id="cliente-correo" name="email" type="email" placeholder="Ej. persona@correo.com" required>
                 </div>
                 <div class="modal-footer">
                     <button

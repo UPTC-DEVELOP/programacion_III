@@ -24,9 +24,8 @@ require 'util/ResourcesURL.php';
 require 'util/JSONUtil.php';
 require 'model/core/segurity/User.php';
 require 'querys/core/SegurityQuery.php';
-
-//Business
 require 'ctrl/business/Persons.php';
+require 'ctrl/business/DocumentTypes.php';
 require 'model/business/Person.php';
 require 'querys/business/BusinessQuery.php';
 

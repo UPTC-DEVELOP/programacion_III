@@ -11,7 +11,7 @@ define("RESOURCES_URL", array(
     'users',
     'useraction',
     'roles',
-    //Business
+    'documenttypes',
     'persons'
 ));
 
