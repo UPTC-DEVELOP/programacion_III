@@ -45,7 +45,7 @@ require 'ctrl/business/Persons.php';
 require 'model/business/Person.php';
 require 'querys/business/BusinessQuery.php';
 
-// Vehiculos y empleados (feature/grupo5)
+// Vehiculos y empleados (Kevin → panther compartido)
 require 'ctrl/business/Vehiculos.php';
 require 'model/business/Vehiculo.php';
 require 'ctrl/business/Empleados.php';

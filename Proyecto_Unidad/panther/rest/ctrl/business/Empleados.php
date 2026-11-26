@@ -1,7 +1,7 @@
 <?php
 /**
  * Gestiona los empleados del taller.
- * Integrado desde feature/grupo5 dentro de panther/rest.
+ * Integrado desde Panther/Kevin (developer Kevin) dentro de panther/rest.
  */
 class Empleados extends Request
 {

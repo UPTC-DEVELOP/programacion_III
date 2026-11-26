@@ -1,8 +1,9 @@
 <?php
 
 /**
- * <b>Descripcion:</b> Clase que <br/>Gestiona las personas
+ * <b>Descripcion:</b> Clase que <br/>Gestiona las personas (clientes)
  * <b>Caso de Uso:</b> PANTHER- Business <br/>
+ * Extendido por Kevin (documento, correo, direccion, tipo) + DELETE físico.
  *
  * @author Josué Nicolás Pinzón Villamil <a href = "mailto:jpinzon@j4sysol.com">jpinzon@j4sysol.com</a>
  */

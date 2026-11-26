@@ -1,52 +1,58 @@
 --
 -- Base de datos: `panther`
--- Caso de Estudio: Taller Mecánico (seguridad + órdenes + facturas)
+-- Script único del taller (seguridad + clientes/vehículos/empleados + órdenes + facturas)
+--
+-- Importar este archivo en phpMyAdmin / MariaDB sobre la BD `panther`.
+--
+-- Login REST:
+--   Authorization: 750e8b43e5ed564462c90ef0d382db26
+--   { "user": "admin", "password": "12345" }
 --
 
--- Ingreso vía restful
--- Authorization: 750e8b43e5ed564462c90ef0d382db26
--- {
---  "user":"admin",
---  "password":"12345"
--- }
-
 -- --------------------------------------------------------
--- Seguridad (j4rol / j4user / person)
+-- 1) Seguridad (j4rol / j4user)
 -- --------------------------------------------------------
 
-CREATE TABLE `j4rol` (
+CREATE TABLE IF NOT EXISTS `j4rol` (
   `id` int(11) NOT NULL,
   `name` varchar(30) NOT NULL,
-  `description` varchar(200) NOT NULL
+  `description` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `j4rol` (`id`, `name`, `description`) VALUES
 (1, 'admin', 'Admin'),
-(2, 'user', 'User generic');
+(2, 'user', 'User generic'),
+(3, 'recepcionista', 'Recepcionista'),
+(4, 'mecanico', 'Mecánico'),
+(5, 'almacenista', 'Almacenista')
+ON DUPLICATE KEY UPDATE
+  `name` = VALUES(`name`),
+  `description` = VALUES(`description`);
 
-CREATE TABLE `j4user` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `j4user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user` varchar(254) NOT NULL,
   `password` varchar(128) NOT NULL,
   `keyAPI` varchar(60) NOT NULL,
   `roles` int(30) NOT NULL,
-  `dateDelete` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `dateDelete` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `j4user` (`user`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=17;
 
 INSERT INTO `j4user` (`id`, `user`, `password`, `keyAPI`, `roles`, `dateDelete`) VALUES
-(1, 'admin', '$2y$10$rCdykaN0YQL/H4VJW0RKae69B2QekbrO3Iuj8OxFy/V1syHOmpfmO', '750e8b43e5ed564462c90ef0d382db26', 1, NULL);
+(1, 'admin', '$2y$10$rCdykaN0YQL/H4VJW0RKae69B2QekbrO3Iuj8OxFy/V1syHOmpfmO', '750e8b43e5ed564462c90ef0d382db26', 1, NULL)
+ON DUPLICATE KEY UPDATE
+  `password` = VALUES(`password`),
+  `keyAPI` = VALUES(`keyAPI`),
+  `roles` = VALUES(`roles`);
 
-ALTER TABLE `j4rol`
-  ADD PRIMARY KEY (`id`);
+-- --------------------------------------------------------
+-- 2) Clientes, vehículos, empleados (Kevin → REST persons/vehiculos/empleados)
+-- --------------------------------------------------------
 
-ALTER TABLE `j4user`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `j4user` (`user`) USING BTREE;
-
-ALTER TABLE `j4user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
-CREATE TABLE `person` (
+CREATE TABLE IF NOT EXISTS `person` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(30) NOT NULL,
   `lastName` VARCHAR(30) NOT NULL,
@@ -58,9 +64,6 @@ CREATE TABLE `person` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_person_documento` (`documento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-INSERT INTO person(name, lastName, phone, documento, correo, direccion, tipo)
-VALUES ('Nicolás','Pinzón','3419478','10000001','nicolas@email.com','Tunja','Particular');
 
 CREATE TABLE IF NOT EXISTS `vehiculo` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
@@ -84,8 +87,36 @@ CREATE TABLE IF NOT EXISTS `empleado` (
   UNIQUE KEY `uk_empleado_documento` (`documento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+INSERT INTO person(name, lastName, phone, documento, correo, direccion, tipo)
+VALUES
+('Nicolás', 'Pinzón', '3419478', '10000001', 'nicolas@email.com', 'Tunja', 'Particular'),
+('Carlos', 'Rodríguez', '3201234567', '79123456', 'carlos.rodriguez@email.com', 'Cra 7 # 45-10', 'Particular'),
+('María', 'López', '3159876543', '52987654', 'maria.lopez@email.com', 'Cl 80 # 12-30', 'Particular')
+ON DUPLICATE KEY UPDATE
+  name = VALUES(name),
+  lastName = VALUES(lastName),
+  phone = VALUES(phone);
+
+INSERT INTO vehiculo(placa, marca, modelo, anio, color, propietario)
+VALUES
+('ABC123', 'Toyota', 'Corolla', '2019', 'Gris', 'Carlos Rodríguez'),
+('XYZ789', 'Mazda', '3', '2021', 'Rojo', 'María López')
+ON DUPLICATE KEY UPDATE
+  marca = VALUES(marca),
+  modelo = VALUES(modelo);
+
+INSERT INTO empleado(nombres, apellidos, documento, rol, telefono, correo)
+VALUES
+('Juan', 'Pérez', '79123456', '4', '3001112233', 'juan.perez@autotech.com'),
+('Carlos', 'Gómez', '11223344', '4', '3004445566', 'carlos.gomez@autotech.com'),
+('Ana', 'Ruiz', '99887766', '3', '3007778899', 'ana.ruiz@autotech.com')
+ON DUPLICATE KEY UPDATE
+  nombres = VALUES(nombres),
+  apellidos = VALUES(apellidos),
+  rol = VALUES(rol);
+
 -- --------------------------------------------------------
--- Órdenes de servicio del taller
+-- 3) Órdenes de servicio (Camilo → REST ordenes)
 -- --------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `ordenes` (
@@ -115,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `ordenes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
--- Facturas (flujo: 1° guardar en Panther → 2° Clarisa/DIAN)
+-- 4) Facturas (Camilo → REST facturas; flujo Panther → Clarisa/DIAN)
 -- --------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `facturas` (
@@ -162,10 +193,7 @@ CREATE TABLE IF NOT EXISTS `facturas` (
     ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
 -- Datos de prueba: 2 órdenes (validar GET /ordenes)
--- --------------------------------------------------------
-
 INSERT INTO `ordenes` (
   `numero_orden`,
   `cliente_documento`, `cliente_nombre`, `cliente_telefono`, `cliente_direccion`, `cliente_email`,
@@ -188,4 +216,9 @@ INSERT INTO `ordenes` (
   '11223344', 'Carlos Gómez', 2.50, 35000.00, 17500.00,
   '[{"referencia":"LL-015","descripcion":"Bujías","marca":"NGK","precio":48000,"cantidad":1}]',
   135500.00, 25745.00, 161245.00, 'ABIERTA'
-);
+)
+ON DUPLICATE KEY UPDATE
+  `estado` = VALUES(`estado`),
+  `total` = VALUES(`total`);
+
+-- Nota: proveedores/productos (Estefanía) se agregarán aquí cuando exista el módulo REST.
