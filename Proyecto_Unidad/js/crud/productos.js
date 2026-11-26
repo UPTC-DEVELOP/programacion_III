@@ -1,6 +1,6 @@
 const TOKEN_PANTHER = '750e8b43e5ed564462c90ef0d382db26';
-const BASE_URL = 'http://localhost/api_panther/index.php?PATH_INFO=repuestos';
-const PROVEEDORES_URL = 'http://localhost/api_panther/index.php?PATH_INFO=proveedores';
+const BASE_URL = 'http://localhost/api_panther/index.php=repuestos';
+const PROVEEDORES_URL = 'http://localhost/api_panther/index.php=proveedores';
 
 let editando = false;
 let idEditando = null;
