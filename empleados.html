@@ -141,6 +141,33 @@
 
                 </div>
 
+                <fieldset id="credencialesEmpleado">
+                    <legend>Acceso a AutoGestión</legend>
+
+                    <div class="campo-grupo">
+                        <label for="usuarioEmpleado">Nombre de usuario *</label>
+                        <input id="usuarioEmpleado" type="text" required
+                        minlength="6" maxlength="30" pattern="[A-Za-z0-9._\-]{6,30}"
+                        placeholder="Ej: mateo.recepcion" autocomplete="username"
+                        title="Usa de 6 a 30 caracteres e incluye al menos una letra. Puedes usar letras, números, punto, guion y guion bajo.">
+                    </div>
+                    <div class="campo-grupo">
+                        <label for="claveEmpleado">Contraseña inicial *</label>
+
+                        <div class="campo-clave">
+                            <input id="claveEmpleado" type="password" required
+                            minlength="6" maxlength="72"
+                            autocomplete="new-password"
+                            aria-describedby="ayudaClaveEmpleado">
+
+                            <button type="button" id="verClaveEmpleado"
+                            aria-label="Mostrar contraseña"
+                            aria-controls="claveEmpleado">Ver</button>
+                        </div>
+
+                        <small id="ayudaClaveEmpleado">Mínimo 6 caracteres.</small>
+                    </div>
+                </fieldset>
                 <div class="modal-botones">
                     <button type="button" class="btn-modal btn-cancelar" id="btnCancelar">Cancelar</button>
                     <button type="submit" class="btn-modal btn-guardar" id="btnGuardar">Guardar</button>
@@ -166,6 +193,6 @@
         <span id="toastMensaje">Operación exitosa</span>
     </div>
 
-    <script src="js/empleados.js?v=panther-1"></script>
+    <script src="js/empleados.js?v=sesiones-12h"></script>
 </body>
 </html>

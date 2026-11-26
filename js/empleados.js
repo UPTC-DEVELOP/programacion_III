@@ -124,6 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (guardando) return;
         cedulaEditando = null;
         formEmpleado.reset();
+        pedirCredenciales(true);
         modalTitulo.textContent = "NUEVO EMPLEADO";
         modalSubtitulo.textContent = "Registra los datos del nuevo empleado";
         inputCedula.disabled = false;
@@ -139,6 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (guardando || !emp) return;
 
         cedulaEditando = cedula;
+        pedirCredenciales(!emp.usuario);
         modalTitulo.textContent = "EDITAR EMPLEADO";
         modalSubtitulo.textContent = "Modifica los datos del empleado";
 
@@ -336,6 +338,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 9. ENVÍO DEL FORMULARIO (Crear / Actualizar)
 
+    const credenciales = document.getElementById("credencialesEmpleado");
+    const verClave = document.getElementById("verClaveEmpleado");
+    const campoClave = document.getElementById("claveEmpleado");
+
+    function mostrarClave(visible) {
+        campoClave.type = visible ? "text" : "password";
+        verClave.textContent = visible ? "Ocultar" : "Ver";
+        verClave.setAttribute(
+            "aria-label",
+            visible ? "Ocultar contraseña" : "Mostrar contraseña"
+        );
+    }
+
+    function pedirCredenciales(pedir) {
+        mostrarClave(false);
+        credenciales.hidden = !pedir;
+        credenciales.disabled = !pedir;
+    }
+
+    verClave.addEventListener("click", () => {
+        mostrarClave(campoClave.type === "password");
+    });
+
     async function guardarCambio(boton, ruta, metodo, datos, cerrar, mensaje) {
         if (guardando) return;
         guardando = true;
@@ -361,6 +386,11 @@ document.addEventListener("DOMContentLoaded", () => {
             apellido: inputApellido.value.trim(), telefono: inputTelefono.value.trim(),
             correo: inputCorreo.value.trim(), rol: inputRol.value
         };
+        if (!credenciales.disabled) {
+            if (!formEmpleado.reportValidity()) return;
+            datos.usuario = document.getElementById("usuarioEmpleado").value.trim();
+            datos.clave = document.getElementById("claveEmpleado").value;
+        }
         guardarCambio(document.getElementById("btnGuardar"), cedulaEditando ? "/" + cedulaEditando : "",
             cedulaEditando ? "PUT" : "POST", datos, cerrarModal,
             cedulaEditando ? "Empleado actualizado correctamente" : "Empleado registrado correctamente");

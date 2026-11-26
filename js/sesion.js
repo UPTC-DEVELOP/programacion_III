@@ -28,7 +28,25 @@ const Sesion = {
             ["ag_panther_token", "ag_panther_usuario", "ag_panther_expira"].forEach((k) => sessionStorage.removeItem(k));
         } catch (e) { }
     },
-    cerrar() {
+    async cerrar() {
+        const token = this.token();
+        if (token) {
+            const control = new AbortController();
+            const limite = setTimeout(() => control.abort(), CONFIG.TIEMPO_MAXIMO_MS);
+            try {
+                const respuesta = await fetch(CONFIG.API_BASE + "useraction/logout", {
+                    method: "POST",
+                    headers: { authorization: token },
+                    signal: control.signal
+                });
+                if (!respuesta.ok && respuesta.status !== 401) throw new Error("Cierre pendiente");
+            } catch (error) {
+                window.alert("Panther no pudo confirmar el cierre. Comprueba la conexión y vuelve a pulsar Cerrar sesión.");
+                return;
+            } finally {
+                clearTimeout(limite);
+            }
+        }
         this.limpiar();
         window.location.href = CONFIG.PAGINA_LOGIN;
     },

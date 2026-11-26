@@ -590,3 +590,62 @@ body {
         width: 100%;
     }
 }
+
+#credencialesEmpleado {
+    min-width: 0;
+    margin: 20px 0 0;
+    padding: 0;
+    border: 0;
+}
+
+#credencialesEmpleado:not([hidden]) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+#credencialesEmpleado legend {
+    margin-bottom: 12px;
+    padding: 0;
+    color: #f2f2f2;
+    font: bold 14px Arial, sans-serif;
+}
+
+@media (max-width: 768px) {
+    #credencialesEmpleado:not([hidden]) {
+        grid-template-columns: 1fr;
+    }
+}
+
+#credencialesEmpleado {
+    border: 0;
+}
+
+#credencialesEmpleado .campo-clave {
+    position: relative;
+}
+
+#claveEmpleado {
+    box-sizing: border-box;
+    width: 100%;
+    padding-right: 76px;
+}
+
+#verClaveEmpleado {
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    transform: translateY(-50%);
+    min-width: 44px;
+    min-height: 44px;
+    background: none;
+    border: none;
+    color: #c9ced6;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#verClaveEmpleado:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}

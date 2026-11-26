@@ -71,6 +71,9 @@ else{
 
 // Separación de resources de la url
 $resource = array_shift($request);
+require_once __DIR__ . '/util/AccesoTaller.php';
+AccesoTaller::controlar($resource, $request, strtolower($_SERVER['REQUEST_METHOD']), $view);
+
 // Recursos existentes para servicios rest
 $resourcesExisting = RESOURCES_URL;
 

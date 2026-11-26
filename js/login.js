@@ -29,21 +29,20 @@ function marcarInvalidos(si) {
 }
 
 // Bloqueo por intentos fallidos
+let vencimientoBloqueo = 0;
 function bloqueoRestante() {
-    try { return Math.max(0, Number(localStorage.getItem("ag_panther_bloqueo") || 0) - Date.now()); } catch (e) { return 0; }
+    try { return Math.max(0, Number(localStorage.getItem("ag_panther_bloqueo") || vencimientoBloqueo) - Date.now()); } catch (e) { return Math.max(0, vencimientoBloqueo - Date.now()); }
 }
-function sumarFallo() {
+function recordarBloqueo(segundos) {
+    vencimientoBloqueo = Date.now() + segundos * 1000;
     try {
-        const n = Number(localStorage.getItem("ag_panther_fallos") || 0) + 1;
-        if (n >= CONFIG.INTENTOS_MAX_LOGIN) {
-            localStorage.setItem("ag_panther_bloqueo", String(Date.now() + CONFIG.BLOQUEO_MS));
-            localStorage.setItem("ag_panther_fallos", "0");
-        } else {
-            localStorage.setItem("ag_panther_fallos", String(n));
-        }
-    } catch (e) { }
+        localStorage.setItem("ag_panther_bloqueo", String(vencimientoBloqueo));
+    } catch (error) {
+        // El contador también funciona en memoria.
+    }
 }
 function limpiarFallos() {
+    vencimientoBloqueo = 0;
     try { localStorage.removeItem("ag_panther_fallos"); localStorage.removeItem("ag_panther_bloqueo"); } catch (e) { }
 }
 
@@ -52,10 +51,9 @@ async function iniciarSesion(event) {
     marcarInvalidos(false);
 
     if (bloqueoRestante() > 0) {
-    actualizarBloqueo();
-    return;
+        actualizarBloqueo();
+        return;
     }
-
     if (btnIngresar.disabled) return;
 
     const usuario = inputUsuario.value.trim();
@@ -70,7 +68,7 @@ async function iniciarSesion(event) {
     btnIngresar.disabled = true;
     btnIngresar.textContent = "Ingresando...";
     mostrarMensaje("");
-    
+
     const controlador = new AbortController();
     const temporizador = setTimeout(() => controlador.abort(), CONFIG.TIEMPO_MAXIMO_MS);
 
@@ -86,6 +84,11 @@ async function iniciarSesion(event) {
         let datos = null;
         try { datos = await respuesta.json(); } catch (e) { }
 
+        if (respuesta.status === 429) {
+            const segundos = Number(datos?.data?.segundos || respuesta.headers.get("Retry-After")) || 60;
+            recordarBloqueo(segundos);
+            throw new Error("Espera antes de volver a ingresar.");
+        }
         if (respuesta.status === 401 || respuesta.status === 403) {
             const e = new Error("Usuario o contraseña incorrectos.");
             e.credenciales = true;
@@ -110,7 +113,6 @@ async function iniciarSesion(event) {
 
     } catch (error) {
         if (error.credenciales) {
-            sumarFallo();
             marcarInvalidos(true);
         }
         if (error.name === "AbortError") {
@@ -138,26 +140,16 @@ let mostrandoBloqueo = false;
 
 function actualizarBloqueo() {
     clearTimeout(siguienteActualizacion);
-
     const restante = bloqueoRestante();
 
     if (restante > 0) {
         if (!mostrandoBloqueo) {
-            mostrarMensaje(
-                "Alcanzaste el límite de intentos. Espera para volver a ingresar.",
-                "error"
-            );
+            mostrarMensaje("Alcanzaste el límite de intentos. Espera para volver a ingresar.", "error");
         }
-
         mostrandoBloqueo = true;
         btnIngresar.disabled = true;
-
-        const segundos = Math.ceil(restante / 1000);
-        btnIngresar.textContent = "Reintentar en " + segundos + " s";
-
-        // Actualiza el botón cuando cambie el segundo que se muestra.
-        const siguienteSegundo = restante % 1000 || 1000;
-        siguienteActualizacion = setTimeout(actualizarBloqueo, siguienteSegundo);
+        btnIngresar.textContent = "Reintentar en " + Math.ceil(restante / 1000) + " s";
+        siguienteActualizacion = setTimeout(actualizarBloqueo, restante % 1000 || 1000);
     } else if (mostrandoBloqueo) {
         mostrandoBloqueo = false;
         btnIngresar.disabled = false;
@@ -166,14 +158,8 @@ function actualizarBloqueo() {
     }
 }
 
-// Recupera el tiempo restante al recargar o volver a la página.
 window.addEventListener("pageshow", actualizarBloqueo);
-
-// Mantiene el contador al día si el bloqueo cambia en otra pestaña.
 window.addEventListener("storage", (evento) => {
-    if (evento.key === "ag_panther_bloqueo" || evento.key === null) {
-        actualizarBloqueo();
-    }
+    if (evento.key === "ag_panther_bloqueo" || evento.key === null) actualizarBloqueo();
 });
-
 actualizarBloqueo();
