@@ -1,6 +1,6 @@
 /**
  * Cliente API Panther (PHP REST) — JavaScript puro, sin frameworks.
- * Centraliza GET / POST / PUT / DELETE hacia Proyecto_Unidad/panther/rest/
+ * Centraliza GET / POST / PUT / DELETE hacia Panther/backend_panther/panther/rest/
  *
  * No usa el token de Clarisa (Sesion); maneja solo el keyAPI de Panther.
  */
@@ -9,10 +9,10 @@
 const PANTHER_DEFAULT_KEY_API = '750e8b43e5ed564462c90ef0d382db26';
 
 /**
- * Base URL del REST Panther.
- * - Desde pages/:  ../panther/rest
- * - Desde raíz (login.html, index.html): panther/rest
- * - Producción: asignar window.PANTHER_API_URL antes de cargar este script.
+ * Base URL del REST Panther (backend canónico del equipo).
+ * - Desde pages/:  ../../Panther/backend_panther/panther/rest
+ * - Desde raíz Proyecto_Unidad (login.html, index.html): ../Panther/backend_panther/panther/rest
+ * - Producción / XAMPP: asignar window.PANTHER_API_URL (ej. http://localhost/panther/backend_panther/panther/rest)
  */
 const PANTHER_BASE_URL = (function resolvePantherBaseUrl() {
     if (typeof window !== 'undefined' && window.PANTHER_API_URL) {
@@ -23,12 +23,12 @@ const PANTHER_BASE_URL = (function resolvePantherBaseUrl() {
         ? window.location.pathname
         : '';
 
-    // Páginas en /pages/ → subir un nivel
+    // Páginas en /pages/ → subir a la raíz del repo relativo
     if (/\/pages\//.test(path)) {
-        return '../panther/rest';
+        return '../../Panther/backend_panther/panther/rest';
     }
 
-    return 'panther/rest';
+    return '../Panther/backend_panther/panther/rest';
 })();
 
 class PantherApi {

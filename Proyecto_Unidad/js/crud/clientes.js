@@ -1,6 +1,11 @@
 // CRUD de clientes contra Panther (recurso persons).
 // Usa PantherApi (ruta relativa ../panther/rest) en lugar de URLs absolutas.
 
+const TOKEN_PANTHER = '750e8b43e5ed564462c90ef0d382db26'; 
+const BASE_URL = 'http://localhost/panther/backend_panther/panther/rest/persons';
+
+
+
 let editando = false;
 let idEditando = null;
 

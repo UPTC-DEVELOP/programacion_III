@@ -1,9 +1,0 @@
-CREATE TABLE vehiculo (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    placa VARCHAR(10) UNIQUE NOT NULL,
-    marca VARCHAR(30) NOT NULL,
-    modelo VARCHAR(30) NOT NULL,
-    anio VARCHAR(4) NOT NULL,
-    color VARCHAR(20) NOT NULL,
-    propietario VARCHAR(100) NOT NULL
-);
