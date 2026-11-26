@@ -23,23 +23,23 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function protegerSistema() {
-    const sesion = localStorage.getItem("sesionServiAuto");
-    if (!sesion) {
+    const sesion = obtenerSesion();
+    const token = obtenerTokenValido();
+
+    if (!sesion || (sesion.proveedor !== "demo" && !token)) {
+        limpiarSesion();
         window.location.href = "Login.html";
         return false;
     }
+
     return true;
 }
 
 function mostrarNombreUsuario() {
-    try {
-        const sesion = JSON.parse(localStorage.getItem("sesionServiAuto"));
-        const elemento = document.getElementById("nombreUsuario");
-        if (elemento && sesion?.username) {
-            elemento.textContent = sesion.username;
-        }
-    } catch {
-        localStorage.removeItem("sesionServiAuto");
+    const sesion = obtenerSesion();
+    const elemento = document.getElementById("nombreUsuario");
+    if (elemento && sesion?.username) {
+        elemento.textContent = sesion.username;
     }
 }
 
@@ -48,15 +48,16 @@ function inicializarCerrarSesion() {
     if (!boton) return;
 
     boton.addEventListener("click", () => {
+        limpiarSesion();
         localStorage.removeItem("sesionServiAuto");
         localStorage.removeItem("pantherToken");
         localStorage.removeItem("pantherTokenWithHeader");
         localStorage.removeItem("clarisaToken");
         localStorage.removeItem("clarisaTokenWithHeader");
         localStorage.removeItem("tokenWithPrefix");
+        window.location.href = "Login.html";
     });
 }
-
 function mostrarMensajeLogin(elemento, texto, tipo) {
     if (!elemento) return;
     elemento.textContent = texto;
@@ -81,6 +82,35 @@ function inicializarMostrarPassword() {
 /* =========================================================
    INICIO DE SESIÓN DE DEMOSTRACIÓN.
 ========================================================= */
+const STORAGE_SESION = "sesionPantherActiva";
+function guardarSesion(sesion) {
+    sessionStorage.setItem(STORAGE_SESION, JSON.stringify(sesion));
+}
+
+function obtenerSesion() {
+    try {
+        const raw = sessionStorage.getItem(STORAGE_SESION);
+        return raw ? JSON.parse(raw) : null;
+    } catch {
+        limpiarSesion();
+        return null;
+    }
+}
+
+function limpiarSesion() {
+    sessionStorage.removeItem(STORAGE_SESION);
+}
+
+function obtenerTokenValido() {
+    const sesion = obtenerSesion();
+    if (!sesion?.token) return null;
+    if (sesion.expiraEn && Date.now() >= Number(sesion.expiraEn)) {
+        limpiarSesion();
+        return null;
+    }
+    return sesion.token;
+}
+
 function inicializarLogin(formulario) {
     const campoUsuario = document.getElementById("username");
     const campoPassword = document.getElementById("password");
@@ -109,206 +139,42 @@ function inicializarLogin(formulario) {
         mostrarMensajeLogin(mensajeLogin, "Validando credenciales...", "info");
 
         try {
+            limpiarSesion();
 
-            localStorage.removeItem("pantherToken");
-            localStorage.removeItem("pantherTokenWithHeader");
-            localStorage.removeItem("clarisaToken");
-            localStorage.removeItem("clarisaTokenWithHeader");
-            localStorage.removeItem("tokenWithPrefix");
-            localStorage.removeItem("sesionServiAuto");
-
-            let nombreSesion = username;
-
-            let tokenPanther = "";
-            let tokenClarisa = "";
-
-            let loginExitoso = false;
-
-            // Acceso de demostración con credenciales configuradas.
-            if (await verificarCredencialesConfiguracion(username, password)) {
-               loginExitoso = true;
-               nombreSesion = username;
-            }
-
-            /* ===========================
-               LOGIN PANTHER
-            =========================== */
-
-            try {
-
-                if (!loginExitoso) {
-                    const responsePanther = await fetch(
-                        "http://localhost/panther-api/useraction/login",
-                        {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                                "Accept": "application/json"
-                            },
-                            body: JSON.stringify({
-                                user: username,
-                                password: password
-                            })
-                        }
-                    );
-
-                    const resultadoPanther =
-                        await responsePanther.json();
-
-                    if (
-                        responsePanther.ok &&
-                        resultadoPanther.state === "OK"
-                    ) {
-
-                        loginExitoso = true;
-
-                        nombreSesion =
-                            resultadoPanther.data?.user ||
-                            username;
-
-                        tokenPanther =
-                            resultadoPanther.data?.keyAPI || "";
-                    }
-                }
-
-            } catch (error) {
-
-                console.warn(
-                    "Panther no respondió",
-                    error
-                );
-
-            }
-
-            /* ===========================
-               LOGIN CLARISA
-            =========================== */
-
-            if (!loginExitoso) {
-
-                try {
-
-                    const responseClarisa =
-                        await fetch(
-                            "http://localhost/panther-api/useraction/clarisa-login",
-                            {
-                                method: "POST",
-                                headers: {
-                                    "Content-Type": "application/json",
-                                    "Accept": "application/json"
-                                },
-                                body: JSON.stringify({
-                                    usuario: username,
-                                    contrasenia: password
-                                })
-                            }
-                        );
-
-                    const resultadoClarisa =
-                        await responseClarisa.json();
-
-                    if (
-                        responseClarisa.ok &&
-                        resultadoClarisa.state === "OK"
-                    ) {
-
-                        loginExitoso = true;
-
-                        nombreSesion =
-                            resultadoClarisa.data?.usuario?.userName ||
-                            resultadoClarisa.data?.usuario ||
-                            username;
-
-                        tokenClarisa =
-                            resultadoClarisa.data?.token ||
-                            resultadoClarisa.token ||
-                            "";
-                    }
-
-                } catch (error) {
-
-                    console.warn(
-                        "Clarisa no respondió",
-                        error
-                    );
-
-                }
-            }
-
-            /* ===========================
-               VALIDAR RESULTADO
-            =========================== */
-
-            if (!loginExitoso) {
-
+            const autenticacion = await LoginAPI.autenticar(username, password);
+            if (!autenticacion) {
                 mostrarMensajeLogin(
                     mensajeLogin,
                     "❌ Usuario o contraseña incorrectos.",
                     "error"
                 );
-
                 campoPassword.focus();
-
-                if (botonIngresar) {
-                    botonIngresar.disabled = false;
-                }
-
+                if (botonIngresar) botonIngresar.disabled = false;
                 return;
             }
 
-            /* ===========================
-               GUARDAR TOKENS
-            =========================== */
+            const { username: nombreSesion, proveedor, tokenPanther, tokenClarisa, roles: rolUsuario } =
+                autenticacion;
+            const tokenPrincipal = tokenPanther || tokenClarisa || "";
+            const expiraEn = Date.now() + (1000 * 60 * 60 * 8);
 
-            if (tokenPanther) {
+            guardarSesion({
+                username: nombreSesion,
+                roles: rolUsuario,
+                proveedor,
+                token: tokenPrincipal,
+                tokens: {
+                    panther: tokenPanther,
+                    clarisa: tokenClarisa
+                },
+                expiraEn
+            });
 
-                localStorage.setItem(
-                    "pantherToken",
-                    tokenPanther
-                );
-
-                // Panther espera la clave API directamente en Authorization,
-                // sin el prefijo "Bearer".
-                localStorage.setItem(
-                    "pantherTokenWithHeader",
-                    tokenPanther
-                );
-
-                // Compatibilidad con el código anterior.
-                localStorage.setItem(
-                    "tokenWithPrefix",
-                    tokenPanther
-                );
-
-            }
-
-            if (tokenClarisa) {
-
-                localStorage.setItem(
-                    "clarisaToken",
-                    tokenClarisa
-                );
-
-                // Clarisacloud recibe el JWT con el prefijo Bearer.
-                localStorage.setItem(
-                    "clarisaTokenWithHeader",
-                    `Bearer ${tokenClarisa}`
-                );
-
-            }
-
-            if (recordarUsuario.checked) {
+            if (recordarUsuario?.checked) {
                 localStorage.setItem("usuarioRecordadoServiAuto", username);
             } else {
                 localStorage.removeItem("usuarioRecordadoServiAuto");
             }
-
-            localStorage.setItem(
-                "sesionServiAuto",
-                JSON.stringify({
-                    username: nombreSesion
-                })
-            );
 
             mostrarMensajeLogin(
                 mensajeLogin,
@@ -317,27 +183,19 @@ function inicializarLogin(formulario) {
             );
 
             setTimeout(() => {
-
-                window.location.href =
-                    "sistema.html";
-
+                window.location.href = "sistema.html";
             }, 500);
-
         } catch (error) {
-
             console.error(error);
-
             mostrarMensajeLogin(
                 mensajeLogin,
                 "Error al autenticar.",
                 "error"
             );
-
+            if (botonIngresar) botonIngresar.disabled = false;
         }
-
     });
 }
-
 /* =========================================================
    NAVEGACIÓN
 ========================================================= */
@@ -400,269 +258,183 @@ function mostrarEstado(texto) {
    CONFIGURACION DEL SISTEMA
 ========================================================= */
 
-const CLAVE_CONFIGURACION = "configuracionServiAuto";
+let configuracionFinanciera = null;
 
 function leerConfiguracionServiAuto() {
-    const guardada = localStorage.getItem(CLAVE_CONFIGURACION);
-
-    const valoresIniciales = {
-        porcentajeUtilidad: 20,
-        porcentajeIva: 19,
-        valorManoObra: 50000,
-        usuario: "admin",
-        credenciales: null
-    };
-
-    if (!guardada) {
-        return valoresIniciales;
-    }
-
-    try {
-        return {
-            ...valoresIniciales,
-            ...JSON.parse(guardada)
-        };
-    } catch (error) {
-        console.error("Error leyendo configuración:", error);
-        return valoresIniciales;
-    }
+    return configuracionFinanciera;
 }
 
-// Convierte texto a Base64.
-function convertirBase64(datos) {
-    let texto = "";
-
-    datos.forEach((byte) => {
-        texto += String.fromCharCode(byte);
-    });
-
-    return btoa(texto);
-}
-
-// Genera un hash seguro para la contraseña.
-async function generarHashPassword(password, salt) {
-    const encoder = new TextEncoder();
-
-    const clave = await crypto.subtle.importKey(
-        "raw",
-        encoder.encode(password),
-        "PBKDF2",
-        false,
-        ["deriveBits"]
-    );
-
-    const resultado = await crypto.subtle.deriveBits(
-        {
-            name: "PBKDF2",
-            salt: salt,
-            iterations: 100000,
-            hash: "SHA-256"
-        },
-        clave,
-        256
-    );
-
-    return convertirBase64(new Uint8Array(resultado));
-}
-
-// Comprueba el usuario y la contraseña del acceso de demostración.
-async function verificarCredencialesConfiguracion(usuario, password) {
-    const configuracion = leerConfiguracionServiAuto();
-
-    if (configuracion.credenciales) {
-        const credenciales = configuracion.credenciales;
-
-        if (usuario !== credenciales.usuario) {
-            return false;
-        }
-
-        const salt = Uint8Array.from(
-            atob(credenciales.salt),
-            caracter => caracter.charCodeAt(0)
-        );
-
-        const hash = await generarHashPassword(password, salt);
-
-        return hash === credenciales.hash;
-    }
-
-    return usuario.toLowerCase() === "admin" && password === "234";
-}
-
-// Carga y guarda la configuración.
-function inicializarConfiguracion() {
+async function inicializarConfiguracion() {
     const formulario = document.getElementById("formulario-configuracion");
-
     if (!formulario) return;
 
     const utilidad = document.getElementById("config-utilidad");
     const iva = document.getElementById("config-iva");
     const manoObra = document.getElementById("config-mano-obra");
 
-    const usuario = document.getElementById("config-usuario");
+    const passwordActual = document.getElementById("config-password-actual");
     const password = document.getElementById("config-password");
     const confirmarPassword = document.getElementById("config-confirmar-password");
+    const guardar = formulario.querySelector('[type="submit"]');
 
-    const configuracion = leerConfiguracionServiAuto();
+    const sesion = obtenerSesion() || {};
+    const roles = Number(sesion.roles) || 0;
+    const esAdmin = roles === 1;
+    let configuracionActual = null;
 
-    // Mostrar los valores guardados.
-    utilidad.value = configuracion.porcentajeUtilidad;
-    iva.value = configuracion.porcentajeIva;
-    manoObra.value = configuracion.valorManoObra;
+    // 1. Obtener configuración directamente desde Panther
+    try {
+        const registros = await ConfiguracionAPI.listar();
+        const lista = Array.isArray(registros) ? registros : [];
 
-    usuario.placeholder = `Usuario actual: ${configuracion.usuario}`;
+        configuracionActual = lista
+            .filter((registro) => !registro.dateDelete)
+            .sort((a, b) =>
+                String(b.fecha_actualizacion || b.id || "").localeCompare(
+                    String(a.fecha_actualizacion || a.id || "")
+                )
+            )[0] || null;
 
+        if (configuracionActual) {
+            configuracionFinanciera = {
+                id: Number(configuracionActual.id),
+                porcentajeUtilidad: Number(configuracionActual.porcentaje_utilidad),
+                porcentajeIva: Number(configuracionActual.iva),
+                valorManoObra: Number(configuracionActual.valor_mano_obra)
+            };
+        }
+    } catch (error) {
+        console.error("No se pudo cargar la configuración de Panther:", error);
+        mostrarEstado(`❌ No se pudo cargar la configuración: ${error.message}`);
+    }
+
+    // 2. Cargar en los inputs los valores que devolvió Panther
+    const valores = leerConfiguracionServiAuto();
+    if (utilidad) {
+        utilidad.value = valores?.porcentajeUtilidad ?? "";
+        utilidad.disabled = !esAdmin;
+    }
+    if (iva) {
+        iva.value = valores?.porcentajeIva ?? "";
+        iva.disabled = !esAdmin;
+    }
+    if (manoObra) {
+        manoObra.value = valores?.valorManoObra ?? "";
+        manoObra.disabled = !esAdmin;
+    }
+
+    const avisoPermisos = document.getElementById("aviso-configuracion-permisos");
+    if (!esAdmin && avisoPermisos) {
+        avisoPermisos.textContent = "Solo un administrador puede modificar los parámetros financieros.";
+    }
+
+    if (sesion.proveedor === "clarisa" && passwordActual && password && confirmarPassword) {
+        passwordActual.disabled = true;
+        password.disabled = true;
+        confirmarPassword.disabled = true;
+        passwordActual.placeholder = "La contraseña de CLARISA se administra en Clarisacloud";
+        const aviso = document.getElementById("aviso-password");
+        if (aviso) {
+            aviso.textContent = "Esta sesión usa CLARISA. Cambia la contraseña desde Clarisacloud.";
+        }
+    }
+
+    // 3. Guardar cambios en Panther (POST / PUT configuraciones y PUT users/change-password)
     formulario.addEventListener("submit", async (evento) => {
         evento.preventDefault();
 
-        const porcentajeUtilidad = Number(utilidad.value);
-        const porcentajeIva = Number(iva.value);
-        const valorManoObra = Number(manoObra.value);
+        const porcentajeUtilidad = Number(utilidad?.value);
+        const porcentajeIva = Number(iva?.value);
+        const valorManoObra = Number(manoObra?.value);
 
-        const nuevoUsuario = usuario.value.trim();
-        const nuevaPassword = password.value;
-        const confirmacion = confirmarPassword.value;
+        const claveActual = passwordActual?.value || "";
+        const nuevaPassword = password?.value || "";
+        const confirmacion = confirmarPassword?.value || "";
 
-        // Validar utilidad.
         if (
-            !Number.isFinite(porcentajeUtilidad) ||
-            porcentajeUtilidad < 0 ||
-            porcentajeUtilidad > 100
+            esAdmin &&
+            (!Number.isFinite(porcentajeUtilidad) || porcentajeUtilidad < 0 || porcentajeUtilidad > 100)
         ) {
             mostrarEstado("⚠️ La utilidad debe estar entre 0 y 100 %.");
             return;
         }
 
-        // Validar IVA.
-        if (
-            !Number.isFinite(porcentajeIva) ||
-            porcentajeIva <= 0
-        ) {
+        if (esAdmin && (!Number.isFinite(porcentajeIva) || porcentajeIva <= 0)) {
             mostrarEstado("⚠️ El IVA debe ser mayor que cero.");
             return;
         }
 
-        // Validar mano de obra.
-        if (
-            !Number.isFinite(valorManoObra) ||
-            valorManoObra <= 0
-        ) {
-            mostrarEstado("⚠️ El valor de mano de obra debe ser mayor que cero.");
+        if (esAdmin && (!Number.isFinite(valorManoObra) || valorManoObra < 0)) {
+            mostrarEstado("⚠️ El valor de mano de obra no puede ser negativo.");
             return;
         }
 
-        // Validar nombre de usuario.
-        if (nuevoUsuario.length > 50) {
-            mostrarEstado("⚠️ El usuario no puede superar 50 caracteres.");
-            return;
-        }
-
-        // Validar contraseña solamente si se escribió una nueva.
-        if (nuevaPassword) {
-            const contraseñaValida =
-                nuevaPassword.length >= 8 &&
-                /[A-Z]/.test(nuevaPassword) &&
-                /[a-z]/.test(nuevaPassword) &&
-                /[0-9]/.test(nuevaPassword) &&
-                /[^A-Za-z0-9]/.test(nuevaPassword);
-
-            if (!contraseñaValida) {
+        if (nuevaPassword || confirmacion || claveActual) {
+            if (
+                !claveActual ||
+                !nuevaPassword ||
+                nuevaPassword.length < 8 ||
+                !/[A-Z]/.test(nuevaPassword) ||
+                !/[a-z]/.test(nuevaPassword) ||
+                !/[0-9]/.test(nuevaPassword) ||
+                !/[^A-Za-z0-9]/.test(nuevaPassword)
+            ) {
                 mostrarEstado(
-                    "⚠️ La contraseña debe tener mínimo 8 caracteres, mayúsculas, minúsculas, números y símbolos."
+                    "⚠️ Ingresa tu contraseña actual y una nueva contraseña segura (8 caracteres, mayúscula, minúscula, número y símbolo)."
                 );
                 return;
             }
-
             if (nuevaPassword !== confirmacion) {
-                mostrarEstado("⚠️ Las contraseñas no coinciden.");
+                mostrarEstado("⚠️ Las contraseñas nuevas no coinciden.");
                 return;
-            }
-        } else if (confirmacion) {
-            mostrarEstado("⚠️ Escribiste una confirmación, pero no una nueva contraseña.");
-            return;
-        }
-
-        const configuracionActual = leerConfiguracionServiAuto();
-
-        const nuevaConfiguracion = {
-            ...configuracionActual,
-            porcentajeUtilidad,
-            porcentajeIva,
-            valorManoObra
-        };
-
-        if (nuevoUsuario) {
-            nuevaConfiguracion.usuario = nuevoUsuario;
-        }
-
-        // Si se cambia usuario o contraseña, actualizar las credenciales.
-        if (nuevoUsuario || nuevaPassword) {
-            const usuarioFinal = nuevoUsuario || configuracionActual.usuario;
-
-            if (!window.crypto || !crypto.subtle) {
-                mostrarEstado(
-                    "⚠️ No se puede proteger la contraseña en este navegador. Ejecuta el proyecto en localhost o HTTPS."
-                );
-                return;
-            }
-
-            const salt = crypto.getRandomValues(new Uint8Array(16));
-            const hash = await generarHashPassword(
-                nuevaPassword || "",
-                salt
-            );
-
-            let credencialesAnteriores = configuracionActual.credenciales;
-
-            // Si solamente cambia el usuario, conserva la contraseña anterior.
-            if (!nuevaPassword && credencialesAnteriores) {
-                nuevaConfiguracion.credenciales = {
-                    usuario: usuarioFinal,
-                    salt: credencialesAnteriores.salt,
-                    hash: credencialesAnteriores.hash
-                };
-            } else if (!nuevaPassword && !credencialesAnteriores) {
-                mostrarEstado(
-                    "⚠️ Para cambiar el usuario por primera vez, también debes establecer una nueva contraseña."
-                );
-                return;
-            } else {
-                nuevaConfiguracion.credenciales = {
-                    usuario: usuarioFinal,
-                    salt: convertirBase64(salt),
-                    hash
-                };
             }
         }
 
-        const confirmar = window.confirm(
-            "¿Estás seguro de que deseas guardar la configuración?"
-        );
-
-        if (!confirmar) return;
+        if (guardar) guardar.disabled = true;
 
         try {
-            localStorage.setItem(
-                CLAVE_CONFIGURACION,
-                JSON.stringify(nuevaConfiguracion)
-            );
+            if (esAdmin) {
+                const payload = {
+                    iva: porcentajeIva,
+                    valor_mano_obra: valorManoObra,
+                    porcentaje_utilidad: porcentajeUtilidad
+                };
+
+                const idRegistro = configuracionActual?.id || configuracionFinanciera?.id;
+                const respuestaGuardado = await ConfiguracionAPI.guardar(idRegistro, payload);
+
+                const nuevoId = Number(respuestaGuardado?.id || idRegistro) || null;
+                if (nuevoId) {
+                    configuracionActual = { ...(configuracionActual || {}), id: nuevoId, ...payload };
+                }
+
+                configuracionFinanciera = {
+                    id: nuevoId,
+                    porcentajeUtilidad,
+                    porcentajeIva,
+                    valorManoObra
+                };
+            }
+
+            if (nuevaPassword) {
+                await ConfiguracionAPI.cambiarPassword(claveActual, nuevaPassword);
+            }
 
             formulario.reset();
-
-            utilidad.value = nuevaConfiguracion.porcentajeUtilidad;
-            iva.value = nuevaConfiguracion.porcentajeIva;
-            manoObra.value = nuevaConfiguracion.valorManoObra;
-            usuario.placeholder = `Usuario actual: ${nuevaConfiguracion.usuario}`;
+            const valoresActualizados = leerConfiguracionServiAuto();
+            if (utilidad) utilidad.value = valoresActualizados?.porcentajeUtilidad ?? "";
+            if (iva) iva.value = valoresActualizados?.porcentajeIva ?? "";
+            if (manoObra) manoObra.value = valoresActualizados?.valorManoObra ?? "";
 
             mostrarEstado("✅ Configuración guardada correctamente.");
-
         } catch (error) {
-            console.error("Error guardando configuración:", error);
-            mostrarEstado("❌ No se pudo guardar la configuración.");
+            console.error("No se pudo guardar la configuración:", error);
+            mostrarEstado(`❌ No se pudo guardar: ${error.message}`);
+        } finally {
+            if (guardar) guardar.disabled = false;
         }
     });
 }
-
 
 /* =========================================================
    ALMACENAMIENTO Y VALIDACIÓN
@@ -743,8 +515,6 @@ async function inicializarCRUDClientes() {
 
     let clientes = [];
 
-    const API_URL_CLIENTES = "http://localhost/panther-api/Clientes";
-
     const modal = document.getElementById("modal-cliente");
     const formulario = document.getElementById("formulario-cliente");
 
@@ -767,100 +537,13 @@ async function inicializarCRUDClientes() {
     let modoEdicion = false;
 
     /* =======================================
-       HEADERS
-    ======================================= */
-
-    function obtenerHeadersConToken() {
-
-        const token =
-            localStorage.getItem("pantherTokenWithHeader") ||
-            localStorage.getItem("pantherToken") ||
-            "";
-
-        return {
-            "Authorization": token,
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        };
-    }
-
-    /* =======================================
-       API
-    ======================================= */
-
-    async function obtenerClientesAPI() {
-        const res = await fetch(API_URL_CLIENTES, {
-            headers: obtenerHeadersConToken()
-        });
-
-        if (!res.ok) {
-            throw new Error("Error consultando clientes");
-        }
-
-        const respuesta = await res.json();
-        return (respuesta.data || []).map(normalizarCliente);
-    }
-
-    async function crearClienteAPI(data) {
-        const res = await fetch(API_URL_CLIENTES, {
-            method: "POST",
-            headers: obtenerHeadersConToken(),
-            body: JSON.stringify(normalizarPayloadCliente(data))
-        });
-
-        if (!res.ok) throw new Error("Error creando cliente");
-        return await res.json();
-    }
-
-    async function actualizarClienteAPI(id, data) {
-        const res = await fetch(`${API_URL_CLIENTES}/${id}`, {
-            method: "PUT",
-            headers: obtenerHeadersConToken(),
-            body: JSON.stringify(normalizarPayloadCliente(data))
-        });
-
-        if (!res.ok) throw new Error("Error actualizando cliente");
-        return await res.json();
-    }
-
-    async function eliminarClienteAPI(id) {
-        const res = await fetch(`${API_URL_CLIENTES}/${id}`, {
-            method: "DELETE",
-            headers: obtenerHeadersConToken()
-        });
-
-        if (!res.ok) throw new Error("Error eliminando cliente");
-        return await res.json();
-    }
-
-    function normalizarCliente(cliente) {
-        return {
-            ...cliente,
-            tipoIdentificacion: cliente.tipoIdentificacion || cliente.tipo_identificacion || "",
-            numeroIdentificacion: cliente.numeroIdentificacion || cliente.numero_identificacion || ""
-        };
-    }
-
-    function normalizarPayloadCliente(cliente) {
-        return {
-            nombres: cliente.nombres,
-            apellidos: cliente.apellidos,
-            tipo_identificacion: cliente.tipoIdentificacion || cliente.tipo_identificacion,
-            numero_identificacion: cliente.numeroIdentificacion || cliente.numero_identificacion,
-            correo: cliente.correo,
-            direccion: cliente.direccion,
-            telefono: cliente.telefono
-        };
-    }
-
-    /* =======================================
        CARGAR CLIENTES
     ======================================= */
 
     async function cargarClientes() {
 
         try {
-            clientes = await obtenerClientesAPI();
+            clientes = await ClientesAPI.listar();
 
             mostrarClientes(buscador.value);
 
@@ -1075,7 +758,7 @@ async function inicializarCRUDClientes() {
 
                 if (modoEdicion) {
 
-                    await actualizarClienteAPI(
+                    await ClientesAPI.actualizar(
                         idActual.value,
                         registro
                     );
@@ -1086,7 +769,7 @@ async function inicializarCRUDClientes() {
 
                 } else {
 
-                    await crearClienteAPI(
+                    await ClientesAPI.crear(
                         registro
                     );
 
@@ -1191,7 +874,7 @@ async function inicializarCRUDClientes() {
 
                 try {
 
-                    await eliminarClienteAPI(
+                    await ClientesAPI.eliminar(
                         cliente.id
                     );
 
@@ -1223,9 +906,12 @@ async function inicializarCRUDClientes() {
 /* =========================================================
    CRUD DE VEHÍCULOS
 ========================================================= */
+let vehiculos = [];
+let clientes = [];
 
-function inicializarCRUDVehiculos() {
-    let vehiculos = leerRegistros("vehiculosServiAuto", "vehículos");
+async function inicializarCRUDVehiculos() {
+    let vehiculos = [];
+    let clientes = [];
     const modal = document.getElementById("modal-vehiculo");
     const formulario = document.getElementById("formulario-vehiculo");
     const idsCampos = [
@@ -1241,7 +927,26 @@ function inicializarCRUDVehiculos() {
     const buscador = document.getElementById("buscar-vehiculo");
     const idActual = document.getElementById("vehiculo-id");
     const propietario = document.getElementById("vehiculo-propietario");
-    let clientes = leerRegistros("clientesServiAuto", "clientes");
+
+
+
+    async function cargarDatosVehiculos() {
+        try {
+            const [listaVehiculos, listaClientes] = await Promise.all([
+                VehiculosAPI.listar(),
+                ClientesAPI.listar()
+            ]);
+            vehiculos = listaVehiculos;
+            clientes = listaClientes.map((cliente) => ({
+                ...cliente,
+                id: String(cliente.id)
+            }));
+            mostrarVehiculos(buscador.value);
+        } catch (error) {
+            console.error("Error cargando vehículos:", error);
+            mostrarEstado(`❌ Error cargando vehículos: ${error.message}`);
+        }
+    }
 
     function mostrarVehiculos(filtro = "", propietarioId = null) {
         const consulta = filtro.toLowerCase().trim();
@@ -1304,8 +1009,18 @@ function inicializarCRUDVehiculos() {
         document.getElementById("total-vehiculos").textContent = vehiculos.length;
     }
 
-    function abrirVehiculo(vehiculo = null) {
-        clientes = leerRegistros("clientesServiAuto", "clientes");
+    async function abrirVehiculo(vehiculo = null) {
+        try {
+            const listaClientes = await ClientesAPI.listar();
+            clientes = listaClientes.map((cliente) => ({
+                ...cliente,
+                id: String(cliente.id)
+            }));
+        } catch (error) {
+            console.error("Error cargando clientes:", error);
+            mostrarEstado(`❌ Error cargando clientes: ${error.message}`);
+        }
+
         if (clientes.length === 0) {
             mostrarEstado("⚠️ Registra primero un cliente para asociar el vehículo.");
             return;
@@ -1316,7 +1031,7 @@ function inicializarCRUDVehiculos() {
         propietario.replaceChildren(new Option("Seleccionar propietario", ""));
         clientes.forEach((cliente) => {
             const etiqueta = `${cliente.nombres} ${cliente.apellidos} (${cliente.tipoIdentificacion}: ${cliente.numeroIdentificacion})`;
-            propietario.add(new Option(etiqueta, cliente.id));
+            propietario.add(new Option(etiqueta, String(cliente.id)));
         });
 
         document.getElementById("titulo-modal-vehiculo").textContent =
@@ -1341,43 +1056,42 @@ function inicializarCRUDVehiculos() {
                 return "La placa debe tener entre 5 y 10 letras, números o guiones.";
             }
             if (vehiculos.some((item) =>
-                item.placa.toLowerCase() === valor.toLowerCase() && item.id !== idActual.value
+                item.placa.toLowerCase() === valor.toLowerCase() && String(item.id) !== String(idActual.value)
             )) {
                 return "La placa ya está registrada.";
             }
         }
 
         if (campo.id === "vehiculo-propietario" &&
-            !clientes.some((cliente) => cliente.id === valor)) {
+            !clientes.some((cliente) => String(cliente.id) === String(valor))) {
             return "Selecciona un propietario registrado.";
         }
 
         return "";
     });
 
-    formulario.addEventListener("formulario-valido", () => {
+    formulario.addEventListener("formulario-valido", async () => {
         const registro = Object.fromEntries(campos.map((campo) => [
             campo.dataset.prop,
             campo.value.trim()
         ]));
         registro.placa = registro.placa.toUpperCase();
 
-        const posicion = vehiculos.findIndex((vehiculo) => vehiculo.id === idActual.value);
-        const nuevosVehiculos = [...vehiculos];
+        try {
+            if (idActual.value) {
+                await VehiculosAPI.actualizar(idActual.value, registro);
+            } else {
+                await VehiculosAPI.crear(registro);
+            }
 
-        if (idActual.value && posicion !== -1) {
-            nuevosVehiculos[posicion] = { ...nuevosVehiculos[posicion], ...registro };
-        } else {
-            nuevosVehiculos.push({ id: generarId(vehiculos), ...registro });
+            modal.close();
+            await cargarDatosVehiculos();
+            window.dispatchEvent(new Event("serviauto:vehiculos-actualizados"));
+            mostrarEstado(idActual.value ? "✅ Vehículo actualizado correctamente." : "✅ Vehículo registrado correctamente.");
+        } catch (error) {
+            console.error("Error guardando vehículo:", error);
+            mostrarEstado(`❌ Error guardando vehículo: ${error.message}`);
         }
-
-        if (!guardarRegistros("vehiculosServiAuto", nuevosVehiculos, "vehículos")) return;
-
-        vehiculos = nuevosVehiculos;
-        modal.close();
-        mostrarVehiculos(buscador.value);
-        window.dispatchEvent(new Event("serviauto:vehiculos-actualizados"));
-        mostrarEstado(idActual.value ? "✅ Vehículo actualizado correctamente." : "✅ Vehículo registrado correctamente.");
     });
 
     document.getElementById("btn-registrar-vehiculo").addEventListener("click", () => abrirVehiculo());
@@ -1385,11 +1099,11 @@ function inicializarCRUDVehiculos() {
     document.getElementById("btn-cancelar-vehiculo").addEventListener("click", () => modal.close());
     buscador.addEventListener("input", () => mostrarVehiculos(buscador.value));
 
-    tabla.addEventListener("click", (evento) => {
+    tabla.addEventListener("click", async (evento) => {
         const boton = evento.target.closest("button[data-accion]");
         if (!boton) return;
 
-        const vehiculo = vehiculos.find((item) => item.id === boton.dataset.id);
+        const vehiculo = vehiculos.find((item) => String(item.id) === String(boton.dataset.id));
         if (!vehiculo) {
             mostrarEstado("⚠️ No se encontró el vehículo seleccionado.");
             return;
@@ -1402,19 +1116,26 @@ function inicializarCRUDVehiculos() {
 
         if (boton.dataset.accion === "eliminar-vehiculo" &&
             window.confirm(`¿Eliminar el vehículo ${vehiculo.placa}? Esta acción no se puede deshacer.`)) {
-            const nuevosVehiculos = vehiculos.filter((item) => item.id !== vehiculo.id);
-            if (!guardarRegistros("vehiculosServiAuto", nuevosVehiculos, "vehículos")) return;
-
-            vehiculos = nuevosVehiculos;
-            mostrarVehiculos(buscador.value);
-            window.dispatchEvent(new Event("serviauto:vehiculos-actualizados"));
-            mostrarEstado("🗑️ Vehículo eliminado correctamente.");
+            try {
+                await VehiculosAPI.eliminar(vehiculo.id);
+                await cargarDatosVehiculos();
+                window.dispatchEvent(new Event("serviauto:vehiculos-actualizados"));
+                mostrarEstado("🗑️ Vehículo eliminado correctamente.");
+            } catch (error) {
+                console.error("Error eliminando vehículo:", error);
+                mostrarEstado(`❌ Error eliminando vehículo: ${error.message}`);
+            }
         }
     });
 
-    window.addEventListener("serviauto:clientes-actualizados", () => {
-        clientes = leerRegistros("clientesServiAuto", "clientes");
-        mostrarVehiculos(buscador.value);
+    window.addEventListener("serviauto:clientes-actualizados", async () => {
+        try {
+            const listaClientes = await ClientesAPI.listar();
+            clientes = listaClientes.map((cliente) => ({ ...cliente, id: String(cliente.id) }));
+            mostrarVehiculos(buscador.value);
+        } catch (error) {
+            console.error(error);
+        }
     });
 
     window.addEventListener("serviauto:ver-vehiculos", (evento) => {
@@ -1423,9 +1144,8 @@ function inicializarCRUDVehiculos() {
         mostrarVehiculos("", evento.detail.propietarioId);
     });
 
-    mostrarVehiculos();
+    await cargarDatosVehiculos();
 }
-
 
 /* =========================================================
    ÓRDENES DE SERVICIO
@@ -1863,9 +1583,10 @@ function inicializarCRUDServicios() {
 /* =========================================================
    CRUD DE EMPLEADOS
 ========================================================= */
+async function inicializarCRUDEmpleados() {
+    let empleados = [];
+    let todosLosEmpleados = [];
 
-function inicializarCRUDEmpleados() {
-    let empleados = leerRegistros("empleadosServiAuto", "empleados");
     const modal = document.getElementById("modal-empleado");
     const formulario = document.getElementById("formulario-empleado");
     const tabla = document.getElementById("lista-empleados");
@@ -1888,6 +1609,21 @@ function inicializarCRUDEmpleados() {
 
     function estadoEmpleado(empleado) {
         return empleado.estado || "Disponible";
+    }
+
+    async function cargarEmpleados() {
+        try {
+            const [filtrados, generales] = await Promise.all([
+                EmpleadosAPI.listarPorEstado(filtroActual),
+                filtroActual === "todos" ? Promise.resolve(null) : EmpleadosAPI.listar()
+            ]);
+            empleados = filtrados;
+            todosLosEmpleados = generales || filtrados;
+            mostrarEmpleados();
+        } catch (error) {
+            console.error("Error cargando empleados:", error);
+            mostrarEstado(`❌ Error cargando empleados: ${error.message}`);
+        }
     }
 
     function mostrarEmpleados() {
@@ -1913,7 +1649,7 @@ function inicializarCRUDEmpleados() {
             const fila = tabla.insertRow();
             const celda = fila.insertCell();
             celda.colSpan = 9;
-            celda.textContent = empleados.length
+            celda.textContent = todosLosEmpleados.length
                 ? "🔎 No se encontraron empleados para este filtro."
                 : "👥 Todavía no hay empleados registrados.";
         }
@@ -1949,13 +1685,13 @@ function inicializarCRUDEmpleados() {
 
         document.getElementById("cantidad-empleados").textContent =
             `${resultados.length} ${resultados.length === 1 ? "empleado" : "empleados"}`;
-        document.getElementById("total-empleados").textContent = empleados.length;
+        document.getElementById("total-empleados").textContent = todosLosEmpleados.length;
         document.getElementById("total-disponibles-empleados").textContent =
-            empleados.filter((empleado) => estadoEmpleado(empleado) === "Disponible").length;
+            todosLosEmpleados.filter((empleado) => estadoEmpleado(empleado) === "Disponible").length;
         document.getElementById("total-ocupados-empleados").textContent =
-            empleados.filter((empleado) => estadoEmpleado(empleado) === "Ocupado").length;
+            todosLosEmpleados.filter((empleado) => estadoEmpleado(empleado) === "Ocupado").length;
         document.getElementById("total-no-disponibles-empleados").textContent =
-            empleados.filter((empleado) => estadoEmpleado(empleado) === "No disponible").length;
+            todosLosEmpleados.filter((empleado) => estadoEmpleado(empleado) === "No disponible").length;
     }
 
     function abrirEmpleado(empleado = null) {
@@ -1965,7 +1701,7 @@ function inicializarCRUDEmpleados() {
             document.getElementById(`error-${campo.id}`).textContent = "";
         });
         modoEdicion = Boolean(empleado);
-        idActual.value = empleado?.id || generarId(empleados);
+        idActual.value = empleado?.id || "";
         document.getElementById("titulo-modal-empleado").textContent =
             empleado ? "Editar empleado" : "Registrar empleado";
         document.getElementById("descripcion-modal-empleado").textContent =
@@ -1999,7 +1735,7 @@ function inicializarCRUDEmpleados() {
         if (campo.id === "identificacion-empleado") {
             if (valor.length > 20) return "Admite máximo 20 caracteres.";
             const tipo = document.getElementById("tipo-identificacion-empleado").value;
-            const duplicado = empleados.some((empleado) =>
+            const duplicado = todosLosEmpleados.some((empleado) =>
                 String(empleado.id) !== String(idActual.value) &&
                 empleado.tipoIdentificacion === tipo &&
                 String(empleado.identificacion || empleado.numeroIdentificacion || "").toLocaleLowerCase() ===
@@ -2011,28 +1747,29 @@ function inicializarCRUDEmpleados() {
         return "";
     });
 
-    formulario.addEventListener("formulario-valido", () => {
+    formulario.addEventListener("formulario-valido", async () => {
         const registro = Object.fromEntries(campos.map((campo) => [
             campo.dataset.prop,
             campo.value.trim()
         ]));
-        const posicion = empleados.findIndex((empleado) => String(empleado.id) === String(idActual.value));
-        const nuevosEmpleados = [...empleados];
 
-        if (modoEdicion && posicion !== -1) {
-            nuevosEmpleados[posicion] = { ...nuevosEmpleados[posicion], ...registro };
-        } else {
-            nuevosEmpleados.push({ id: idActual.value, ...registro });
+        try {
+            if (modoEdicion && idActual.value) {
+                await EmpleadosAPI.actualizar(idActual.value, registro);
+            } else {
+                await EmpleadosAPI.crear(registro);
+            }
+
+            modal.close();
+            await cargarEmpleados();
+            window.dispatchEvent(new Event("serviauto:empleados-actualizados"));
+            mostrarEstado(modoEdicion
+                ? "✅ Empleado actualizado correctamente."
+                : "✅ Empleado registrado correctamente.");
+        } catch (error) {
+            console.error("Error guardando empleado:", error);
+            mostrarEstado(`❌ Error guardando empleado: ${error.message}`);
         }
-
-        if (!guardarRegistros("empleadosServiAuto", nuevosEmpleados, "empleados")) return;
-        empleados = nuevosEmpleados;
-        modal.close();
-        mostrarEmpleados();
-        window.dispatchEvent(new Event("serviauto:empleados-actualizados"));
-        mostrarEstado(modoEdicion
-            ? "✅ Empleado actualizado correctamente."
-            : "✅ Empleado registrado correctamente.");
     });
 
     document.querySelector(".btn-nuevo-empleado").addEventListener("click", () => abrirEmpleado());
@@ -2042,21 +1779,21 @@ function inicializarCRUDEmpleados() {
     buscador.addEventListener("input", mostrarEmpleados);
 
     document.querySelectorAll(".filtro-empleado").forEach((boton) => {
-        boton.addEventListener("click", () => {
+        boton.addEventListener("click", async () => {
             filtroActual = boton.dataset.filtro;
             document.querySelectorAll(".filtro-empleado").forEach((filtro) => {
                 const activo = filtro === boton;
                 filtro.classList.toggle("activo", activo);
                 filtro.setAttribute("aria-pressed", String(activo));
             });
-            mostrarEmpleados();
+            await cargarEmpleados();
         });
     });
 
-    tabla.addEventListener("click", (evento) => {
+    tabla.addEventListener("click", async (evento) => {
         const boton = evento.target.closest("button[data-accion]");
         if (!boton) return;
-        const empleado = empleados.find((item) => String(item.id) === boton.dataset.id);
+        const empleado = empleados.find((item) => String(item.id) === String(boton.dataset.id));
         if (!empleado) {
             mostrarEstado("⚠️ No se encontró el empleado seleccionado.");
             return;
@@ -2068,19 +1805,20 @@ function inicializarCRUDEmpleados() {
         }
         if (boton.dataset.accion === "eliminar-empleado" &&
             window.confirm(`¿Eliminar al empleado ${empleado.nombres || empleado.nombre || ""}? Esta acción no se puede deshacer.`)) {
-            const nuevosEmpleados = empleados.filter((item) => item.id !== empleado.id);
-            if (!guardarRegistros("empleadosServiAuto", nuevosEmpleados, "empleados")) return;
-            empleados = nuevosEmpleados;
-            mostrarEmpleados();
-            window.dispatchEvent(new Event("serviauto:empleados-actualizados"));
-            mostrarEstado("🗑️ Empleado eliminado correctamente.");
+            try {
+                await EmpleadosAPI.eliminar(empleado.id);
+                await cargarEmpleados();
+                window.dispatchEvent(new Event("serviauto:empleados-actualizados"));
+                mostrarEstado("🗑️ Empleado eliminado correctamente.");
+            } catch (error) {
+                console.error("Error eliminando empleado:", error);
+                mostrarEstado(`❌ Error eliminando empleado: ${error.message}`);
+            }
         }
     });
 
-    mostrarEmpleados();
+    await cargarEmpleados();
 }
-
-
 /* =========================================================
    CRUD DE REPUESTOS E INVENTARIO
 ========================================================= */
@@ -2319,16 +2057,16 @@ function inicializarFacturacion() {
     }
 
     function tasaImpuesto(tipo) {
-       const configuracion = leerConfiguracionServiAuto();
+        const configuracion = leerConfiguracionServiAuto();
 
-       if (tipo === "iva-19") {
-       return Number(configuracion.porcentajeIva) / 100;
+        if (tipo === "iva-19") {
+            return Number(configuracion.porcentajeIva) / 100;
+        }
+
+        if (tipo === "iva-5") return 0.05;
+
+        return 0;
     }
-
-    if (tipo === "iva-5") return 0.05;
-
-    return 0;
-}
 
     function redondear(valor) {
         return Math.round((valor + Number.EPSILON) * 100) / 100;
