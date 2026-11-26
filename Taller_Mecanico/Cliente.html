@@ -130,6 +130,23 @@
                     </label>
                     <input type="text" id="cliente-direccion"placeholder="Ej. Calle 10 # 5-23, Barrio Centro"required>
                 </div>
+
+                <div class="form-group">
+                    <label for="cliente-tipo-documento">Tipo de documento</label>
+                    <select id="cliente-tipo-documento" required>
+                        <option value="">Selecciona el tipo</option>
+                        <!-- Luego se cargarán aquí los tipos de la tabla documenttype -->
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="cliente-correo">Correo</label>
+                    <input
+                        type="email"
+                        id="cliente-correo"
+                        placeholder="Ej. persona@correo.com"
+                        required>
+                </div>
                 <div class="modal-footer">
                     <button
                         type="button" class="btn btn-secondary" id="btn-cancelar">Cancelar</button>
