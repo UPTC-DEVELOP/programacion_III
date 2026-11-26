@@ -1,7 +1,5 @@
-// CRUD DE PROVEEDORES - Conectado a Panther (MariaDB)
-
 const TOKEN_PANTHER = '750e8b43e5ed564462c90ef0d382db26';
-const BASE_URL = 'http://localhost/panther/backend_panther/panther/rest/proveedores';
+const BASE_URL = 'http://localhost/api_panther/index.php?PATH_INFO=proveedores';
 
 let editando = false;
 let idEditando = null;
