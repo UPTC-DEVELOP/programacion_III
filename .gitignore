@@ -1,0 +1,65 @@
+# ---------------------------------------------------------------------------
+# Panther / AutoTech — ignores compartidos (macOS + Windows)
+# Cada developer usa BD local distinta; no subir credenciales ni basura de SO/IDE.
+# ---------------------------------------------------------------------------
+
+# SO
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Editores / IDE
+.idea/
+*.swp
+*.swo
+*~
+*.code-workspace
+
+# VS Code / Cursor — settings locales (SQLTools, puertos, passwords)
+.vscode/settings.json
+.vscode/*.session.sql
+*.session.sql
+
+# Credenciales locales de Panther (cada uno copia desde el .example)
+Panther/backend_panther/panther/rest/cxn/LoginMysql.php
+**/cxn/LoginMysql.php
+
+# Entornos y secretos
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+
+# Logs / temporales / caches
+*.log
+*.tmp
+*.temp
+.cache/
+tmp/
+temp/
+
+# Node (por si se añade tooling)
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# PHP / Composer (por si se añade)
+/vendor/
+
+# Builds / empaquetados
+dist/
+build/
+*.zip
+*.rar
+*.7z
+
+# Live Server / dumps locales
+*.sql.bak
+*.dump

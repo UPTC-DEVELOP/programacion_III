@@ -1,0 +1,18 @@
+{
+  "liveServer.settings.port": 5501,
+  "sqltools.connections": [
+    {
+      "name": "Panther Local",
+      "driver": "MySQL",
+      "server": "127.0.0.1",
+      "port": 3306,
+      "database": "panther",
+      "username": "root",
+      "password": "CAMBIAR_POR_TU_PASSWORD_LOCAL",
+      "connectionTimeout": 30,
+      "previewLimit": 50
+    }
+  ],
+  "sqltools.useNodeRuntime": true,
+  "sqltools.autoConnectTo": ["Panther Local"]
+}
