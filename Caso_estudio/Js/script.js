@@ -1,3 +1,4 @@
+/* Interacciones de la página pública: reserva, navegación y fecha. */
 document.addEventListener("DOMContentLoaded", function () {
 
     inicializarFecha();

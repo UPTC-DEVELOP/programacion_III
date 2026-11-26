@@ -11,12 +11,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="CSS/sistema.css" />
+    <!-- Adaptadores de datos y controlador del panel -->
     <script src="Js/pantherApi.js" defer></script>
     <script src="Js/configuracionApi.js" defer></script>
     <script src="Js/clientesApi.js" defer></script>
-    <script src="Js/sistema.js" defer></script>
     <script src="Js/vehiculosApi.js" defer></script>
     <script src="Js/empleadosApi.js" defer></script>
+    <script src="Js/repuestosApi.js" defer></script>
+    <script src="Js/sistema.js" defer></script>
 </head>
 
 <body>
@@ -59,6 +61,7 @@
                 </div>
             </header>
 
+            <!-- Resumen general y accesos rápidos -->
             <section id="dashboard" class="dashboard-sistema" aria-labelledby="titulo-dashboard">
                 <p class="eyebrow-sistema">Resumen del taller</p>
                 <h2 id="titulo-dashboard">Bienvenido a SERVI-AUTO</h2>
@@ -102,6 +105,7 @@
                 </nav>
             </section>
 
+            <!-- Módulo de clientes -->
             <section id="clientes" class="modulo-sistema" aria-labelledby="titulo-clientes" hidden>
                 <header class="encabezado-modulo">
                     <div>
@@ -135,6 +139,7 @@
                 </div>
             </section>
 
+            <!-- Módulo de vehículos -->
             <section id="vehiculo" class="modulo-sistema" aria-labelledby="titulo-vehiculos" hidden>
                 <header class="encabezado-modulo">
                     <div>
@@ -169,6 +174,7 @@
                 </div>
             </section>
 
+            <!-- Formularios modales de clientes y vehículos -->
             <dialog id="modal-cliente" class="modal-sistema">
                 <form id="formulario-cliente" novalidate>
                     <header class="cabecera-modal">
@@ -270,6 +276,7 @@
                 </form>
             </dialog>
 
+            <!-- Módulo de servicios -->
             <section id="servicios" class="modulo-sistema" aria-labelledby="titulo-servicios" hidden>
 
                 <header class="encabezado-modulo">
@@ -360,6 +367,7 @@
             </section>
             <p id="estado-sistema" class="estado-sistema" role="status" aria-live="polite"></p>
 
+            <!-- Formulario modal de servicios -->
             <dialog id="modal-servicio" class="modal-sistema modal-servicio">
                 <form id="formulario-servicio" novalidate>
 
@@ -494,6 +502,7 @@
                 </form>
             </dialog>
 
+            <!-- Módulo de empleados -->
             <section id="empleados" class="modulo-sistema" aria-labelledby="titulo-empleados" hidden>
                 <header class="encabezado-modulo">
                     <div>
@@ -544,6 +553,7 @@
                     </table>
                 </div>
             </section>
+            <!-- Formulario modal de empleados -->
             <dialog id="modal-empleado" class="modal-sistema modal-empleado">
                 <form id="formulario-empleado" novalidate>
                     <header class="cabecera-modal">
@@ -613,6 +623,7 @@
                     </footer>
                 </form>
             </dialog>
+            <!-- Módulo de repuestos e inventario -->
             <section id="repuestos" class="modulo-sistema" aria-labelledby="titulo-repuestos" hidden>
                 <header class="encabezado-modulo">
                     <div>
@@ -660,6 +671,7 @@
                     </table>
                 </div>
             </section>
+            <!-- Formulario modal de repuestos -->
             <dialog id="modal-repuesto" class="modal-sistema modal-repuesto">
                 <form id="formulario-repuesto" novalidate>
                     <header class="cabecera-modal">
@@ -711,10 +723,7 @@
                 </form>
             </dialog>
 
-            <!-- =========================================
-     MODULO DE CONFIGURACION
-========================================= -->
-
+            <!-- Módulo de configuración y acceso -->
             <section id="configuracion" class="modulo-sistema" aria-labelledby="titulo-configuracion" hidden>
 
                 <header class="encabezado-modulo">
@@ -784,8 +793,7 @@
 
             </section>
 
-            <!-- FIN MODULO DE CONFIGURACION -->
-
+            <!-- Módulo de facturación -->
             <section id="facturas" class="modulo-sistema modulo-facturas" aria-labelledby="titulo-facturas" hidden>
                 <header class="encabezado-modulo">
                     <div>
@@ -810,12 +818,14 @@
                         </thead>
                         <tbody id="lista-facturas"></tbody>
                     </table>
+                </div>
             </section>
 
             <p id="estado-sistema" class="estado-sistema" role="status" aria-live="polite"></p>
         </main>
     </div>
 
+    <!-- Formularios modales para facturas y artículos -->
     <dialog id="modal-factura" class="modal-sistema modal-factura" aria-labelledby="titulo-modal-factura">
         <form id="formulario-factura">
             <header class="factura-cabecera">

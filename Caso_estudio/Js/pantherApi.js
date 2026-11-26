@@ -1,6 +1,7 @@
 (function (global) {
     "use strict";
 
+    /* Cliente HTTP compartido para los recursos protegidos de Panther. */
     global.PANTHER_API_URL = "http://localhost/panther-api";
 
     async function solicitarPanther(recurso, opciones = {}) {
@@ -26,6 +27,10 @@
             ...opciones,
             headers
         });
+
+        if (respuesta.status === 204) {
+            return [];
+        }
 
         const texto = await respuesta.text();
         let json = {};

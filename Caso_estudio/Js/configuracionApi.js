@@ -1,6 +1,7 @@
 (function (global) {
     "use strict";
 
+    /* Operaciones de configuración del sistema y cambio de contraseña. */
     async function listar() {
         return global.solicitarPanther("configuraciones");
     }

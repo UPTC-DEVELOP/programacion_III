@@ -1,6 +1,7 @@
 (function (global) {
     "use strict";
 
+    /* Adaptador CRUD de clientes entre la interfaz y la API Panther. */
     function normalizarCliente(cliente) {
         return {
             ...cliente,

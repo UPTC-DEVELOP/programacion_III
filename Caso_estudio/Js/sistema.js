@@ -1,3 +1,4 @@
+/* Controlador principal de autenticación y módulos del panel administrativo. */
 document.addEventListener("DOMContentLoaded", () => {
     const formularioLogin = document.getElementById("loginForm");
 
@@ -80,7 +81,7 @@ function inicializarMostrarPassword() {
 
 
 /* =========================================================
-   INICIO DE SESIÓN DE DEMOSTRACIÓN.
+   GESTIÓN DE SESIÓN Y AUTENTICACIÓN.
 ========================================================= */
 const STORAGE_SESION = "sesionPantherActiva";
 function guardarSesion(sesion) {
@@ -928,7 +929,9 @@ async function inicializarCRUDVehiculos() {
     const idActual = document.getElementById("vehiculo-id");
     const propietario = document.getElementById("vehiculo-propietario");
 
-
+    /* =======================================
+         CARGAR VEHÍCULOS
+      ======================================= */
 
     async function cargarDatosVehiculos() {
         try {
@@ -947,6 +950,10 @@ async function inicializarCRUDVehiculos() {
             mostrarEstado(`❌ Error cargando vehículos: ${error.message}`);
         }
     }
+
+    /* =======================================
+     TABLA
+  ======================================= */
 
     function mostrarVehiculos(filtro = "", propietarioId = null) {
         const consulta = filtro.toLowerCase().trim();
@@ -1009,6 +1016,12 @@ async function inicializarCRUDVehiculos() {
         document.getElementById("total-vehiculos").textContent = vehiculos.length;
     }
 
+
+    /* =======================================
+       MODAL
+    ======================================= */
+
+
     async function abrirVehiculo(vehiculo = null) {
         try {
             const listaClientes = await ClientesAPI.listar();
@@ -1047,6 +1060,10 @@ async function inicializarCRUDVehiculos() {
         campos[0].focus();
     }
 
+    /* =======================================
+          VALIDACIÓN
+       ======================================= */
+
     conectarValidacion(formulario, campos, (campo) => {
         const valor = campo.value.trim();
         if (!valor) return "Este campo es obligatorio.";
@@ -1069,6 +1086,10 @@ async function inicializarCRUDVehiculos() {
 
         return "";
     });
+
+    /* =======================================
+      GUARDAR
+   ======================================= */
 
     formulario.addEventListener("formulario-valido", async () => {
         const registro = Object.fromEntries(campos.map((campo) => [
@@ -1098,6 +1119,10 @@ async function inicializarCRUDVehiculos() {
     document.getElementById("cerrar-modal-vehiculo").addEventListener("click", () => modal.close());
     document.getElementById("btn-cancelar-vehiculo").addEventListener("click", () => modal.close());
     buscador.addEventListener("input", () => mostrarVehiculos(buscador.value));
+
+    /* =======================================
+         EVENTOS
+      ======================================= */
 
     tabla.addEventListener("click", async (evento) => {
         const boton = evento.target.closest("button[data-accion]");
@@ -1611,6 +1636,10 @@ async function inicializarCRUDEmpleados() {
         return empleado.estado || "Disponible";
     }
 
+    /* =======================================
+     CARGAR EMPLEADOS
+  ======================================= */
+
     async function cargarEmpleados() {
         try {
             const [filtrados, generales] = await Promise.all([
@@ -1625,6 +1654,10 @@ async function inicializarCRUDEmpleados() {
             mostrarEstado(`❌ Error cargando empleados: ${error.message}`);
         }
     }
+
+    /* =======================================
+         TABLA
+      ======================================= */
 
     function mostrarEmpleados() {
         const consulta = buscador.value.trim().toLocaleLowerCase();
@@ -1694,6 +1727,10 @@ async function inicializarCRUDEmpleados() {
             todosLosEmpleados.filter((empleado) => estadoEmpleado(empleado) === "No disponible").length;
     }
 
+    /* =======================================
+         MODAL
+      ======================================= */
+
     function abrirEmpleado(empleado = null) {
         formulario.reset();
         campos.forEach((campo) => {
@@ -1725,6 +1762,10 @@ async function inicializarCRUDEmpleados() {
         campos[0].focus();
     }
 
+    /* =======================================
+       VALIDACIÓN
+    ======================================= */
+
     conectarValidacion(formulario, campos, (campo) => {
         const valor = campo.value.trim();
         if (!valor) return "Este campo es obligatorio.";
@@ -1746,6 +1787,10 @@ async function inicializarCRUDEmpleados() {
 
         return "";
     });
+
+    /* =======================================
+       GUARDAR
+    ======================================= */
 
     formulario.addEventListener("formulario-valido", async () => {
         const registro = Object.fromEntries(campos.map((campo) => [
@@ -1790,6 +1835,11 @@ async function inicializarCRUDEmpleados() {
         });
     });
 
+
+    /* =======================================
+       EVENTOS
+    ======================================= */
+
     tabla.addEventListener("click", async (evento) => {
         const boton = evento.target.closest("button[data-accion]");
         if (!boton) return;
@@ -1822,9 +1872,8 @@ async function inicializarCRUDEmpleados() {
 /* =========================================================
    CRUD DE REPUESTOS E INVENTARIO
 ========================================================= */
-
-function inicializarCRUDRepuestos() {
-    let repuestos = leerRegistros("repuestosServiAuto", "repuestos");
+async function inicializarCRUDRepuestos() {
+    let repuestos = [];
     const modal = document.getElementById("modal-repuesto");
     const formulario = document.getElementById("formulario-repuesto");
     const tabla = document.getElementById("lista-repuestos");
@@ -1849,6 +1898,16 @@ function inicializarCRUDRepuestos() {
 
     function referencia(repuesto) {
         return repuesto.referencia || repuesto.referencias || repuesto.codigo || "";
+    }
+
+    async function cargarRepuestos() {
+        try {
+            repuestos = await RepuestosAPI.listar();
+            mostrarRepuestos();
+        } catch (error) {
+            console.error("Error cargando repuestos:", error);
+            mostrarEstado(`❌ Error cargando repuestos: ${error.message}`);
+        }
     }
 
     function mostrarRepuestos() {
@@ -1910,7 +1969,7 @@ function inicializarCRUDRepuestos() {
             document.getElementById(`error-${campo.id}`).textContent = "";
         });
         modoEdicion = Boolean(repuesto);
-        idActual = repuesto?.id || generarId(repuestos);
+        idActual = repuesto?.id ? String(repuesto.id) : "";
         document.getElementById("titulo-modal-repuesto").textContent =
             repuesto ? "Editar repuesto" : "Registrar repuesto";
         document.getElementById("descripcion-modal-repuesto").textContent =
@@ -1921,7 +1980,9 @@ function inicializarCRUDRepuestos() {
                 const propiedad = campo.dataset.prop;
                 const alternativas = propiedad === "referencia" ? ["referencias", "codigo"]
                     : propiedad === "precio" ? ["precioUnitario", "valor"]
-                        : [];
+                        : propiedad === "stockMinimo" ? ["stock_minimo"]
+                            : propiedad === "stockMaximo" ? ["stock_maximo"]
+                                : [];
                 const valor = repuesto[propiedad] ?? alternativas.map((alternativa) => repuesto[alternativa]).find((dato) => dato !== undefined);
                 campo.value = valor ?? "";
             });
@@ -1965,7 +2026,7 @@ function inicializarCRUDRepuestos() {
         return "";
     });
 
-    formulario.addEventListener("formulario-valido", () => {
+    formulario.addEventListener("formulario-valido", async () => {
         const registro = Object.fromEntries(campos.map((campo) => [
             campo.dataset.prop,
             ["precio"].includes(campo.dataset.prop)
@@ -1974,23 +2035,24 @@ function inicializarCRUDRepuestos() {
                     ? Number(campo.value)
                     : campo.value.trim()
         ]));
-        const posicion = repuestos.findIndex((repuesto) => String(repuesto.id) === String(idActual));
-        const nuevosRepuestos = [...repuestos];
 
-        if (modoEdicion && posicion !== -1) {
-            nuevosRepuestos[posicion] = { ...nuevosRepuestos[posicion], ...registro };
-        } else {
-            nuevosRepuestos.push({ id: idActual, ...registro });
+        try {
+            if (modoEdicion && idActual) {
+                await RepuestosAPI.actualizar(idActual, registro);
+            } else {
+                await RepuestosAPI.crear(registro);
+            }
+
+            modal.close();
+            await cargarRepuestos();
+            window.dispatchEvent(new Event("serviauto:repuestos-actualizados"));
+            mostrarEstado(modoEdicion
+                ? "✅ Repuesto actualizado correctamente."
+                : "✅ Repuesto registrado correctamente.");
+        } catch (error) {
+            console.error("Error guardando repuesto:", error);
+            mostrarEstado(`❌ Error guardando repuesto: ${error.message}`);
         }
-
-        if (!guardarRegistros("repuestosServiAuto", nuevosRepuestos, "repuestos")) return;
-        repuestos = nuevosRepuestos;
-        modal.close();
-        mostrarRepuestos();
-        window.dispatchEvent(new Event("serviauto:repuestos-actualizados"));
-        mostrarEstado(modoEdicion
-            ? "✅ Repuesto actualizado correctamente."
-            : "✅ Repuesto registrado correctamente.");
     });
 
     document.querySelector(".btn-nuevo-repuesto").addEventListener("click", () => abrirRepuesto());
@@ -1999,10 +2061,10 @@ function inicializarCRUDRepuestos() {
     });
     buscador.addEventListener("input", mostrarRepuestos);
 
-    tabla.addEventListener("click", (evento) => {
+    tabla.addEventListener("click", async (evento) => {
         const boton = evento.target.closest("button[data-accion]");
         if (!boton) return;
-        const repuesto = repuestos.find((item) => String(item.id) === boton.dataset.id);
+        const repuesto = repuestos.find((item) => String(item.id) === String(boton.dataset.id));
         if (!repuesto) {
             mostrarEstado("⚠️ No se encontró el repuesto seleccionado.");
             return;
@@ -2014,19 +2076,24 @@ function inicializarCRUDRepuestos() {
         }
         if (boton.dataset.accion === "eliminar-repuesto" &&
             window.confirm(`¿Eliminar el repuesto ${referencia(repuesto)}? Esta acción no se puede deshacer.`)) {
-            const nuevosRepuestos = repuestos.filter((item) => item.id !== repuesto.id);
-            if (!guardarRegistros("repuestosServiAuto", nuevosRepuestos, "repuestos")) return;
-            repuestos = nuevosRepuestos;
-            mostrarRepuestos();
-            window.dispatchEvent(new Event("serviauto:repuestos-actualizados"));
-            mostrarEstado("🗑️ Repuesto eliminado correctamente.");
+            try {
+                await RepuestosAPI.eliminar(repuesto.id);
+                await cargarRepuestos();
+                window.dispatchEvent(new Event("serviauto:repuestos-actualizados"));
+                mostrarEstado("🗑️ Repuesto eliminado correctamente.");
+            } catch (error) {
+                console.error("Error eliminando repuesto:", error);
+                mostrarEstado(`❌ Error eliminando repuesto: ${error.message}`);
+            }
         }
     });
 
-    mostrarRepuestos();
+    await cargarRepuestos();
 }
+/* =======================================
+     CRUD DE FACTURACION
+  ======================================= */
 
-/*facturacion.js--*/
 function inicializarFacturacion() {
     const modalFactura = document.getElementById("modal-factura");
     const formularioFactura = document.getElementById("formulario-factura");

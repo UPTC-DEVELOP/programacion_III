@@ -1,6 +1,7 @@
 (function (global) {
     "use strict";
 
+    /* Adaptador CRUD de vehículos y normalización de campos de la API. */
     function normalizarVehiculo(vehiculo) {
         return {
             ...vehiculo,

@@ -1,6 +1,7 @@
 (function (global) {
     "use strict";
 
+    /* Autenticación contra Panther y Clarisa con una sesión unificada. */
     async function solicitarLogin(recurso, datos) {
         const respuesta = await fetch(`${global.PANTHER_API_URL}/${recurso}`, {
             method: "POST",
@@ -53,7 +54,7 @@
                         resultado.data?.usuario?.userName ||
                         resultado.data?.usuario ||
                         username,
-                    tokenPanther: "",
+                    tokenPanther: resultado.data?.keyAPI || "",
                     tokenClarisa: resultado.data?.token || resultado.token || "",
                     roles: Number(
                         resultado.data?.roles ??

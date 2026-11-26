@@ -1,6 +1,7 @@
 (function (global) {
     "use strict";
 
+    /* Adaptador CRUD de empleados y filtros de disponibilidad. */
     const SLUGS_ESTADO = {
         "disponible": "disponible",
         "ocupado": "ocupado",
