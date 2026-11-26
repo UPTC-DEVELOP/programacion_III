@@ -6,14 +6,22 @@ document.addEventListener('DOMContentLoaded', async () => {
   const sesion = obtenerSesion();
   if (!sesion) return; 
 
+  // Se pide barraLateral.html sin usar caché. Si el archivo no se puede leer, está incompleto
+  // (faltan enlaces) o es una versión vieja, se usa la copia de respaldo de abajo, para que el
+  // menú SIEMPRE muestre Clientes, Autos, Empleados, Facturación, Inicio y Cerrar sesión.
+ let contenidoBarra = '';
+
   try {
-    const respuesta = await fetch('barraLateral.html');
+    const respuesta = await fetch('barraLateral.html', { cache: 'no-store' });
     if (!respuesta.ok) throw new Error('HTTP ' + respuesta.status);
-    contenedor.innerHTML = await respuesta.text();
+   contenidoBarra = await respuesta.text();
   } catch (error) {
-    console.error('No se pudo cargar la barra lateral:', error);
-    return;
-  }
+   console.error('No se pudo cargar barraLateral.html, se usa la copia de respaldo:', error);
+   }
+  const enlacesCompletos = (contenidoBarra.match(/barra-lateral__enlace/g) || []).length >= 5
+    && contenidoBarra.includes('barraLateralCerrarSesion');
+  contenedor.innerHTML = enlacesCompletos ? contenidoBarra : PLANTILLA_BARRA_LATERAL;
+  
 
   const barra = document.getElementById('barraLateral');
   document.body.classList.add('con-barra-lateral');
@@ -49,3 +57,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.location.replace('login.html');
   });
 });
+

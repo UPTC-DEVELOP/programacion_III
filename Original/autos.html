@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html lang="es" data-privada>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -108,7 +107,7 @@
           <!-- Campo: cédula del dueño -->
           <div class="campo">
             <label for="cedulaDueno">Cédula del dueño</label>
-            <input type="text" id="cedulaDueno" name="cedulaDueno" maxlength="10" inputmode="numeric"
+            <input type="text" id="cedulaDueno" name="cedulaDueno" maxlength="20" 
               placeholder="Ej: 1015896321" autocomplete="off">
             <small class="ayuda">Debe corresponder a un cliente ya registrado.</small>
             <span class="error" id="errorCedulaDueno"></span>
@@ -131,7 +130,7 @@
           </div>
         </div>
         <!-- Campo oculto: guarda la placa original cuando estamos actualizando -->
-        <input type="hidden" id="placaOriginal" value="">
+        <input type="hidden" id="autoIdEditando" value="">
 
         <div class="botones">
           <button type="button" id="btnCancelar" class="boton boton-secundario">Cancelar</button>
@@ -186,8 +185,10 @@
 
   <script src="js/script.js"></script>
   <script src="js/scriptAutos.js"></script>
-  <script src="js/sesion.js"></script>
-  <script src="js/barraLateral.js"></script>
+    <script src="js/barraLateral.js"></script>
+   <script src="js/config.js"></script>
+ <script src="js/sesion.js"></script>
+ <script src="js/api.js"></script>
 
 </body>
 

@@ -1,32 +1,31 @@
 /* =========================================================
-   TallerMax — Gestión de Empleados
-   
+      TallerMax — Gestión de Empleados (conectado al backend Panther) 
    ========================================================= */
 
 (function () {
   "use strict";
 
   // ---------- 1. REFERENCIAS A ELEMENTOS DEL HTML ----------
-   const formulario        = document.getElementById("formularioNuevoEmpleado");
-  const tituloFormulario  = document.getElementById("tituloFormularioEmpleado");
+  const formulario = document.getElementById("formularioNuevoEmpleado");
+  const tituloFormulario = document.getElementById("tituloFormularioEmpleado");
   const inputCedulaEditando = document.getElementById("empleadoCedulaEditando");
 
-  const inputCedula    = document.getElementById("cedulaEmpleado");
-  const inputNombres   = document.getElementById("nombresEmpleado");
+  const inputCedula = document.getElementById("cedulaEmpleado");
+  const inputNombres = document.getElementById("nombresEmpleado");
   const inputApellidos = document.getElementById("apellidosEmpleado");
-  const selectCargo    = document.getElementById("cargoEmpleado");
+  const selectCargo = document.getElementById("cargoEmpleado");
 
-  const botonNuevo     = document.getElementById("botonNuevoEmpleado");
-  const botonCancelar  = document.getElementById("botonCancelarEmpleado");
-  const inputBuscar    = document.getElementById("buscarEmpleado");
+  const botonNuevo = document.getElementById("botonNuevoEmpleado");
+  const botonCancelar = document.getElementById("botonCancelarEmpleado");
+  const inputBuscar = document.getElementById("buscarEmpleado");
 
   const estadoFormulario = document.getElementById("estadoFormularioEmpleado");
-  const estadoGeneral    = document.getElementById("estadoEmpleados");
+  const estadoGeneral = document.getElementById("estadoEmpleados");
 
-  const cuerpoTabla   = document.getElementById("cuerpoTablaEmpleados");
+  const cuerpoTabla = document.getElementById("cuerpoTablaEmpleados");
   const sinResultados = document.getElementById("mensajeSinEmpleados");
 
-  const LLAVE_ALMACENAMIENTO = "tallermax_empleados";
+
 
   const CARGOS_VALIDOS = [
     "Mecánico",
@@ -36,40 +35,35 @@
     "Ayudante de taller",
   ];
 
-  // ---------- 2. "BASE DE DATOS" EN MEMORIA ----------
+  // ---------- 2. LISTA EN MEMORIA (copia de lo que hay en la base de datos) ----------
   let empleados = [];
-   // Guarda el temporizador que cierra el formulario después de guardar
+  // Guarda el temporizador que cierra el formulario después de guardar
   let temporizadorCierre = null;
   let temporizadorEstado = null;
 
-   // ---------- 3. ALMACENAMIENTO (localStorage) ----------
-  // Usamos try/catch porque localStorage puede fallar (navegación privada,
-  // almacenamiento lleno, permisos del navegador, etc.)
+  // ---------- 3. ALMACENAMIENTO (backend Panther, recurso "employees") ----------
+  // La base de datos devuelve {id, document, firstName, lastName, position};
+  // aquí se convierte al formato que ya usaba la pantalla {id, cedula, nombres, apellidos, cargo}.
 
-  function cargarEmpleados() {
+  function desdeApi(e) {
+    return { id: e.id, cedula: e.document, nombres: e.firstName, apellidos: e.lastName, cargo: e.position };
+  }
+
+  function haciaApi(d) {
+    return { document: d.cedula, firstName: d.nombres, lastName: d.apellidos, position: d.cargo };
+  }
+  async function cargarEmpleados() {
     try {
-      const datosGuardados = localStorage.getItem(LLAVE_ALMACENAMIENTO);
-      empleados = datosGuardados ? JSON.parse(datosGuardados) : [];
+      const lista = await api.listar("employees");
+      empleados = lista.map(desdeApi);
     } catch (error) {
-      console.error("No se pudieron cargar los empleados guardados:", error);
+      console.error("No se pudieron cargar los empleados:", error);
       empleados = [];
-      mostrarEstadoGeneral("No se pudo leer la información guardada en este navegador.", "error");
+      mostrarEstadoGeneral("No se pudieron cargar los empleados: " + error.message, "error");
     }
   }
 
-   
-  function guardarEmpleados() {
-    try {
-       localStorage.setItem(LLAVE_ALMACENAMIENTO, JSON.stringify(empleados));
-      return true;
-    } catch (error) {
-      console.error("No se pudieron guardar los empleados:", error);
-      mostrarEstadoGeneral("No se pudo guardar el cambio en este navegador.", "error");
-      return false;
-    }
-  }
-
-// ---------- 4. VALIDACIONES ----------
+  // ---------- 4. VALIDACIONES ----------
   // Cada función devuelve un texto con el error, o "" si todo está bien.
 
   function validarCedula(valor, cedulaQueEstamosEditando) {
@@ -136,10 +130,10 @@
   function validarFormularioCompleto() {
     const cedulaOriginal = inputCedulaEditando.value;
 
-    const msjCedula    = validarCedula(inputCedula.value.trim(), cedulaOriginal);
-    const msjNombres   = validarNombres(inputNombres.value.trim());
+    const msjCedula = validarCedula(inputCedula.value.trim(), cedulaOriginal);
+    const msjNombres = validarNombres(inputNombres.value.trim());
     const msjApellidos = validarApellidos(inputApellidos.value.trim());
-    const msjCargo     = validarCargo(selectCargo.value);
+    const msjCargo = validarCargo(selectCargo.value);
 
     mostrarErrorCampo(inputCedula, msjCedula);
     mostrarErrorCampo(inputNombres, msjNombres);
@@ -177,7 +171,7 @@
     estadoFormulario.className = "estado-formulario " + (tipo === "exito" ? "success" : "error");
   }
 
-   // ---------- 6. ABRIR Y CERRAR EL FORMULARIO ----------
+  // ---------- 6. ABRIR Y CERRAR EL FORMULARIO ----------
 
   // Abre el formulario vacío para registrar un empleado nuevo
   function abrirFormularioNuevo() {
@@ -241,9 +235,9 @@
   botonNuevo.addEventListener("click", abrirFormularioNuevo);
   botonCancelar.addEventListener("click", cerrarFormulario);
 
-// ---------- 7. GUARDAR (REGISTRAR O ACTUALIZAR) ----------
+  // ---------- 7. GUARDAR (REGISTRAR O ACTUALIZAR) ----------
 
-  formulario.addEventListener("submit", function (evento) {
+  formulario.addEventListener("submit", async function (evento) {
     evento.preventDefault();
 
     if (!validarFormularioCompleto()) {
@@ -259,36 +253,43 @@
       apellidos: inputApellidos.value.trim(),
       cargo: selectCargo.value,
     };
-
+    const botonGuardar = formulario.querySelector('button[type="submit"]');
+    botonGuardar.disabled = true;
     let textoExito = "";
 
-    if (cedulaOriginal) {
-      // --- MODO ACTUALIZAR ---
-      const indice = empleados.findIndex(function (emp) {
-        return emp.cedula === cedulaOriginal;
-      });
-      if (indice === -1) {
-        mostrarEstadoFormulario("No se encontró el empleado que intentas actualizar.", "error");
-        return;
+    try {
+      if (cedulaOriginal) {
+        // --- MODO ACTUALIZAR ---
+        const existente = empleados.find(function (emp) {
+          return emp.cedula === cedulaOriginal;
+        });
+        if (!existente) {
+          mostrarEstadoFormulario("No se encontró el empleado que intentas actualizar.", "error");
+          return;
+        }
+        await api.actualizar("employees", existente.id, haciaApi(datosEmpleado));
+        textoExito = 'Empleado "' + datosEmpleado.nombres + '" actualizado correctamente.';
+      } else {
+        // --- MODO REGISTRAR ---
+        await api.crear("employees", haciaApi(datosEmpleado));
+        textoExito = 'Empleado "' + datosEmpleado.nombres + '" registrado correctamente.';
       }
-      empleados[indice] = datosEmpleado;
-      textoExito = 'Empleado "' + datosEmpleado.nombres + '" actualizado correctamente.';
-    } else {
-      // --- MODO REGISTRAR ---
-      empleados.push(datosEmpleado);
-      textoExito = 'Empleado "' + datosEmpleado.nombres + '" registrado correctamente.';
+
+      mostrarEstadoFormulario(textoExito, "exito");
+      inputBuscar.value = ""; // limpiamos el buscador para que se vea el empleado guardado
+      await cargarEmpleados();
+      renderizarTabla(datosEmpleado.cedula);
+      temporizadorCierre = setTimeout(cerrarFormulario, 1200);
+    } catch (error) {
+      // Errores del servidor (cédula repetida, cargo inválido, sesión vencida...)
+      mostrarEstadoFormulario(error.message, "error");
+    } finally {
+      botonGuardar.disabled = false;
     }
 
-    if (!guardarEmpleados()) {
-      return; // guardarEmpleados() ya mostró el aviso de error
-    }
 
-    mostrarEstadoFormulario(textoExito, "exito");
 
-    inputBuscar.value = ""; // limpiamos el buscador para que se vea el empleado guardado
-    renderizarTabla(datosEmpleado.cedula);
 
-    temporizadorCierre = setTimeout(cerrarFormulario, 1200);
   });
 
   // Mientras el usuario escribe: la cédula solo acepta números y se borra el error de ese campo
@@ -304,9 +305,9 @@
     });
   });
 
-// ---------- 8. ELIMINAR ----------
+  // ---------- 8. ELIMINAR ----------
 
-  function eliminarEmpleado(cedula) {
+  async function eliminarEmpleado(cedula) {
     const empleado = empleados.find(function (emp) {
       return emp.cedula === cedula;
     });
@@ -318,19 +319,20 @@
     );
     if (!confirmado) return;
 
-    empleados = empleados.filter(function (emp) {
-      return emp.cedula !== cedula;
-    });
-
-    if (guardarEmpleados()) {
+    try {
+      await api.eliminar("employees", empleado.id);
       mostrarEstadoGeneral("Empleado eliminado.", "exito");
+    } catch (error) {
+      mostrarEstadoGeneral(error.message, "error");
+      return;
+
     }
 
     // Si justo se estaba editando a este empleado, cerramos el formulario
     if (inputCedulaEditando.value === cedula) {
       cerrarFormulario();
     }
-
+await cargarEmpleados();
     renderizarTabla();
   }
 
@@ -354,7 +356,7 @@
     });
   }
 
-// ---------- 10. DIBUJAR LA TABLA ----------
+  // ---------- 10. DIBUJAR LA TABLA ----------
   // Las celdas se crean con textContent (no con innerHTML), así un nombre
   // como "<b>Hola</b>" se ve como texto y nunca se ejecuta como HTML.
 
@@ -428,6 +430,9 @@
   // ---------- 11. INICIO ----------
   cargarEmpleados();
   renderizarTabla();
+  cargarEmpleados().then(function () {
+    renderizarTabla();
+  });
 
 })(); // Fin del módulo (IIFE): nada de esto queda expuesto en "window"
 

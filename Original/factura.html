@@ -39,8 +39,8 @@
 
     <!-- Menú desplegable para registrar autos, clientes o empleados -->
     <nav class="menu-registro" aria-label="Menú de registro">
-      <button type="button" class="boton boton-secundario boton-pequeno boton-registro"
-        id="botonRegistro" aria-expanded="false" aria-controls="listaRegistro">
+      <button type="button" class="boton boton-secundario boton-pequeno boton-registro" id="botonRegistro"
+        aria-expanded="false" aria-controls="listaRegistro">
         Registro <span class="icono-flecha" aria-hidden="true">▾</span>
       </button>
 
@@ -78,18 +78,21 @@
         <!-- Bloque 1: datos generales de la factura -->
         <fieldset class="bloque-factura">
           <legend>Datos de la factura</legend>
-          <p class="nota-bloque">Los valores de NIT, resolución, prefijo y consecutivo vienen con los datos de prueba de la guía de Clarisa. Cámbialos por los del taller cuando uses datos reales.</p>
+          <p class="nota-bloque">Los valores de NIT, resolución, prefijo y consecutivo vienen con los datos de prueba de
+            la guía de Clarisa. Cámbialos por los del taller cuando uses datos reales.</p>
 
           <section class="cuadricula-campos" aria-label="Datos generales">
             <p class="campo-formulario">
               <label for="campoNit">NIT del taller</label>
-              <input type="text" id="campoNit" name="nit" inputmode="numeric" maxlength="15" value="12345" autocomplete="off">
+              <input type="text" id="campoNit" name="nit" inputmode="numeric" maxlength="15" value="12345"
+                autocomplete="off">
               <span class="error-campo" data-error-for="campoNit"></span>
             </p>
 
             <p class="campo-formulario">
               <label for="campoNumeroResolucion">Número de resolución</label>
-              <input type="text" id="campoNumeroResolucion" name="numeroResolucion" inputmode="numeric" maxlength="20" value="18760000001" autocomplete="off">
+              <input type="text" id="campoNumeroResolucion" name="numeroResolucion" inputmode="numeric" maxlength="20"
+                value="18760000001" autocomplete="off">
               <span class="error-campo" data-error-for="campoNumeroResolucion"></span>
             </p>
 
@@ -101,7 +104,8 @@
 
             <p class="campo-formulario">
               <label for="campoConsecutivo">Consecutivo</label>
-              <input type="text" id="campoConsecutivo" name="consecutivo" inputmode="numeric" maxlength="15" value="990000001" autocomplete="off">
+              <input type="text" id="campoConsecutivo" name="consecutivo" inputmode="numeric" maxlength="15"
+                value="990000001" autocomplete="off">
               <span class="error-campo" data-error-for="campoConsecutivo"></span>
             </p>
 
@@ -123,11 +127,14 @@
 
           <fieldset class="grupo-medios-pago" id="grupoMediosPago">
             <legend class="titulo-grupo">Medios de pago (elige uno o varios)</legend>
-            <label class="etiqueta-medio-pago"><input type="checkbox" name="medioPago" value="10" checked> Efectivo</label>
+            <label class="etiqueta-medio-pago"><input type="checkbox" name="medioPago" value="10" checked>
+              Efectivo</label>
             <label class="etiqueta-medio-pago"><input type="checkbox" name="medioPago" value="20"> Cheque</label>
             <label class="etiqueta-medio-pago"><input type="checkbox" name="medioPago" value="30"> Transferencia</label>
-            <label class="etiqueta-medio-pago"><input type="checkbox" name="medioPago" value="48"> Tarjeta crédito</label>
-            <label class="etiqueta-medio-pago"><input type="checkbox" name="medioPago" value="49"> Tarjeta débito</label>
+            <label class="etiqueta-medio-pago"><input type="checkbox" name="medioPago" value="48"> Tarjeta
+              crédito</label>
+            <label class="etiqueta-medio-pago"><input type="checkbox" name="medioPago" value="49"> Tarjeta
+              débito</label>
           </fieldset>
           <p class="error-campo" id="errorMediosPago"></p>
         </fieldset>
@@ -139,7 +146,8 @@
           <section class="cuadricula-campos" aria-label="Datos del cliente">
             <p class="campo-formulario">
               <label for="campoNombreCliente">Nombre o razón social</label>
-              <input type="text" id="campoNombreCliente" name="nombreCliente" maxlength="120" placeholder="Ej. Juan Pérez" autocomplete="off">
+              <input type="text" id="campoNombreCliente" name="nombreCliente" maxlength="120"
+                placeholder="Ej. Juan Pérez" autocomplete="off">
               <span class="error-campo" data-error-for="campoNombreCliente"></span>
             </p>
 
@@ -156,7 +164,8 @@
 
             <p class="campo-formulario">
               <label for="campoNumeroIdentificacion">Número de identificación</label>
-              <input type="text" id="campoNumeroIdentificacion" name="numeroIdentificacion" inputmode="numeric" maxlength="15" placeholder="Ej. 1000123456" autocomplete="off">
+              <input type="text" id="campoNumeroIdentificacion" name="numeroIdentificacion" inputmode="numeric"
+                maxlength="15" placeholder="Ej. 1000123456" autocomplete="off">
               <span class="error-campo" data-error-for="campoNumeroIdentificacion"></span>
             </p>
 
@@ -171,7 +180,8 @@
           </section>
 
           <p>
-            <button type="button" class="boton boton-secundario boton-pequeno" id="botonUsarConsumidorFinal">Usar consumidor final</button>
+            <button type="button" class="boton boton-secundario boton-pequeno" id="botonUsarConsumidorFinal">Usar
+              consumidor final</button>
           </p>
         </fieldset>
 
@@ -201,7 +211,8 @@
           <p class="error-campo" id="errorItems"></p>
 
           <p>
-            <button type="button" class="boton boton-secundario boton-pequeno" id="botonAgregarItem">+ Agregar ítem</button>
+            <button type="button" class="boton boton-secundario boton-pequeno" id="botonAgregarItem">+ Agregar
+              ítem</button>
           </p>
         </fieldset>
 
@@ -222,7 +233,8 @@
         </dl>
 
         <p class="botones-formulario-factura">
-          <button type="button" class="boton boton-secundario boton-pequeno" id="botonCargarEjemploGuia">Cargar ejemplo de la guía</button>
+          <button type="button" class="boton boton-secundario boton-pequeno" id="botonCargarEjemploGuia">Cargar ejemplo
+            de la guía</button>
           <button type="button" class="boton boton-secundario boton-pequeno" id="botonLimpiarFactura">Limpiar</button>
           <button type="button" class="boton boton-secundario" id="botonGuardarFactura">Guardar factura</button>
           <button type="submit" class="boton boton-primario" id="botonEnviarAClarisa">Enviar a Clarisa</button>
@@ -247,6 +259,7 @@
               <th scope="col">Cliente</th>
               <th scope="col">Total</th>
               <th scope="col">Fecha</th>
+              <th scope="col">Estado</th>
             </tr>
           </thead>
           <tbody id="cuerpoTablaFacturasEmitidas">
@@ -254,7 +267,8 @@
           </tbody>
         </table>
 
-        <p class="mensaje-sin-resultados" id="mensajeSinFacturasEmitidas">Aún no has emitido facturas desde este navegador.</p>
+        <p class="mensaje-sin-resultados" id="mensajeSinFacturasEmitidas">Aún no hay facturas guardadas en la base de
+          datos.</p>
       </section>
 
     </section>
@@ -278,9 +292,11 @@
       </ul>
     </nav>
 
-    <p class="linea-copyright">© <span id="year"></span> TallerMax. Todos los derechos reservados - Calidad y servicio garantizado.</p>
+    <p class="linea-copyright">© <span id="year"></span> TallerMax. Todos los derechos reservados - Calidad y servicio
+      garantizado.</p>
   </footer>
-
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
   <script src="js/script.js"></script>
   <script src="js/factura.js"></script>
   <script src="js/barraLateral.js"></script>

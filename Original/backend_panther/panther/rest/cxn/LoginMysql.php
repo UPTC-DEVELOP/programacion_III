@@ -31,7 +31,7 @@ define("CLARISA_LOGIN_URL", cfg("CLARISA_LOGIN_URL", "https://pru.clarisacloud.c
 define("CLARISA_FACTURA_URL", cfg("CLARISA_FACTURA_URL", "https://pru.clarisacloud.com:8443/api/factura/rest/v1/factura/nacional"));
 /** Cabecera y prefijo con que Clarisa espera el token en la factura (ajustar segun la guia) */
 define("CLARISA_TOKEN_HEADER", cfg("CLARISA_TOKEN_HEADER", "Authorization"));
-define("CLARISA_TOKEN_PREFIX", cfg("CLARISA_TOKEN_PREFIX", "Bearer "));
+define("CLARISA_TOKEN_PREFIX", cfg("CLARISA_TOKEN_PREFIX", ""));
 /**
  * Si es "1", el endpoint useraction/clarisa-enlace acepta un usuario + token de Clarisa SIN
  * poder verificarlos (solo para el modo "directo" del frontend). Dejar en "0" en produccion

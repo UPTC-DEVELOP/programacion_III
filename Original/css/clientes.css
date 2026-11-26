@@ -117,3 +117,15 @@
   padding: 20px 0;
   text-align: center;
 }
+/* Móvil: cada cliente se muestra como una tarjeta (fase 4) */
+@media (max-width: 40em) {
+  .tabla-clientes thead { display: none; }
+  .tabla-clientes, .tabla-clientes tbody, .tabla-clientes tr, .tabla-clientes td { display: block; width: 100%; }
+  .tabla-clientes tr { margin-bottom: 12px; border: 1px solid var(--border); border-radius: var(--radius); padding: 8px 12px; }
+  .tabla-clientes td { display: flex; justify-content: space-between; align-items: center; gap: 10px; border-bottom: 1px dashed var(--border); padding: 6px 0; text-align: right; word-break: break-word; }
+  .tabla-clientes td:last-child { border-bottom: none; }
+  .tabla-clientes td::before { content: attr(data-etiqueta); font-weight: 600; color: var(--text-muted); font-size: 12px; text-align: left; }
+}
+
+
+.campo-formulario select{width:100%;background:#1a1f28;border:1px solid var(--border);border-radius:var(--radius-sm);padding:0.6rem 0.75rem;color:var(--text);}

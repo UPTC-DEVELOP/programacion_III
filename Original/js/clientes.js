@@ -1,198 +1,226 @@
-// Todo vive en memoria (sin backend)
+// clientes.js — CRUD de clientes contra el backend Panther (recurso "customers").
+// Ya no se guarda nada en memoria: todo se lee y se escribe en la base de datos.
 
-document.addEventListener('DOMContentLoaded', () => {
-  renderizarTablaClientes(clientes);
+let clientes = [];
+let tiposDocumento = [];
+
+document.addEventListener('DOMContentLoaded', async () => {
   initBusquedaClientes();
   initFormularioCliente();
+  await Promise.all([cargarTiposDocumento(), cargarClientes()]);
 });
 
-// Dato de ejemplo
-let clientes = [
-  { id: 'C001', nombre: 'Juan Pérez', cedula: '1000123456', telefono: '3001234567', correo: 'juan@mail.com', direccion: 'Cra 5 # 10-20', autos: 2 },
-];
-
-
-// Genera el siguiente ID disponible (C001, C002, C003...)
-function generarSiguienteId() {
-  const numero = clientes.length + 1;
-  return 'C' + String(numero).padStart(3, '0');
+// "C001"-style a partir del id numérico de la base de datos
+function codigoCliente(id) {
+  return 'C' + String(id).padStart(3, '0');
 }
 
+function mostrarEstadoGeneral(texto, tipo) {
+  const estado = document.getElementById('estadoFormularioCliente');
+  estado.className = 'estado-formulario' + (tipo ? ' ' + tipo : '');
+  estado.textContent = texto;
+}
 
-// Dibuja la tabla de clientes a partir de una lista
-// (se usa tanto para mostrar todos como para mostrar el resultado de una búsqueda)
+async function cargarTiposDocumento() {
+  const select = document.getElementById('tipoDocCliente');
+  try {
+    tiposDocumento = await api.listar('documenttypes');
+    select.innerHTML = '<option value="">-- Seleccione --</option>' +
+      tiposDocumento.map((t) => `<option value="${t.id}">${escaparHtml(t.shortName)} · ${escaparHtml(t.longName)}</option>`).join('');
+  } catch (error) {
+    select.innerHTML = '<option value="">No se pudieron cargar</option>';
+    mostrarEstadoGeneral(error.message, 'error');
+  }
+}
+
+async function cargarClientes() {
+  try {
+    clientes = await api.listar('customers');
+    renderizarTablaClientes(filtrarClientes());
+  } catch (error) {
+    clientes = [];
+    renderizarTablaClientes([]);
+    mostrarEstadoGeneral('No se pudieron cargar los clientes: ' + error.message, 'error');
+  }
+}
+
+function filtrarClientes() {
+  const texto = (document.getElementById('buscarCliente').value || '').trim().toLowerCase();
+  if (!texto) return clientes;
+  return clientes.filter((c) =>
+    c.name.toLowerCase().includes(texto) || String(c.document).toLowerCase().includes(texto));
+}
+
 function renderizarTablaClientes(lista) {
   const cuerpoTabla = document.getElementById('cuerpoTablaClientes');
   const mensajeSinResultados = document.getElementById('mensajeSinClientes');
   cuerpoTabla.innerHTML = '';
 
   if (lista.length === 0) {
+    mensajeSinResultados.textContent = clientes.length === 0
+      ? 'Aún no hay clientes registrados.'
+      : 'No se encontraron clientes con esos datos.';
     mensajeSinResultados.hidden = false;
     return;
   }
   mensajeSinResultados.hidden = true;
 
-  lista.forEach(cliente => {
+  lista.forEach((c) => {
     const fila = document.createElement('tr');
     fila.innerHTML = `
-      <td>${cliente.id}</td>
-      <td>${cliente.nombre}</td>
-      <td>${cliente.cedula}</td>
-      <td>${cliente.telefono}</td>
-      <td>${cliente.correo}</td>
-      <td><span class="contador-autos">${cliente.autos}</span></td>
-      <td>
-        <button type="button" class="enlace-accion-cliente enlace-editar-cliente" data-id="${cliente.id}">Editar</button>
-        <button type="button" class="enlace-accion-cliente enlace-eliminar-cliente" data-id="${cliente.id}">Eliminar</button>
-      </td>
-    `;
+      <td data-etiqueta="ID">${codigoCliente(c.id)}</td>
+      <td data-etiqueta="Nombre">${escaparHtml(c.name)}</td>
+      <td data-etiqueta="Documento">${escaparHtml((c.documentType ? c.documentType + ' ' : '') + c.document)}</td>
+      <td data-etiqueta="Teléfono">${escaparHtml(c.phone)}</td>
+      <td data-etiqueta="Correo">${escaparHtml(c.email)}</td>
+      <td data-etiqueta="Autos"><span class="contador-autos">${Number(c.vehicles) || 0}</span></td>
+      <td data-etiqueta="Acciones">
+        <button type="button" class="enlace-accion-cliente enlace-editar-cliente" data-id="${c.id}">Editar</button>
+        <button type="button" class="enlace-accion-cliente enlace-eliminar-cliente" data-id="${c.id}">Eliminar</button>
+      </td>`;
     cuerpoTabla.appendChild(fila);
   });
 
-  // Vuelve a conectar los botones de cada fila recién creada
-  cuerpoTabla.querySelectorAll('.enlace-editar-cliente').forEach(boton => {
-    boton.addEventListener('click', () => abrirFormularioEdicion(boton.dataset.id));
-  });
-  cuerpoTabla.querySelectorAll('.enlace-eliminar-cliente').forEach(boton => {
-    boton.addEventListener('click', () => eliminarCliente(boton.dataset.id));
-  });
+  cuerpoTabla.querySelectorAll('.enlace-editar-cliente').forEach((b) =>
+    b.addEventListener('click', () => abrirFormularioEdicion(b.dataset.id)));
+  cuerpoTabla.querySelectorAll('.enlace-eliminar-cliente').forEach((b) =>
+    b.addEventListener('click', () => eliminarCliente(b.dataset.id)));
 }
 
-
-// Búsqueda por cédula, NIT o nombre, en tiempo real
 function initBusquedaClientes() {
-  const campoBusqueda = document.getElementById('buscarCliente');
-  if (!campoBusqueda) return;
+  document.getElementById('buscarCliente').addEventListener('input', () => renderizarTablaClientes(filtrarClientes()));
+}
 
-  campoBusqueda.addEventListener('input', () => {
-    const texto = campoBusqueda.value.trim().toLowerCase();
-
-    if (texto === '') {
-      renderizarTablaClientes(clientes);
-      return;
-    }
-
-    const resultado = clientes.filter(cliente =>
-      cliente.nombre.toLowerCase().includes(texto) ||
-      cliente.cedula.toLowerCase().includes(texto)
-    );
-    renderizarTablaClientes(resultado);
+function initFormularioCliente() {
+  document.getElementById('botonNuevoCliente').addEventListener('click', abrirFormularioNuevo);
+  document.getElementById('botonCancelarCliente').addEventListener('click', cerrarFormularioCliente);
+  document.getElementById('formularioNuevoCliente').addEventListener('submit', guardarCliente);
+  // Al escribir se limpia el error de ese campo
+  document.querySelectorAll('#formularioNuevoCliente input, #formularioNuevoCliente select').forEach((campo) => {
+    campo.addEventListener('input', () => marcarError(campo.name, ''));
   });
 }
 
-
-// Conecta los botones que abren y cierran el formulario, y el envío del formulario
-function initFormularioCliente() {
-  const botonNuevoCliente = document.getElementById('botonNuevoCliente');
-  const botonCancelarCliente = document.getElementById('botonCancelarCliente');
-  const formulario = document.getElementById('formularioNuevoCliente');
-
-  botonNuevoCliente.addEventListener('click', () => abrirFormularioNuevo());
-  botonCancelarCliente.addEventListener('click', () => cerrarFormularioCliente());
-  formulario.addEventListener('submit', guardarCliente);
+function marcarError(nombre, texto) {
+  const campo = document.querySelector(`#formularioNuevoCliente [name="${nombre}"]`);
+  const span = document.querySelector(`[data-error-for="${nombre}"]`);
+  if (campo) campo.classList.toggle('invalid', !!texto);
+  if (span) span.textContent = texto;
 }
 
-
-// Abre el formulario vacío para registrar un cliente nuevo 
 function abrirFormularioNuevo() {
   const formulario = document.getElementById('formularioNuevoCliente');
-
   formulario.reset();
+  limpiarErrores();
   document.getElementById('clienteIdEditando').value = '';
   document.getElementById('tituloFormularioCliente').textContent = 'Nuevo cliente';
-
+  mostrarEstadoGeneral('', '');
   formulario.hidden = false;
   document.getElementById('botonNuevoCliente').setAttribute('aria-expanded', 'true');
+  document.getElementById('nombreCliente').focus();
 }
 
-
-// Abre el formulario con los datos ya llenos, listo para editar
 function abrirFormularioEdicion(id) {
-  const cliente = clientes.find(c => c.id === id);
-  if (!cliente) return;
-
+  const c = clientes.find((x) => String(x.id) === String(id));
+  if (!c) return;
   const formulario = document.getElementById('formularioNuevoCliente');
-
-  document.getElementById('clienteIdEditando').value = cliente.id;
-  document.getElementById('nombreCliente').value = cliente.nombre;
-  document.getElementById('cedulaCliente').value = cliente.cedula;
-  document.getElementById('telefonoCliente').value = cliente.telefono;
-  document.getElementById('correoCliente').value = cliente.correo;
-  document.getElementById('direccionCliente').value = cliente.direccion;
+  limpiarErrores();
+  mostrarEstadoGeneral('', '');
+  document.getElementById('clienteIdEditando').value = c.id;
+  document.getElementById('nombreCliente').value = c.name;
+  document.getElementById('tipoDocCliente').value = c.documentTypeId || '';
+  document.getElementById('cedulaCliente').value = c.document;
+  document.getElementById('telefonoCliente').value = c.phone;
+  document.getElementById('correoCliente').value = c.email;
+  document.getElementById('direccionCliente').value = c.address;
   document.getElementById('tituloFormularioCliente').textContent = 'Editar cliente';
-
   formulario.hidden = false;
   document.getElementById('botonNuevoCliente').setAttribute('aria-expanded', 'true');
   formulario.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-
-// Cierra el formulario y lo deja limpio, sin datos de una edición anterior
 function cerrarFormularioCliente() {
   const formulario = document.getElementById('formularioNuevoCliente');
   formulario.reset();
+  limpiarErrores();
+  document.getElementById('clienteIdEditando').value = '';
   formulario.hidden = true;
   document.getElementById('botonNuevoCliente').setAttribute('aria-expanded', 'false');
-  document.getElementById('estadoFormularioCliente').textContent = '';
+  mostrarEstadoGeneral('', '');
 }
 
+function limpiarErrores() {
+  ['nombreCliente', 'tipoDocCliente', 'cedulaCliente', 'telefonoCliente', 'correoCliente', 'direccionCliente']
+    .forEach((n) => marcarError(n, ''));
+}
 
-// Guarda el cliente: si "clienteIdEditando" tiene un valor, lo actualiza 
-// si está vacío, lo registra como cliente nuevo 
-function guardarCliente(evento) {
+// Validaciones del lado del cliente (el backend vuelve a validar todo)
+function validarCliente(d) {
+  const e = {};
+  if (!d.name) e.nombreCliente = 'El nombre es obligatorio.';
+  else if (d.name.length > 100) e.nombreCliente = 'Máximo 100 caracteres.';
+  if (!d.documentTypeId) e.tipoDocCliente = 'Selecciona el tipo de documento.';
+  if (!d.document) e.cedulaCliente = 'El documento es obligatorio.';
+  else if (!/^[0-9A-Za-z-]{5,20}$/.test(d.document)) e.cedulaCliente = 'Entre 5 y 20 caracteres, sin espacios.';
+  if (!d.phone) e.telefonoCliente = 'El teléfono es obligatorio.';
+  else if (!/^[0-9+\s]{7,15}$/.test(d.phone)) e.telefonoCliente = 'Entre 7 y 15 dígitos.';
+  if (!d.email) e.correoCliente = 'El correo es obligatorio.';
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) e.correoCliente = 'Correo no válido.';
+  if (!d.address) e.direccionCliente = 'La dirección es obligatoria.';
+  return e;
+}
+
+async function guardarCliente(evento) {
   evento.preventDefault();
-
+  limpiarErrores();
   const idEditando = document.getElementById('clienteIdEditando').value;
-  const estado = document.getElementById('estadoFormularioCliente');
 
-  const datosCliente = {
-    nombre: document.getElementById('nombreCliente').value.trim(),
-    cedula: document.getElementById('cedulaCliente').value.trim(),
-    telefono: document.getElementById('telefonoCliente').value.trim(),
-    correo: document.getElementById('correoCliente').value.trim(),
-    direccion: document.getElementById('direccionCliente').value.trim(),
+  const datos = {
+    name: document.getElementById('nombreCliente').value.trim(),
+    documentTypeId: document.getElementById('tipoDocCliente').value ? Number(document.getElementById('tipoDocCliente').value) : null,
+    document: document.getElementById('cedulaCliente').value.trim(),
+    phone: document.getElementById('telefonoCliente').value.trim(),
+    email: document.getElementById('correoCliente').value.trim(),
+    address: document.getElementById('direccionCliente').value.trim()
   };
 
-  if (!datosCliente.nombre || !datosCliente.cedula || !datosCliente.telefono || !datosCliente.correo || !datosCliente.direccion) {
-    estado.style.color = '#f08080';
-    estado.textContent = 'Completa todos los campos antes de guardar.';
+  const errores = validarCliente(datos);
+  const claves = Object.keys(errores);
+  if (claves.length) {
+    claves.forEach((n) => marcarError(n, errores[n]));
+    mostrarEstadoGeneral('Revisa los campos marcados antes de guardar.', 'error');
     return;
   }
 
-  if (idEditando) {
-    // Actualizar un cliente que ya existe 
-    const cliente = clientes.find(c => c.id === idEditando);
-    if (!cliente) {
-      estado.style.color = '#f08080';
-      estado.textContent = 'No se encontró un cliente con esa cédula para actualizar.';
-      return;
+  const boton = evento.target.querySelector('button[type="submit"]');
+  boton.disabled = true;
+  try {
+    if (idEditando) {
+      await api.actualizar('customers', idEditando, datos);
+      mostrarEstadoGeneral(`Cliente "${datos.name}" actualizado correctamente.`, 'success');
+    } else {
+      await api.crear('customers', datos);
+      mostrarEstadoGeneral(`Cliente "${datos.name}" registrado correctamente.`, 'success');
     }
-    Object.assign(cliente, datosCliente);
-    estado.style.color = 'var(--accent-2)';
-    estado.textContent = `Cliente "${cliente.nombre}" actualizado correctamente.`;
-  } else {
-    // Registrar un cliente nuevo
-    const nuevoCliente = { id: generarSiguienteId(), autos: 0, ...datosCliente };
-    clientes.push(nuevoCliente);
-    estado.style.color = 'var(--accent-2)';
-    estado.textContent = `Cliente "${nuevoCliente.nombre}" registrado correctamente.`;
+    document.getElementById('buscarCliente').value = '';
+    await cargarClientes();
+    setTimeout(cerrarFormularioCliente, 1200);
+  } catch (error) {
+    mostrarEstadoGeneral(error.message, 'error');
+  } finally {
+    boton.disabled = false;
   }
-
-  renderizarTablaClientes(clientes);
-  document.getElementById('buscarCliente').value = '';
-
-  setTimeout(() => cerrarFormularioCliente(), 1200);
 }
 
-
-// Elimina un cliente de la lista, pidiendo confirmación antes 
-function eliminarCliente(id) {
-  const cliente = clientes.find(c => c.id === id);
-  if (!cliente) return;
-
-  const confirmar = window.confirm(`¿Seguro que quieres eliminar a "${cliente.nombre}"? Esta acción no se puede deshacer.`);
-  if (!confirmar) return;
-
-  clientes = clientes.filter(c => c.id !== id);
-  renderizarTablaClientes(clientes);
+async function eliminarCliente(id) {
+  const c = clientes.find((x) => String(x.id) === String(id));
+  if (!c) return;
+  if (!window.confirm(`¿Seguro que quieres eliminar a "${c.name}"? Esta acción no se puede deshacer.`)) return;
+  try {
+    await api.eliminar('customers', id);
+    await cargarClientes();
+  } catch (error) {
+    // Por ejemplo: el cliente todavía tiene autos registrados
+    window.alert(error.message);
+  }
 }

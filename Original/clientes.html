@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-privada>
 
 <head>
   <meta charset="UTF-8">
@@ -34,8 +34,8 @@
 
     <!-- Menú desplegable para registrar autos, clientes o empleados -->
     <nav class="menu-registro" aria-label="Menú de registro">
-      <button type="button" class="boton boton-secundario boton-pequeno boton-registro"
-        id="botonRegistro" aria-expanded="false" aria-controls="listaRegistro">
+      <button type="button" class="boton boton-secundario boton-pequeno boton-registro" id="botonRegistro"
+        aria-expanded="false" aria-controls="listaRegistro">
         Registro <span class="icono-flecha" aria-hidden="true">▾</span>
       </button>
 
@@ -62,8 +62,8 @@
         <label for="buscarCliente" class="etiqueta-oculta">Buscar cliente</label>
         <input type="search" id="buscarCliente" class="campo-busqueda" placeholder="Buscar por nombre o cédula...">
 
-        <button type="button" id="botonNuevoCliente" class="boton boton-primario boton-pequeno"
-          aria-expanded="false" aria-controls="formularioNuevoCliente">
+        <button type="button" id="botonNuevoCliente" class="boton boton-primario boton-pequeno" aria-expanded="false"
+          aria-controls="formularioNuevoCliente">
           + Nuevo cliente
         </button>
       </p>
@@ -82,7 +82,15 @@
         </p>
 
         <p class="campo-formulario">
-          <label for="cedulaCliente">Cédula o NIT</label>
+          <label for="tipoDocCliente">Tipo de documento</label>
+          <select id="tipoDocCliente" name="tipoDocCliente" required>
+            <option value="">Cargando…</option>
+          </select>
+          <span class="error-campo" data-error-for="tipoDocCliente"></span>
+        </p>
+
+        <p class="campo-formulario">
+          <label for="cedulaCliente">Número de documento (cédula o NIT)</label>
           <input type="text" id="cedulaCliente" name="cedulaCliente" placeholder="Ej. 1000123456" required>
           <span class="error-campo" data-error-for="cedulaCliente"></span>
         </p>
@@ -154,12 +162,15 @@
       </ul>
     </nav>
 
-    <p class="linea-copyright">© <span id="year"></span> TallerMax. Todos los derechos reservados - Calidad y servicio garantizado.</p>
+    <p class="linea-copyright">© <span id="year"></span> TallerMax. Todos los derechos reservados - Calidad y servicio
+      garantizado.</p>
   </footer>
 
   <script src="js/script.js"></script>
   <script src="js/clientes.js"></script>
+  <script src="js/config.js"></script>
   <script src="js/sesion.js"></script>
+  <script src="js/api.js"></script>
   <script src="js/barraLateral.js"></script>
 </body>
 

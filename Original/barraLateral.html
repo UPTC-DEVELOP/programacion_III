@@ -1,31 +1,48 @@
-<button type="button" class="barra-lateral__abrir" id="barraLateralAbrir"
-  aria-label="Abrir menú" aria-controls="barraLateral" aria-expanded="false">☰</button>
-
+<button type="button" class="barra-lateral__abrir" id="barraLateralAbrir" aria-label="Abrir menú"
+  aria-controls="barraLateral" aria-expanded="false">
+  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"
+    stroke-linecap="round" aria-hidden="true">
+    <path d="M4 7h16M4 12h16M4 17h16" />
+  </svg>
+</button>
 <aside class="barra-lateral" id="barraLateral">
-  <p class="barra-lateral__marca">
-    <span class="barra-lateral__logo" aria-hidden="true">TM</span>
-    <span class="barra-lateral__nombre">TallerMax</span>
-    <span class="barra-lateral__rol">Admin</span>
+
+  <!-- Mismo logo que el encabezado del sitio -->
+  <p class="logo barra-lateral__marca">
+    <img src="img/Tuerca_encabezado.jpg" alt="" width="28" height="28">
+    <span>TALLER<span class="resaltado">MAX</span></span>
   </p>
 
   <p class="barra-lateral__usuario">
     <span class="barra-lateral__avatar" id="barraLateralAvatar" aria-hidden="true">US</span>
     <span class="barra-lateral__datos">
       <strong id="barraLateralNombre">Usuario</strong>
-      <span>Administrador</span>
+      <span class="barra-lateral__estado">Sesión activa</span>
     </span>
   </p>
 
   <nav aria-label="Módulos del sistema">
+    <p class="barra-lateral__titulo">Gestión</p>
     <ul class="barra-lateral__lista">
-      <li><a class="barra-lateral__enlace" href="clientes.html"><span class="barra-lateral__icono" aria-hidden="true"></span>Clientes</a></li>
-      <li><a class="barra-lateral__enlace" href="autos.html"><span class="barra-lateral__icono" aria-hidden="true"></span>Autos</a></li>
-      <li><a class="barra-lateral__enlace" href="empleados.html"><span class="barra-lateral__icono" aria-hidden="true"></span>Empleados</a></li>
-      <li><a class="barra-lateral__enlace" href="factura.html"><span class="barra-lateral__icono" aria-hidden="true"></span>Facturación</a></li>
+      <li><a class="barra-lateral__enlace" href="clientes.html">
+        <svg class="barra-lateral__icono" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16 4.7a3.5 3.5 0 0 1 0 6.6M18.5 14.4c1.9.8 3 2.6 3 5.6"/></svg>Clientes</a></li> 
+      <li><a class="barra-lateral__enlace" href="autos.html">
+        <svg class="barra-lateral__icono" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13l2-5.5A2 2 0 0 1 6.9 6h10.2a2 2 0 0 1 1.9 1.5L21 13v5h-3v-2H6v2H3z"/><circle cx="7.5" cy="13.5" r="1"/><circle cx="16.5" cy="13.5" r="1"/></svg>Autos</a></li>   
+      <li><a class="barra-lateral__enlace" href="empleados.html">
+       <svg class="barra-lateral__icono" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5 5L3.5 17.5a1.8 1.8 0 0 0 2.5 2.5l6.2-6.2a4 4 0 0 0 5-5l-2.4 2.4-2.1-.5-.5-2.1z"/></svg>Empleados</a></li>   
+      <li><a class="barra-lateral__enlace" href="factura.html">
+       <svg class="barra-lateral__icono" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg>Facturación</a></li> 
+    </ul>
+
+    <p class="barra-lateral__titulo">Sitio</p>
+    <ul class="barra-lateral__lista">
+      <li><a class="barra-lateral__enlace" href="index.html">
+       <svg class="barra-lateral__icono" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11L12 4l8.5 7"/><path d="M6 9.5V20h12V9.5"/></svg>Inicio</a></li>  
     </ul>
   </nav>
 
   <button type="button" class="barra-lateral__salir" id="barraLateralCerrarSesion">
-    <span class="barra-lateral__icono" aria-hidden="true"></span>Cerrar sesión
+  <svg class="barra-lateral__icono" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H5v16h5"/><path d="M15 8l4 4-4 4M19 12H9"/></svg>Cerrar sesión
   </button>
+
 </aside>

@@ -564,3 +564,33 @@ h3 { font-size: 16px; }
   grid-column: 1 / -1; border-top: 1px solid var(--border);
   padding-top: 20px; text-align: center; color: var(--text-dim); font-size: 13px;
 }
+/* ---------- ENCABEZADO RESPONSIVO (fase 4) ----------
+   El encabezado original no se adaptaba al celular y desbordaba la pantalla. */
+@media (max-width: 900px) {
+  .encabezado-sitio {
+    flex-wrap: wrap;
+    gap: 10px 14px;
+    padding-block: 12px;
+    padding-inline: 16px;
+  }
+  .encabezado-sitio .logo { flex: 1 1 auto; }
+  /* los enlaces de secciones pasan a una segunda fila con desplazamiento horizontal */
+  .menu-principal { order: 5; width: 100%; overflow-x: auto; }
+  .menu-principal ul { gap: 22px; white-space: nowrap; padding-bottom: 4px; }
+  .acciones-encabezado { flex-wrap: wrap; }
+  #zonaSesion { display: inline-flex; gap: 8px; flex-wrap: wrap; }
+}
+@media (max-width: 560px) {
+  .acciones-encabezado .boton-primario { display: none; } /* "Prueba gratis" queda en la portada */
+}
+
+/* ---------- LANDING RESPONSIVA (fase 4) ----------
+   Las cuadrículas de la portada eran solo de escritorio. En pantallas angostas pasan a 1-2 columnas. */
+@media (max-width: 900px) {
+  .portada, .seccion-formulario, .pie-de-pagina,
+  #servicios, #nosotros, .seccion-resumen, .seccion-clara { grid-template-columns: 1fr !important; }
+  .seccion > *, .portada > *, .seccion-formulario > * { min-width: 0; }
+  .seccion, .portada, .pie-de-pagina, .seccion-formulario { padding-inline: 16px; }
+  .cuadricula-estadisticas { grid-template-columns: repeat(2, 1fr); }
+  .url-panel { overflow-wrap: anywhere; }
+}

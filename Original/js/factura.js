@@ -1,9 +1,6 @@
-// Usa sesion.js (obtenerSesion, protegerPagina y cerrarSesion) para la sesión y el token de Clarisa.
-
-const URL_FACTURA_NACIONAL_CLARISA = 'https://pru.clarisacloud.com:8443/api/factura/rest/v1/factura/nacional';
+// La URL de Clarisa y el modo (proxy o directo) se configuran en js/config.js
 const TARIFA_IVA_PORCENTAJE = 19;
-const LLAVE_FACTURAS_EMITIDAS = 'tm_facturas_emitidas';
-const MAXIMO_FACTURAS_GUARDADAS = 20;
+
 
 // Datos de ejemplo de la guía de Clarisa (ambiente de pruebas): 10 x $10.000 + IVA 19 % = $119.000
 const DATOS_EJEMPLO_DE_LA_GUIA = {
@@ -42,7 +39,7 @@ function iniciarPantallaFactura() {
   dibujarTablaFacturasEmitidas();
 
   obtenerElemento('formularioFactura').addEventListener('submit', enviarFormularioFactura);
-  obtenerElemento('botonGuardarFactura').addEventListener('click', avisarQueGuardarEstaPendiente);
+  obtenerElemento('botonGuardarFactura').addEventListener('click', guardarBorradorDeFactura);
   obtenerElemento('botonAgregarItem').addEventListener('click', () => agregarFilaItem());
   obtenerElemento('botonUsarConsumidorFinal').addEventListener('click', usarClienteConsumidorFinal);
   obtenerElemento('botonCargarEjemploGuia').addEventListener('click', cargarEjemploDeLaGuia);
@@ -152,7 +149,7 @@ function crearFilaItem(valores = {}) {
     '<td><input type="text" class="campo-codigo-item" maxlength="20" placeholder="SRV-001" aria-label="Código del ítem"></td>' +
     '<td><input type="text" class="campo-nombre-item" maxlength="120" placeholder="Ej. Cambio de aceite" aria-label="Descripción del ítem"></td>' +
     '<td><select class="campo-unidad-item" aria-label="Unidad de medida">' +
-      '<option value="94">Unidad (94)</option><option value="HUR">Hora (HUR)</option></select></td>' +
+    '<option value="94">Unidad (94)</option><option value="HUR">Hora (HUR)</option></select></td>' +
     '<td><input type="number" class="campo-cantidad-item" min="0" step="any" inputmode="decimal" aria-label="Cantidad"></td>' +
     '<td><input type="number" class="campo-precio-item" min="0" step="any" inputmode="decimal" placeholder="0" aria-label="Precio unitario sin IVA"></td>' +
     '<td class="texto-total-item"></td>' +
@@ -283,13 +280,23 @@ function limpiarClienteEItems() {
   reiniciarTablaDeItems();
 }
 
-// El botón «Guardar factura» todavía no guarda: se conectará con la base de datos más adelante
-function avisarQueGuardarEstaPendiente() {
-  mostrarMensajeEstado(
-    obtenerElemento('estadoFactura'),
-    'Guardar en la base de datos todavía no está conectado: se hará más adelante.',
-    'info'
-  );
+// «Guardar factura»: guarda la factura en la base de datos (Panther) como PENDIENTE, sin enviarla a Clarisa
+async function guardarBorradorDeFactura() {
+  const estadoFactura = obtenerElemento('estadoFactura');
+  if (!validarFormularioFactura()) {
+    mostrarMensajeEstado(estadoFactura, 'Revisa los campos marcados en rojo.', 'error');
+    return;
+  }
+  const cuerpoFactura = construirCuerpoFactura();
+  const numero = cuerpoFactura.prefijoDcto + cuerpoFactura.consecutivoDcto;
+  try {
+    await registrarFacturaEnPanther(cuerpoFactura, 'PENDIENTE', null);
+    mostrarMensajeEstado(estadoFactura, 'Factura ' + numero + ' guardada en la base de datos como PENDIENTE. Aún no se envió a Clarisa.', 'exito');
+    await dibujarTablaFacturasEmitidas();
+  } catch (error) {
+    mostrarMensajeEstado(estadoFactura, 'No se pudo guardar la factura: ' + error.message, 'error');
+  }
+
 }
 
 function limpiarFormularioFactura() {
@@ -462,27 +469,20 @@ async function enviarFormularioFactura(evento) {
 
   try {
     let respuesta;
+    let cuerpoRespuesta = null;
     try {
-      respuesta = await fetch(URL_FACTURA_NACIONAL_CLARISA, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': tokenClarisa },
-        body: JSON.stringify(cuerpoFactura)
-      });
+
+      ({ respuesta, cuerpoRespuesta } = await enviarFacturaAClarisa(cuerpoFactura, tokenClarisa));
     } catch (error) {
       mostrarMensajeEstado(
         estadoFactura,
-        'No se pudo comunicar con Clarisa. Revisa tu internet; si sigue igual, el navegador pudo bloquear la petición (CORS).',
+        error.message || 'No se pudo comunicar con Clarisa. Revisa tu internet; si sigue igual, el navegador pudo bloquear la petición (CORS).',
         'error'
       );
       return;
     }
 
-    let cuerpoRespuesta = null;
-    try {
-      cuerpoRespuesta = await respuesta.json();
-    } catch (error) {
-      // La respuesta no traía JSON
-    }
+
 
     // 401 o 403: Clarisa ya no acepta el token. Se cierra la sesión y se lleva al login.
     if (respuesta.status === 401 || respuesta.status === 403) {
@@ -495,29 +495,29 @@ async function enviarFormularioFactura(evento) {
     const { titulo, texto } = obtenerTituloYTextoDeClarisa(cuerpoRespuesta, respuesta.status);
 
     if (facturaEmitida) {
-      guardarFacturaEmitida({
-        numero: numeroFactura,
-        cliente: cuerpoFactura.cliente.nombreRazonSocial,
-        total: Number(cuerpoFactura.total),
-        fechaHora: new Date().toISOString()
-      });
-      dibujarTablaFacturasEmitidas();
+      const aviso = await guardarResultadoEnPanther(cuerpoFactura, 'EMITIDA', cuerpoRespuesta);
+      await dibujarTablaFacturasEmitidas();
       mostrarRespuestaDeClarisa(cuerpoRespuesta, false);
-      mostrarMensajeEstado(estadoFactura, 'Factura ' + numeroFactura + ' enviada a Clarisa correctamente. ' + titulo + ': ' + texto, 'exito');
+      mostrarMensajeEstado(estadoFactura, 'Factura ' + numeroFactura + ' enviada a Clarisa correctamente. ' + titulo + ': ' + texto + aviso, 'exito');
 
       incrementarConsecutivo();
       limpiarClienteEItems();
-        } else {
+    } else {
       const estadoClarisa = obtenerEstadoDeClarisa(cuerpoRespuesta);
       const motivoDelError = obtenerMensajeDelPrimerError(cuerpoRespuesta) || texto;
 
       mostrarRespuestaDeClarisa(cuerpoRespuesta, true);
 
+      // Se guarda en Panther también el intento fallido, para tener trazabilidad
+      const estadoLocal = estadoClarisa === 'VERIFICANDO' ? 'PENDIENTE' : 'ERROR';
+      const avisoGuardado = await guardarResultadoEnPanther(cuerpoFactura, estadoLocal, cuerpoRespuesta);
+      await dibujarTablaFacturasEmitidas();
+
       if (estadoClarisa === 'VERIFICANDO') {
         // Clarisa sí recibió la factura: solo falta que termine de validarla
         mostrarMensajeEstado(
           estadoFactura,
-          'Clarisa recibió la factura ' + numeroFactura + ' y la está validando. Todavía no hay respuesta final de la DIAN.',
+          'Clarisa recibió la factura ' + numeroFactura + ' y la está validando. Todavía no hay respuesta final de la DIAN.' + avisoGuardado,
           'info'
         );
         incrementarConsecutivo();
@@ -525,12 +525,12 @@ async function enviarFormularioFactura(evento) {
         // Fue recibida y rechazada: ese consecutivo ya se gastó
         mostrarMensajeEstado(
           estadoFactura,
-          'Clarisa recibió la factura ' + numeroFactura + ' pero la rechazó. ' + motivoDelError,
+          'Clarisa recibió la factura ' + numeroFactura + ' pero la rechazó. ' + motivoDelError + avisoGuardado,
           'error'
         );
         incrementarConsecutivo();
       } else {
-        mostrarMensajeEstado(estadoFactura, 'La factura no se envió a Clarisa. ' + motivoDelError, 'error');
+        mostrarMensajeEstado(estadoFactura, 'La factura no se envió a Clarisa. ' + motivoDelError + avisoGuardado, 'error');
       }
     }
   } finally {
@@ -539,49 +539,91 @@ async function enviarFormularioFactura(evento) {
 }
 
 
-// Facturas emitidas (se guardan en este navegador) 
+// Conexión con Clarisa (proxy de Panther o directo) y con la base de datos Panther
 
-function leerFacturasEmitidas() {
-  try {
-    const textoGuardado = localStorage.getItem(LLAVE_FACTURAS_EMITIDAS);
-    const listaFacturas = textoGuardado ? JSON.parse(textoGuardado) : [];
-    return Array.isArray(listaFacturas) ? listaFacturas : [];
-  } catch (error) {
-    return [];
+// Envía la factura a Clarisa. Devuelve { respuesta: { status, ok }, cuerpoRespuesta }.
+async function enviarFacturaAClarisa(cuerpoFactura, tokenClarisa) {
+  if (CONFIG.CLARISA_MODO === 'directo') {
+    let r;
+    try {
+      r = await fetch(CONFIG.CLARISA_FACTURA_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', [CONFIG.CLARISA_TOKEN_HEADER]: CONFIG.CLARISA_TOKEN_PREFIX + tokenClarisa },
+        body: JSON.stringify(cuerpoFactura)
+      });
+    } catch (error) {
+      throw new Error('No se pudo comunicar con Clarisa. Revisa tu internet; si sigue igual, el navegador pudo bloquear la petición (CORS).');
+    }
+    let cuerpo = null;
+    try { cuerpo = await r.json(); } catch (e) { /* sin JSON */ }
+    return { respuesta: r, cuerpoRespuesta: cuerpo };
   }
+
+  // Modo proxy: Panther reenvía la factura a Clarisa y devuelve su respuesta
+  const d = await pedirApi('clarisa/factura', 'POST', { token: tokenClarisa, factura: cuerpoFactura });
+  const status = Number(d.clarisaStatus);
+  const cuerpo = d.clarisaBody && typeof d.clarisaBody === 'object' ? d.clarisaBody : null;
+  return { respuesta: { status, ok: status >= 200 && status < 300 }, cuerpoRespuesta: cuerpo };
 }
 
-function guardarFacturaEmitida(factura) {
-  const facturas = leerFacturasEmitidas();
-  facturas.unshift(factura); // la más reciente primero
-  try {
-    localStorage.setItem(LLAVE_FACTURAS_EMITIDAS, JSON.stringify(facturas.slice(0, MAXIMO_FACTURAS_GUARDADAS)));
-  } catch (error) {
-    // Sin almacenamiento disponible: la factura se emitió igual, solo no queda en la lista
-  }
-}
-
-function dibujarTablaFacturasEmitidas() {
-  const cuerpoTabla = obtenerElemento('cuerpoTablaFacturasEmitidas');
-  const facturas = leerFacturasEmitidas();
-
-  cuerpoTabla.replaceChildren();
-  obtenerElemento('mensajeSinFacturasEmitidas').hidden = facturas.length > 0;
-
-  facturas.forEach(factura => {
-    const fila = document.createElement('tr');
-    const textosDeLaFila = [
-      factura.numero,
-      factura.cliente,
-      formatearPesos(factura.total),
-      new Date(factura.fechaHora).toLocaleString('es-CO')
-    ];
-
-    textosDeLaFila.forEach(texto => {
-      const celda = document.createElement('td');
-      celda.textContent = texto; // textContent: lo escrito por la persona nunca se interpreta como HTML
-      fila.appendChild(celda);
-    });
-    cuerpoTabla.appendChild(fila);
+// Guarda la factura en la tabla invoice de Panther
+async function registrarFacturaEnPanther(cuerpoFactura, estado, cuerpoRespuesta) {
+  const sesion = obtenerSesion() || {};
+  return api.crear('invoices', {
+    customerName: cuerpoFactura.cliente.nombreRazonSocial,
+    customerDocument: cuerpoFactura.cliente.numIdentificacion,
+    issueDate: obtenerFechaDeHoy(),
+    total: Number(cuerpoFactura.total),
+    status: estado,
+    clarisaNumber: cuerpoFactura.prefijoDcto + cuerpoFactura.consecutivoDcto,
+    items: cuerpoFactura.items,
+    requestJson: cuerpoFactura,
+    responseJson: cuerpoRespuesta,
+    createdBy: sesion.usuario || ''
   });
+
+}
+
+
+// Igual que la anterior, pero si Panther falla devuelve un aviso en vez de interrumpir el flujo
++async function guardarResultadoEnPanther(cuerpoFactura, estado, cuerpoRespuesta) {
+  try {
+    await registrarFacturaEnPanther(cuerpoFactura, estado, cuerpoRespuesta);
+    return '';
+  } catch (error) {
+    return ' (Aviso: no se pudo guardar en la base de datos: ' + error.message + ')';
+  }
+
+  // Facturas guardadas (base de datos Panther)
+
+  async function dibujarTablaFacturasEmitidas() {
+    const cuerpoTabla = obtenerElemento('cuerpoTablaFacturasEmitidas');
+    let facturas = [];
+    try {
+      facturas = await api.listar('invoices');
+    } catch (error) {
+      mostrarMensajeEstado(obtenerElemento('estadoFactura'), 'No se pudo cargar el historial: ' + error.message, 'error');
+    }
+
+    cuerpoTabla.replaceChildren();
+    obtenerElemento('mensajeSinFacturasEmitidas').hidden = facturas.length > 0;
+
+    facturas.forEach(factura => {
+      const fila = document.createElement('tr');
+      const textosDeLaFila = [
+        factura.clarisaNumber || '—',
+        factura.customerName,
+        formatearPesos(Number(factura.total)),
+        String(factura.createdAt || factura.issueDate).replace('T', ' ').slice(0, 16),
+        factura.status
+      ];
+
+      textosDeLaFila.forEach(texto => {
+        const celda = document.createElement('td');
+        celda.textContent = texto; // textContent: lo escrito por la persona nunca se interpreta como HTML
+        fila.appendChild(celda);
+      });
+      cuerpoTabla.appendChild(fila);
+    });
+  }
 }

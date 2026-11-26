@@ -1,173 +1,250 @@
-.barra-lateral[hidden], 
+/* Barra lateral — usa SOLO las variables, tipografías, radios e iconografía del sitio (style.css):
+   fondo oscuro, acento naranja, iconos de línea redondeada del mismo trazo que los de servicios. */
 
-.barra-lateral__abrir { 
-  display: none; 
+.barra-lateral[hidden],
+.barra-lateral__abrir {
+  display: none;
 }
 
-body.con-barra-lateral { 
+body.con-barra-lateral {
   padding-left: 256px;
 }
-body.con-barra-lateral .encabezado-sitio { 
-  display: none; 
+
+body.con-barra-lateral .encabezado-sitio {
+  display: none;
 }
 
 body.con-barra-lateral .barra-lateral {
-  position: fixed; 
-  inset: 0 auto 0 0; 
-  width: 256px; 
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: 256px;
   z-index: 60;
-  display: flex; 
+  display: flex;
   flex-direction: column;
-  background: radial-gradient(600px 360px at 50% 20%, rgba(232, 100, 31, 0.10), transparent 60%);
-  color: #e6e9f0;
-  border-right: 1px solid rgba(255,255,255,.06);
+  background:
+    radial-gradient(420px 260px at 0% 0%, rgba(232, 100, 31, 0.10), transparent 70%),
+    var(--bg-alt);
+  color: var(--text);
+  border-right: 1px solid var(--border);
   overflow-y: auto;
 }
-.barra-lateral__marca {
-  display: flex; 
-  align-items: center; 
-  gap: 10px;
-  padding: 18px 24px; 
-  border-bottom: 1px solid rgba(255,255,255,.07);
-}
-.barra-lateral__logo {
-  display: grid; 
-  place-items: center; 
-  width: 28px; 
-  height: 28px;
-  border-radius: 8px;
-  background: var(--accent); 
-  color: #fff;
-  font: 700 11px var(--font-body);
-}
-.barra-lateral__nombre { 
-  font: 700 16px var(--font-body);
-  color: #fff; }
-.barra-lateral__rol {
-  margin-left: auto; 
-  padding: 2px 9px; 
-  border-radius: 999px;
-  background: rgba(232,100,31,.18); 
-  color: var(--accent); 
-  font-size: 12px;
-}
-.barra-lateral__usuario {
-  display: flex; 
-  align-items: center; 
-  gap: 12px;
-  padding: 16px 24px; 
-  border-bottom: 1px solid rgba(255,255,255,.07);
-}
-.barra-lateral__avatar {
-  display: grid; 
-  place-items: center; 
-  flex: none; 
-  width: 36px; 
-  height: 36px;
-  border-radius: 50%; 
-  background: var(--accent); 
-  color: #fff; 
-  font: 700 13px var(--font-body);
-}
-.barra-lateral__datos { 
-  display: flex; 
-  flex-direction: column; 
-  line-height: 1.25; 
-  min-width: 0; }
-.barra-lateral__datos strong {
-  color: #fff; 
-  font-size: 14px; 
-  overflow: hidden; 
-  text-overflow: ellipsis;
-  white-space: nowrap; }
-.barra-lateral__datos span { 
-  color: var(--accent); 
-  font-size: 12px; }
 
-.barra-lateral__lista { 
-  list-style: none; 
-  padding: 16px; 
-  display: grid; 
-  gap: 4px; }
+/* Logo: reutiliza la clase .logo del encabezado (Oswald + MAX en naranja) */
+.barra-lateral__marca {
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--border);
+}
+
+.barra-lateral__marca img {
+  border-radius: var(--radius-sm);
+}
+
+/* Usuario */
+.barra-lateral__usuario {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--border);
+}
+
+.barra-lateral__avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font: 600 14px var(--font-display);
+  letter-spacing: 0.5px;
+}
+
+.barra-lateral__datos {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+  min-width: 0;
+}
+
+.barra-lateral__datos strong {
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.barra-lateral__estado {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  font: 500 11px var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.barra-lateral__estado::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--success);
+}
+
+/* Títulos de grupo (mismo estilo que los encabezados de tabla) */
+.barra-lateral__titulo {
+  padding: 18px 22px 6px;
+  color: var(--text-dim);
+  font: 500 11px var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.barra-lateral__lista {
+  list-style: none;
+  padding: 4px 12px;
+  display: grid;
+  gap: 4px;
+}
+
 .barra-lateral__enlace {
-  display: flex; 
-  align-items: center; 
-  gap: 12px; 
+  display: flex;
+  align-items: center;
+  gap: 12px;
   width: 100%;
-  padding: 10px 12px; 
-  border-radius: 10px;
-  color: #d5d9e3; 
-  font-size: 14.5px; 
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  font-size: 15px;
+  font-weight: 500;
   text-decoration: none;
   transition: background var(--transition), color var(--transition);
 }
-a.barra-lateral__enlace:hover { 
-  background: rgba(255,255,255,.07); 
-  color: #fff; 
+
+a.barra-lateral__enlace:hover {
+  background: rgba(255, 255, 255, .07);
+  color: #fff;
 }
-.barra-lateral__enlace--activo, a.barra-lateral__enlace--activo:hover { 
-  background: var(--accent); 
-  color: #fff; 
-  font-weight: 600; }
+
+a.barra-lateral__enlace:hover {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.barra-lateral__enlace--activo,
+a.barra-lateral__enlace--activo:hover {
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+
 .barra-lateral__enlace--inactivo {
-  opacity: .45; 
-  cursor: not-allowed; 
+  opacity: 0.45;
+  cursor: not-allowed;
 }
-.barra-lateral__icono { 
-  width: 20px; 
-  text-align: center; 
-  font-size: 15px; 
+
+/* Iconos: línea redondeada naranja, como los de la sección Servicios */
+.barra-lateral__icono {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke var(--transition);
+}
+
+.barra-lateral__enlace--activo .barra-lateral__icono,
+.barra-lateral__enlace:hover .barra-lateral__icono,
+.barra-lateral__salir:hover .barra-lateral__icono {
+  stroke: currentColor;
+
 }
 
 .barra-lateral__salir {
-  display: flex; 
-  align-items: center; 
-  gap: 12px; 
+  display: flex;
+  align-items: center;
+  gap: 12px;
   margin-top: auto;
-  padding: 18px 28px;
-  background: none; 
+  padding: 16px 24px;
+  /* Siempre visible al pie de la barra, aunque la ventana sea baja y haya que desplazar el menú */
+  position: sticky;
+  bottom: 0;
+  background: var(--bg-alt);
   border: 0;
-  border-top: 1px solid rgba(255,255,255,.07);
-  color: #b9bfcc; 
-  font: inherit; 
-  font-size: 14.5px; 
-  cursor: pointer; 
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  font: 500 15px var(--font-body);
+  cursor: pointer;
   text-align: left;
+  transition: color var(--transition), background var(--transition);
+
 }
-.barra-lateral__salir:hover { 
-  color: #fff; 
-}
-.barra-lateral a:focus-visible, .barra-lateral button:focus-visible {
+
+.barra-lateral__salir:hover { color: #fff; background: var(--surface); }
+
+
+.barra-lateral a:focus-visible,
+.barra-lateral button:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 2px; }
+  outline-offset: 2px;
+}
+
+/* Móvil: la barra se desliza desde la izquierda */
 
 @media (max-width: 900px) {
   body.con-barra-lateral {
-    padding-left: 0; 
+    padding-left: 0;
   }
-  body.con-barra-lateral .barra-lateral { 
-    transform: translateX(-100%); 
-    transition: transform var(--transition); 
+
+  body.con-barra-lateral .barra-lateral {
+    transform: translateX(-100%);
+    transition: transform var(--transition);
   }
-  body.con-barra-lateral .barra-lateral.barra-lateral--abierta { 
-    transform: none; 
-    box-shadow: 0 0 0 100vmax rgba(0,0,0,.5); 
+
+  body.con-barra-lateral .barra-lateral.barra-lateral--abierta {
+    transform: none;
+    box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.6);
   }
+
   body.con-barra-lateral .barra-lateral__abrir {
-    display: grid; 
-    place-items: center; 
-    position: fixed; 
-    top: 10px; 
-    left: 10px; 
+    display: grid;
+    place-items: center;
+    position: fixed;
+    top: 10px;
+    left: 10px;
     z-index: 55;
-    width: 40px; 
-    height: 40px; 
-    border-radius: 10px; 
-    border: 0;
-    background: #0f1a2e; 
-    color: #fff; 
-    font-size: 20px; 
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--accent);
     cursor: pointer;
+    transition: border-color var(--transition);
+
+  }
+
+  body.con-barra-lateral .barra-lateral__abrir:hover {
+    border-color: var(--accent);
+  }
+
+  /* el contenido no queda debajo del botón de menú */
+  body.con-barra-lateral main {
+    padding-top: 56px;
   }
 }
-@media (prefers-reduced-motion: reduce) { body.con-barra-lateral .barra-lateral { transition: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+
+  body.con-barra-lateral .barra-lateral,
+  .barra-lateral__enlace {
+    transition: none;
+  }
+}

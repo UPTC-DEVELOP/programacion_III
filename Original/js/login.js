@@ -1,13 +1,12 @@
-// login.js — es el que consume la API de autenticación de Clarisa
-const URL_LOGIN = 'https://pru.clarisacloud.com:8443/seguridad/rest/api/v1/login/';
-const PAGINA_DESTINO = 'clientes.html';
+// login.js — Inicio de sesión con la API de autenticación de Clarisa.
+// Si es exitoso, guarda la sesión y redirige a factura.html (CONFIG.PAGINA_DESTINO).
 
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('formLogin');
   if (!form) return;
 
   if (obtenerSesion()) {
-    window.location.replace(PAGINA_DESTINO);
+    window.location.replace(CONFIG.PAGINA_DESTINO);
     return;
   }
 
@@ -43,29 +42,73 @@ document.addEventListener('DOMContentLoaded', () => {
     boton.disabled = activo;
     textoBoton.textContent = activo ? 'Ingresando…' : 'Ingresar';
   }
-
-  async function iniciarSesion(usuario, contrasenia) {
-    const respuesta = await fetch(URL_LOGIN, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ usuario, contrasenia })
-    });
-    let json = null;
-    try {
-      json = await respuesta.json();
-    } catch (error) {
-      /* la respuesta no era JSON */
-    }
-    return { ok: respuesta.ok, json };
-  }
-
+  // Mensaje de error del formato de Clarisa: { errores: { errores: [{ errorMessage }] }, textResponse }
   function extraerMensajeError(json) {
     if (!json) return 'El servicio respondió de forma inesperada.';
     const lista = json.errores && json.errores.errores;
-    if (lista && lista.length) {
-      return lista.map((e) => e.errorMessage).join(' ');
-    }
+    if (lista && lista.length) return lista.map((e) => e.errorMessage).join(' ');
     return json.textResponse || 'No fue posible iniciar sesión.';
+  }
+
+  // ---- Modo proxy: Panther valida contra Clarisa y entrega su propia llave ----
+  async function loginPorProxy(usuario, contrasenia) {
+    let respuesta;
+
+    try {
+      respuesta = await fetch(CONFIG.urlApi() + 'clarisa/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ usuario, contrasenia })
+      });
+    } catch (e) {
+      throw new ErrorApi('No se pudo conectar con el backend Panther.', 0);
+    }
+    const json = await respuesta.json().catch(() => null);
+    if (!respuesta.ok) {
+      const msg = json && typeof json.data === 'string' ? json.data : 'Error ' + respuesta.status;
+      throw new ErrorApi(msg, respuesta.status);
+    }
+    const d = json.data;
+    return {
+      usuario: d.clarisa.usuario ? d.clarisa.usuario.userName : usuario,
+      tokenClarisa: d.clarisa.token,
+      permisos: d.clarisa.permisos || [],
+      keyAPI: d.keyAPI
+    };
+  }
+
+  // ---- Modo directo: el navegador llama a Clarisa y luego pide su llave a Panther ----
+  async function loginDirecto(usuario, contrasenia) {
+    let respuesta;
+    try {
+      respuesta = await fetch(CONFIG.CLARISA_LOGIN_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ usuario, contrasenia })
+      });
+    } catch (e) {
+      throw new ErrorApi('No se pudo conectar con Clarisa (revisa la red o el CORS del servicio).', 0);
+    }
+
+    const json = await respuesta.json().catch(() => null);
+    if (!respuesta.ok || !json || !json.success) {
+      throw new ErrorApi(extraerMensajeError(json), respuesta.status);
+    }
+    const enlace = await fetch(CONFIG.urlApi() + 'useraction/clarisa-enlace', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ usuario, token: json.data.token })
+    });
+    const jsonEnlace = await enlace.json().catch(() => null);
+    if (!enlace.ok) {
+      throw new ErrorApi(jsonEnlace && jsonEnlace.data ? jsonEnlace.data : 'Panther no aceptó la sesión.', enlace.status);
+    }
+    return {
+      usuario: json.data.usuario ? json.data.usuario.userName : usuario,
+      tokenClarisa: json.data.token,
+      permisos: json.data.permisos || [],
+      keyAPI: jsonEnlace.data.keyAPI
+    };
   }
 
   [campoUsuario, campoClave].forEach((campo) => {
@@ -78,8 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
   form.addEventListener('submit', async (evento) => {
     evento.preventDefault();
 
-    const camposValidos = [campoUsuario, campoClave].map(validarCampo);
-    if (camposValidos.includes(false)) {
+    if ([campoUsuario, campoClave].map(validarCampo).includes(false)) {
       mostrarEstado('Revisa los campos marcados antes de continuar.', 'error');
       return;
     }
@@ -89,21 +131,21 @@ document.addEventListener('DOMContentLoaded', () => {
     let exito = false;
 
     try {
-      const { ok, json } = await iniciarSesion(campoUsuario.value.trim(), campoClave.value);
+      const usuario = campoUsuario.value.trim();
+      const datos = CONFIG.CLARISA_MODO === 'directo'
+        ? await loginDirecto(usuario, campoClave.value)
+        : await loginPorProxy(usuario, campoClave.value);
 
-      if (ok && json && json.success) {
-        exito = true;
-        guardarSesion(json.data);
-        mostrarEstado(json.textResponse || 'Bienvenido', 'success');
-        setTimeout(() => { window.location.href = PAGINA_DESTINO; }, 800);
-      } else {
-        mostrarEstado(extraerMensajeError(json), 'error');
-        campoClave.value = '';
-        campoClave.focus();
-      }
+      if (!guardarSesion(datos)) throw new ErrorApi('No se pudo guardar la sesión en este navegador.', 0);
+      exito = true;
+      mostrarEstado('¡Bienvenido, ' + datos.usuario + '!', 'success');
+      setTimeout(() => { window.location.href = CONFIG.PAGINA_DESTINO; }, 700);
+
     } catch (error) {
-      console.error('Error al llamar al servicio de login:', error);
-      mostrarEstado('No se pudo conectar con el servicio. Inténtalo de nuevo.', 'error');
+      console.error('Error en el login:', error);
+      mostrarEstado(error.message, 'error');
+      campoClave.value = '';
+      campoClave.focus();
     } finally {
       if (!exito) cargando(false);
     }
