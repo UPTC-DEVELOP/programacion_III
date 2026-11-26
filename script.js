@@ -1,3 +1,5 @@
+
+
 const URL_SCRIPT = 'http://localhost/panther/rest/useraction/Script.php';
 
 const navToggle = document.getElementById('navToggle');
@@ -5,27 +7,22 @@ const nav = document.getElementById('nav');
 
 document.addEventListener('DOMContentLoaded', function() {
 
+    const carro = document.querySelector(".hero__visual");
 
-   
+    if (carro) {
+        // Empieza invisible y MUY lejos por la derecha
+        carro.style.opacity = "0";
+        carro.style.transform = "translateX(800px)";
 
-const carro = document.querySelector(".hero__visual");
+        // Más velocidad: 0.4 segundos en lugar de 1s
+        carro.style.transition = "opacity 0.4s ease, transform 0.2s ease";
 
-if (carro) {
-  // Empieza invisible y MUY lejos por la derecha
-  carro.style.opacity = "0";
-  carro.style.transform = "translateX(800px)";
-
-  // Más velocidad: 0.4 segundos en lugar de 1s
-  carro.style.transition = "opacity 0.4s ease, transform 0.2s ease";
-
-  setTimeout(function () {
-    // Aparece y cruza casi hasta el otro lado
-    carro.style.opacity = "1";
-    carro.style.transform = "translateX(-150px)";
-  }, 250);
-}
-
-
+        setTimeout(function () {
+            // Aparece y cruza casi hasta el otro lado
+            carro.style.opacity = "1";
+            carro.style.transform = "translateX(-150px)";
+        }, 250);
+    }
 
     // Tarjeta beneficios
     const tarjetas = document.querySelectorAll('.benefit-card');
@@ -49,20 +46,17 @@ if (carro) {
         tarjetas.forEach(tarjeta => observador.observe(tarjeta));
     }
 
-        //Aqui es el login
-        // ===== LOGIN: selección de tipo de usuario =====
+    // ===== LOGIN: selección de tipo de usuario =====
     const loginOpen = document.getElementById('loginOpen');
     const loginClose = document.getElementById('loginClose');
     const loginModal = document.getElementById('loginModal');
 
-        //CRUD Administrador
-          const PAGINAS = {
-            administrador: 'crud_administrador/administradores.html',
-            empleado: 'crud_empleados/empleados.html',
-            cliente: 'crud_clientes/clientes_2.html'//<----- tiene error de sintasis en la ruta 
-  };
-
-           
+    // Rutas relativas desde Login/LoginPanther.html hacia cada CRUD
+    const PAGINAS = {
+        administrador: '../crud_administrador/administradores.html',
+        empleado: '../crud_empleados/empleados.html',
+        cliente: '../crud_clientes/clientes_2.html'
+    };
 
     if (loginOpen && loginModal) {
 
@@ -94,32 +88,21 @@ if (carro) {
             if (e.key === 'Escape' && !loginModal.hidden) cerrarLogin();
         });
 
-        
-        // Clic en cada tipo de usuario: lleva a su página
+        // Clic en cada tipo de usuario: lleva a LoginPanther.html con la ruta de destino
         loginModal.querySelectorAll('.role-btn').forEach((boton) => {
-      boton.addEventListener('click', () => {
-        const rol = boton.dataset.role; // "cliente", "empleado" o "administrador"
-        const destino = PAGINAS[rol];
-        if (!destino) return;
+            boton.addEventListener('click', () => {
+                const rol = boton.dataset.role; // "cliente", "empleado" o "administrador"
+                const destino = PAGINAS[rol];
+                if (!destino) return;
 
-        try { sessionStorage.setItem('tallerpro_rol', rol); } catch (e) { /* sin acceso */ }
-        window.location.href = destino;
+                try {
+                    sessionStorage.setItem('tallerpro_rol', rol);
+                } catch (e) { /* sin acceso */ }
 
-                
-             });
-        });    
-     }            
+                // Redirige al login de Panther indicando a dónde volver al autenticarse
+                window.location.href = `Login/LoginPanther.html?volver=${encodeURIComponent(destino)}`;
+            });
+        });
+    }
 });
-    
-
-
-
-
-
-
-
-
-
-
-
     

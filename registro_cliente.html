@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Cliente - TallerPro</title>
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        .contenedor {
+            display: flex;
+            min-height: 100vh;
+        }
+        .lado-izquierdo {
+            width: 40%;
+            background: #2563eb;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+        }
+        .lado-izquierdo h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .lado-izquierdo p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        .lado-derecho {
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 40px;
+            background: #f9fafb;
+        }
+        .lado-derecho h2 {
+            color: #1f2937;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        .grupo {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #374151;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+        input:focus {
+            outline: 2px solid #2563eb;
+            border-color: #2563eb;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.2s ease, opacity 0.2s ease;
+        }
+        button:hover:not(:disabled) {
+            background: #1d4ed8;
+        }
+        button:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+        #mensaje {
+            margin-top: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .exito { color: #16a34a; }
+        .error { color: #dc2626; }
+
+        @media (max-width: 768px) {
+            .contenedor {
+                flex-direction: column;
+            }
+            .lado-izquierdo,
+            .lado-derecho {
+                width: 100%;
+                padding: 28px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contenedor">
+        <div class="lado-izquierdo">
+            <h1>¡Hola, Bienvenido!</h1>
+            <p>Regístrate para ser parte de TallerPro</p>
+        </div>
+
+        <div class="lado-derecho">
+            <h2>📝 Registro de Cliente</h2>
+            
+            <form id="formRegistro">
+                <div class="grupo">
+                    <label for="nombre">Nombre completo:</label>
+                    <input type="text" id="nombre" required>
+                </div>
+                <div class="grupo">
+                    <label for="documento">Documento (Cédula):</label>
+                    <input type="text" id="documento" required>
+                </div>
+                <div class="grupo">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" id="telefono" required>
+                </div>
+                <div class="grupo">
+                    <label for="correo">Correo electrónico:</label>
+                    <input type="email" id="correo" required>
+                </div>
+                <div class="grupo">
+                    <label for="direccion">Dirección:</label>
+                    <input type="text" id="direccion" required>
+                </div>
+                <button type="submit" id="btnSubmit">✅ Registrarse</button>
+            </form>
+
+            <p id="mensaje"></p>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('formRegistro');
+        const btnSubmit = document.getElementById('btnSubmit');
+        const mensaje = document.getElementById('mensaje');
+        const textoBotonOriginal = btnSubmit.textContent;
+        let enviando = false;
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            if (enviando) return;
+            enviando = true;
+            btnSubmit.disabled = true;
+            btnSubmit.textContent = '⏳ Enviando...';
+            mensaje.textContent = '';
+            mensaje.className = '';
+
+            const datos = {
+                nombre: document.getElementById('nombre').value.trim(),
+                documento: document.getElementById('documento').value.trim(),
+                telefono: document.getElementById('telefono').value.trim(),
+                correo: document.getElementById('correo').value.trim(),
+                direccion: document.getElementById('direccion').value.trim()
+            };
+
+            try {
+                // 🔗 Ruta — ajústala según tu dirección real
+                const res = await fetch('panther/rest/clientes/create', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(datos)
+                });
+
+                const textoRespuesta = await res.text();
+                let resp = null;
+                if (textoRespuesta) {
+                    try {
+                        resp = JSON.parse(textoRespuesta);
+                    } catch (_) {
+                        resp = null;
+                    }
+                }
+
+                if (!res.ok) {
+                    const detalleError = (resp && (resp.message || resp.error)) || `Error HTTP ${res.status}`;
+                    throw new Error(detalleError);
+                }
+
+                if (resp && resp.status === 'error') {
+                    throw new Error(resp.message || 'Verifica los datos ingresados');
+                }
+
+                mensaje.textContent = (resp && resp.message) || '✅ ¡Registro exitoso! Bienvenido a TallerPro';
+                mensaje.className = 'exito';
+                form.reset();
+            } catch (err) {
+                const esErrorRed = err instanceof TypeError;
+                mensaje.textContent = esErrorRed
+                    ? '❌ No se pudo conectar al servidor — revisa la ruta de Panther'
+                    : `❌ Error: ${err.message || 'Verifica los datos'}`;
+                mensaje.className = 'error';
+                console.error(err);
+            } finally {
+                enviando = false;
+                btnSubmit.disabled = false;
+                btnSubmit.textContent = textoBotonOriginal;
+            }
+        });
+    </script>
+
+</body>
+</html>
