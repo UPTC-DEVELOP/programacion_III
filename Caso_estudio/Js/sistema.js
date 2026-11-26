@@ -1176,7 +1176,7 @@ async function inicializarCRUDVehiculos() {
    ÓRDENES DE SERVICIO
 ========================================================= */
 
-function inicializarCRUDServicios() {
+async function inicializarCRUDServicios() {
     const estadosValidos = ["Pendiente", "En proceso", "Finalizado"];
     const prioridadesValidas = ["Baja", "Media", "Alta", "Urgente"];
     const modal = document.getElementById("modal-servicio");
@@ -1201,7 +1201,8 @@ function inicializarCRUDServicios() {
         "servicio-repuestos",
         "servicio-descripcion"
     ].map((id) => document.getElementById(id));
-    let servicios = leerRegistros("serviciosServiAuto", "servicios");
+
+    let servicios = [];
     let clientes = [];
     let vehiculos = [];
     let empleados = [];
@@ -1227,11 +1228,28 @@ function inicializarCRUDServicios() {
             `Repuesto ${idRegistro(repuesto)}`;
     }
 
-    function cargarCatalogos() {
-        clientes = leerRegistros("clientesServiAuto", "clientes");
-        vehiculos = leerRegistros("vehiculosServiAuto", "vehículos");
-        empleados = leerRegistros("empleadosServiAuto", "empleados");
-        repuestos = leerRegistros("repuestosServiAuto", "repuestos");
+    async function cargarCatalogos() {
+        const [listaClientes, listaVehiculos, listaEmpleados, listaRepuestos] = await Promise.all([
+            window.ClientesAPI?.listar ? window.ClientesAPI.listar() : [],
+            window.VehiculosAPI?.listar ? window.VehiculosAPI.listar() : [],
+            window.EmpleadosAPI?.listar ? window.EmpleadosAPI.listar() : [],
+            window.RepuestosAPI?.listar ? window.RepuestosAPI.listar() : []
+        ]);
+        clientes = listaClientes;
+        vehiculos = listaVehiculos;
+        empleados = listaEmpleados;
+        repuestos = listaRepuestos;
+    }
+
+    async function cargarServicios() {
+        try {
+            await cargarCatalogos();
+            servicios = await window.ServiciosAPI.listar();
+            mostrarServicios();
+        } catch (error) {
+            console.error("Error cargando servicios:", error);
+            mostrarEstado(`❌ Error cargando servicios: ${error.message}`);
+        }
     }
 
     function llenarSelector(selector, textoInicial, registros, etiqueta, seleccionado = "") {
@@ -1268,17 +1286,26 @@ function inicializarCRUDServicios() {
         );
     }
 
-    function llenarReferencias(empleadoId = "", repuestoIds = []) {
+    function llenarReferencias(empleadoId = "", repuestoIds = [], repuestosServicio = []) {
         llenarSelector(selectorEmpleado, "Seleccionar empleado", empleados, nombreEmpleado, empleadoId);
         selectorRepuestos.replaceChildren();
+        const idsActivos = new Set();
         repuestos.forEach((repuesto) => {
             const id = idRegistro(repuesto);
             if (!id) return;
+            idsActivos.add(id);
             const opcion = new Option(nombreRepuesto(repuesto), id);
             opcion.selected = repuestoIds.includes(id);
             selectorRepuestos.add(opcion);
         });
-
+        repuestosServicio.forEach((repuesto) => {
+            const id = String(repuesto.repuesto_id ?? "");
+            if (!id || idsActivos.has(id)) return;
+            const opcion = new Option(`Repuesto ${id} (fuera de catálogo)`, id);
+            opcion.disabled = true;
+            opcion.selected = repuestoIds.includes(id);
+            selectorRepuestos.add(opcion);
+        });
     }
 
     function clientePorId(id) {
@@ -1300,24 +1327,14 @@ function inicializarCRUDServicios() {
         return "";
     }
 
-    function montoTotal(servicio) {
-        const totalRepuestos = (servicio.repuestoIds || []).reduce((total, repuestoId) => {
-            const repuesto = repuestos.find((item) => idRegistro(item) === String(repuestoId));
-            const valor = Number(repuesto?.precio ?? repuesto?.valor ?? repuesto?.costo ?? 0);
-            return total + (Number.isFinite(valor) && valor > 0 ? valor : 0);
-        }, 0);
-        return Number(servicio.manoObra || 0) + totalRepuestos;
-    }
-
     function mostrarServicios() {
         const consulta = buscador.value.trim().toLocaleLowerCase();
         const resultados = servicios.filter((servicio) => {
-            const coincideFiltro = filtroActual === "historial"
-                ? true
-                : filtroActual === "agenda"
-                    ? servicio.estado !== "Finalizado"
-                    : servicio.estado === filtroActual;
-            if (!coincideFiltro) return false;
+            if (filtroActual === "agenda" && servicio.estado === "Finalizado") return false;
+            if (["Pendiente", "En proceso", "Finalizado"].includes(filtroActual) &&
+                servicio.estado !== filtroActual) {
+                return false;
+            }
 
             const cliente = clientePorId(servicio.clienteId);
             const vehiculo = vehiculoPorId(servicio.vehiculoId);
@@ -1374,12 +1391,15 @@ function inicializarCRUDServicios() {
                 style: "currency",
                 currency: "COP",
                 maximumFractionDigits: 2
-            }).format(montoTotal(servicio));
+            }).format(servicio.montoTotal);
 
             const facturacion = fila.insertCell();
             const etiquetaFactura = document.createElement("span");
-            etiquetaFactura.className = servicio.facturable ? "etiqueta-facturable" : "etiqueta-no-facturable";
-            etiquetaFactura.textContent = servicio.facturable ? "Disponible" : "No disponible";
+            const estadoFacturacion = servicio.estadoFacturacion ||
+                (servicio.facturable ? "Disponible" : "No disponible");
+            etiquetaFactura.className =
+                estadoFacturacion === "Disponible" ? "etiqueta-facturable" : "etiqueta-no-facturable";
+            etiquetaFactura.textContent = estadoFacturacion;
             facturacion.append(etiquetaFactura);
 
             const acciones = fila.insertCell();
@@ -1409,8 +1429,14 @@ function inicializarCRUDServicios() {
         });
     }
 
-    function abrirServicio(servicio = null) {
-        cargarCatalogos();
+    async function abrirServicio(servicio = null) {
+        try {
+            await cargarCatalogos();
+        } catch (error) {
+            mostrarEstado(`❌ No se pudieron cargar los catálogos: ${error.message}`);
+            return;
+        }
+
         formulario.reset();
         limpiarErrores();
         idActual.value = servicio?.id || "";
@@ -1419,7 +1445,11 @@ function inicializarCRUDServicios() {
 
         llenarClientes(servicio?.clienteId || "");
         llenarVehiculos(servicio?.clienteId || "", servicio?.vehiculoId || "");
-        llenarReferencias(servicio?.empleadoId || "", servicio?.repuestoIds || []);
+        llenarReferencias(
+            servicio?.empleadoId || "",
+            servicio?.repuestoIds || [],
+            servicio?.repuestos || []
+        );
         document.getElementById("servicio-estado").value = servicio?.estado || "Pendiente";
         document.getElementById("servicio-prioridad").value = servicio?.prioridad || "Media";
         document.getElementById("servicio-fecha-inicio").value =
@@ -1501,52 +1531,71 @@ function inicializarCRUDServicios() {
         return "";
     }
 
-    formulario.addEventListener("submit", cargarCatalogos, true);
     conectarValidacion(formulario, campos, validarCampo);
 
-    formulario.addEventListener("formulario-valido", () => {
-        cargarCatalogos();
-        const posicion = servicios.findIndex((servicio) => servicio.id === idActual.value);
-        const servicioAnterior = posicion === -1 ? {} : servicios[posicion];
+    formulario.addEventListener("formulario-valido", async () => {
         const clienteSeleccionado = clientePorId(selectorCliente.value);
         if (!clienteSeleccionado) {
             mostrarEstado("⚠️ Selecciona un cliente registrado antes de guardar el servicio.");
             return;
         }
+
         const clienteNombre = `${clienteSeleccionado.nombres} ${clienteSeleccionado.apellidos}`.trim();
+        const servicioExistente = servicios.find(
+            (servicio) => idRegistro(servicio) === String(idActual.value)
+        );
+        const repuestosSeleccionados = [...selectorRepuestos.selectedOptions].map((opcion) => {
+            const repuesto = repuestos.find((item) => idRegistro(item) === opcion.value);
+            const existente = servicioExistente?.repuestos?.find(
+                (item) => String(item.repuesto_id) === opcion.value
+            );
+            return {
+                repuesto_id: Number(opcion.value),
+                cantidad: Number(existente?.cantidad ?? 1),
+                precio_unitario: Number(
+                    existente?.precio_unitario ?? repuesto?.precio ?? repuesto?.precio_unitario ?? 0
+                )
+            };
+        });
         const registro = {
-            id: idActual.value || generarId(servicios),
             clienteId: selectorCliente.value,
             clienteNombre,
             clienteNumeroIdentificacion: clienteSeleccionado.numeroIdentificacion,
             vehiculoId: selectorVehiculo.value,
             empleadoId: selectorEmpleado.value,
             estado: document.getElementById("servicio-estado").value,
+            estadoFacturacion: servicioExistente?.estadoFacturacion || "",
             prioridad: document.getElementById("servicio-prioridad").value,
             fechaInicio: document.getElementById("servicio-fecha-inicio").value,
             fechaFin: document.getElementById("servicio-fecha-fin").value,
             horas: Number(document.getElementById("servicio-horas").value),
             manoObra: Number(document.getElementById("servicio-mano-obra").value),
-            repuestoIds: [...selectorRepuestos.selectedOptions].map((opcion) => opcion.value),
+            repuestoIds: repuestosSeleccionados.map((repuesto) => String(repuesto.repuesto_id)),
+            repuestos: repuestosSeleccionados,
             descripcion: document.getElementById("servicio-descripcion").value.trim(),
             observaciones: document.getElementById("servicio-observaciones").value.trim(),
-            facturable: true,
-            fechaRegistro: servicioAnterior.fechaRegistro || new Date().toISOString()
+            facturable: true
         };
-        const nuevosServicios = [...servicios];
-        if (posicion === -1) nuevosServicios.push(registro);
-        else nuevosServicios[posicion] = { ...servicioAnterior, ...registro };
 
-        if (!guardarRegistros("serviciosServiAuto", nuevosServicios, "servicios")) return;
-        servicios = nuevosServicios;
-        modal.close();
-        mostrarServicios();
-        window.dispatchEvent(new CustomEvent("serviauto:servicios-actualizados", {
-            detail: { servicio: registro }
-        }));
-        mostrarEstado(idActual.value
-            ? "✅ Servicio actualizado correctamente y disponible para facturación."
-            : "✅ Servicio registrado correctamente y disponible para facturación.");
+        try {
+            if (idActual.value) {
+                await window.ServiciosAPI.actualizar(idActual.value, registro);
+            } else {
+                await window.ServiciosAPI.crear(registro);
+            }
+
+            modal.close();
+            await cargarServicios();
+            window.dispatchEvent(new CustomEvent("serviauto:servicios-actualizados", {
+                detail: { servicio: registro }
+            }));
+            mostrarEstado(idActual.value
+                ? "✅ Servicio actualizado correctamente y disponible para facturación."
+                : "✅ Servicio registrado correctamente y disponible para facturación.");
+        } catch (error) {
+            console.error("Error guardando servicio:", error);
+            mostrarEstado(`❌ Error guardando servicio: ${error.message}`);
+        }
     });
 
     selectorCliente.addEventListener("change", () => llenarVehiculos(selectorCliente.value));
@@ -1567,10 +1616,10 @@ function inicializarCRUDServicios() {
         });
     });
 
-    tabla.addEventListener("click", (evento) => {
+    tabla.addEventListener("click", async (evento) => {
         const boton = evento.target.closest("button[data-accion]");
         if (!boton) return;
-        const servicio = servicios.find((item) => item.id === boton.dataset.id);
+        const servicio = servicios.find((item) => idRegistro(item) === String(boton.dataset.id));
         if (!servicio) {
             mostrarEstado("⚠️ No se encontró el servicio seleccionado.");
             return;
@@ -1581,27 +1630,30 @@ function inicializarCRUDServicios() {
         }
         if (boton.dataset.accion === "eliminar-servicio" &&
             window.confirm(`¿Eliminar la orden OS-${servicio.id}? Esta acción no se puede deshacer.`)) {
-            const nuevosServicios = servicios.filter((item) => item.id !== servicio.id);
-            if (!guardarRegistros("serviciosServiAuto", nuevosServicios, "servicios")) return;
-            servicios = nuevosServicios;
-            mostrarServicios();
-            window.dispatchEvent(new Event("serviauto:servicios-actualizados"));
-            mostrarEstado("🗑️ Servicio eliminado correctamente.");
+            try {
+                await window.ServiciosAPI.eliminar(servicio.id);
+                await cargarServicios();
+                window.dispatchEvent(new Event("serviauto:servicios-actualizados"));
+                mostrarEstado("🗑️ Servicio eliminado correctamente.");
+            } catch (error) {
+                console.error("Error eliminando servicio:", error);
+                mostrarEstado(`❌ Error eliminando servicio: ${error.message}`);
+            }
         }
     });
 
-    window.addEventListener("serviauto:clientes-actualizados", () => {
-        cargarCatalogos();
+    window.addEventListener("serviauto:clientes-actualizados", async () => {
+        await cargarCatalogos();
         mostrarServicios();
     });
-    window.addEventListener("serviauto:vehiculos-actualizados", () => {
-        cargarCatalogos();
+    window.addEventListener("serviauto:vehiculos-actualizados", async () => {
+        await cargarCatalogos();
         mostrarServicios();
     });
     window.addEventListener("serviauto:empleados-actualizados", cargarCatalogos);
     window.addEventListener("serviauto:repuestos-actualizados", cargarCatalogos);
-    cargarCatalogos();
-    mostrarServicios();
+
+    await cargarServicios();
 }
 
 
@@ -2424,15 +2476,9 @@ function inicializarFacturacion() {
         );
         if (!repuesto && !servicio) return;
 
-        const valorRepuestosServicio = servicio
-            ? (servicio.repuestoIds || []).reduce((total, id) => {
-                const item = repuestos.find((registro) => String(registro.id) === String(id));
-                return total + Number(item?.precio ?? item?.precioUnitario ?? item?.valor ?? item?.costo ?? 0);
-            }, 0)
-            : 0;
         const valor = repuesto
             ? Number(repuesto.precio ?? repuesto.precioUnitario ?? repuesto.valor ?? 0)
-            : Number(servicio.manoObra || 0) + valorRepuestosServicio;
+            : Number(servicio.montoTotal || 0);
         document.getElementById("codigo-item").value = repuesto
             ? repuesto.referencia || repuesto.codigo || ""
             : `OS-${servicio.id}`;
