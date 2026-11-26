@@ -1,37 +1,35 @@
+
 <?php
-/**<b>Descripcion:</b> Clase que <br/> Contiene las constantes para acceso a servicios restFul
- * <b>Caso de Uso:</b> PANTHER-Seguridad <br/>
- * @author Josué Nicolás Pinzón Villamil <a href = "mailto:jpinzon@j4sysol.com">jpinzon@j4sysol.com</a>
- */
 
 /**
- * Recursos existentes para servicios restFul
+ * Recursos existentes para servicios REST.
  */
 define("RESOURCES_URL", array(
     'users',
     'useraction',
     'roles',
-    //Business
+    // Business
     'persons',
     'clients',
     'spareparts',
-    'facturacion'
+    'facturacion',
+    'empleados'
 ));
 
 /**
- * Relaciona endpoints que conservan su nombre publico con su controlador.
+ * Relaciona endpoints con sus controladores.
  */
 define("RESOURCE_CONTROLLERS", array(
-    'spareparts' => 'Repuestos'
+    'spareparts' => 'Repuestos',
+    'empleados' => 'Empleados'
 ));
 
-/**
- * Cabecera de autenticación del token
- */
+
 define("AUTHORIZATION", "authorization");
 
 /**
- * Nombre del metodo que permite cargar el nombre de la tabla
+ * Método para inicializar el nombre de la tabla.
  */
 define("INIT_TABLE", "init");
+
 ?>

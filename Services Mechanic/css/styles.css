@@ -3166,6 +3166,7 @@ footer#contacto .mapa-footer iframe {
 }
 
 .modal-empleado {
+  
     display: none;
     position: fixed;
     inset: 0;
@@ -3175,6 +3176,9 @@ footer#contacto .mapa-footer iframe {
     z-index: 9999;
 }
 
+.modal-empleado:not([hidden]) {
+    display: flex !important;
+}
 .contenido-modal-empleado {
     width: 430px;
     max-width: calc(100% - 30px);
