@@ -2,7 +2,7 @@
     "use strict";
 
     /* Cliente HTTP compartido para los recursos protegidos de Panther. */
-    global.PANTHER_API_URL = "http://localhost/panther-api";
+    global.PANTHER_API_URL = "http://localhost/programacion_III/panther-api";
 
     async function solicitarPanther(recurso, opciones = {}) {
         const sesion = global.obtenerSesion?.() || {};
