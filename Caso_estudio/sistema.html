@@ -19,6 +19,7 @@
     <script src="Js/empleadosApi.js" defer></script>
     <script src="Js/repuestosApi.js" defer></script>
     <script src="Js/serviciosApi.js" defer></script>
+    <script src="Js/facturasApi.js" defer></script>
     <script src="Js/sistema.js" defer></script>
 
 </head>
@@ -765,8 +766,6 @@
 
                     <h3>Configuración de acceso</h3>
 
-                    <p id="aviso-password" role="status"></p>
-
                     <label class="campo-formulario" for="config-password-actual">
                         Contraseña actual
                         <input type="password" id="config-password-actual" autocomplete="current-password"
@@ -803,6 +802,11 @@
                         <h2 id="titulo-facturas">Facturas electrónicas</h2>
                         <p class="contador-sistema">Crea y revisa los datos de una factura.</p>
                     </div>
+                    <search class="campo-busqueda" aria-label="Buscar facturas">
+                        <label for="buscar-facturas">Buscar factura</label>
+                        <input type="search" id="buscar-facturas"
+                            placeholder="Número, cliente o estado" />
+                    </search>
                     <button type="button" class="boton-principal btn-nueva-factura">＋ Nueva factura electrónica</button>
                 </header>
                 <div class="tabla-contenedor">
@@ -984,7 +988,8 @@
             </div>
             <footer class="acciones-modal factura-acciones">
                 <button type="button" class="boton-secundario cerrar-modal-factura">Cerrar</button>
-                <button type="submit" class="boton-principal">Enviar factura</button>
+                <button type="submit" class="boton-secundario" data-accion="guardar">Guardar factura</button>
+                <button type="submit" class="boton-principal" data-accion="enviar">Enviar factura</button>
             </footer>
         </form>
     </dialog>
@@ -1004,6 +1009,13 @@
                 <input type="text" id="nombre-item" list="catalogo-items-factura" maxlength="120"
                     placeholder="Escribe o busca un producto o servicio" required />
                 <datalist id="catalogo-items-factura"></datalist>
+            </label>
+            <label class="campo-formulario" for="servicio-item-factura">
+                Servicio finalizado (opcional)
+                <select id="servicio-item-factura">
+                    <option value="">Ítem manual o repuesto</option>
+                </select>
+                <small class="ayuda-formulario">Solo aparecen servicios finalizados y disponibles para facturar.</small>
             </label>
             <label class="campo-formulario" for="impuesto-item"><span class="titulo-campo">Impuesto <span
                         class="requerido">*</span></span>

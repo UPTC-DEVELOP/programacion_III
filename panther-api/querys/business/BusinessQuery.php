@@ -14,9 +14,76 @@ define("INTSERT_PERSON", "INSERT INTO person(name, lastName, phone) VALUES (?,?,
 define("UPDATE_PERSON", "UPDATE person SET name=?, lastName =? , phone=? WHERE id=? ;");
 
 // --- FACTURA ---
-define("INTSERT_FACTURA", "INSERT INTO factura(fecha,total) VALUES (?,?);");
-define("UPDATE_FACTURA", "UPDATE factura SET fecha=?, total=? WHERE id=? ;");
-
+define(
+    "SELECT_FACTURAS",
+    "SELECT f.*, CONCAT(c.nombres, ' ', c.apellidos) AS cliente_nombre
+     FROM factura f LEFT JOIN cliente c ON c.id = f.cliente_id
+     ORDER BY f.id DESC"
+);
+define(
+    "SELECT_FACTURA_BY_ID",
+    "SELECT f.*, CONCAT(c.nombres, ' ', c.apellidos) AS cliente_nombre,
+            c.nombres, c.apellidos, c.tipo_identificacion, c.numero_identificacion
+     FROM factura f LEFT JOIN cliente c ON c.id = f.cliente_id
+     WHERE f.id = ?"
+);
+define("SELECT_FACTURA_DETALLES", "SELECT * FROM factura_detalle WHERE factura_id IN (%s) ORDER BY id");
+define("SELECT_FACTURA_DETALLE_BY_ID", "SELECT * FROM factura_detalle WHERE factura_id = ? ORDER BY id");
+define(
+    "SELECT_CLIENTE_FACTURA",
+    "SELECT id, nombres, apellidos, tipo_identificacion, numero_identificacion
+     FROM cliente WHERE id = ? AND dateDelete IS NULL"
+);
+define("SELECT_FACTURA_NUMERO", "SELECT id FROM factura WHERE numero_documento_comercial = ? LIMIT 1");
+define(
+    "SELECT_IVA_FACTURA",
+    "SELECT iva FROM configuracion WHERE dateDelete IS NULL
+     ORDER BY fecha_actualizacion DESC, id DESC LIMIT 1"
+);
+define(
+    "INSERT_FACTURA",
+    "INSERT INTO factura (
+        cliente_id, nit_emisor, numero_resolucion, numero_documento_comercial,
+        tipo_factura, fecha, fecha_vencimiento, medio_pago, naturaleza_cliente,
+        observacion, tipo_descuento_general, descuento_general_valor,
+        subtotal, descuento_lineas, descuento_general, impuestos, total, estado_envio
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'BORRADOR')"
+);
+define(
+    "INSERT_FACTURA_DETALLE",
+    "INSERT INTO factura_detalle (
+        factura_id, servicio_id, nombre, precio_unitario, precio_referencia, cantidad, codigo,
+        unidad, impuesto, tasa_impuesto, descuento_porcentaje, descuento_valor,
+        subtotal, valor_impuesto, total, observacion
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+);
+define("SELECT_ESTADO_FACTURA", "SELECT estado_envio FROM factura WHERE id = ?");
+define(
+    "UPDATE_ESTADO_FACTURA",
+    "UPDATE factura SET estado_envio = ?, respuesta_envio = ? WHERE id = ?"
+);
+define(
+    "SELECT_TOKEN_CLARISA",
+    "SELECT token_clarisa, fecha_expiracion
+     FROM j4user WHERE keyAPI = ? AND dateDelete IS NULL LIMIT 1"
+);
+define(
+    "SELECT_SERVICIO_FACTURABLE",
+    "SELECT * FROM servicio
+     WHERE id = ? AND estado = 'Finalizado'
+       AND estado_facturacion = 'Disponible' AND dateDelete IS NULL"
+);
+define(
+    "SELECT_REPUESTOS_SERVICIO",
+    "SELECT servicio_id, repuesto_id, cantidad, precio_unitario
+     FROM servicio_repuesto WHERE servicio_id = ? ORDER BY repuesto_id"
+);
+define(
+    "MARCAR_SERVICIO_FACTURADO",
+    "UPDATE servicio SET estado_facturacion = 'Facturado'
+     WHERE id = ? AND estado = 'Finalizado'
+       AND estado_facturacion = 'Disponible' AND dateDelete IS NULL"
+);
 // --- CLIENTE ---
 define("SELECT_CLIENTES", "SELECT * FROM cliente WHERE dateDelete IS NULL");
 //define("SELECT_CLIENTE_BY_ID", "SELECT * FROM cliente WHERE id = ? AND dateDelete IS NULL");
@@ -60,6 +127,11 @@ define("UPDATE_SERVICIO", "UPDATE servicio SET
 WHERE id = ?");
 
 define("DELETE_SERVICIO_REPUESTOS", "DELETE FROM servicio_repuesto WHERE servicio_id = ?");
+define(
+    "SELECT_ESTADO_FACTURACION_SERVICIO",
+    "SELECT estado_facturacion FROM servicio
+     WHERE id = ? AND dateDelete IS NULL FOR UPDATE"
+);
 
 define("INSERT_SERVICIO_REPUESTO", "INSERT INTO servicio_repuesto (
     servicio_id, repuesto_id, cantidad, precio_unitario

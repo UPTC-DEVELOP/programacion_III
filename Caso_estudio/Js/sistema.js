@@ -329,17 +329,6 @@ async function inicializarConfiguracion() {
         avisoPermisos.textContent = "Solo un administrador puede modificar los parámetros financieros.";
     }
 
-    if (sesion.proveedor === "clarisa" && passwordActual && password && confirmarPassword) {
-        passwordActual.disabled = true;
-        password.disabled = true;
-        confirmarPassword.disabled = true;
-        passwordActual.placeholder = "La contraseña de CLARISA se administra en Clarisacloud";
-        const aviso = document.getElementById("aviso-password");
-        if (aviso) {
-            aviso.textContent = "Esta sesión usa CLARISA. Cambia la contraseña desde Clarisacloud.";
-        }
-    }
-
     // 3. Guardar cambios en Panther (POST / PUT configuraciones y PUT users/change-password)
     formulario.addEventListener("submit", async (evento) => {
         evento.preventDefault();
@@ -1396,6 +1385,7 @@ async function inicializarCRUDServicios() {
             const facturacion = fila.insertCell();
             const etiquetaFactura = document.createElement("span");
             const estadoFacturacion = servicio.estadoFacturacion ||
+                servicio.estado_facturacion ||
                 (servicio.facturable ? "Disponible" : "No disponible");
             etiquetaFactura.className =
                 estadoFacturacion === "Disponible" ? "etiqueta-facturable" : "etiqueta-no-facturable";
@@ -1564,7 +1554,7 @@ async function inicializarCRUDServicios() {
             vehiculoId: selectorVehiculo.value,
             empleadoId: selectorEmpleado.value,
             estado: document.getElementById("servicio-estado").value,
-            estadoFacturacion: servicioExistente?.estadoFacturacion || "",
+            estadoFacturacion: servicioExistente?.estadoFacturacion || servicioExistente?.estado_facturacion || "",
             prioridad: document.getElementById("servicio-prioridad").value,
             fechaInicio: document.getElementById("servicio-fecha-inicio").value,
             fechaFin: document.getElementById("servicio-fecha-fin").value,
@@ -1652,6 +1642,10 @@ async function inicializarCRUDServicios() {
     });
     window.addEventListener("serviauto:empleados-actualizados", cargarCatalogos);
     window.addEventListener("serviauto:repuestos-actualizados", cargarCatalogos);
+    window.addEventListener("serviauto:servicios-actualizados", async (evento) => {
+        if (!Array.isArray(evento.detail?.serviciosFacturados)) return;
+        await cargarServicios();
+    });
 
     await cargarServicios();
 }
@@ -2156,6 +2150,7 @@ function inicializarFacturacion() {
     const fechaFactura = document.getElementById("fecha-factura");
     const fechaVencimiento = document.getElementById("vencimiento-factura");
     const selectorImpuesto = document.getElementById("impuesto-item");
+    const selectorServicio = document.getElementById("servicio-item-factura");
     const precioBase = document.getElementById("precio-unitario-item");
     const precioImpuestos = document.getElementById("precio-impuestos-item");
     let items = [];
@@ -2163,6 +2158,9 @@ function inicializarFacturacion() {
     let clientes = [];
     let repuestos = [];
     let servicios = [];
+    const tablaFacturas = document.getElementById("lista-facturas");
+    const buscarFacturas = document.getElementById("buscar-facturas");
+    let facturas = [];
     const formatoMoneda = new Intl.NumberFormat("es-CO", {
         style: "currency",
         currency: "COP",
@@ -2176,10 +2174,10 @@ function inicializarFacturacion() {
     }
 
     function tasaImpuesto(tipo) {
-        const configuracion = leerConfiguracionServiAuto();
+        const configuracion = leerConfiguracionServiAuto() || {};
 
         if (tipo === "iva-19") {
-            return Number(configuracion.porcentajeIva) / 100;
+            return (Number(configuracion.porcentajeIva) || 19) / 100;
         }
 
         if (tipo === "iva-5") return 0.05;
@@ -2237,143 +2235,171 @@ function inicializarFacturacion() {
 
     function obtenerPayloadFactura() {
         const cliente = clientes.find((registro) => String(registro.id) === selectorCliente.value);
-        const tipoIdentificacion = {
-            "Cédula de ciudadanía": "CC",
-            "Cédula de extranjería": "CE",
-            Pasaporte: "PA",
-            NIT: "NI"
-        }[cliente?.tipoIdentificacion];
-
-        if (!cliente || !tipoIdentificacion) {
-            throw new Error("Selecciona un cliente con un tipo de identificación válido.");
+        if (!cliente || !cliente.tipoIdentificacion || !cliente.numeroIdentificacion) {
+            throw new Error("Selecciona un cliente con identificación válida.");
         }
         if (!items.length) {
-            throw new Error("Agrega al menos un ítem antes de enviar la factura.");
+            throw new Error("Agrega al menos un ítem antes de guardar la factura.");
         }
 
         const nit = document.getElementById("nit-emisor").value.trim().split("-")[0].replace(/[^\d]/g, "");
-        const numeroIdentificacion = String(cliente?.numeroIdentificacion || "").trim();
-        const subtotal = items.reduce((total, item) => total + item.subtotal, 0);
-        const valorDescuento = Math.max(0, Number(document.getElementById("descuento-general").value) || 0);
-        const esPorcentaje = document.getElementById("tipo-descuento-general").value === "porcentaje";
-        const descuentoGeneral = Math.min(subtotal, esPorcentaje ? subtotal * Math.min(100, valorDescuento) / 100 : valorDescuento);
-        const impuestos = items.reduce((total, item) => total + item.impuestos, 0);
-        const porcentajeDescuentoGeneral = subtotal > 0
-            ? redondear(descuentoGeneral / subtotal * 100)
-            : 0;
-        const medioPago = {
-            efectivo: "10",
-            "tarjeta-credito": "30",
-            "tarjeta-debito": "49"
-        }[document.getElementById("medio-pago").value];
-
         if (!nit || !document.getElementById("resolucion-factura").value.trim() ||
-            !document.getElementById("numero-documento-comercial").value.trim() ||
-            !numeroIdentificacion) {
+            !document.getElementById("numero-documento-comercial").value.trim()) {
             throw new Error("Completa los datos de emisión y verifica el número de identificación del cliente.");
         }
 
         return {
-            nit,
-            numeroResolucion: document.getElementById("resolucion-factura").value.trim(),
-            numeroDocumentoComercial: document.getElementById("numero-documento-comercial").value.trim(),
-            fechaGeneracion: `${fechaFactura.value}T00:00:00`,
-            fechaVencimiento: `${fechaVencimiento.value}T00:00:00`,
-            mediosPago: medioPago,
+            cliente_id: Number(cliente.id),
+            nit_emisor: nit,
+            numero_resolucion: document.getElementById("resolucion-factura").value.trim(),
+            numero_documento_comercial: document.getElementById("numero-documento-comercial").value.trim(),
+            tipo_factura: document.getElementById("tipo-factura").value,
+            fecha: fechaFactura.value,
+            fecha_vencimiento: fechaVencimiento.value,
+            medio_pago: document.getElementById("medio-pago").value,
+            naturaleza_cliente: document.getElementById("naturaleza-cliente-factura").value,
             observacion: document.getElementById("observaciones-factura").value.trim(),
-            formaPago: "1",
-            total: redondear(Math.max(0, subtotal - descuentoGeneral + impuestos)),
-            cliente: {
-                nombreRazonSocial: `${cliente.nombres || ""} ${cliente.apellidos || ""}`.trim(),
-                tipoIdentificacion,
-                numIdentificacion: numeroIdentificacion,
-                naturaleza: document.getElementById("naturaleza-cliente-factura").value
-            },
-            codigoDescuento: "04",
-            porcentajeDescuentoGeneral,
+            descuento_general_valor: Number(document.getElementById("descuento-general").value) || 0,
+            tipo_descuento_general: document.getElementById("tipo-descuento-general").value,
             items: items.map((item) => ({
-                nombreItemVenta: item.nombre,
-                precioVentaUnitario: item.precioConImpuestos > 0 ? item.precioConImpuestos : item.precioAplicado,
-                precioReferencia: item.precioReferencia,
+                nombre: item.nombre,
+                precio_unitario: item.precioAplicado,
+                precio_referencia: item.precioReferencia,
                 cantidad: item.cantidad,
                 codigo: item.codigo,
-                descuentoPorcentaje: item.descuentoPorcentaje,
+                descuento_porcentaje: item.descuentoPorcentaje,
                 observacion: item.observacion,
-                unidad: {
-                    unidad: "94",
-                    pieza: "94",
-                    cm: "CMT",
-                    m: "MTR",
-                    pulgada: "INH",
-                    kg: "KGM"
-                }[item.unidad],
-                codigoDescuento: "04",
-                impuesto: {
-                    "iva-19": "IVA_19",
-                    "iva-5": "IVA_5",
-                    excluido: "EXCLUIDO",
-                    exento: "EXENTO"
-                }[item.impuesto]
+                unidad: item.unidad,
+                impuesto: item.impuesto,
+                servicio_id: item.servicioId || null
             }))
         };
     }
 
-    async function enviarFactura(evento) {
+    async function procesarFactura(evento) {
         evento.preventDefault();
 
         if (!formularioFactura.reportValidity()) return;
 
-        const botonEnviar = formularioFactura.querySelector('[type="submit"]');
-        if (botonEnviar) botonEnviar.disabled = true;
+        const accion = evento.submitter?.dataset.accion || "enviar";
+        const botones = [...formularioFactura.querySelectorAll('[type="submit"]')];
+        botones.forEach((boton) => { boton.disabled = true; });
 
         try {
-            const tokenGuardado =
-                localStorage.getItem("clarisaToken") ||
-                localStorage.getItem("clarisaTokenWithHeader")?.replace(/^Bearer\s+/i, "") ||
-                "";
-            if (!tokenGuardado || !tokenGuardado.trim()) {
-                throw new Error("No se encontró el token de autenticación. Inicia sesión nuevamente.");
-            }
-
-            const token = tokenGuardado.trim();
-            const authorization = /^Bearer\s/i.test(token) ? token : `Bearer ${token}`;
             const payload = obtenerPayloadFactura();
-            const response = await fetch(
-                "https://pru.clarisacloud.com:8443/facturas/rest/api/v1/factura",
-                {
-                    method: "POST",
-                    headers: {
-                        Authorization: authorization,
-                        "Content-Type": "application/json",
-                        Accept: "application/json"
-                    },
-                    body: JSON.stringify(payload)
-                }
-            );
-            const textoRespuesta = await response.text();
-            let respuesta = null;
-
-            if (textoRespuesta) {
-                try {
-                    respuesta = JSON.parse(textoRespuesta);
-                } catch {
-                    respuesta = { textResponse: textoRespuesta };
-                }
+            const respuesta = await FacturasAPI.crear(payload, accion);
+            const serviciosFacturados = payload.items
+                .map((item) => item.servicio_id)
+                .filter(Boolean);
+            if (serviciosFacturados.length) {
+                window.dispatchEvent(new CustomEvent("serviauto:servicios-actualizados", {
+                    detail: { serviciosFacturados }
+                }));
             }
-
-            if (!response.ok || respuesta?.success === false) {
-                const detalle = respuesta?.textResponse || respuesta?.message || response.statusText;
-                throw new Error(`No se pudo enviar la factura (${response.status}): ${detalle}`);
+            await cargarFacturas();
+            const numero = payload.numero_documento_comercial;
+            if (accion === "guardar") {
+                mostrarEstado(`✅ Factura ${numero} guardada como borrador en Panther.`);
+            } else if (respuesta.envio?.success) {
+                mostrarEstado(`✅ Factura ${numero} guardada y enviada a Clarisacloud.`);
+            } else {
+                mostrarEstado(
+                    `⚠️ Factura ${numero} guardada, pero no se pudo enviar: ` +
+                    `${respuesta.envio?.message || "revisa el estado de envío."}`
+                );
             }
-
-            const numero = respuesta?.data?.numeroDocumentoComercial || payload.numeroDocumentoComercial;
-            mostrarEstado(`✅ Factura ${numero} enviada correctamente a Clarisacloud.`);
             modalFactura.close();
         } catch (error) {
-            console.error("No se pudo enviar la factura:", error);
-            mostrarEstado(`❌ ${error.message || "Ocurrió un error al enviar la factura."}`);
+            console.error("No se pudo procesar la factura:", error);
+            mostrarEstado(`❌ ${error.message || "Ocurrió un error al procesar la factura."}`);
         } finally {
-            if (botonEnviar) botonEnviar.disabled = false;
+            botones.forEach((boton) => { boton.disabled = false; });
+        }
+    }
+
+    function mostrarFacturas() {
+        if (!tablaFacturas) return;
+        const termino = (buscarFacturas?.value || "").trim().toLocaleLowerCase();
+        const facturasFiltradas = facturas.filter((factura) => [
+            factura.numero_documento_comercial,
+            factura.id,
+            factura.cliente_nombre,
+            factura.estado_envio,
+            factura.fecha,
+            factura.fecha_vencimiento
+        ].some((valor) => String(valor || "").toLocaleLowerCase().includes(termino)));
+        tablaFacturas.replaceChildren();
+        if (!facturasFiltradas.length) {
+            const fila = tablaFacturas.insertRow();
+            const celda = fila.insertCell();
+            celda.colSpan = 7;
+            celda.textContent = facturas.length
+                ? "No hay facturas que coincidan con la búsqueda."
+                : "Todavía no hay facturas guardadas.";
+            return;
+        }
+
+        facturasFiltradas.forEach((factura) => {
+            const fila = tablaFacturas.insertRow();
+            const valores = [
+                factura.numero_documento_comercial || `#${factura.id}`,
+                factura.cliente_nombre || "Cliente no disponible",
+                factura.fecha || "—",
+                factura.fecha_vencimiento || "—",
+                moneda(Number(factura.total)),
+                factura.estado_envio || "BORRADOR"
+            ];
+            valores.forEach((valor) => {
+                fila.insertCell().textContent = String(valor);
+            });
+            const acciones = fila.insertCell();
+            if (
+                ["BORRADOR", "ERROR"].includes(factura.estado_envio) &&
+                factura.cliente_id &&
+                factura.numero_documento_comercial
+            ) {
+                const enviar = crearAccion("Enviar", "Enviar factura", "enviar-factura", String(factura.id));
+                acciones.append(enviar);
+            } else if (factura.estado_envio === "PENDIENTE") {
+                acciones.textContent = "Envío pendiente";
+            } else {
+                acciones.textContent = "—";
+            }
+        });
+    }
+
+    async function cargarFacturas() {
+        if (!tablaFacturas) return;
+        try {
+            facturas = await FacturasAPI.listar();
+            mostrarFacturas();
+        } catch (error) {
+            console.error("No se pudieron cargar las facturas:", error);
+            mostrarEstado(`❌ No se pudieron cargar las facturas: ${error.message}`);
+        }
+    }
+
+    async function actualizarConfiguracionFactura() {
+        if (!window.ConfiguracionAPI?.listar) return;
+        const configuraciones = await ConfiguracionAPI.listar();
+        const configuracion = (Array.isArray(configuraciones) ? configuraciones : [])
+            .filter((registro) => !registro.dateDelete)
+            .sort((a, b) =>
+                String(b.fecha_actualizacion || b.id || "").localeCompare(
+                    String(a.fecha_actualizacion || a.id || "")
+                )
+            )[0];
+        if (configuracion) {
+            configuracionFinanciera = {
+                id: Number(configuracion.id),
+                porcentajeIva: Number(configuracion.iva),
+                porcentajeUtilidad: Number(configuracion.porcentaje_utilidad),
+                valorManoObra: Number(configuracion.valor_mano_obra)
+            };
+            const opcionIva = selectorImpuesto.querySelector('option[value="iva-19"]');
+            if (opcionIva) {
+                opcionIva.textContent = `IVA ${configuracionFinanciera.porcentajeIva}% (configurado)`;
+            }
         }
     }
 
@@ -2391,12 +2417,14 @@ function inicializarFacturacion() {
 
         items.forEach((item, indice) => {
             const fila = tabla.insertRow();
+            const porcentajeIvaConfigurado =
+                Number(leerConfiguracionServiAuto()?.porcentajeIva) || 19;
             [
-                item.nombre,
+                item.servicioId ? `${item.nombre} (OS-${item.servicioId})` : item.nombre,
                 `${item.cantidad} ${item.unidad}`,
                 moneda(item.precioAplicado),
                 {
-                    "iva-19": "IVA 19%",
+                    "iva-19": `IVA ${porcentajeIvaConfigurado}%`,
                     "iva-5": "IVA 5%",
                     exento: "Exento",
                     excluido: "Excluido"
@@ -2454,10 +2482,9 @@ function inicializarFacturacion() {
     function cargarCatalogoItems() {
         const catalogo = document.getElementById("catalogo-items-factura");
         catalogo.replaceChildren();
-        const nombres = [
-            ...repuestos.map((repuesto) => repuesto.descripcion || repuesto.nombre || repuesto.referencia || repuesto.codigo),
-            ...servicios.filter((servicio) => servicio.facturable !== false).map((servicio) => servicio.descripcion)
-        ];
+        const nombres = repuestos.map((repuesto) =>
+            repuesto.descripcion || repuesto.nombre || repuesto.referencia || repuesto.codigo
+        );
         nombres.filter(Boolean).forEach((nombre) => {
             const opcion = document.createElement("option");
             opcion.value = nombre;
@@ -2465,23 +2492,94 @@ function inicializarFacturacion() {
         });
     }
 
+    function cargarServiciosFacturables() {
+        selectorServicio.replaceChildren();
+        const opcionInicial = document.createElement("option");
+        opcionInicial.value = "";
+        opcionInicial.textContent = "Ítem manual o repuesto";
+        selectorServicio.append(opcionInicial);
+
+        const serviciosEnFactura = new Set(items
+            .filter((item, indice) => indice !== indiceEdicion && item.servicioId)
+            .map((item) => String(item.servicioId)));
+
+        servicios
+            .filter((servicio) => {
+                const estadoFact = servicio.estadoFacturacion || servicio.estado_facturacion;
+                return (
+                    servicio.estado === "Finalizado" &&
+                    estadoFact === "Disponible" &&
+                    !serviciosEnFactura.has(String(servicio.id))
+                );
+            })
+            .forEach((servicio) => {
+                const monto = Number(servicio.montoTotal ?? servicio.monto_total ?? 0) || 0;
+                const opcion = document.createElement("option");
+                opcion.value = String(servicio.id);
+                opcion.textContent = `OS-${servicio.id} · ${servicio.descripcion} · ${moneda(monto)}`;
+                selectorServicio.append(opcion);
+            });
+    }
+    let servicioAplicado = false;
+    function completarDesdeServicio() {
+        const servicio = servicios.find((registro) => {
+            const estadoFact = registro.estadoFacturacion || registro.estado_facturacion;
+            return (
+                String(registro.id) === selectorServicio.value &&
+                registro.estado === "Finalizado" &&
+                estadoFact === "Disponible"
+            );
+        });
+        const camposBloqueados = [
+            document.getElementById("nombre-item"),
+            precioBase,
+            precioImpuestos,
+            document.getElementById("cantidad-item"),
+            document.getElementById("unidad-item"),
+            document.getElementById("precio-referencia-item"),
+            document.getElementById("codigo-item")
+        ];
+
+        if (!servicio) {
+            camposBloqueados.forEach((campo) => { campo.disabled = false; });
+            if (servicioAplicado) {
+                document.getElementById("nombre-item").value = "";
+                precioBase.value = "0";
+                precioImpuestos.value = "0";
+                document.getElementById("cantidad-item").value = "1";
+                document.getElementById("precio-referencia-item").value = "0";
+                document.getElementById("codigo-item").value = "";
+            }
+            servicioAplicado = false;
+            actualizarResumenItem();
+            return;
+        }
+
+        const monto = Number(servicio.montoTotal ?? servicio.monto_total ?? 0) || 0;
+        document.getElementById("nombre-item").value = servicio.descripcion;
+        precioBase.value = monto;
+        precioImpuestos.value = redondear(
+            monto * (1 + tasaImpuesto(selectorImpuesto.value))
+        );
+        document.getElementById("cantidad-item").value = "1";
+        document.getElementById("unidad-item").value = "unidad";
+        document.getElementById("precio-referencia-item").value = "0";
+        document.getElementById("codigo-item").value = `OS-${servicio.id}`;
+        camposBloqueados.forEach((campo) => { campo.disabled = true; });
+        servicioAplicado = true;
+        actualizarResumenItem();
+    }
     function completarDesdeCatalogo() {
         const nombre = document.getElementById("nombre-item").value.trim().toLowerCase();
         const repuesto = repuestos.find((registro) =>
             [registro.descripcion, registro.nombre, registro.referencia, registro.codigo]
                 .some((dato) => String(dato || "").trim().toLowerCase() === nombre)
         );
-        const servicio = servicios.find((registro) =>
-            registro.facturable !== false && String(registro.descripcion || "").trim().toLowerCase() === nombre
-        );
-        if (!repuesto && !servicio) return;
+        if (!repuesto) return;
 
-        const valor = repuesto
-            ? Number(repuesto.precio ?? repuesto.precioUnitario ?? repuesto.valor ?? 0)
-            : Number(servicio.montoTotal || 0);
-        document.getElementById("codigo-item").value = repuesto
-            ? repuesto.referencia || repuesto.codigo || ""
-            : `OS-${servicio.id}`;
+        const valor = Number(repuesto.precio ?? repuesto.precioUnitario ?? repuesto.valor ?? 0);
+        document.getElementById("codigo-item").value =
+            repuesto.referencia || repuesto.codigo || "";
         if (valor > 0) {
             precioBase.value = valor;
             precioImpuestos.value = redondear(valor * (1 + tasaImpuesto(selectorImpuesto.value)));
@@ -2492,6 +2590,10 @@ function inicializarFacturacion() {
     function abrirItem(indice = -1) {
         indiceEdicion = indice;
         formularioItem.reset();
+        servicioAplicado = false;
+        cargarServiciosFacturables();
+        selectorServicio.value = "";
+        completarDesdeServicio();
         selectorImpuesto.value = "iva-19";
         document.getElementById("cantidad-item").value = "1";
         document.getElementById("precio-unitario-item").value = "0";
@@ -2513,6 +2615,8 @@ function inicializarFacturacion() {
             document.getElementById("codigo-item").value = item.codigo;
             document.getElementById("descuento-item").value = item.descuentoPorcentaje;
             document.getElementById("observacion-item").value = item.observacion;
+            selectorServicio.value = item.servicioId ? String(item.servicioId) : "";
+            completarDesdeServicio();
         }
 
         actualizarResumenItem();
@@ -2521,12 +2625,20 @@ function inicializarFacturacion() {
     }
 
     document.querySelectorAll(".btn-nueva-factura, .btn-abrir-factura").forEach((boton) => {
-        boton.addEventListener("click", () => {
+        boton.addEventListener("click", async () => {
+            try {
+                await actualizarConfiguracionFactura();
+                [clientes, repuestos, servicios] = await Promise.all([
+                    ClientesAPI.listar(),
+                    RepuestosAPI.listar(),
+                    ServiciosAPI.listar()
+                ]);
+            } catch (error) {
+                mostrarEstado(`❌ No se pudieron cargar los datos de facturación: ${error.message}`);
+                return;
+            }
             items = [];
             formularioFactura.reset();
-            clientes = leerRegistros("clientesServiAuto", "clientes");
-            repuestos = leerRegistros("repuestosServiAuto", "repuestos");
-            servicios = leerRegistros("serviciosServiAuto", "servicios");
             cargarClientes();
             cargarCatalogoItems();
             fechaFactura.value = fechaLocalActual();
@@ -2549,7 +2661,24 @@ function inicializarFacturacion() {
         boton.addEventListener("click", () => modalItem.close());
     });
 
-    formularioFactura.addEventListener("submit", enviarFactura);
+    formularioFactura.addEventListener("submit", procesarFactura);
+    buscarFacturas?.addEventListener("input", mostrarFacturas);
+    tablaFacturas?.addEventListener("click", async (evento) => {
+        const boton = evento.target.closest('button[data-accion="enviar-factura"]');
+        if (!boton) return;
+        boton.disabled = true;
+        try {
+            const respuesta = await FacturasAPI.enviar(boton.dataset.id);
+            await cargarFacturas();
+            mostrarEstado(respuesta.envio?.success
+                ? "✅ Factura guardada enviada correctamente a Clarisacloud."
+                : `⚠️ No se pudo enviar la factura: ${respuesta.envio?.message || "revisa el estado."}`);
+        } catch (error) {
+            console.error("No se pudo enviar la factura guardada:", error);
+            mostrarEstado(`❌ No se pudo enviar la factura: ${error.message}`);
+            boton.disabled = false;
+        }
+    });
     selectorCliente.addEventListener("change", actualizarDetalleCliente);
     selectorPlazo.addEventListener("change", actualizarFechaVencimiento);
     fechaFactura.addEventListener("change", actualizarFechaVencimiento);
@@ -2572,10 +2701,12 @@ function inicializarFacturacion() {
         document.getElementById(id).addEventListener("input", actualizarResumenItem);
     });
     document.getElementById("nombre-item").addEventListener("change", completarDesdeCatalogo);
+    selectorServicio.addEventListener("change", completarDesdeServicio);
 
     formularioItem.addEventListener("submit", (evento) => {
         evento.preventDefault();
         const nombre = document.getElementById("nombre-item").value.trim();
+        const servicioId = selectorServicio.value ? Number(selectorServicio.value) : null;
         const cantidad = Number(document.getElementById("cantidad-item").value);
         const base = Number(precioBase.value) || 0;
         const referencia = Number(document.getElementById("precio-referencia-item").value) || 0;
@@ -2589,8 +2720,16 @@ function inicializarFacturacion() {
             return;
         }
 
+        if (servicioId !== null && items.some((item, indice) =>
+            indice !== indiceEdicion && Number(item.servicioId) === servicioId
+        )) {
+            mostrarEstado("⚠️ Ese servicio ya está agregado a esta factura.");
+            return;
+        }
+
         const resumen = obtenerDatosItem();
         const registro = {
+            servicioId,
             nombre,
             impuesto: selectorImpuesto.value,
             cantidad,
@@ -2628,6 +2767,8 @@ function inicializarFacturacion() {
             mostrarItems();
         }
     });
+
+    cargarFacturas();
 }
 
 

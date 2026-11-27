@@ -79,6 +79,9 @@ class Servicios extends Request
 
         try {
             $srv = self::leerServicioSolicitud();
+            $srv->setEstadoFacturacion(
+                $srv->getEstado() === "Finalizado" ? "Disponible" : "No disponible"
+            );
 
             $stmt = $pdo->prepare(INSERT_SERVICIO);
             self::insertParameter($srv, $stmt);
@@ -115,13 +118,17 @@ class Servicios extends Request
         $pdo->beginTransaction();
 
         try {
-            $statement = $pdo->prepare(
-                "SELECT id FROM " . self::NAME_TABLE . " WHERE id = ? AND dateDelete IS NULL"
-            );
+            $statement = $pdo->prepare(SELECT_ESTADO_FACTURACION_SERVICIO);
             $statement->execute([$id]);
-            if (!$statement->fetchColumn()) {
+            $estadoFacturacionActual = $statement->fetchColumn();
+            if ($estadoFacturacionActual === false) {
                 throw new ExcepcionAPI(NOT_FOUND, ST404, error_notExist);
             }
+            $srv->setEstadoFacturacion(
+                $estadoFacturacionActual === "Facturado"
+                    ? "Facturado"
+                    : ($srv->getEstado() === "Finalizado" ? "Disponible" : "No disponible")
+            );
 
             $statement = $pdo->prepare(UPDATE_SERVICIO);
             self::updateParameter($srv, $statement, $id);
