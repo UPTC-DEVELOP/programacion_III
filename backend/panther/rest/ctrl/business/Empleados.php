@@ -126,6 +126,21 @@ class Empleados
         if (!preg_match('/^[0-9]{7,10}$/D', $ruta[0] ?? '') || count($ruta) > 2) self::rutaInvalida();
         $obj = JSONUtil::decodeJSON();
         if (count($ruta) === 2) {
+            if ($ruta[1] === 'clave') {
+                $clave = $obj->clave ?? null;
+                if (!is_string($clave) || preg_match('/\A.{6}/us', $clave) !== 1
+                    || strlen($clave) > 72 || strpos($clave, chr(0)) !== false) {
+                    throw new ExcepcionAPI(BAD_REQUEST, 400, 'Usa al menos 6 caracteres y como máximo 72 bytes.');
+                }
+                $hash = password_hash($clave, PASSWORD_BCRYPT);
+                if (!$hash) throw new ExcepcionAPI(INTERNAL_SERVER_ERROR, 500, 'No se pudo actualizar la clave.');
+                $q = self::db()->prepare('UPDATE j4user u JOIN cuenta_empleado c ON c.usuario_id = u.id
+                    SET u.password = ?, u.sesionHasta = NULL, u.intentosFallidos = 0, u.bloqueoHasta = NULL
+                    WHERE c.cedula = ? AND u.dateDelete IS NULL');
+                $q->execute([$hash, $ruta[0]]);
+                if ($q->rowCount() !== 1) throw new ExcepcionAPI(NOT_FOUND, 404, 'Empleado sin cuenta disponible.');
+                return new ContentBody(OK, 200, $ruta[0]);
+            }
             if ($ruta[1] !== 'estado') self::rutaInvalida();
             if (!in_array($obj->estado ?? null, ['Activo','Inactivo'], true)) {
                 throw new ExcepcionAPI(BAD_REQUEST, 400, 'Estado inválido.');

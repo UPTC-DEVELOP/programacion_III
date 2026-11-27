@@ -65,6 +65,56 @@ document.addEventListener("DOMContentLoaded", () => {
     let cedulaEditando = null; // null = creando, string = editando
     let cedulaCambioEstado = null;
 
+    const dialogoClave = document.getElementById("dialogoClave");
+    const formClave = document.getElementById("formClave");
+    const nuevaClave = document.getElementById("nuevaClave");
+    const guardarClave = document.getElementById("guardarClave");
+    const cancelarClave = document.getElementById("cancelarClave");
+    const errorNuevaClave = document.getElementById("errorNuevaClave");
+
+    const verNuevaClave = document.getElementById("verNuevaClave");
+    function mostrarNuevaClave(visible) {
+        nuevaClave.type = visible ? "text" : "password";
+        verNuevaClave.textContent = visible ? "Ocultar" : "Ver";
+        verNuevaClave.setAttribute("aria-label", visible ? "Ocultar contraseña" : "Mostrar contraseña");
+    }
+    verNuevaClave.addEventListener("click", () => mostrarNuevaClave(nuevaClave.type === "password"));
+
+    function abrirCambioClave(emp) {
+        mostrarNuevaClave(false);
+        formClave.reset();
+        formClave.dataset.cedula = emp.cedula;
+        document.getElementById("cuentaClave").textContent = emp.nombre + " " + emp.apellido + " · " + emp.usuario;
+        errorNuevaClave.textContent = "";
+        dialogoClave.showModal();
+        nuevaClave.focus();
+    }
+
+    cancelarClave.addEventListener("click", () => dialogoClave.close());
+    dialogoClave.addEventListener("cancel", evento => {
+        if (guardarClave.disabled) evento.preventDefault();
+    });
+    dialogoClave.addEventListener("close", () => formClave.reset());
+    formClave.addEventListener("submit", async evento => {
+        evento.preventDefault();
+        if (guardarClave.disabled) return;
+        const clave = nuevaClave.value;
+        if ([...clave].length < 6 || new TextEncoder().encode(clave).length > 72) {
+            errorNuevaClave.textContent = "Usa al menos 6 caracteres y como máximo 72 bytes.";
+            return;
+        }
+        guardarClave.disabled = cancelarClave.disabled = true;
+        try {
+            await solicitar("/" + encodeURIComponent(formClave.dataset.cedula) + "/clave", "PUT", { clave });
+            dialogoClave.close();
+            mostrarToast("Contraseña actualizada.");
+        } catch (error) {
+            errorNuevaClave.textContent = error.message;
+        } finally {
+            guardarClave.disabled = cancelarClave.disabled = false;
+        }
+    });
+
     // 3. RENDERIZAR TABLA
 
     function renderizarTabla(lista = empleados) {
@@ -100,6 +150,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 boton.className = "btn-accion " + clase;
                 boton.dataset.cedula = emp.cedula;
                 boton.textContent = texto;
+                acciones.appendChild(boton);
+            }
+            if (emp.usuario) {
+                const boton = document.createElement("button");
+                boton.type = "button";
+                boton.className = "btn-accion btn-restablecer";
+                boton.textContent = "Restablecer clave";
+                boton.addEventListener("click", () => abrirCambioClave(emp));
                 acciones.appendChild(boton);
             }
             fila.insertCell().appendChild(acciones);

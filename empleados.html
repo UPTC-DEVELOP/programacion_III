@@ -176,6 +176,25 @@
         </div>
     </div>
 
+    <dialog id="dialogoClave" aria-labelledby="tituloClave" class="modal-contenido">
+        <form id="formClave">
+            <h2 id="tituloClave" class="modal-titulo">Restablecer contraseña</h2>
+            <p id="cuentaClave"></p>
+            <div class="campo-grupo">
+                <label for="nuevaClave">Nueva contraseña (mínimo 6 caracteres)</label>
+                <div class="campo-clave">
+                    <input id="nuevaClave" type="password" autocomplete="new-password" required>
+                    <button type="button" id="verNuevaClave" aria-controls="nuevaClave" aria-label="Mostrar contraseña">Ver</button>
+                </div>
+            </div>
+            <div class="modal-botones">
+                <button type="button" id="cancelarClave" class="btn-modal btn-cancelar">Cancelar</button>
+                <button type="submit" id="guardarClave" class="btn-modal btn-guardar">Guardar</button>
+            </div>
+            <p id="errorNuevaClave" role="alert"></p>
+        </form>
+    </dialog>
+
     <!-- MODAL: Confirmar cambio de estado -->
     <div class="modal-overlay modal-confirmacion" id="modalConfirmacion">
         <div class="modal-contenido">

@@ -267,11 +267,53 @@ body {
     background-color: transparent;
 }
 
+#dialogoClave {
+    color: #f2f2f2;
+}
+
+#cuentaClave {
+    color: #c9ced6;
+}
+
+#errorNuevaClave {
+    color: #ff8a90;
+}
+
+#dialogoClave .campo-clave {
+    position: relative;
+}
+
+#dialogoClave .campo-clave input {
+    width: 100%;
+    padding-right: 76px;
+}
+
+#dialogoClave .campo-clave button {
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    transform: translateY(-50%);
+    min-width: 44px;
+    min-height: 44px;
+    background: none;
+    border: none;
+    color: #c9ced6;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#dialogoClave .campo-clave button:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.btn-restablecer,
 .btn-editar {
     color: #ffffff;
     border-color: #33353a;
 }
 
+.btn-restablecer:hover,
 .btn-editar:hover {
     border-color: #e3262e;
     color: #e3262e;
