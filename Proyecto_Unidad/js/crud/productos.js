@@ -1,6 +1,4 @@
-const TOKEN_PANTHER = '750e8b43e5ed564462c90ef0d382db26';
-const BASE_URL = 'http://localhost/panther/backend_panther/panther/rest/repuestos';
-const PROVEEDORES_URL = 'http://localhost/panther/backend_panther/panther/rest/proveedores';
+// CRUD de Repuestos/Productos - Usando la arquitectura de Camilo
 
 let editando = false;
 let idEditando = null;
@@ -13,20 +11,16 @@ const formProducto = document.getElementById('form-producto');
 const modalTitulo = document.getElementById('modal-titulo-producto');
 const selectProveedor = document.getElementById('id_proveedor');
 
+const api = pantherApi;
+
 // ---------- 0. CARGAR PROVEEDORES PARA EL SELECT Y LA TABLA ----------
 async function cargarProveedores() {
     try {
-        const response = await fetch(PROVEEDORES_URL, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'authorization': TOKEN_PANTHER
-            }
-        });
+        const respuesta = await api.get('proveedores');
+        if (!respuesta.ok) return;
 
-        if (!response.ok) return;
-        const data = await response.json();
-        listaProveedores = Array.isArray(data) ? data : (data.data || []);
+        const cuerpo = respuesta.data && respuesta.data.data ? respuesta.data.data : respuesta.data;
+        listaProveedores = Array.isArray(cuerpo) ? cuerpo : [];
 
         selectProveedor.innerHTML = '<option value="">-- Seleccione un proveedor --</option>';
         listaProveedores.forEach(prov => {
@@ -49,26 +43,14 @@ function formatearCOP(valor) {
     return '$ ' + Number(valor).toLocaleString('es-CO') + ' COP';
 }
 
+// ---------- 1. LEER DATOS (GET) ----------
 async function obtenerRepuestos() {
     try {
-        const response = await fetch(BASE_URL, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'authorization': TOKEN_PANTHER
-            }
-        });
+        const respuesta = await api.get('repuestos');
+        if (!respuesta.ok) throw new Error(respuesta.mensaje || 'Error en la petición al servidor');
 
-        if (!response.ok) throw new Error('Error en la petición al servidor');
-
-        const data = await response.json();
-
-        if (data.state && data.state !== 'OK') {
-            console.error('Error de Panther:', data.data);
-            return [];
-        }
-
-        return Array.isArray(data) ? data : (data.data || []);
+        const cuerpo = respuesta.data && respuesta.data.data ? respuesta.data.data : respuesta.data;
+        return Array.isArray(cuerpo) ? cuerpo : [];
     } catch (error) {
         console.error('Error al conectar con Panther:', error);
         mostrarNotificacion('No se pudo obtener el inventario de repuestos.', 'error');
@@ -76,6 +58,7 @@ async function obtenerRepuestos() {
     }
 }
 
+// ---------- 2. RENDERIZAR TABLA ----------
 async function renderizarTabla(filtro = '') {
     tablaBody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Cargando repuestos...</td></tr>';
 
@@ -109,8 +92,8 @@ async function renderizarTabla(filtro = '') {
                 <td>${nombreProveedorPorId(r.id_proveedor)}</td>
                 <td>
                     <div class="crud-acciones-tabla">
-                        <button class="btn-accion btn-editar" onclick="prepararEdicion(${r.id})">Editar</button>
-                        <button class="btn-accion btn-eliminar" onclick="eliminarRepuesto(${r.id})">Eliminar</button>
+                        <button class="btn-accion btn-editar" type="button" onclick="prepararEdicion(${r.id})">Editar</button>
+                        <button class="btn-accion btn-eliminar" type="button" onclick="eliminarRepuesto(${r.id})">Eliminar</button>
                     </div>
                 </td>
             `;
@@ -120,6 +103,7 @@ async function renderizarTabla(filtro = '') {
     contador.textContent = filtrados.length + ' registro(s)';
 }
 
+// ---------- 3. GUARDAR (POST / PUT) ----------
 formProducto.addEventListener('submit', async function (e) {
     e.preventDefault();
 
@@ -130,40 +114,30 @@ formProducto.addEventListener('submit', async function (e) {
     const stock = parseInt(document.getElementById('stock').value, 10);
     const id_proveedor = parseInt(document.getElementById('id_proveedor').value, 10);
 
-    // Validaciones de campos obligatorios
-    if (!referencia || referencia.length < 2) return mostrarNotificacion('La referencia del repuesto es obligatoria.', 'error');
-    if (!nombre || nombre.length < 3) return mostrarNotificacion('El nombre del repuesto es obligatorio.', 'error');
+    if (!referencia || referencia.length < 2) return mostrarNotificacion('La referencia es obligatoria.', 'error');
+    if (!nombre || nombre.length < 3) return mostrarNotificacion('El nombre es obligatorio.', 'error');
     if (!marca || marca.length < 2) return mostrarNotificacion('La marca es obligatoria.', 'error');
-    if (isNaN(precio_unitario) || precio_unitario <= 0) return mostrarNotificacion('Ingresa un precio unitario mayor a 0.', 'error');
+    if (isNaN(precio_unitario) || precio_unitario <= 0) return mostrarNotificacion('Precio unitario inválido.', 'error');
     if (isNaN(stock) || stock < 0) return mostrarNotificacion('El stock debe ser 0 o superior.', 'error');
-    if (isNaN(id_proveedor) || !id_proveedor) return mostrarNotificacion('Debes seleccionar un proveedor de la lista.', 'error');
+    if (isNaN(id_proveedor) || !id_proveedor) return mostrarNotificacion('Selecciona un proveedor.', 'error');
 
     const payload = { referencia, nombre, marca, precio_unitario, stock, id_proveedor };
-    const metodo = editando ? 'PUT' : 'POST';
-    const url = editando ? `${BASE_URL}/${idEditando}` : BASE_URL;
 
-    try {
-        const response = await fetch(url, {
-            method: metodo,
-            headers: {
-                'Content-Type': 'application/json',
-                'authorization': TOKEN_PANTHER
-            },
-            body: JSON.stringify(payload)
-        });
+    const respuesta = editando 
+        ? await api.put('repuestos', idEditando, payload) 
+        : await api.post('repuestos', payload);
 
-        if (response.ok) {
-            mostrarNotificacion(`Repuesto ${editando ? 'actualizado' : 'registrado'} correctamente.`, 'success');
-            cerrarModal('modal-producto');
-            renderizarTabla(buscador.value);
-        } else {
-            throw new Error('No se pudo guardar el repuesto en Panther');
-        }
-    } catch (error) {
-        mostrarNotificacion('Error al guardar: ' + error.message, 'error');
+    if (!respuesta.ok) {
+        mostrarNotificacion(respuesta.mensaje || 'No se pudo guardar el repuesto.', 'error');
+        return;
     }
+
+    mostrarNotificacion(`Repuesto ${editando ? 'actualizado' : 'registrado'} correctamente.`, 'success');
+    cerrarModal('modal-producto');
+    renderizarTabla(buscador.value);
 });
 
+// ---------- 4. EDITAR ----------
 async function prepararEdicion(id) {
     await cargarProveedores();
     const repuestos = await obtenerRepuestos();
@@ -189,21 +163,13 @@ async function prepararEdicion(id) {
 async function eliminarRepuesto(id) {
     if (!confirm('¿Estás seguro de que deseas eliminar este repuesto?')) return;
 
-    try {
-        const response = await fetch(`${BASE_URL}/${id}`, {
-            method: 'DELETE',
-            headers: { 'authorization': TOKEN_PANTHER }
-        });
-
-        if (response.ok) {
-            mostrarNotificacion('Repuesto eliminado correctamente.', 'success');
-            renderizarTabla(buscador.value);
-        } else {
-            throw new Error('No se pudo eliminar el repuesto');
-        }
-    } catch (error) {
-        mostrarNotificacion('Error al eliminar: ' + error.message, 'error');
+    const respuesta = await api.delete('repuestos', id);
+    if (!respuesta.ok) {
+        mostrarNotificacion(respuesta.mensaje || 'No se pudo eliminar el repuesto.', 'error');
+        return;
     }
+    mostrarNotificacion('Repuesto eliminado correctamente.', 'success');
+    renderizarTabla(buscador.value);
 }
 
 // ---------- EVENTOS DE UI ----------
@@ -220,52 +186,6 @@ document.getElementById('btn-nuevo-producto').addEventListener('click', async fu
 buscador.addEventListener('input', function () {
     renderizarTabla(this.value);
 });
-
-document.addEventListener('click', function (e) {
-    if (e.target.classList.contains('crud-modal')) {
-        e.target.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-});
-
-document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') {
-        document.querySelectorAll('.crud-modal.active').forEach(modal => {
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        });
-    }
-});
-
-function abrirModal(id) {
-    const modal = document.getElementById(id);
-    if (modal) {
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-function cerrarModal(id) {
-    const modal = document.getElementById(id);
-    if (modal) {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-}
-
-function mostrarNotificacion(mensaje, tipo) {
-    const notificacion = document.getElementById('notificacion-crud');
-    if (!notificacion) return;
-
-    notificacion.className = 'crud-notificacion ' + tipo;
-    notificacion.textContent = mensaje;
-    notificacion.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-    setTimeout(() => {
-        notificacion.className = 'crud-notificacion';
-        notificacion.textContent = '';
-    }, 4000);
-}
 
 // ---------- INICIALIZAR ----------
 renderizarTabla();

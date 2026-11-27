@@ -1,8 +1,4 @@
-// CRUD de vehículos contra Panther (recurso vehiculos).
-
-const TOKEN_PANTHER = '750e8b43e5ed564462c90ef0d382db26'; 
-const BASE_URL = 'http://localhost/panther/backend_panther/panther/rest/vehiculos';
-
+// CRUD de vehículos - Usando  (pantherApi)
 
 let editando = false;
 let idEditando = null;
@@ -12,66 +8,65 @@ const contador = document.getElementById('contador-vehiculos');
 const buscador = document.getElementById('buscar-vehiculo');
 const formVehiculo = document.getElementById('form-vehiculo');
 const modalTitulo = document.getElementById('modal-titulo');
-const api = typeof pantherApi !== 'undefined' ? pantherApi : new PantherApi();
 
-function filasDe(respuesta) {
-    if (!respuesta || respuesta.status === 204) return [];
-    const cuerpo = respuesta.data && Object.prototype.hasOwnProperty.call(respuesta.data, 'data')
-        ? respuesta.data.data
-        : respuesta.data;
-    return Array.isArray(cuerpo) ? cuerpo : [];
-}
+const api = pantherApi;
 
+// ---------- 1. LEER DATOS (GET) ----------
 async function obtenerVehiculos() {
     try {
         const respuesta = await api.get('vehiculos');
-        if (!respuesta.ok && respuesta.status !== 204) {
-            throw new Error(respuesta.mensaje || 'No se pudo obtener la lista de vehículos.');
-        }
-        return filasDe(respuesta);
+        if (!respuesta.ok) throw new Error(respuesta.mensaje || 'Error al obtener datos');
+        
+        const cuerpo = respuesta.data && respuesta.data.data ? respuesta.data.data : respuesta.data;
+        return Array.isArray(cuerpo) ? cuerpo : [];
     } catch (error) {
-        mostrarNotificacion(error.message || 'No se pudo obtener la lista de vehículos.', 'error');
+        console.error("Error:", error);
+        mostrarNotificacion('No se pudo obtener la lista de vehículos.', 'error');
         return [];
     }
 }
 
+// ---------- 2. RENDERIZAR TABLA ----------
 async function renderizarTabla(filtro = '') {
-    tablaBody.innerHTML = '<tr><td colspan="7" class="sin-resultados">Cargando vehículos...</td></tr>';
+    tablaBody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Cargando vehículos...</td></tr>';
     const vehiculos = await obtenerVehiculos();
-    const busqueda = (filtro || '').toLowerCase();
-    const filtrados = vehiculos.filter((vehiculo) =>
-        String(vehiculo.placa || '').toLowerCase().includes(busqueda)
-        || String(vehiculo.marca || '').toLowerCase().includes(busqueda)
-        || String(vehiculo.propietario || '').toLowerCase().includes(busqueda)
-    );
-
     tablaBody.innerHTML = '';
-    if (!filtrados.length) {
-        tablaBody.innerHTML = '<tr><td colspan="7" class="sin-resultados">No se encontraron vehículos</td></tr>';
+
+    const filtrados = vehiculos.filter(v => {
+        const busqueda = filtro.toLowerCase();
+        return (v.placa || '').toLowerCase().includes(busqueda) || 
+               (v.marca || '').toLowerCase().includes(busqueda) || 
+               (v.propietario || '').toLowerCase().includes(busqueda);
+    });
+
+    if (filtrados.length === 0) {
+        tablaBody.innerHTML = `<tr><td colspan="7" class="sin-resultados" style="text-align:center;">No se encontraron vehículos</td></tr>`;
     } else {
-        filtrados.forEach((vehiculo) => {
-            const fila = document.createElement('tr');
-            fila.innerHTML = `
-                <td>${vehiculo.placa || '—'}</td>
-                <td>${vehiculo.marca || '—'}</td>
-                <td>${vehiculo.modelo || '—'}</td>
-                <td>${vehiculo.anio || '—'}</td>
-                <td>${vehiculo.color || '—'}</td>
-                <td>${vehiculo.propietario || '—'}</td>
+        filtrados.forEach(v => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${v.placa}</td>
+                <td>${v.marca}</td>
+                <td>${v.modelo}</td>
+                <td>${v.anio}</td>
+                <td>${v.color}</td>
+                <td>${v.propietario}</td>
                 <td>
                     <div class="crud-acciones-tabla">
-                        <button class="btn-accion btn-editar" type="button" onclick="prepararEdicion(${vehiculo.id})">Editar</button>
-                        <button class="btn-accion btn-eliminar" type="button" onclick="eliminarVehiculo(${vehiculo.id})">Eliminar</button>
+                        <button class="btn-accion btn-editar" type="button" onclick="prepararEdicion(${v.id})">Editar</button>
+                        <button class="btn-accion btn-eliminar" type="button" onclick="eliminarVehiculo(${v.id})">Eliminar</button>
                     </div>
-                </td>`;
-            tablaBody.appendChild(fila);
+                </td>
+            `;
+            tablaBody.appendChild(tr);
         });
     }
     contador.textContent = filtrados.length + ' registro(s)';
 }
 
-formVehiculo.addEventListener('submit', async function (evento) {
-    evento.preventDefault();
+// ---------- 3. GUARDAR (POST / PUT) ----------
+formVehiculo.addEventListener('submit', async function(e) {
+    e.preventDefault();
 
     const placa = document.getElementById('placa').value.trim().toUpperCase();
     const marca = document.getElementById('marca').value.trim();
@@ -80,6 +75,7 @@ formVehiculo.addEventListener('submit', async function (evento) {
     const color = document.getElementById('color').value.trim();
     const propietario = document.getElementById('propietario').value.trim();
 
+    // Validaciones
     if (!placa || !/^[A-Z]{3}[0-9]{3}$/.test(placa)) return mostrarNotificacion('Placa inválida (ABC123).', 'error');
     if (!marca || marca.length < 2) return mostrarNotificacion('Marca inválida.', 'error');
     if (!modelo) return mostrarNotificacion('Modelo obligatorio.', 'error');
@@ -88,47 +84,57 @@ formVehiculo.addEventListener('submit', async function (evento) {
     if (!propietario) return mostrarNotificacion('Propietario obligatorio.', 'error');
 
     const payload = { placa, marca, modelo, anio, color, propietario };
-    const respuesta = editando
-        ? await api.put('vehiculos', idEditando, payload)
+    
+    const respuesta = editando 
+        ? await api.put('vehiculos', idEditando, payload) 
         : await api.post('vehiculos', payload);
 
     if (!respuesta.ok) {
-        mostrarNotificacion(respuesta.mensaje || 'Error al guardar en la base de datos.', 'error');
+        mostrarNotificacion(respuesta.mensaje || 'Error al guardar.', 'error');
         return;
     }
-    mostrarNotificacion(editando ? 'Vehículo actualizado correctamente.' : 'Vehículo registrado correctamente.', 'success');
+
+    mostrarNotificacion(`Vehículo ${editando ? 'actualizado' : 'registrado'} correctamente.`, 'success');
     cerrarModal('modal-vehiculo');
     renderizarTabla(buscador.value);
 });
 
+// ---------- 4. EDITAR ----------
 async function prepararEdicion(id) {
-    const vehiculo = (await obtenerVehiculos()).find((item) => Number(item.id) === Number(id));
-    if (!vehiculo) return;
+    const vehiculos = await obtenerVehiculos();
+    const v = vehiculos.find(item => item.id == id);
+    if (!v) return;
+
     editando = true;
     idEditando = id;
     modalTitulo.textContent = 'Editar Vehículo';
-    document.getElementById('placa').value = vehiculo.placa || '';
-    document.getElementById('placa').disabled = true;
-    document.getElementById('marca').value = vehiculo.marca || '';
-    document.getElementById('modelo').value = vehiculo.modelo || '';
-    document.getElementById('anio').value = vehiculo.anio || '';
-    document.getElementById('color').value = vehiculo.color || '';
-    document.getElementById('propietario').value = vehiculo.propietario || '';
+
+    document.getElementById('placa').value = v.placa;
+    document.getElementById('placa').disabled = true; 
+    document.getElementById('marca').value = v.marca;
+    document.getElementById('modelo').value = v.modelo;
+    document.getElementById('anio').value = v.anio;
+    document.getElementById('color').value = v.color;
+    document.getElementById('propietario').value = v.propietario;
+
     abrirModal('modal-vehiculo');
 }
 
+// ---------- 5. ELIMINAR ----------
 async function eliminarVehiculo(id) {
     if (!confirm('¿Estás seguro de que deseas eliminar este vehículo?')) return;
+    
     const respuesta = await api.delete('vehiculos', id);
     if (!respuesta.ok) {
-        mostrarNotificacion(respuesta.mensaje || 'No se pudo eliminar el vehículo.', 'error');
+        mostrarNotificacion(respuesta.mensaje || 'No se pudo eliminar.', 'error');
         return;
     }
     mostrarNotificacion('Vehículo eliminado correctamente.', 'success');
     renderizarTabla(buscador.value);
 }
 
-document.getElementById('btn-nuevo-vehiculo').addEventListener('click', function () {
+// ---------- EVENTOS DE LA UI ----------
+document.getElementById('btn-nuevo-vehiculo').addEventListener('click', function() {
     editando = false;
     idEditando = null;
     modalTitulo.textContent = 'Nuevo Vehículo';
@@ -137,8 +143,7 @@ document.getElementById('btn-nuevo-vehiculo').addEventListener('click', function
     abrirModal('modal-vehiculo');
 });
 
-buscador.addEventListener('input', function () {
-    renderizarTabla(this.value);
-});
+buscador.addEventListener('input', function() { renderizarTabla(this.value); });
 
+// ---------- INICIALIZAR ----------
 renderizarTabla();
