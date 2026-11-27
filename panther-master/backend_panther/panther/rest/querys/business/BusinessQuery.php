@@ -27,5 +27,6 @@ define("INTSERT_AUTO", "INSERT INTO auto(placa, marca, modelo, anio, color, kilo
 define("UPDATE_AUTO", "UPDATE auto SET placa=?, marca=?, modelo=?, anio=?, color=?, kilometraje=?, id_cliente=? WHERE id=? ;");
 
 define("UPDATE_ADMINISTRADOR", "UPDATE administrador SET nombre=?, usuario=?, correo=?, rol=? WHERE id=? ;");
-
+define("INSERT_SERVICIO", "INSERT INTO servicio(id_cliente, id_auto, fecha, descripcion, costo, estado) VALUES (?,?,?,?,?,?);");
+define("UPDATE_SERVICIO", "UPDATE servicio SET id_cliente=?, id_auto=?, fecha=?, descripcion=?, costo=?, estado=? WHERE id=? ;");
 ?>
