@@ -81,12 +81,15 @@ require 'querys/business/BusinessQuery.php';
 // Vehiculos y empleados (Kevin)
 require 'ctrl/business/Vehiculos.php';
 require 'model/business/Vehiculo.php';
+
+
 require 'ctrl/business/Empleados.php';
 require 'model/business/Empleado.php';
 
 // Proveedores y repuestos (Estefanía)
 require_once 'model/business/Proveedor.php';
 require_once 'ctrl/business/Proveedores.php';
+
 require_once 'model/business/Repuesto.php';
 require_once 'ctrl/business/Repuestos.php';
 
@@ -99,6 +102,7 @@ require 'querys/business/OrdenQuery.php';
 require 'util/ClarisaService.php';
 require 'ctrl/business/Facturas.php';
 require 'model/business/Factura.php';
+
 require 'querys/business/FacturaQuery.php';
 
 // Preparar manejo de excepciones

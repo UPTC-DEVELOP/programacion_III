@@ -2,7 +2,7 @@
 
 const TOKEN_PANTHER = '750e8b43e5ed564462c90ef0d382db26'; 
 const BASE_URL = 'http://localhost/panther/backend_panther/panther/rest/empleados';
-const BASE_USUARIOS = 'http://localhost/panther/backend_panther/panther/rest/persons';
+const BASE_USUARIOS = 'http://localhost/panther/backend_panther/panther/rest/users';
 
 
 let editando = false;
