@@ -5,7 +5,33 @@
  */
 
 /**
- * Polyfill de apache_request_headers + normaliza "authorization" en minusculas.
+ * Resuelve Authorization aunque Apache/XAMPP lo haya quitado del request
+ * (CGI) o php -S no exponga apache_request_headers nativo.
+ */
+function panther_resolve_authorization_header(array $headers = array())
+{
+    foreach ($headers as $name => $value) {
+        if (strtolower((string) $name) === 'authorization' && $value !== '' && $value !== null) {
+            return $value;
+        }
+    }
+    $serverKeys = array(
+        'HTTP_AUTHORIZATION',
+        'REDIRECT_HTTP_AUTHORIZATION',
+        'Authorization',
+        'AUTHORIZATION'
+    );
+    foreach ($serverKeys as $key) {
+        if (!empty($_SERVER[$key])) {
+            return $_SERVER[$key];
+        }
+    }
+    return null;
+}
+
+/**
+ * Polyfill / enriquecimiento de apache_request_headers.
+ * Siempre normaliza la clave "authorization" en minúsculas (Panther AUTHORIZATION).
  */
 if (!function_exists('apache_request_headers')) {
     function apache_request_headers()
@@ -21,17 +47,25 @@ if (!function_exists('apache_request_headers')) {
                 $headers['Content-Length'] = $value;
             }
         }
-        if (!isset($headers['Authorization']) && isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
-            $headers['Authorization'] = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
+        $auth = panther_resolve_authorization_header($headers);
+        if ($auth !== null) {
+            $headers['Authorization'] = $auth;
+            $headers['authorization'] = $auth;
         }
-        if (!isset($headers['Authorization']) && isset($_SERVER['HTTP_AUTHORIZATION'])) {
-            $headers['Authorization'] = $_SERVER['HTTP_AUTHORIZATION'];
+        return $headers;
+    }
+} else {
+    // Apache ya define la función: envolver para reinyectar Authorization desde $_SERVER
+    function panther_request_headers()
+    {
+        $headers = apache_request_headers();
+        if (!is_array($headers)) {
+            $headers = array();
         }
-        foreach ($headers as $name => $value) {
-            if (strtolower((string) $name) === 'authorization') {
-                $headers['authorization'] = $value;
-                break;
-            }
+        $auth = panther_resolve_authorization_header($headers);
+        if ($auth !== null) {
+            $headers['Authorization'] = $auth;
+            $headers['authorization'] = $auth;
         }
         return $headers;
     }

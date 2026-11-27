@@ -16,13 +16,49 @@ if (!sesionTallerActiva()) {
     window.location.replace(PAGINA_LOGIN);
 }
 
+/** Inserta pestaña Módulos (panel) sin reescribir el HTML de cada CRUD del equipo. */
+function asegurarEnlaceModulos() {
+    const nav = document.querySelector('nav[aria-label="Navegación principal"] ul');
+    if (!nav) return;
+    const yaExiste = Array.from(nav.querySelectorAll('a[href]')).some(function (a) {
+        return (a.getAttribute('href') || '').indexOf('panel-principal.html') !== -1;
+    });
+    if (yaExiste) return;
+
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = 'panel-principal.html';
+    a.textContent = 'Módulos';
+    li.appendChild(a);
+    nav.insertBefore(li, nav.firstChild);
+
+    const logoLink = document.querySelector('.header-logo a');
+    if (logoLink) {
+        logoLink.setAttribute('href', 'panel-principal.html');
+    }
+}
+
+function etiquetaRolSesion() {
+    const mapa = {
+        1: 'Administrador',
+        3: 'Cajero / Recepcionista',
+        4: 'Mecánico',
+        5: 'Almacenista'
+    };
+    const rol = parseInt(sessionStorage.getItem('userRole'), 10);
+    return mapa[rol] || '';
+}
+
 function iniciarControlSesion() {
+    asegurarEnlaceModulos();
+
     const usuarioActivo = document.getElementById('usuario-activo');
     if (usuarioActivo) {
         const nombre = (typeof Sesion !== 'undefined' && Sesion.usuario)
             || sessionStorage.getItem('userName')
             || 'DEMO_API';
-        usuarioActivo.textContent = nombre;
+        const rolTxt = etiquetaRolSesion();
+        usuarioActivo.textContent = rolTxt ? (nombre + ' (' + rolTxt + ')') : nombre;
     }
 
     const btnCerrar = document.getElementById('btn-cerrar-sesion');
@@ -38,6 +74,7 @@ function iniciarControlSesion() {
             sessionStorage.removeItem('userRole');
             sessionStorage.removeItem('userName');
             sessionStorage.removeItem('pantherToken');
+            sessionStorage.removeItem('pantherKeyAPI');
             window.location.replace(PAGINA_LOGIN);
         });
     }

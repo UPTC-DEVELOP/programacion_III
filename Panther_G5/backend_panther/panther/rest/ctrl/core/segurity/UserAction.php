@@ -68,14 +68,36 @@ class UserAction implements IRequest
      */
     public static function authenticator()
     {
-        $heads = apache_request_headers();
+        // Preferir wrapper que reinyecta Authorization desde $_SERVER (XAMPP/CGI)
+        if (function_exists('panther_request_headers')) {
+            $heads = panther_request_headers();
+        } else {
+            $heads = apache_request_headers();
+        }
+        if (!is_array($heads)) {
+            $heads = array();
+        }
+
         $keyAPI = null;
-        if (isset($heads[AUTHORIZATION])) {
+        if (isset($heads[AUTHORIZATION]) && $heads[AUTHORIZATION] !== '') {
             $keyAPI = $heads[AUTHORIZATION];
         } else {
             foreach ($heads as $name => $value) {
-                if (strtolower((string) $name) === AUTHORIZATION) {
+                if (strtolower((string) $name) === AUTHORIZATION && $value !== '' && $value !== null) {
                     $keyAPI = $value;
+                    break;
+                }
+            }
+        }
+
+        if (($keyAPI === null || $keyAPI === '') && function_exists('panther_resolve_authorization_header')) {
+            $keyAPI = panther_resolve_authorization_header($heads);
+        }
+
+        if (($keyAPI === null || $keyAPI === '')) {
+            foreach (array('HTTP_AUTHORIZATION', 'REDIRECT_HTTP_AUTHORIZATION') as $serverKey) {
+                if (!empty($_SERVER[$serverKey])) {
+                    $keyAPI = $_SERVER[$serverKey];
                     break;
                 }
             }

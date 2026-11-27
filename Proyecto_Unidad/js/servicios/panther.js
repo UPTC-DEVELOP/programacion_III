@@ -1,5 +1,5 @@
 /**
- * Cliente API Panther (PHP REST) — JavaScript puro, sin frameworks.
+ * Cliente API Panther (PHP REST) — JavaScript vainilla.
  * Centraliza GET / POST / PUT / DELETE hacia Panther/backend_panther/panther/rest/
  *
  * No usa el token de Clarisa (Sesion); maneja solo el keyAPI de Panther.
@@ -9,26 +9,37 @@
 const PANTHER_DEFAULT_KEY_API = '750e8b43e5ed564462c90ef0d382db26';
 
 /**
- * Base URL del REST Panther (backend canónico del equipo).
- * - Desde pages/:  ../../Panther/backend_panther/panther/rest
- * - Desde raíz Proyecto_Unidad (login.html, index.html): ../Panther/backend_panther/panther/rest
- * - Producción / XAMPP: asignar window.PANTHER_API_URL (ej. http://localhost/panther/backend_panther/panther/rest)
+ * Base URL del REST Panther (capa compartida — no editar CRUDs del equipo).
+ *
+ * Prioridad:
+ *   1) window.PANTHER_API_URL / window.PANTHER_REST_BASE
+ *   2) localStorage.PANTHER_REST_BASE (override Mac / php -S; no se versiona)
+ *   3) Default Windows XAMPP: http://localhost/panther/backend_panther/panther/rest
+ *
+ * Así Live Server (5500/5501) habla con Apache/XAMPP sin rutas relativas ni :8080 en git.
  */
 const PANTHER_BASE_URL = (function resolvePantherBaseUrl() {
-    if (typeof window !== 'undefined' && window.PANTHER_API_URL) {
+    var DEFAULT_WINDOWS = 'http://localhost/panther/backend_panther/panther/rest';
+
+    if (typeof window === 'undefined') {
+        return DEFAULT_WINDOWS;
+    }
+
+    if (window.PANTHER_API_URL) {
         return String(window.PANTHER_API_URL).replace(/\/$/, '');
     }
-
-    const path = (typeof window !== 'undefined' && window.location && window.location.pathname)
-        ? window.location.pathname
-        : '';
-
-    // Páginas en /pages/ → subir a la raíz del repo relativo
-    if (/\/pages\//.test(path)) {
-        return '../../Panther/backend_panther/panther/rest';
+    if (window.PANTHER_REST_BASE) {
+        return String(window.PANTHER_REST_BASE).replace(/\/$/, '');
     }
 
-    return '../Panther/backend_panther/panther/rest';
+    try {
+        var stored = window.localStorage.getItem('PANTHER_REST_BASE');
+        if (stored) {
+            return String(stored).replace(/\/$/, '');
+        }
+    } catch (e) { /* private mode */ }
+
+    return DEFAULT_WINDOWS;
 })();
 
 class PantherApi {
@@ -86,10 +97,18 @@ class PantherApi {
      */
     async _request(method, ruta, payload) {
         const url = `${this.baseUrl}/${String(ruta).replace(/^\//, '')}`;
+        // Releer keyAPI por si el login guardó sesión después de crear la instancia
+        const token = PantherApi.getStoredKeyAPI() || this.keyAPI || PANTHER_DEFAULT_KEY_API;
+        this.keyAPI = token;
+
         const headers = {
-            'Content-Type': 'application/json',
-            Authorization: this.keyAPI
+            // Solo una clave: el navegador unifica Authorization
+            Authorization: token
         };
+        // Content-Type solo con cuerpo → evita preflight extra en GET (Live Server → XAMPP)
+        if (payload !== undefined) {
+            headers['Content-Type'] = 'application/json';
+        }
 
         let response;
         try {
