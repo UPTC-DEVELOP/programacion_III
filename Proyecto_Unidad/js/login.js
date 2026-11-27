@@ -1,8 +1,9 @@
-// Login dual: demo_api → Clarisa (facturación); resto → Panther (CRUDs del taller).
+// Login dual: Clarisa (demo_api) o Panther (taller)
 
 const CLAVE_USUARIO_RECORDADO = 'autotech-usuario';
-const PAGINA_FACTURACION = 'pages/factura.html';
-const PAGINA_TALLER = 'pages/clientes.html';
+const PAGINA_PANEL = 'pages/panel-principal.html';
+const URL_LOGIN_PANTHER = pantherUrl('useraction/login');
+const KEY_API_SEED = '750e8b43e5ed564462c90ef0d382db26';
 
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('form-login');
@@ -58,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.removeItem(CLAVE_USUARIO_RECORDADO);
             }
 
-            // demo_api entra por Clarisa y va a facturación. El resto entra por Panther.
             if (valorUsuario.toLowerCase() === 'demo_api') {
                 const { ok, data } = await ClarisaApi.login(valorUsuario, valorContrasena);
                 if (!ok || data?.success !== true) {
@@ -74,29 +74,43 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 const userName = data.data?.usuario?.userName || valorUsuario;
                 Sesion.iniciar(rawToken, userName);
-                mostrarAlerta(`${data.textResponse || 'Bienvenido'}, ${userName}. Redirigiendo a facturación...`, 'success');
+                sessionStorage.removeItem('pantherKeyAPI');
+                sessionStorage.removeItem('userRole');
+                sessionStorage.setItem('userName', userName);
+                mostrarAlerta(`${data.textResponse || 'Bienvenido'}, ${userName}. Redirigiendo al panel...`, 'success');
                 btnTexto.textContent = 'Ingresando...';
-                setTimeout(() => window.location.assign(PAGINA_FACTURACION), 800);
+                setTimeout(() => window.location.assign(PAGINA_PANEL), 800);
                 return;
             }
 
-            const respuesta = await pantherApi.post('useraction/login', {
-                user: valorUsuario,
-                password: valorContrasena
+            const response = await fetch(URL_LOGIN_PANTHER, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: KEY_API_SEED
+                },
+                body: JSON.stringify({ user: valorUsuario, password: valorContrasena })
             });
-            const usuarioPanther = respuesta.data && respuesta.data.data;
-            if (!respuesta.ok || !usuarioPanther || !usuarioPanther.keyAPI) {
-                throw new Error(respuesta.mensaje || 'Usuario o contraseña incorrectos.');
+
+            const data = await response.json().catch(() => null);
+            const usuarioPanther = data && (data.data || data);
+            const keyAPI = usuarioPanther && usuarioPanther.keyAPI;
+
+            if (!response.ok || !keyAPI) {
+                const msg = (data && (data.data || data.message || data.mensaje)) || 'Usuario o contraseña incorrectos.';
+                throw new Error(typeof msg === 'string' ? msg : 'Usuario o contraseña incorrectos.');
             }
 
-            PantherApi.setKeyAPI(usuarioPanther.keyAPI);
-            sessionStorage.setItem('userRole', usuarioPanther.roles);
-            sessionStorage.setItem('userName', usuarioPanther.user);
-            mostrarAlerta(`Bienvenido, ${usuarioPanther.user}. Redirigiendo al taller...`, 'success');
+            const rol = parseInt(usuarioPanther.roles, 10) || 1;
+            sessionStorage.setItem('pantherKeyAPI', keyAPI);
+            sessionStorage.setItem('userName', usuarioPanther.user || valorUsuario);
+            sessionStorage.setItem('userRole', String(rol));
+
+            mostrarAlerta(`Bienvenido, ${usuarioPanther.user || valorUsuario}. Redirigiendo al panel...`, 'success');
             btnTexto.textContent = 'Ingresando...';
-            setTimeout(() => window.location.assign(PAGINA_TALLER), 800);
+            setTimeout(() => window.location.assign(PAGINA_PANEL), 800);
         } catch (error) {
-            mostrarAlerta(error.message, 'error');
+            mostrarAlerta(error.message || 'No se pudo iniciar sesión.', 'error');
             estadoCargando(false);
         }
     });

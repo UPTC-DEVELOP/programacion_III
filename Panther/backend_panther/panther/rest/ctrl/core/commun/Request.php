@@ -141,13 +141,17 @@ abstract class Request
             // Ejecutar sentencia preparada
             $statement->execute();
             $tempo = $statement->fetchAll(PDO::FETCH_ASSOC);
-            
+
             if (count($tempo) > 0) {
-                $bodyAnswer = new ContentBody(OK, ST200, $tempo);
-                return $bodyAnswer;
-            } else {
-                throw new ExcepcionApi(NO_CONTENT, ST204, no_result);
+                return new ContentBody(OK, ST200, $tempo);
             }
+            // Listado vacío = OK []; id inexistente = 204 (antes el catch lo convertía en 500)
+            if (empty($id)) {
+                return new ContentBody(OK, ST200, array());
+            }
+            throw new ExcepcionApi(NO_CONTENT, ST204, no_result);
+        } catch (ExcepcionApi $e) {
+            throw $e;
         } catch (Exception $e) {
             throw new ExcepcionApi(INTERNAL_SERVER_ERROR, ST500, $e->getMessage());
         }

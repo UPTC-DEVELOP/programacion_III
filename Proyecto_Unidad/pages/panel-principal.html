@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de módulos - AutoTech</title>
+    <link rel="icon" type="image/png" href="../img/favicon.svg">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/crud.css">
+    <link rel="stylesheet" href="../css/panel-principal.css">
+</head>
+<body>
+
+    <header class="factura-header">
+        <div class="header-logo">
+            <a href="panel-principal.html">
+                <img src="../img/Logo.jpeg" alt="AutoTech - Sistema de Gestión para Talleres" class="logo">
+            </a>
+        </div>
+        <nav aria-label="Navegación principal">
+            <ul>
+                <li><a href="panel-principal.html" class="active">Módulos</a></li>
+                <li><a href="clientes.html">Clientes</a></li>
+                <li><a href="vehiculos.html">Vehículos</a></li>
+                <li><a href="empleados.html">Empleados</a></li>
+                <li><a href="proveedores.html">Proveedores</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="ordenes.html">Órdenes</a></li>
+                <li><a href="factura.html">Facturación</a></li>
+            </ul>
+        </nav>
+        <div class="factura-sesion">
+            <span class="usuario-badge" title="Usuario autenticado">
+                <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-4.4 0-8 2.2-8 5v3h16v-3c0-2.8-3.6-5-8-5z"/></svg>
+                <span class="sr-only">Usuario activo:</span>
+                <span id="usuario-activo">—</span>
+            </span>
+            <button type="button" class="btn-cerrar-sesion" id="btn-cerrar-sesion">Cerrar sesión</button>
+        </div>
+    </header>
+
+    <main class="crud-main panel-main">
+        <p class="panel-eyebrow">Gestión del taller</p>
+        <h1 class="crud-titulo panel-titulo">Panel de módulos</h1>
+        <p class="panel-intro">Accede únicamente a los paneles autorizados para tu rol: <strong id="rol-activo">—</strong>.</p>
+
+        <div id="panel-modulos-grid" class="panel-grid" aria-label="Módulos disponibles"></div>
+    </main>
+
+    <script src="../js/servicios/panther-config.js"></script>
+    <script src="../js/servicios/clarisa.js"></script>
+    <script src="../js/servicios/sesion.js"></script>
+</body>
+</html>

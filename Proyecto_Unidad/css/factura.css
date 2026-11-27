@@ -1,12 +1,9 @@
-/* Emision de factura electronica.
-   Reutiliza la paleta de styles.css y los controles de crud.css. */
-
-/* ---------- FORMULARIO ---------- */
+/* Facturacion */
 .factura-main {
     max-width: 1280px;
 }
 
-/* ---------- DASHBOARD ---------- */
+/* Dashboard KPI */
 .kpi-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -97,7 +94,7 @@
     flex-wrap: wrap;
 }
 
-/* ---------- PANEL DEL FORMULARIO ---------- */
+/* Panel formulario */
 .factura-panel {
     margin-top: 28px;
 }
@@ -115,7 +112,7 @@
     font-size: 1.5rem;
 }
 
-/* ---------- POPUP DETALLE ---------- */
+/* Modal factura */
 .factura-modal {
     max-width: 760px;
 }
@@ -214,7 +211,7 @@
     gap: 0 20px;
 }
 
-/* ---------- TABLA DE REPUESTOS ---------- */
+/* Tabla repuestos */
 .repuestos-tabla-container {
     clear: both;
     margin-bottom: 14px;
@@ -275,7 +272,7 @@
     color: var(--color-text-light);
 }
 
-/* ---------- RESUMEN ---------- */
+/* Resumen totales */
 .factura-resumen {
     background-color: var(--color-text-light);
     border-radius: var(--radius);
@@ -310,7 +307,44 @@
     cursor: wait;
 }
 
-/* ---------- RESPUESTA DEL API ---------- */
+/* Modal clave Clarisa */
+.btn-generar-factura {
+    background-color: #223239;
+}
+
+.btn-generar-factura:hover:not(:disabled) {
+    background-color: #1a262c;
+}
+
+.btn-generar-factura:disabled {
+    background-color: #6c757d;
+    cursor: wait;
+}
+
+.clarisa-clave-modal {
+    max-width: 420px;
+}
+
+.clarisa-clave-ayuda {
+    margin: 0 0 16px;
+    color: var(--color-gray);
+    font-size: 0.92rem;
+    line-height: 1.45;
+}
+
+.clarisa-clave-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.clarisa-clave-form input[readonly] {
+    background: #f1f3f5;
+    color: #495057;
+    cursor: default;
+}
+
+/* Respuesta API */
 .respuesta-api {
     margin-top: 30px;
     background-color: var(--color-text-light);
@@ -404,7 +438,7 @@
     word-break: break-word;
 }
 
-/* ---------- RESPONSIVE ---------- */
+/* Responsive */
 @media (max-width: 900px) {
     .kpi-grid {
         grid-template-columns: 1fr 1fr;

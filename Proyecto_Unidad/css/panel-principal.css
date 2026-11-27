@@ -1,0 +1,91 @@
+/* Panel gestor de módulos — coherente con crud.css / AutoTech */
+
+.panel-main {
+    max-width: 1100px;
+}
+
+.panel-eyebrow {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-gray);
+    margin-bottom: 8px;
+}
+
+.panel-titulo {
+    margin-bottom: 10px;
+}
+
+.panel-intro {
+    color: var(--color-gray);
+    margin-bottom: 32px;
+    max-width: 640px;
+}
+
+.panel-intro strong {
+    color: var(--color-primary);
+}
+
+.panel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.panel-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 24px 22px;
+    background: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    min-height: 160px;
+}
+
+.panel-card:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(238, 37, 36, 0.12);
+}
+
+.panel-card-titulo {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin: 0;
+}
+
+.panel-card-desc {
+    flex: 1;
+    font-size: 0.95rem;
+    color: var(--color-gray);
+    margin: 0;
+    line-height: 1.45;
+}
+
+.panel-card-cta {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+.panel-vacio {
+    grid-column: 1 / -1;
+    padding: 24px;
+    background: #fff;
+    border-radius: var(--radius);
+    color: var(--color-gray);
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .panel-grid {
+        grid-template-columns: 1fr;
+    }
+}

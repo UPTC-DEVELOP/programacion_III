@@ -29,6 +29,10 @@ $RECYCLE.BIN/
 Panther/backend_panther/panther/rest/cxn/LoginMysql.php
 **/cxn/LoginMysql.php
 
+# Override URL REST en Mac (default Windows queda en panther-config.js)
+Proyecto_Unidad/js/servicios/panther-config.local.js
+**/panther-config.local.js
+
 # Entornos y secretos
 .env
 .env.*

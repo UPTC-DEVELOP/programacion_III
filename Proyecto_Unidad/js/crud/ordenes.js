@@ -1,9 +1,26 @@
-/**
- * CRUD de Órdenes de Servicio — persistencia real vía Panther REST (MariaDB).
- * Reemplaza localStorage por PantherApi (GET/POST/PUT/DELETE /ordenes).
- */
+// CRUD de ordenes
+
+// Configuracion y variables
+const TOKEN_FALLBACK = '750e8b43e5ed564462c90ef0d382db26';
+const BASE_URL = pantherUrl('ordenes');
+const URL_PERSONS = pantherUrl('persons');
+const URL_VEHICULOS = pantherUrl('vehiculos');
+const URL_EMPLEADOS = pantherUrl('empleados');
+
+const IVA_ORDEN = 0.19;
+const VALOR_HORA_DEFAULT = 35000;
+
+function tokenPanther() {
+    if (typeof SesionTaller !== 'undefined' && SesionTaller.tokenPanther) {
+        return SesionTaller.tokenPanther(TOKEN_FALLBACK);
+    }
+    return sessionStorage.getItem('pantherKeyAPI') || TOKEN_FALLBACK;
+}
 
 let ordenes = [];
+let catalogoClientes = [];
+let catalogoVehiculos = [];
+let catalogoEmpleados = [];
 let editando = false;
 let idEditando = null;
 let numeroEditando = null;
@@ -16,16 +33,89 @@ const formOrden = document.getElementById('form-orden');
 const modalTitulo = document.getElementById('modal-titulo');
 const listaRepuestos = document.getElementById('lista-repuestos');
 const btnGuardar = document.getElementById('btn-guardar-orden');
-const api = typeof pantherApi !== 'undefined' ? pantherApi : new PantherApi();
 
-/** Extrae el cuerpo útil de la respuesta ContentBody de Panther. */
-function cuerpoPanther(respuesta) {
-    if (!respuesta || respuesta.data == null) return null;
-    const cuerpo = respuesta.data;
-    if (cuerpo && typeof cuerpo === 'object' && Object.prototype.hasOwnProperty.call(cuerpo, 'data')) {
-        return cuerpo.data;
+function headersPanther(json) {
+    const h = { authorization: tokenPanther() };
+    if (json) h['Content-Type'] = 'application/json';
+    return h;
+}
+
+function filasDe(data) {
+    if (data == null) return [];
+    if (Array.isArray(data)) return data;
+    if (data.data != null) {
+        return Array.isArray(data.data) ? data.data : [];
     }
-    return cuerpo;
+    return [];
+}
+
+function escapar(texto) {
+    return String(texto ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+}
+
+function formatoPesos(valor) {
+    return new Intl.NumberFormat('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        maximumFractionDigits: 0
+    }).format(Number(valor) || 0);
+}
+
+function formatoIngreso(valor) {
+    if (!valor) return '—';
+    const normalizado = String(valor).includes('T') ? valor : String(valor).replace(' ', 'T');
+    const fecha = new Date(normalizado);
+    if (Number.isNaN(fecha.getTime())) return valor;
+    return fecha.toLocaleString('es-CO', { dateStyle: 'short', timeStyle: 'short' });
+}
+
+function aDatetimeLocal(valor) {
+    if (!valor) return '';
+    const texto = String(valor).trim();
+    if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(texto)) return texto.slice(0, 16);
+    if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}/.test(texto)) return texto.replace(' ', 'T').slice(0, 16);
+    const fecha = new Date(texto);
+    if (Number.isNaN(fecha.getTime())) return '';
+    const pad = (n) => String(n).padStart(2, '0');
+    return `${fecha.getFullYear()}-${pad(fecha.getMonth() + 1)}-${pad(fecha.getDate())}T${pad(fecha.getHours())}:${pad(fecha.getMinutes())}`;
+}
+
+function aDatetimeMysql(valor) {
+    if (!valor) return '';
+    const local = aDatetimeLocal(valor);
+    if (!local) return valor;
+    return `${local.replace('T', ' ')}:00`.slice(0, 19);
+}
+
+function abrirModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function cerrarModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+function mostrarNotificacion(mensaje, tipo) {
+    const notificacion = document.getElementById('notificacion-crud');
+    if (!notificacion) return;
+    notificacion.className = 'crud-notificacion ' + tipo;
+    notificacion.textContent = mensaje;
+    setTimeout(() => {
+        notificacion.className = 'crud-notificacion';
+        notificacion.textContent = '';
+    }, 4000);
 }
 
 function parsearRepuestos(orden) {
@@ -111,7 +201,6 @@ function actualizarResumen() {
         utilidad: document.getElementById('utilidad-estimada').value,
         repuestos: leerRepuestos(false)
     });
-
     document.getElementById('res-subtotal-repuestos').textContent = formatoPesos(totales.subtotalRepuestos);
     document.getElementById('res-mano-obra').textContent = formatoPesos(totales.manoObra);
     document.getElementById('res-base').textContent = formatoPesos(totales.baseGravable);
@@ -119,29 +208,78 @@ function actualizarResumen() {
     document.getElementById('res-total').textContent = formatoPesos(totales.total);
 }
 
+async function fetchLista(url) {
+    try {
+        const response = await fetch(url, { method: 'GET', headers: headersPanther(true) });
+        if (!response.ok) return [];
+        const data = await response.json();
+        if (data.state && data.state !== 'OK' && data.state !== 'GET') return [];
+        return filasDe(data);
+    } catch (error) {
+        console.error('Error Panther:', url, error);
+        return [];
+    }
+}
+
+async function cargarCatalogos() {
+    const [persons, vehiculos, empleados] = await Promise.all([
+        fetchLista(URL_PERSONS),
+        fetchLista(URL_VEHICULOS),
+        fetchLista(URL_EMPLEADOS)
+    ]);
+
+    catalogoClientes = persons.map((p) => ({
+        nombre: `${p.name || ''} ${p.lastName || ''}`.trim(),
+        documento: String(p.documento || ''),
+        telefono: String(p.phone || ''),
+        direccion: String(p.direccion || ''),
+        email: String(p.correo || '')
+    })).filter((c) => c.documento);
+
+    catalogoVehiculos = vehiculos.map((v) => ({
+        placa: String(v.placa || '').toUpperCase(),
+        marca: String(v.marca || ''),
+        modelo: String(v.modelo || ''),
+        color: String(v.color || ''),
+        propietario: String(v.propietario || '')
+    })).filter((v) => v.placa);
+
+    catalogoEmpleados = empleados.map((e) => ({
+        nombres: String(e.nombres || ''),
+        apellidos: String(e.apellidos || ''),
+        documento: String(e.documento || ''),
+        rol: String(e.rol || '')
+    })).filter((e) => e.documento);
+}
+
 function llenarCatalogos() {
     const selCliente = document.getElementById('cliente-catalogo');
     selCliente.innerHTML = '<option value="">Selecciona o escribe los datos...</option>' +
-        CATALOGO.clientes.map((c) =>
+        catalogoClientes.map((c) =>
             `<option value="${escapar(c.documento)}">${escapar(c.nombre)} · ${escapar(c.documento)}</option>`
         ).join('');
 
     const selVehiculo = document.getElementById('vehiculo-catalogo');
     selVehiculo.innerHTML = '<option value="">Selecciona o escribe los datos...</option>' +
-        CATALOGO.vehiculos.map((v) =>
+        catalogoVehiculos.map((v) =>
             `<option value="${escapar(v.placa)}">${escapar(v.placa)} · ${escapar(v.marca)} ${escapar(v.modelo)} · ${escapar(v.color)}</option>`
         ).join('');
 
     const selEmpleado = document.getElementById('empleado-catalogo');
     selEmpleado.innerHTML = '<option value="">Selecciona...</option>' +
-        CATALOGO.empleados.map((e) => {
-            const nombre = `${e.nombres} ${e.apellidos}`;
-            return `<option value="${escapar(e.documento)}" data-nombre="${escapar(nombre)}">${escapar(nombre)} · ${escapar(e.rol)}</option>`;
+        catalogoEmpleados.map((e) => {
+            const nombre = `${e.nombres} ${e.apellidos}`.trim();
+            let nombreRol = e.rol;
+            if (e.rol == 1) nombreRol = 'Administrador';
+            if (e.rol == 3) nombreRol = 'Recepcionista';
+            if (e.rol == 4) nombreRol = 'Mecánico';
+            if (e.rol == 5) nombreRol = 'Almacenista';
+            return `<option value="${escapar(e.documento)}" data-nombre="${escapar(nombre)}">${escapar(nombre)} · ${escapar(nombreRol)}</option>`;
         }).join('');
 }
 
 function aplicarClienteCatalogo(documento) {
-    const cliente = CATALOGO.clientes.find((c) => c.documento === documento);
+    const cliente = catalogoClientes.find((c) => c.documento === documento);
     if (!cliente) return;
     document.getElementById('cliente-documento').value = cliente.documento;
     document.getElementById('cliente-nombre').value = cliente.nombre;
@@ -151,7 +289,7 @@ function aplicarClienteCatalogo(documento) {
 }
 
 function aplicarVehiculoCatalogo(placa) {
-    const vehiculo = CATALOGO.vehiculos.find((v) => v.placa === placa);
+    const vehiculo = catalogoVehiculos.find((v) => v.placa === placa);
     if (!vehiculo) return;
     document.getElementById('vehiculo-placa').value = vehiculo.placa;
     document.getElementById('vehiculo-modelo').value = `${vehiculo.marca} ${vehiculo.modelo}`.trim();
@@ -217,7 +355,6 @@ function leerRepuestos(soloCompletos = true) {
     if (!soloCompletos) {
         return lista.filter((r) => r.referencia || r.descripcion || r.marca || r.precio || r.cantidad);
     }
-
     return lista.filter((r) => r.referencia || r.descripcion || r.marca || r.precio);
 }
 
@@ -262,7 +399,6 @@ function renderizarTabla(filtro) {
             tablaBody.appendChild(fila);
         });
     }
-
     contador.textContent = `${filtrados.length} registro(s)`;
 }
 
@@ -279,13 +415,11 @@ function prepararFormulario(orden) {
         document.getElementById('cliente-telefono').value = orden.cliente_telefono;
         document.getElementById('cliente-direccion').value = orden.cliente_direccion;
         document.getElementById('cliente-email').value = orden.cliente_email || '';
-
         document.getElementById('vehiculo-catalogo').value = orden.vehiculo_placa;
         document.getElementById('vehiculo-placa').value = orden.vehiculo_placa;
         document.getElementById('vehiculo-modelo').value = orden.vehiculo_modelo;
         document.getElementById('vehiculo-color').value = orden.vehiculo_color;
         document.getElementById('fecha-ingreso').value = aDatetimeLocal(orden.fecha_ingreso);
-
         document.getElementById('empleado-catalogo').value = orden.empleado_documento;
         document.getElementById('empleado-documento').value = orden.empleado_documento;
         document.getElementById('empleado-nombre').value = orden.empleado_nombre;
@@ -364,31 +498,28 @@ function validarOrden(orden) {
     return null;
 }
 
+// Cargar ordenes
 async function cargarOrdenes() {
     contador.textContent = 'Cargando...';
-    const respuesta = await api.get('ordenes');
-    const cuerpo = cuerpoPanther(respuesta);
-
-    if (respuesta.status === 204 || (respuesta.ok && (!cuerpo || (Array.isArray(cuerpo) && !cuerpo.length)))) {
+    try {
+        const response = await fetch(BASE_URL, { method: 'GET', headers: headersPanther(true) });
+        if (!response.ok) throw new Error('Error al obtener órdenes');
+        const data = await response.json();
+        if (data.state && data.state !== 'OK' && data.state !== 'GET') {
+            ordenes = [];
+        } else {
+            ordenes = filasDe(data).map(normalizarOrden);
+        }
+        renderizarTabla(buscador.value);
+    } catch (error) {
+        console.error(error);
         ordenes = [];
         renderizarTabla(buscador.value);
-        return;
+        mostrarNotificacion('No se pudieron cargar las órdenes desde Panther.', 'error');
     }
-
-    if (!respuesta.ok || !Array.isArray(cuerpo)) {
-        ordenes = [];
-        renderizarTabla(buscador.value);
-        mostrarNotificacion(
-            respuesta.mensaje || 'No se pudieron cargar las órdenes desde Panther.',
-            'error'
-        );
-        return;
-    }
-
-    ordenes = cuerpo.map(normalizarOrden);
-    renderizarTabla(buscador.value);
 }
 
+// Guardar orden
 async function guardarOrden(evento) {
     evento.preventDefault();
     if (cargando) return;
@@ -400,18 +531,23 @@ async function guardarOrden(evento) {
         return;
     }
 
+    const cuerpo = {
+        ...payload,
+        repuestos_json: JSON.stringify(payload.repuestos)
+    };
+    delete cuerpo.repuestos;
+
     setCargando(true, editando ? 'Actualizando...' : 'Guardando...');
+    const metodo = editando ? 'PUT' : 'POST';
+    const url = editando ? `${BASE_URL}/${idEditando}` : BASE_URL;
 
     try {
-        const respuesta = editando
-            ? await api.put('ordenes', idEditando, payload)
-            : await api.post('ordenes', payload);
-
-        if (!respuesta.ok) {
-            mostrarNotificacion(respuesta.mensaje || 'No se pudo guardar la orden.', 'error');
-            return;
-        }
-
+        const response = await fetch(url, {
+            method: metodo,
+            headers: headersPanther(true),
+            body: JSON.stringify(cuerpo)
+        });
+        if (!response.ok) throw new Error('No se pudo guardar la orden.');
         mostrarNotificacion(
             editando ? 'Orden actualizada correctamente.' : 'Orden registrada en MariaDB.',
             'success'
@@ -427,15 +563,17 @@ async function guardarOrden(evento) {
 
 async function eliminarOrden(id) {
     if (!confirm('¿Estás seguro de que deseas eliminar esta orden?')) return;
-
-    const respuesta = await api.delete('ordenes', id);
-    if (!respuesta.ok) {
-        mostrarNotificacion(respuesta.mensaje || 'No se pudo eliminar la orden.', 'error');
-        return;
+    try {
+        const response = await fetch(`${BASE_URL}/${id}`, {
+            method: 'DELETE',
+            headers: headersPanther(false)
+        });
+        if (!response.ok) throw new Error('No se pudo eliminar');
+        mostrarNotificacion('Orden eliminada correctamente.', 'success');
+        await cargarOrdenes();
+    } catch (error) {
+        mostrarNotificacion('Error al eliminar la orden.', 'error');
     }
-
-    mostrarNotificacion('Orden eliminada correctamente.', 'success');
-    await cargarOrdenes();
 }
 
 function editarOrden(id) {
@@ -453,15 +591,13 @@ function facturarOrden(id) {
     window.location.href = `factura.html?ordenId=${encodeURIComponent(id)}`;
 }
 
-// --- Eventos ---
+// Eventos del formulario
 document.getElementById('cliente-catalogo').addEventListener('change', function () {
     if (this.value) aplicarClienteCatalogo(this.value);
 });
-
 document.getElementById('vehiculo-catalogo').addEventListener('change', function () {
     if (this.value) aplicarVehiculoCatalogo(this.value);
 });
-
 document.getElementById('empleado-catalogo').addEventListener('change', sincronizarEmpleado);
 
 ['horas-empleadas', 'valor-hora', 'utilidad-estimada'].forEach((id) => {
@@ -481,11 +617,12 @@ listaRepuestos.addEventListener('click', (evento) => {
     actualizarResumen();
 });
 
-document.getElementById('btn-nueva-orden').addEventListener('click', () => {
+document.getElementById('btn-nueva-orden').addEventListener('click', async () => {
     editando = false;
     idEditando = null;
     numeroEditando = null;
     modalTitulo.textContent = 'Nueva orden';
+    await cargarCatalogos();
     prepararFormulario(null);
     abrirModal('modal-orden');
 });
@@ -506,4 +643,22 @@ buscador.addEventListener('input', function () {
     renderizarTabla(this.value);
 });
 
-cargarOrdenes();
+document.addEventListener('click', function (e) {
+    if (e.target.classList.contains('crud-modal')) {
+        e.target.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+});
+document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+        document.querySelectorAll('.crud-modal.active').forEach((modal) => {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    }
+});
+
+(async function iniciar() {
+    await cargarCatalogos();
+    await cargarOrdenes();
+})();

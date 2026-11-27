@@ -13,12 +13,13 @@
 
     <header class="factura-header">
         <div class="header-logo">
-            <a href="../index.html">
+            <a href="panel-principal.html">
                 <img src="../img/Logo.jpeg" alt="AutoTech - Sistema de Gestión para Talleres" class="logo">
             </a>
         </div>
         <nav aria-label="Navegación principal">
             <ul>
+                <li><a href="panel-principal.html">Módulos</a></li>
                 <li><a href="clientes.html">Clientes</a></li>
                 <li><a href="vehiculos.html">Vehículos</a></li>
                 <li><a href="empleados.html">Empleados</a></li>
@@ -29,10 +30,10 @@
             </ul>
         </nav>
         <div class="factura-sesion">
-            <span class="usuario-badge" title="Usuario autenticado en Clarisa">
+            <span class="usuario-badge" title="Usuario autenticado">
                 <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-4.4 0-8 2.2-8 5v3h16v-3c0-2.8-3.6-5-8-5z"/></svg>
                 <span class="sr-only">Usuario activo:</span>
-                <span id="usuario-activo">DEMO_API</span>
+                <span id="usuario-activo">—</span>
             </span>
             <button type="button" class="btn-cerrar-sesion" id="btn-cerrar-sesion">Cerrar sesión</button>
         </div>
@@ -306,7 +307,8 @@
 
                 <div class="crud-form-actions">
                     <button type="button" class="btn-cancelar" id="btn-limpiar">Limpiar</button>
-                    <button type="submit" class="btn-guardar" id="btn-guardar-factura">Guardar Factura en Sistema</button>
+                    <button type="submit" class="btn-guardar" id="btn-guardar-factura">Guardar en Panther</button>
+                    <button type="button" class="btn-guardar btn-generar-factura" id="btn-generar-factura">Generar factura</button>
                 </div>
             </form>
         </section>
@@ -328,14 +330,42 @@
                 <pre id="detalle-respuesta-json" tabindex="0">Aún no hay respuesta de Clarisa.</pre>
             </details>
             <div class="detalle-acciones">
-                <button type="button" class="btn-guardar" id="btn-enviar-facturador" hidden>Enviar al facturador</button>
+                <button type="button" class="btn-guardar" id="btn-enviar-facturador" hidden>Generar factura</button>
                 <button type="button" class="btn-agregar-linea" id="btn-consultar-dian" hidden>Consultar estado DIAN</button>
             </div>
         </div>
     </div>
 
+    <div class="crud-modal" id="modal-clarisa-clave" role="dialog" aria-modal="true" aria-labelledby="clarisa-clave-titulo">
+        <div class="crud-modal-content clarisa-clave-modal">
+            <div class="crud-modal-header">
+                <h3 id="clarisa-clave-titulo">Autenticación Clarisa Sandbox</h3>
+                <button class="crud-modal-close" type="button" id="btn-cerrar-clarisa-clave" aria-label="Cerrar">✕</button>
+            </div>
+            <p class="clarisa-clave-ayuda">
+                El sistema usa automáticamente el usuario de pruebas <strong id="clarisa-usuario-fijo">demo_api</strong>.
+                Ingresa únicamente la clave de la API para emitir o consultar en el Sandbox.
+            </p>
+            <form id="form-clarisa-clave" class="clarisa-clave-form" novalidate>
+                <div class="crud-form-group">
+                    <label for="clarisa-usuario">Usuario API</label>
+                    <input type="text" id="clarisa-usuario" value="demo_api" readonly tabindex="-1" aria-readonly="true">
+                </div>
+                <div class="crud-form-group">
+                    <label for="clarisa-clave">Clave de la API <span>*</span></label>
+                    <input type="password" id="clarisa-clave" autocomplete="current-password" placeholder="••••••••" required>
+                </div>
+                <div class="crud-form-actions">
+                    <button type="button" class="btn-cancelar" id="btn-cancelar-clarisa-clave">Cancelar</button>
+                    <button type="submit" class="btn-guardar" id="btn-confirmar-clarisa-clave">Continuar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/servicios/panther-config.js"></script>
     <script src="../js/servicios/clarisa.js"></script>
-    <script src="../js/servicios/panther.js"></script>
+    <script src="../js/servicios/sesion.js"></script>
     <script src="../js/factura/emision.js"></script>
     
 </body>

@@ -5,13 +5,46 @@
  */
 
 /**
- * Respaldo CORS en PHP: algunos hostings (p. ej. InfinityFree) ignoran
- * directivas Header de .htaccess. Se envían aquí antes de cualquier salida.
+ * Polyfill de apache_request_headers + normaliza "authorization" en minusculas.
+ */
+if (!function_exists('apache_request_headers')) {
+    function apache_request_headers()
+    {
+        $headers = array();
+        foreach ($_SERVER as $key => $value) {
+            if (strpos($key, 'HTTP_') === 0) {
+                $name = str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($key, 5)))));
+                $headers[$name] = $value;
+            } elseif ($key === 'CONTENT_TYPE') {
+                $headers['Content-Type'] = $value;
+            } elseif ($key === 'CONTENT_LENGTH') {
+                $headers['Content-Length'] = $value;
+            }
+        }
+        if (!isset($headers['Authorization']) && isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
+            $headers['Authorization'] = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
+        }
+        if (!isset($headers['Authorization']) && isset($_SERVER['HTTP_AUTHORIZATION'])) {
+            $headers['Authorization'] = $_SERVER['HTTP_AUTHORIZATION'];
+        }
+        foreach ($headers as $name => $value) {
+            if (strtolower((string) $name) === 'authorization') {
+                $headers['authorization'] = $value;
+                break;
+            }
+        }
+        return $headers;
+    }
+}
+
+/**
+ * CORS para frontend en localhost (Apache/XAMPP u otros).
  */
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With, Origin, Accept, Client-Security-Token, Accept-Encoding');
 header('Access-Control-Max-Age: 1000');
+header('Vary: Origin');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(204);
@@ -62,7 +95,8 @@ require 'ctrl/business/Ordenes.php';
 require 'model/business/Orden.php';
 require 'querys/business/OrdenQuery.php';
 
-// Facturas
+// Facturas y Clarisa
+require 'util/ClarisaService.php';
 require 'ctrl/business/Facturas.php';
 require 'model/business/Factura.php';
 require 'querys/business/FacturaQuery.php';

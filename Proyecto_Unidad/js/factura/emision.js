@@ -1,10 +1,30 @@
-/**
- * Dashboard de facturación AutoTech.
- * Paso 1: persiste en Panther (MariaDB) con estado PENDIENTE_ENVIO.
- * Paso 2: el popup envía el payload a Clarisa y actualiza CUFE / estado DIAN.
- *
- * Depende de clarisa.js (Sesion, ClarisaApi) y panther.js (PantherApi).
- */
+// Facturacion electronica
+
+// Configuracion y variables
+const TOKEN_FALLBACK = '750e8b43e5ed564462c90ef0d382db26';
+const BASE_URL_FACTURAS = pantherUrl('facturas');
+const BASE_URL_ORDENES = pantherUrl('ordenes');
+const CLARISA_USUARIO_FIJO = 'demo_api';
+
+function tokenPanther() {
+    if (typeof SesionTaller !== 'undefined' && SesionTaller.tokenPanther) {
+        return SesionTaller.tokenPanther(TOKEN_FALLBACK);
+    }
+    return sessionStorage.getItem('pantherKeyAPI') || TOKEN_FALLBACK;
+}
+
+function headersPanther(json) {
+    const h = { authorization: tokenPanther() };
+    if (json) h['Content-Type'] = 'application/json';
+    return h;
+}
+
+function filasPanther(data) {
+    if (data == null) return [];
+    if (Array.isArray(data)) return data;
+    if (data.data != null) return Array.isArray(data.data) ? data.data : [];
+    return [];
+}
 
 const PAGINA_LOGIN = '../login.html';
 const SEGUNDOS_ENTRE_CONSULTAS = 5;
@@ -20,9 +40,33 @@ const MEDIOS_PAGO = ['10', '47', '48', '49'];
 const TIPOS_ID = ['CC', 'NI', 'CE', 'PA'];
 const ESTADOS_REENVIABLES = ['PENDIENTE_ENVIO', 'RECHAZADA'];
 const ESTADOS_CONSULTA = ['VERIFICANDO', 'PENDIENTE'];
+const ROLES_FACTURACION = [1, 3];
 
-if (!Sesion.activa()) {
-    window.location.replace(PAGINA_LOGIN);
+function rolActual() {
+    if (typeof SesionTaller !== 'undefined' && typeof SesionTaller.rol === 'function') {
+        return SesionTaller.rol();
+    }
+    const r = parseInt(sessionStorage.getItem('userRole'), 10);
+    return Number.isFinite(r) ? r : 0;
+}
+
+function puedeFacturar() {
+    return ROLES_FACTURACION.includes(rolActual());
+}
+
+function sesionFacturaActiva() {
+    const panther = typeof SesionTaller !== 'undefined'
+        ? SesionTaller.pantherActiva()
+        : Boolean(sessionStorage.getItem('pantherKeyAPI'));
+    return Boolean(panther && puedeFacturar());
+}
+
+if (!sesionFacturaActiva()) {
+    if (typeof SesionTaller !== 'undefined' && SesionTaller.pantherActiva() && !puedeFacturar()) {
+        window.location.replace('panel-principal.html');
+    } else {
+        window.location.replace(PAGINA_LOGIN);
+    }
 }
 
 const redondear = (valor) => Math.round(((Number(valor) || 0) + Number.EPSILON) * 100) / 100;
@@ -74,37 +118,34 @@ function parseJson(valor, fallback) {
     }
 }
 
-function cuerpoPanther(respuesta) {
-    if (!respuesta || respuesta.data == null) return null;
-    const cuerpo = respuesta.data;
-    if (cuerpo && typeof cuerpo === 'object' && Object.prototype.hasOwnProperty.call(cuerpo, 'data')) {
-        return cuerpo.data;
-    }
-    return cuerpo;
-}
-
-function mensajePanther(respuesta) {
-    if (!respuesta) return 'No hubo respuesta de Panther.';
-    if (respuesta.status === 0) return 'No se pudo conectar con Panther. Verifica que Apache y MariaDB estén activos.';
-    if (respuesta.status === 401 || respuesta.status === 403) {
+function mensajePantherHttp(status, data) {
+    if (status === 0) return 'No se pudo conectar con Panther. Verifica Apache/MariaDB y la URL del REST.';
+    if (status === 401 || status === 403) {
         return 'Panther rechazó la clave API. Revisa Authorization del usuario admin.';
     }
-    return respuesta.mensaje || `Panther respondió HTTP ${respuesta.status}.`;
+    if (data && (data.data || data.message || data.mensaje)) {
+        const msg = data.data || data.message || data.mensaje;
+        return typeof msg === 'string' ? msg : `Panther respondió HTTP ${status}.`;
+    }
+    return `Panther respondió HTTP ${status}.`;
 }
 
-function mensajeClarisa(data, status, errorRed) {
-    if (errorRed) return 'No fue posible conectar con Clarisa. Verifica tu conexión e inténtalo de nuevo.';
-    if (status === 401 || status === 403) {
-        return 'La sesión de Clarisa expiró o no tiene autorización. Cierra sesión e ingresa de nuevo.';
-    }
-    const mensaje = ClarisaApi.mensajeDeError(data);
-    if (mensaje) return mensaje;
-    if (status === 400 || status === 206 || status === 422) {
-        return `Clarisa encontró errores de validación (HTTP ${status}). Revisa la respuesta.`;
-    }
-    return `Clarisa rechazó la factura (HTTP ${status || 'sin código'}).`;
+function mensajeClarisaBackend(clarisa) {
+    if (!clarisa) return 'Sin respuesta de Clarisa.';
+    if (clarisa.mensaje) return clarisa.mensaje;
+    if (clarisa.ok) return `Clarisa Sandbox: ${clarisa.estado_dian || 'OK'}`;
+    return `Clarisa rechazó la operación (HTTP ${clarisa.http_status || 'sin código'}).`;
 }
 
+function resultadoPanther(data) {
+    if (!data) return null;
+    if (data.data && typeof data.data === 'object' && !Array.isArray(data.data)) {
+        return data.data;
+    }
+    return data;
+}
+
+// Items y payload Clarisa
 function impuestoIva() {
     return { tipo: 'IVA', claseImpuesto: 'PO', tarifaTributo: TARIFA_IVA };
 }
@@ -204,21 +245,6 @@ function construirPayloadClarisa(datos, items, totales) {
     return payload;
 }
 
-function extraerCufe(data) {
-    const qr = data?.data?.informacionFacQR || data?.informacionFacQR || {};
-    return qr.cufe || qr.CUFE || qr.cufeFactura || data?.data?.cufe || data?.data?.uuid || data?.cufe || '';
-}
-
-function resolverEstadoDian(status, data) {
-    const estado = String(data?.data?.estadoDIAN || data?.estadoDIAN || '').toUpperCase();
-    const verificando = ClarisaApi.estaVerificando(data) || estado === 'PENDIENTE' || estado === 'VERIFICANDO';
-    if (verificando) return 'VERIFICANDO';
-    if (status === 200 && data?.success === true && (estado === 'APROBADA' || estado === '')) return 'APROBADA';
-    if (estado === 'APROBADA') return 'APROBADA';
-    if (estado === 'RECHAZADA' || status === 206 || status === 400 || status === 422) return 'RECHAZADA';
-    return status === 200 && data?.success === true ? 'APROBADA' : 'RECHAZADA';
-}
-
 function etiquetaEstado(estado) {
     const mapa = {
         PENDIENTE_ENVIO: 'Pendiente de envío',
@@ -230,21 +256,22 @@ function etiquetaEstado(estado) {
     return mapa[estado] || estado || '—';
 }
 
+// UI del dashboard
 document.addEventListener('DOMContentLoaded', () => {
-    if (!Sesion.activa()) return;
-
-    const apiClarisa = new ClarisaApi();
-    const api = typeof pantherApi !== 'undefined' ? pantherApi : new PantherApi();
+    if (!sesionFacturaActiva()) return;
 
     const form = document.getElementById('form-factura');
     const panelFormulario = document.getElementById('panel-formulario');
     const repuestosBody = document.getElementById('repuestos-body');
     const btnGuardar = document.getElementById('btn-guardar-factura');
+    const btnGenerar = document.getElementById('btn-generar-factura');
     const btnEnviar = document.getElementById('btn-enviar-facturador');
     const btnConsultar = document.getElementById('btn-consultar-dian');
     const notificacion = document.getElementById('notificacion-factura');
     const tablaBody = document.getElementById('tabla-facturas-body');
     const modal = document.getElementById('modal-detalle-factura');
+    const modalClave = document.getElementById('modal-clarisa-clave');
+    const formClave = document.getElementById('form-clarisa-clave');
     const campo = (id) => document.getElementById(id);
     const valor = (id) => campo(id).value.trim();
 
@@ -255,8 +282,18 @@ document.addEventListener('DOMContentLoaded', () => {
     let guardando = false;
     let enviandoClarisa = false;
     let ultimoEnvioClarisa = 0;
+    let resolverClaveClarisa = null;
 
-    campo('usuario-activo').textContent = Sesion.usuario || 'DEMO_API';
+    if (typeof SesionTaller !== 'undefined' && SesionTaller.aplicarUI) {
+        SesionTaller.aplicarUI();
+    } else {
+        campo('usuario-activo').textContent = sessionStorage.getItem('userName') || 'usuario';
+    }
+
+    const etiquetaUsuarioApi = campo('clarisa-usuario-fijo');
+    if (etiquetaUsuarioApi) etiquetaUsuarioApi.textContent = CLARISA_USUARIO_FIJO;
+    const inputUsuarioApi = campo('clarisa-usuario');
+    if (inputUsuarioApi) inputUsuarioApi.value = CLARISA_USUARIO_FIJO;
 
     let temporizadorNotificacion;
     function mostrarNotificacion(mensaje, tipo) {
@@ -548,16 +585,19 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    async function listarRecurso(recurso) {
-        const respuesta = await api.get(recurso);
-        if (respuesta.status === 204) return [];
-        if (!respuesta.ok) {
-            const error = new Error(mensajePanther(respuesta));
-            error.status = respuesta.status;
+    async function listarRecurso(url) {
+        const response = await fetch(url, { method: 'GET', headers: headersPanther(true) });
+        if (response.status === 204) return [];
+        if (!response.ok) {
+            let data = null;
+            try { data = await response.json(); } catch (_) { /* ignore */ }
+            const error = new Error(mensajePantherHttp(response.status, data));
+            error.status = response.status;
             throw error;
         }
-        const cuerpo = cuerpoPanther(respuesta);
-        return Array.isArray(cuerpo) ? cuerpo : [];
+        const data = await response.json();
+        if (data.state && data.state !== 'OK' && data.state !== 'GET') return [];
+        return filasPanther(data);
     }
 
     function pintarKpis() {
@@ -624,7 +664,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function cargarDashboardFacturas() {
         campo('contador-facturas').textContent = 'Cargando...';
         try {
-            const filas = await listarRecurso('facturas');
+            const filas = await listarRecurso(BASE_URL_FACTURAS);
             facturas = filas.map(normalizarFactura);
             renderizarTabla();
         } catch (error) {
@@ -659,7 +699,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function cargarOrdenesDisponibles() {
         const select = campo('select-orden-cargar');
         try {
-            const filas = await listarRecurso('ordenes');
+            const filas = await listarRecurso(BASE_URL_ORDENES);
             ordenes = filas.map(normalizarOrden);
             select.innerHTML = '<option value="">Selecciona una orden para rellenar el formulario...</option>' +
                 ordenes.map((orden) =>
@@ -777,48 +817,89 @@ document.addEventListener('DOMContentLoaded', () => {
         mostrarFormulario(`Editar factura ${factura.prefijo}${factura.consecutivo}`);
     }
 
-    async function guardarFacturaEnPanther(evento) {
-        evento.preventDefault();
-        if (guardando) return;
+    // Guardar factura
+    function cerrarModalClave(resultado) {
+        if (!modalClave) return;
+        modalClave.classList.remove('active');
+        document.body.style.overflow = modal.classList.contains('active') ? 'hidden' : '';
+        const resolver = resolverClaveClarisa;
+        resolverClaveClarisa = null;
+        if (resolver) resolver(resultado);
+    }
 
+    function solicitarClaveClarisa() {
+        return new Promise((resolve) => {
+            if (!puedeFacturar()) {
+                mostrarNotificacion('Tu rol no está autorizado para emitir facturas electrónicas.', 'error');
+                resolve(null);
+                return;
+            }
+            resolverClaveClarisa = resolve;
+            campo('clarisa-clave').value = '';
+            modalClave.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => campo('clarisa-clave').focus(), 50);
+        });
+    }
+
+    function prepararCuerpoFactura() {
         const datos = leerFormulario();
         const error = validar(datos);
         if (error) {
             mostrarNotificacion(error, 'error');
-            return;
+            return null;
         }
-
-        let items;
-        let payload;
-        let totales;
         try {
-            items = construirItems(datos);
-            totales = totalizar(items);
-            payload = construirPayloadClarisa(datos, items, totales);
+            const items = construirItems(datos);
+            const totales = totalizar(items);
+            const payload = construirPayloadClarisa(datos, items, totales);
+            const factura = armarFacturaDesdeFormulario(datos, items, totales, payload);
+            return { datos, cuerpo: facturaAPayload(factura) };
         } catch (err) {
             mostrarNotificacion(err.message, 'error');
-            return;
+            return null;
         }
+    }
 
-        const factura = armarFacturaDesdeFormulario(datos, items, totales, payload);
-        const cuerpo = facturaAPayload(factura);
+    async function persistirFacturaEnPanther(cuerpo, { emitir = false, clarisaClave = '' } = {}) {
+        const payload = { ...cuerpo };
+        if (emitir) {
+            payload.emitir_clarisa = true;
+            payload.clarisa_clave = clarisaClave;
+        }
+        const url = editandoId ? `${BASE_URL_FACTURAS}/${editandoId}` : BASE_URL_FACTURAS;
+        const response = await fetch(url, {
+            method: editandoId ? 'PUT' : 'POST',
+            headers: headersPanther(true),
+            body: JSON.stringify(payload)
+        });
+        let data = null;
+        try { data = await response.json(); } catch (_) { /* ignore */ }
+        if (!response.ok) {
+            const error = new Error(mensajePantherHttp(response.status, data));
+            error.status = response.status;
+            error.data = data;
+            throw error;
+        }
+        return resultadoPanther(data);
+    }
+
+    async function guardarFacturaEnPanther(evento) {
+        evento.preventDefault();
+        if (guardando || enviandoClarisa) return;
+
+        const preparado = prepararCuerpoFactura();
+        if (!preparado) return;
+
         guardando = true;
         btnGuardar.disabled = true;
+        if (btnGenerar) btnGenerar.disabled = true;
         btnGuardar.textContent = 'Guardando...';
 
         try {
-            const respuesta = editandoId
-                ? await api.put('facturas', editandoId, cuerpo)
-                : await api.post('facturas', cuerpo);
-
-            if (!respuesta.ok) {
-                mostrarNotificacion(mensajePanther(respuesta), 'error');
-                return;
-            }
-
-            const creado = cuerpoPanther(respuesta);
-            const id = editandoId || Number(creado?.id);
-            localStorage.setItem(CLAVE_CONSECUTIVO, datos.consecutivo);
+            const resultado = await persistirFacturaEnPanther(preparado.cuerpo, { emitir: false });
+            const id = editandoId || Number(resultado?.id);
+            localStorage.setItem(CLAVE_CONSECUTIVO, preparado.datos.consecutivo);
             mostrarNotificacion(
                 editandoId
                     ? 'Factura actualizada en Panther. Aún no se ha enviado a Clarisa.'
@@ -833,7 +914,84 @@ document.addEventListener('DOMContentLoaded', () => {
         } finally {
             guardando = false;
             btnGuardar.disabled = false;
-            btnGuardar.textContent = 'Guardar Factura en Sistema';
+            if (btnGenerar) btnGenerar.disabled = false;
+            btnGuardar.textContent = 'Guardar en Panther';
+        }
+    }
+
+    function notificarResultadoClarisa(clarisa, prefijo, consecutivo) {
+        const doc = `${prefijo || ''}${consecutivo || ''}`;
+        if (!clarisa) {
+            mostrarNotificacion('Panther guardó la factura, pero no hubo respuesta de Clarisa.', 'warning');
+            return;
+        }
+        if (clarisa.ok && clarisa.estado_dian === 'APROBADA') {
+            mostrarNotificacion(`Factura ${doc} aprobada en Clarisa Sandbox y actualizada en Panther.`, 'success');
+        } else if (clarisa.ok && clarisa.estado_dian === 'VERIFICANDO') {
+            mostrarNotificacion(`Clarisa recibió la factura ${doc}. Consulta el estado DIAN en unos segundos.`, 'warning');
+        } else if (clarisa.ok) {
+            mostrarNotificacion(mensajeClarisaBackend(clarisa), 'success');
+        } else if (clarisa.paso === 'login') {
+            mostrarNotificacion(mensajeClarisaBackend(clarisa) || 'Clave de la API Clarisa incorrecta.', 'error');
+        } else {
+            mostrarNotificacion(mensajeClarisaBackend(clarisa), 'error');
+        }
+    }
+
+    async function generarFacturaCompleta() {
+        if (guardando || enviandoClarisa) return;
+        if (!puedeFacturar()) {
+            mostrarNotificacion('Solo Administrador o Cajero/Recepcionista pueden generar facturas.', 'error');
+            return;
+        }
+
+        const preparado = prepararCuerpoFactura();
+        if (!preparado) return;
+
+        const clave = await solicitarClaveClarisa();
+        if (clave == null) return;
+        if (!clave) {
+            mostrarNotificacion('Debes ingresar la clave de la API Clarisa.', 'error');
+            return;
+        }
+
+        enviandoClarisa = true;
+        guardando = true;
+        btnGuardar.disabled = true;
+        if (btnGenerar) {
+            btnGenerar.disabled = true;
+            btnGenerar.textContent = 'Generando factura...';
+        }
+
+        try {
+            const resultado = await persistirFacturaEnPanther(preparado.cuerpo, {
+                emitir: true,
+                clarisaClave: clave
+            });
+            const id = editandoId || Number(resultado?.id);
+            localStorage.setItem(CLAVE_CONSECUTIVO, preparado.datos.consecutivo);
+            const clarisa = resultado?.clarisa;
+            if (resultado?.persistencia?.ok && !clarisa?.ok) {
+                mostrarNotificacion(
+                    `Persistencia OK. ${mensajeClarisaBackend(clarisa)}`,
+                    'warning'
+                );
+            } else {
+                notificarResultadoClarisa(clarisa, preparado.datos.prefijo, preparado.datos.consecutivo);
+            }
+            ocultarFormulario();
+            await cargarDashboardFacturas();
+            if (id) abrirPopUpFactura(id);
+        } catch (err) {
+            mostrarNotificacion(err.message || 'Error al generar la factura.', 'error');
+        } finally {
+            enviandoClarisa = false;
+            guardando = false;
+            btnGuardar.disabled = false;
+            if (btnGenerar) {
+                btnGenerar.disabled = false;
+                btnGenerar.textContent = 'Generar factura';
+            }
         }
     }
 
@@ -841,9 +999,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const factura = facturas.find((item) => item.id === Number(id));
         if (!factura) return;
         if (!confirm(`¿Eliminar la factura ${factura.prefijo}${factura.consecutivo}? Esta acción borra el registro en MariaDB.`)) return;
-        const respuesta = await api.delete('facturas', id);
-        if (!respuesta.ok) {
-            mostrarNotificacion(mensajePanther(respuesta), 'error');
+        const response = await fetch(`${BASE_URL_FACTURAS}/${id}`, {
+            method: 'DELETE',
+            headers: headersPanther(false)
+        });
+        if (!response.ok) {
+            let data = null;
+            try { data = await response.json(); } catch (_) { /* ignore */ }
+            mostrarNotificacion(mensajePantherHttp(response.status, data), 'error');
             return;
         }
         if (facturaAbierta && facturaAbierta.id === Number(id)) cerrarPopUp();
@@ -919,18 +1082,11 @@ document.addEventListener('DOMContentLoaded', () => {
         boton.disabled = false;
     }
 
-    async function actualizarFacturaEnPanther(factura) {
-        const respuesta = await api.put('facturas', factura.id, facturaAPayload(factura));
-        if (!respuesta.ok) {
-            throw new Error(mensajePanther(respuesta));
-        }
-    }
-
     async function enviarAlFacturadorClarisa(id) {
         const factura = facturas.find((item) => item.id === Number(id)) || facturaAbierta;
         if (!factura || enviandoClarisa || btnEnviar.disabled) return;
-        if (!Sesion.activa() || !apiClarisa.token) {
-            mostrarNotificacion('La sesión de Clarisa no está activa. Cierra sesión e ingresa de nuevo.', 'error');
+        if (!puedeFacturar()) {
+            mostrarNotificacion('Solo Administrador o Cajero/Recepcionista pueden emitir facturas.', 'error');
             return;
         }
         if (!factura.payload_clarisa) {
@@ -938,75 +1094,109 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        const clave = await solicitarClaveClarisa();
+        if (clave == null) return;
+        if (!clave) {
+            mostrarNotificacion('Debes ingresar la clave de la API Clarisa.', 'error');
+            return;
+        }
+
         enviandoClarisa = true;
-        await respetarEsperaClarisa(btnEnviar, 'Enviar al facturador');
+        await respetarEsperaClarisa(btnEnviar, 'Generar factura');
         btnEnviar.disabled = true;
-        btnEnviar.textContent = 'Enviando a Clarisa...';
+        btnEnviar.textContent = 'Generando factura...';
 
         try {
-            const { status, data } = await apiClarisa.emitirFactura(factura.payload_clarisa);
+            const response = await fetch(`${BASE_URL_FACTURAS}/emitir/${factura.id}`, {
+                method: 'POST',
+                headers: headersPanther(true),
+                body: JSON.stringify({ clarisa_clave: clave })
+            });
+            let data = null;
+            try { data = await response.json(); } catch (_) { /* ignore */ }
             ultimoEnvioClarisa = Date.now();
-            const estado = resolverEstadoDian(status, data);
-            const cufe = extraerCufe(data) || factura.cufe || '';
-            factura.estado_dian = estado;
-            factura.cufe = cufe;
-            factura.respuesta_clarisa = data;
-            await actualizarFacturaEnPanther(factura);
-            await cargarDashboardFacturas();
-            const fresca = facturas.find((item) => item.id === factura.id) || factura;
-            pintarPopUp(fresca);
 
-            if (estado === 'APROBADA') {
-                mostrarNotificacion(`Factura ${factura.prefijo}${factura.consecutivo} aprobada y actualizada en Panther.`, 'success');
-            } else if (estado === 'VERIFICANDO') {
-                mostrarNotificacion(`Clarisa recibió la factura ${factura.prefijo}${factura.consecutivo}. Consulta el estado DIAN en unos segundos.`, 'warning');
-            } else {
-                mostrarNotificacion(mensajeClarisa(data, status), 'error');
+            if (!response.ok) {
+                mostrarNotificacion(mensajePantherHttp(response.status, data), 'error');
+                return;
             }
+
+            const resultado = resultadoPanther(data);
+            await cargarDashboardFacturas();
+            const fresca = facturas.find((item) => item.id === factura.id);
+            if (fresca) pintarPopUp(fresca);
+            notificarResultadoClarisa(resultado?.clarisa, factura.prefijo, factura.consecutivo);
         } catch (err) {
             const red = err instanceof TypeError;
-            mostrarNotificacion(red ? mensajeClarisa(null, 0, true) : (err.message || 'Error al enviar a Clarisa.'), 'error');
+            mostrarNotificacion(
+                red
+                    ? 'No fue posible conectar con Panther/Clarisa. Verifica la red y el backend.'
+                    : (err.message || 'Error al emitir en Clarisa.'),
+                'error'
+            );
         } finally {
             enviandoClarisa = false;
             btnEnviar.disabled = false;
-            btnEnviar.textContent = 'Enviar al facturador';
+            btnEnviar.textContent = 'Generar factura';
             if (facturaAbierta && ESTADOS_REENVIABLES.includes(facturaAbierta.estado_dian)) {
-                await respetarEsperaClarisa(btnEnviar, 'Enviar al facturador');
+                await respetarEsperaClarisa(btnEnviar, 'Generar factura');
             }
         }
     }
 
     async function consultarEstadoDian() {
         if (!facturaAbierta || btnConsultar.disabled) return;
-        if (!Sesion.activa()) {
-            mostrarNotificacion('La sesión de Clarisa expiró. Ingresa de nuevo para consultar el estado.', 'error');
+        if (!puedeFacturar()) {
+            mostrarNotificacion('Solo Administrador o Cajero/Recepcionista pueden consultar DIAN.', 'error');
             return;
         }
+
+        const clave = await solicitarClaveClarisa();
+        if (clave == null) return;
+        if (!clave) {
+            mostrarNotificacion('Debes ingresar la clave de la API Clarisa.', 'error');
+            return;
+        }
+
         const factura = facturaAbierta;
         const numeroDocumento = `${factura.prefijo}${factura.consecutivo}`;
         btnConsultar.disabled = true;
         btnConsultar.textContent = 'Consultando...';
         try {
-            const { status, data } = await apiClarisa.consultarEstado(factura.nit, numeroDocumento);
-            const estado = resolverEstadoDian(status, data);
-            factura.estado_dian = estado === 'RECHAZADA' && ClarisaApi.estaVerificando(data) ? 'VERIFICANDO' : estado;
-            const cufe = extraerCufe(data);
-            if (cufe) factura.cufe = cufe;
-            factura.respuesta_clarisa = data;
-            await actualizarFacturaEnPanther(factura);
+            const response = await fetch(`${BASE_URL_FACTURAS}/consultar/${factura.id}`, {
+                method: 'POST',
+                headers: headersPanther(true),
+                body: JSON.stringify({ clarisa_clave: clave })
+            });
+            let data = null;
+            try { data = await response.json(); } catch (_) { /* ignore */ }
+
+            if (!response.ok) {
+                mostrarNotificacion(mensajePantherHttp(response.status, data), 'error');
+                return;
+            }
+
+            const resultado = resultadoPanther(data);
             await cargarDashboardFacturas();
-            const fresca = facturas.find((item) => item.id === factura.id) || factura;
-            pintarPopUp(fresca);
-            if (fresca.estado_dian === 'APROBADA') {
+            const fresca = facturas.find((item) => item.id === factura.id);
+            if (fresca) pintarPopUp(fresca);
+
+            const clarisa = resultado?.clarisa;
+            if (clarisa?.ok && clarisa.estado_dian === 'APROBADA') {
                 mostrarNotificacion(`Factura ${numeroDocumento} aprobada por la DIAN.`, 'success');
-            } else if (fresca.estado_dian === 'VERIFICANDO') {
+            } else if (clarisa?.ok && clarisa.estado_dian === 'VERIFICANDO') {
                 mostrarNotificacion(`La factura ${numeroDocumento} sigue en validación con la DIAN.`, 'warning');
             } else {
-                mostrarNotificacion(mensajeClarisa(data, status), 'error');
+                mostrarNotificacion(mensajeClarisaBackend(clarisa), clarisa?.ok ? 'success' : 'error');
             }
         } catch (err) {
             const red = err instanceof TypeError;
-            mostrarNotificacion(red ? mensajeClarisa(null, 0, true) : (err.message || 'No se pudo consultar Clarisa.'), 'error');
+            mostrarNotificacion(
+                red
+                    ? 'No fue posible conectar con Panther/Clarisa. Verifica la red y el backend.'
+                    : (err.message || 'No se pudo consultar Clarisa.'),
+                'error'
+            );
         } finally {
             let restante = SEGUNDOS_ENTRE_CONSULTAS;
             const intervalo = setInterval(() => {
@@ -1028,10 +1218,19 @@ document.addEventListener('DOMContentLoaded', () => {
     campo('cli-tipo-id').addEventListener('change', (evento) => {
         campo('cli-naturaleza').value = evento.target.value === 'NI' ? 'JURIDICA' : 'NATURAL';
     });
-    campo('btn-cerrar-sesion').addEventListener('click', () => {
-        Sesion.cerrar();
-        window.location.replace(PAGINA_LOGIN);
-    });
+    const btnCerrar = campo('btn-cerrar-sesion');
+    if (btnCerrar && !btnCerrar.dataset.sesionLista) {
+        btnCerrar.dataset.sesionLista = '1';
+        btnCerrar.addEventListener('click', () => {
+            if (typeof SesionTaller !== 'undefined' && SesionTaller.cerrar) {
+                SesionTaller.cerrar();
+            } else if (typeof Sesion !== 'undefined' && Sesion.cerrar) {
+                Sesion.cerrar();
+            }
+            window.location.replace(PAGINA_LOGIN);
+        });
+    }
+    // Eventos del formulario
     campo('btn-nueva-factura').addEventListener('click', nuevaFactura);
     campo('btn-cerrar-formulario').addEventListener('click', ocultarFormulario);
     campo('btn-limpiar').addEventListener('click', () => {
@@ -1050,6 +1249,7 @@ document.addEventListener('DOMContentLoaded', () => {
     campo('buscar-factura').addEventListener('input', renderizarTabla);
     campo('filtro-estado').addEventListener('change', renderizarTabla);
     campo('btn-cerrar-detalle').addEventListener('click', cerrarPopUp);
+    if (btnGenerar) btnGenerar.addEventListener('click', generarFacturaCompleta);
     btnEnviar.addEventListener('click', () => {
         if (facturaAbierta) enviarAlFacturadorClarisa(facturaAbierta.id);
     });
@@ -1057,6 +1257,22 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('input', actualizarResumen);
     form.addEventListener('change', actualizarResumen);
     form.addEventListener('submit', guardarFacturaEnPanther);
+
+    formClave.addEventListener('submit', (evento) => {
+        evento.preventDefault();
+        const clave = valor('clarisa-clave');
+        if (!clave) {
+            mostrarNotificacion('Ingresa la clave de la API Clarisa.', 'error');
+            campo('clarisa-clave').focus();
+            return;
+        }
+        cerrarModalClave(clave);
+    });
+    campo('btn-cancelar-clarisa-clave').addEventListener('click', () => cerrarModalClave(null));
+    campo('btn-cerrar-clarisa-clave').addEventListener('click', () => cerrarModalClave(null));
+    modalClave.addEventListener('click', (evento) => {
+        if (evento.target === modalClave) cerrarModalClave(null);
+    });
 
     repuestosBody.addEventListener('click', (evento) => {
         if (!evento.target.classList.contains('quitar-repuesto')) return;
