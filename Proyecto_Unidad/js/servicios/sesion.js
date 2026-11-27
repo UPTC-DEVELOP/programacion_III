@@ -1,19 +1,4 @@
-/**
- * Sesión + navegación centralizada AutoTech (roles del caso de estudio).
- *
- * Login Panther: admin/12345 (seed) u otros creados al registrar empleado
- *   (user = nombre del rol, password = documento).
- *
- * Roles j4rol (Panther/database/panther.sql):
- *   1 admin          → 7 módulos
- *   3 recepcionista  → Clientes, Órdenes, Facturación (Cajero/Recepcionista)
- *   4 mecanico       → Vehículos, Órdenes
- *   5 almacenista    → Productos, Proveedores, Órdenes
- * Clarisa demo_api   → solo Facturación (+ panel)
- *
- * Claves de sesión (sessionStorage): pantherKeyAPI, userName, userRole
- * NO usar localStorage.clear() — preserva PANTHER_REST_BASE (Mac override).
- */
+// Sesion y navegacion AutoTech
 
 const SesionTaller = {
     CLAVE_API: 'pantherKeyAPI',
@@ -22,7 +7,7 @@ const SesionTaller = {
     PAGINA_LOGIN: '../login.html',
     PAGINA_PANEL: 'panel-principal.html',
 
-    /** Páginas CRUD permitidas por rol (sin el panel, que siempre está permitido). */
+    // Configuracion de roles
     MENUS: {
         1: ['clientes.html', 'vehiculos.html', 'empleados.html', 'proveedores.html', 'productos.html', 'ordenes.html', 'factura.html'],
         3: ['clientes.html', 'ordenes.html', 'factura.html'],
@@ -30,7 +15,27 @@ const SesionTaller = {
         5: ['productos.html', 'proveedores.html', 'ordenes.html']
     },
 
-    /** Metadatos de cada módulo (panel gestor + tarjetas). */
+    NAV_ADMIN: [
+        'panel-principal.html',
+        'vehiculos.html',
+        'empleados.html',
+        'proveedores.html',
+        'productos.html',
+        'ordenes.html',
+        'factura.html'
+    ],
+
+    TITULOS_NAV: {
+        'panel-principal.html': 'Módulos',
+        'clientes.html': 'Clientes',
+        'vehiculos.html': 'Vehículos',
+        'empleados.html': 'Empleados',
+        'proveedores.html': 'Proveedores',
+        'productos.html': 'Productos',
+        'ordenes.html': 'Órdenes',
+        'factura.html': 'Facturas'
+    },
+
     MODULOS: [
         { archivo: 'clientes.html', titulo: 'Clientes', descripcion: 'Registro y consulta de clientes del taller.' },
         { archivo: 'vehiculos.html', titulo: 'Vehículos', descripcion: 'Flota y vehículos asociados a clientes.' },
@@ -41,7 +46,6 @@ const SesionTaller = {
         { archivo: 'factura.html', titulo: 'Facturación', descripcion: 'Emisión y seguimiento de facturas.' }
     ],
 
-    /** Destino tras login / redirección por permiso denegado. */
     HOME: {
         1: 'panel-principal.html',
         3: 'panel-principal.html',
@@ -103,14 +107,12 @@ const SesionTaller = {
         return this.paginasPermitidas(r).includes(archivo);
     },
 
-    /**
-     * Cierra solo claves de autenticación.
-     * Conserva localStorage PANTHER_REST_BASE y autotech-usuario (recordarme).
-     */
+    // Cerrar sesion
     cerrar() {
         sessionStorage.removeItem(this.CLAVE_API);
         sessionStorage.removeItem(this.CLAVE_USER);
         sessionStorage.removeItem(this.CLAVE_ROL);
+        sessionStorage.removeItem('pantherToken');
         if (typeof Sesion !== 'undefined' && typeof Sesion.cerrar === 'function') {
             Sesion.cerrar();
         }
@@ -128,7 +130,7 @@ const SesionTaller = {
         return true;
     },
 
-    /** Si el rol no puede ver esta página, redirige al panel principal. */
+    // Bloqueo por rol
     exigirPaginaActual() {
         const archivo = (window.location.pathname || '').split('/').pop() || '';
         if (!archivo || archivo === this.PAGINA_PANEL) return true;
@@ -159,7 +161,57 @@ const SesionTaller = {
 
     textoBadge() {
         const user = this.usuario() || (this.clarisaActiva() && typeof Sesion !== 'undefined' ? Sesion.usuario : '') || 'usuario';
-        return `${user} (${this.etiquetaRol()})`;
+        return user + ' (' + this.etiquetaRol() + ')';
+    },
+
+    pestaniasParaRol() {
+        if (this.clarisaActiva() && !this.pantherActiva()) {
+            return [this.PAGINA_PANEL, 'factura.html'];
+        }
+
+        const rol = this.rol();
+        if (rol === 1) {
+            return this.NAV_ADMIN.slice();
+        }
+
+        const permitidos = this.paginasPermitidas(rol);
+        const orden = this.MODULOS.map(function (m) { return m.archivo; });
+        const tabs = [this.PAGINA_PANEL];
+
+        orden.forEach(function (archivo) {
+            if (permitidos.indexOf(archivo) !== -1) {
+                tabs.push(archivo);
+            }
+        });
+
+        return tabs;
+    },
+
+    // Renderizar barra navegacion
+    renderBarraNavegacion() {
+        const nav = document.querySelector('nav[aria-label="Navegación principal"] ul');
+        if (!nav) return;
+
+        const actual = (window.location.pathname || '').split('/').pop() || '';
+        const items = this.pestaniasParaRol();
+
+        nav.innerHTML = '';
+        items.forEach((archivo) => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = archivo;
+            a.textContent = this.TITULOS_NAV[archivo] || archivo;
+            if (archivo === actual) {
+                a.className = 'active';
+            }
+            li.appendChild(a);
+            nav.appendChild(li);
+        });
+
+        const logoLink = document.querySelector('.header-logo a');
+        if (logoLink) {
+            logoLink.setAttribute('href', this.PAGINA_PANEL);
+        }
     },
 
     aplicarUI() {
@@ -182,41 +234,11 @@ const SesionTaller = {
             });
         }
 
-        this.filtrarMenu();
+        this.renderBarraNavegacion();
         this.renderPanelModulos();
     },
 
-    filtrarMenu() {
-        const nav = document.querySelector('nav[aria-label="Navegación principal"]');
-        if (!nav) return;
-
-        if (this.clarisaActiva() && !this.pantherActiva()) {
-            nav.querySelectorAll('a[href]').forEach((a) => {
-                const archivo = (a.getAttribute('href') || '').split('/').pop();
-                if (archivo && archivo !== 'factura.html' && archivo !== this.PAGINA_PANEL && !String(a.getAttribute('href')).includes('index.html')) {
-                    const li = a.closest('li');
-                    if (li) li.hidden = true;
-                }
-            });
-            return;
-        }
-
-        const rol = this.rol();
-        if (rol === 1) return;
-
-        const permitidos = this.paginasPermitidas(rol);
-        nav.querySelectorAll('a[href]').forEach((a) => {
-            const href = a.getAttribute('href') || '';
-            const archivo = href.split('/').pop();
-            if (!archivo || href.includes('index.html') || archivo === this.PAGINA_PANEL) return;
-            if (!permitidos.includes(archivo)) {
-                const li = a.closest('li');
-                if (li) li.hidden = true;
-            }
-        });
-    },
-
-    /** Tarjetas del panel gestor según rol. */
+    // Tarjetas del panel
     renderPanelModulos() {
         const grid = document.getElementById('panel-modulos-grid');
         if (!grid) return;
@@ -250,7 +272,6 @@ const SesionTaller = {
     }
 };
 
-/** Alias documentado en el plan de estandarización (Fase 5). */
 const SesionNavegacion = SesionTaller;
 
 (function iniciarSesionUI() {

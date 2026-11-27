@@ -1,9 +1,9 @@
-// Utilidades compartidas por los CRUD (sesión de interfaz, catálogo, formato).
-// La API de Clarisa solo se consume en facturación; aquí Sesion solo controla el acceso.
+// Utilidades CRUD compartidas
 
 const PAGINA_LOGIN = '../login.html';
 
 function sesionTallerActiva() {
+    if (typeof SesionTaller !== 'undefined' && SesionTaller.activa()) return true;
     if (typeof Sesion !== 'undefined' && Sesion.activa()) return true;
     return Boolean(
         sessionStorage.getItem('pantherKeyAPI')
@@ -12,33 +12,14 @@ function sesionTallerActiva() {
     );
 }
 
-if (!sesionTallerActiva()) {
+if (typeof SesionTaller === 'undefined' && !sesionTallerActiva()) {
     window.location.replace(PAGINA_LOGIN);
 }
 
-/** Inserta pestaña Módulos (panel) sin reescribir el HTML de cada CRUD del equipo. */
-function asegurarEnlaceModulos() {
-    const nav = document.querySelector('nav[aria-label="Navegación principal"] ul');
-    if (!nav) return;
-    const yaExiste = Array.from(nav.querySelectorAll('a[href]')).some(function (a) {
-        return (a.getAttribute('href') || '').indexOf('panel-principal.html') !== -1;
-    });
-    if (yaExiste) return;
-
-    const li = document.createElement('li');
-    const a = document.createElement('a');
-    a.href = 'panel-principal.html';
-    a.textContent = 'Módulos';
-    li.appendChild(a);
-    nav.insertBefore(li, nav.firstChild);
-
-    const logoLink = document.querySelector('.header-logo a');
-    if (logoLink) {
-        logoLink.setAttribute('href', 'panel-principal.html');
-    }
-}
-
 function etiquetaRolSesion() {
+    if (typeof SesionTaller !== 'undefined' && SesionTaller.etiquetaRol) {
+        return SesionTaller.etiquetaRol();
+    }
     const mapa = {
         1: 'Administrador',
         3: 'Cajero / Recepcionista',
@@ -49,8 +30,9 @@ function etiquetaRolSesion() {
     return mapa[rol] || '';
 }
 
+// Badge y cierre
 function iniciarControlSesion() {
-    asegurarEnlaceModulos();
+    if (typeof SesionTaller !== 'undefined') return;
 
     const usuarioActivo = document.getElementById('usuario-activo');
     if (usuarioActivo) {
