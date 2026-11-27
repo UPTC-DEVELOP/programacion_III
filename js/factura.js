@@ -1,13 +1,9 @@
 (() => {
-    Sesion.exigir();
-
     const $ = (id) => document.getElementById(id);
     const contItems = $("items");
     const dinero = new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 2 });
     const redondear = (n) => Math.round((n + Number.EPSILON) * 100) / 100;
 
-    $("usuarioSesion").textContent = Sesion.usuario() || "";
-    $("btnSalir").addEventListener("click", () => Sesion.cerrar());
     $("emisor").textContent = "Emisor: NIT 12345 · Prefijo SETP · entorno de pruebas";
 
     // Consecutivo y fecha

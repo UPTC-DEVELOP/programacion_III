@@ -14,22 +14,14 @@
     <script defer src="js/config.js"></script>
     <script defer src="js/utilidades.js"></script>
     <script defer src="js/sesion.js"></script>
+    <script defer src="js/acceso.js"></script>
     <script defer src="js/accesoClarisa.js?v=emision-3"></script>
     <script defer src="js/factura.js?v=emision-3"></script>
 </head>
 <body>
     <a class="saltar" href="#contenido">Saltar al contenido</a>
 
-    <header class="header-principal">
-        <div class="header-logo">
-            <img src="img/logo.jpeg" alt="Logo de AutoGestión ERP">
-        </div>
-        <nav aria-label="Sesión">
-            <a href="modulos.html">Volver a módulos</a>
-            <span class="sesion-info" id="usuarioSesion"></span>
-            <button type="button" class="btn-salir" id="btnSalir">Cerrar sesión</button>
-        </nav>
-    </header>
+    <header class="header-principal" data-cabecera-sesion></header>
 
     <main id="contenido" class="factura-main">
         <h1>Crear factura</h1>

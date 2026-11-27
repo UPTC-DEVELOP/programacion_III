@@ -50,6 +50,21 @@ body {
 }
 
 
+.header-principal[data-cabecera-sesion] nav {
+    gap: 10px;
+}
+
+.header-principal[data-cabecera-sesion] nav a.btn-nav,
+.header-principal[data-cabecera-sesion] nav .btn-salir {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 8px 16px;
+    font: bold 14px/1.2 Arial, sans-serif;
+}
+
 .header-principal nav a:hover {
     color: #ff5a60;
     text-decoration: underline;

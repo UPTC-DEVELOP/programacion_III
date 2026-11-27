@@ -99,25 +99,3 @@
     .panel { padding: 50px 5%; }
     .panel-encabezado h1 { font-size: 36px; }
 }
-
-/* Botón Cerrar sesión del panel de módulos */
-#btnSalir {
-    padding: 9px 16px;
-    border: 1px solid #c9333b;
-    border-radius: 6px;
-    background-color: #e3262e;
-    color: #ffffff;
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-#btnSalir:hover {
-    background-color: #ac202a;
-}
-
-#btnSalir:focus-visible {
-    outline: 2px solid #ffffff;
-    outline-offset: 3px;
-}
