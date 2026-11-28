@@ -29,6 +29,7 @@ require 'querys/core/SegurityQuery.php';
 require 'ctrl/business/Persons.php';
 require_once 'ctrl/business/Facturas.php';
 require_once 'ctrl/business/Empleados.php';
+require_once 'ctrl/business/Ordenes.php';
 require 'model/business/Person.php';
 require 'querys/business/BusinessQuery.php';
 

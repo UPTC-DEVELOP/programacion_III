@@ -1,0 +1,74 @@
+/* Textarea del diagnóstico */
+.campo-grupo textarea {
+    background-color: #202226;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    border: 1px solid #33353a;
+    padding: 12px 14px;
+    font-size: 15px;
+    border-radius: 6px;
+    outline: none;
+    resize: vertical;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.campo-grupo textarea:focus {
+    border-color: #e3262e;
+    box-shadow: 0 0 0 0.2rem rgba(227, 38, 46, 0.2);
+}
+
+/* Botones de acción en filas o barra de gestión */
+.acciones-celda {
+    flex-wrap: wrap;
+}
+
+.btn-secundario {
+    background-color: #202226;
+    color: #ffffff;
+    border: 1px solid #33353a;
+}
+
+.btn-secundario:hover {
+    border-color: #e3262e;
+    color: #e3262e;
+}
+
+/* Estados de orden de servicio */
+.badge-pendiente {
+    background-color: rgba(255, 193, 7, 0.15);
+    color: #ffc107;
+    border: 1px solid rgba(255, 193, 7, 0.4);
+}
+
+.badge-asignada,
+.badge-en_proceso {
+    background-color: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.4);
+}
+
+.badge-finalizada {
+    background-color: rgba(40, 167, 69, 0.15);
+    color: #28a745;
+    border: 1px solid rgba(40, 167, 69, 0.4);
+}
+
+.badge-cancelada {
+    background-color: rgba(227, 38, 46, 0.15);
+    color: #ff6b72;
+    border: 1px solid rgba(227, 38, 46, 0.4);
+}
+
+/* Consola de respuesta JSON en ordenes.html */
+#respuesta {
+    white-space: pre-wrap;
+    word-break: break-word;
+    background-color: #0f1014;
+    color: #e2e8f0;
+    border: 1px solid #22252a;
+    padding: 16px;
+    border-radius: 6px;
+    font-family: "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.5;
+}

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Órdenes | AutoGestión ERP</title>
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/vehiculos.css">
+    <script src="js/config.js"></script>
+    <script src="js/sesion.js"></script>
+    <script src="js/acceso.js"></script>
+</head>
+<body>
+    <header class="header-principal" data-cabecera-sesion></header>
+
+    <main class="contenedor">
+        <header class="pagina-encabezado">
+            <h1>Órdenes de taller</h1>
+        </header>
+
+        <p role="status" id="resultado"></p>
+
+        <form id="abrir" hidden>
+            <h2>Abrir orden</h2>
+            <div class="form-grid">
+                <label class="campo">Vehículo y propietario
+                    <select name="vehiculo" required></select>
+                </label>
+                <label class="campo">Fecha y hora de ingreso
+                    <input name="fecha_hora" type="datetime-local" required>
+                </label>
+                <label class="campo">Diagnóstico inicial
+                    <input name="diagnostico" maxlength="500" required>
+                </label>
+            </div>
+            <button class="btn btn-primario">Abrir orden</button>
+        </form>
+
+        <form id="asignacion" hidden>
+            <h2>Asignar mecánico</h2>
+            <div class="form-grid">
+                <label class="campo">Número de orden
+                    <input name="id" type="number" min="1" required>
+                </label>
+                <label class="campo">Cédula del mecánico
+                    <input name="mecanico_id" required>
+                </label>
+            </div>
+            <button class="btn btn-primario">Asignar</button>
+        </form>
+
+        <form id="horas" hidden>
+            <h2>Registrar horas trabajadas</h2>
+            <div class="form-grid">
+                <label class="campo">Número de orden
+                    <input name="id" type="number" min="1" required>
+                </label>
+                <label class="campo">Horas
+                    <input name="horas" type="number" min="0.01" step="0.01" required>
+                </label>
+            </div>
+            <button class="btn btn-primario">Registrar horas</button>
+        </form>
+
+        <form id="estado" hidden>
+            <h2>Cambiar estado</h2>
+            <div class="form-grid">
+                <label class="campo">Número de orden
+                    <input name="id" type="number" min="1" required>
+                </label>
+                <label class="campo">Estado
+                    <select name="estado">
+                        <option value="en_proceso">En proceso</option>
+                        <option value="finalizada">Finalizada</option>
+                        <option value="cancelada">Cancelada</option>
+                    </select>
+                </label>
+            </div>
+            <button class="btn btn-primario">Guardar estado</button>
+        </form>
+    </main>
+
+    <script src="js/catalogoApi.js"></script>
+    <script src="js/ordenes.js"></script>
+</body>
+</html>
