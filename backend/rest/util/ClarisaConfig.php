@@ -26,7 +26,7 @@ final class ClarisaConfig
     public const CURL_TIMEOUT = 30;
     public const CURL_CONNECT_TIMEOUT = 10;
 
--    public static function credencialesConfiguradas(): bool
+    public static function credencialesConfiguradas(): bool
     {
         return trim(self::CLARISA_USERNAME) !== '' && trim(self::CLARISA_PASSWORD) !== '';
     }
