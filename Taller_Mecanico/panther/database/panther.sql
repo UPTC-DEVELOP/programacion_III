@@ -82,6 +82,38 @@ INSERT INTO `documenttype` (`id`, `nombre_corto`, `nombre_largo`, `dateDelete`) 
 (3, 'NIT', 'Numero Identificacion Tributario', NULL),
 (11, 'PA', 'Pasaporte', NULL);
 
+CREATE TABLE `cargos` (
+  `id_cargo` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) NOT NULL,
+  PRIMARY KEY (`id_cargo`),
+  UNIQUE KEY `nombre` (`nombre`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `especialidades` (
+  `id_especialidad` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) NOT NULL,
+  PRIMARY KEY (`id_especialidad`),
+  UNIQUE KEY `nombre` (`nombre`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `tecnicos` (
+  `id_tecnico` int(11) NOT NULL AUTO_INCREMENT,
+  `cedula` varchar(20) NOT NULL,
+  `nombres` varchar(100) NOT NULL,
+  `apellidos` varchar(100) NOT NULL,
+  `telefono` varchar(20) DEFAULT NULL,
+  `id_cargo` int(11) NOT NULL,
+  `id_especialidad` int(11) DEFAULT NULL,
+  `fecha_ingreso` date NOT NULL,
+  `estado` enum('Activo','Inactivo') NOT NULL DEFAULT 'Activo',
+  PRIMARY KEY (`id_tecnico`),
+  UNIQUE KEY `cedula` (`cedula`),
+  CONSTRAINT `fk_tecnico_cargo` FOREIGN KEY (`id_cargo`) REFERENCES `cargos` (`id_cargo`)
+    ON UPDATE CASCADE ON DELETE RESTRICT,
+  CONSTRAINT `fk_tecnico_especialidad` FOREIGN KEY (`id_especialidad`) REFERENCES `especialidades` (`id_especialidad`)
+    ON UPDATE CASCADE ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 CREATE TABLE `person` (
   `id` int(11) NOT NULL,
   `name` varchar(30) NOT NULL,

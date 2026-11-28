@@ -2,7 +2,7 @@
 
 class DatabaseMigrations
 {
-    const MIGRATION_VERSION = '2026112701';
+    const MIGRATION_VERSION = '2026112702';
     const LOCK_NAME = 'panther_schema_migrations';
 
     public static function run(PDO $pdo)
@@ -68,6 +68,58 @@ class DatabaseMigrations
                 (3, 'NIT', 'Numero Identificacion Tributario', NULL),
                 (11, 'PA', 'Pasaporte', NULL)"
         );
+
+        $pdo->exec(
+            'CREATE TABLE IF NOT EXISTS cargos (
+                id_cargo INT NOT NULL AUTO_INCREMENT,
+                nombre VARCHAR(100) NOT NULL,
+                PRIMARY KEY (id_cargo),
+                UNIQUE KEY nombre (nombre)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4'
+        );
+
+        $pdo->exec(
+            'CREATE TABLE IF NOT EXISTS especialidades (
+                id_especialidad INT NOT NULL AUTO_INCREMENT,
+                nombre VARCHAR(100) NOT NULL,
+                PRIMARY KEY (id_especialidad),
+                UNIQUE KEY nombre (nombre)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4'
+        );
+
+        $pdo->exec(
+            "CREATE TABLE IF NOT EXISTS tecnicos (
+                id_tecnico INT NOT NULL AUTO_INCREMENT,
+                cedula VARCHAR(20) NOT NULL,
+                nombres VARCHAR(100) NOT NULL,
+                apellidos VARCHAR(100) NOT NULL,
+                telefono VARCHAR(20) DEFAULT NULL,
+                id_cargo INT NOT NULL,
+                id_especialidad INT DEFAULT NULL,
+                fecha_ingreso DATE NOT NULL,
+                estado ENUM('Activo', 'Inactivo') NOT NULL DEFAULT 'Activo',
+                PRIMARY KEY (id_tecnico),
+                UNIQUE KEY cedula (cedula)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4"
+        );
+
+        if (!self::foreignKeyExists($pdo, 'tecnicos', 'id_cargo', 'cargos', 'id_cargo')) {
+            $pdo->exec(
+                'ALTER TABLE tecnicos
+                    ADD CONSTRAINT fk_tecnico_cargo
+                    FOREIGN KEY (id_cargo) REFERENCES cargos (id_cargo)
+                    ON UPDATE CASCADE ON DELETE RESTRICT'
+            );
+        }
+
+        if (!self::foreignKeyExists($pdo, 'tecnicos', 'id_especialidad', 'especialidades', 'id_especialidad')) {
+            $pdo->exec(
+                'ALTER TABLE tecnicos
+                    ADD CONSTRAINT fk_tecnico_especialidad
+                    FOREIGN KEY (id_especialidad) REFERENCES especialidades (id_especialidad)
+                    ON UPDATE CASCADE ON DELETE SET NULL'
+            );
+        }
 
         self::addColumn($pdo, 'j4rol', 'dateDelete', 'TIMESTAMP NULL DEFAULT NULL');
         $pdo->exec('ALTER TABLE j4user MODIFY roles INT(2) NOT NULL DEFAULT 3');

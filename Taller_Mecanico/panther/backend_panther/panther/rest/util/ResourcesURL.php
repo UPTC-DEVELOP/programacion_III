@@ -12,7 +12,10 @@ define("RESOURCES_URL", array(
     'useraction',
     'roles',
     'documenttypes',
-    'persons'
+    'persons',
+    'tecnicos',
+    'cargos',
+    'especialidades'
 ));
 
 /**

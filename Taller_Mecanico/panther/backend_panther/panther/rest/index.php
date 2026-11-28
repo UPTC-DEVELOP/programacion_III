@@ -26,6 +26,9 @@ require 'model/core/segurity/User.php';
 require 'querys/core/SegurityQuery.php';
 require 'ctrl/business/Persons.php';
 require 'ctrl/business/DocumentTypes.php';
+require 'ctrl/business/Tecnicos.php';
+require 'ctrl/business/Cargos.php';
+require 'ctrl/business/Especialidades.php';
 require 'model/business/Person.php';
 require 'querys/business/BusinessQuery.php';
 
@@ -48,10 +51,15 @@ switch ($format) {
  * *Manejo de excepciones para el componente
  */
 set_exception_handler(function ($exception) use ($view) {
-    // Cuando se presente error Call to undefined method Error::getState()
-    // comentar linea y descomentar siguiente
-   // $bodyAnswer = new ContentBody($exception->getState(), $exception->getCode(), $exception->getMessage());
-    $bodyAnswer = new ContentBody(INTERNAL_SERVER_ERROR,ST500, $exception->getMessage());
+    if ($exception instanceof ExcepcionAPI) {
+        $bodyAnswer = new ContentBody(
+            $exception->getState(),
+            $exception->getCode(),
+            $exception->getMessage()
+        );
+    } else {
+        $bodyAnswer = new ContentBody(INTERNAL_SERVER_ERROR, ST500, $exception->getMessage());
+    }
     $view->viewPrint($bodyAnswer);
 });
 

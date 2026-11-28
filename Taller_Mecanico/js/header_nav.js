@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <i class="bi bi-tags-fill text-info"></i>
               <span>Catálogo y Promociones</span>
             </a>
-            <a href="page-404.html" class="nav-item-link" id="nav-empleados">
+            <a href="tecnicos.html" class="nav-item-link" id="nav-empleados">
               <i class="bi bi-person-badge-fill text-primary"></i>
               <span>Empleados</span>
             </a>
