@@ -14,7 +14,12 @@ define("RESOURCES_URL", array(
     //Business
     'persons',
     'facturas',
-    'empleados', 'clientes', 'vehiculos', 'proveedores', 'repuestos'
+    'empleados', 
+    'clientes', 
+    'vehiculos', 
+    'proveedores', 
+    'repuestos', 
+    'ordenes'
 ));
 
 /**

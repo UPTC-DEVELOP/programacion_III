@@ -123,10 +123,10 @@ class Ordenes
         $clienteId = (int)$clienteRaw;
 
         if ($tieneVehiculoId) {
-            $q = $db->prepare('SELECT id, cliente_id FROM vehiculos WHERE id = ? LIMIT 1');
+            $q = $db->prepare('SELECT id, cliente_id FROM vehiculo_taller WHERE id = ? LIMIT 1');
             $q->execute([(int)$vehiculoIdRaw]);
         } else {
-            $q = $db->prepare('SELECT id, cliente_id FROM vehiculos WHERE placa = ? LIMIT 1');
+            $q = $db->prepare('SELECT id, cliente_id FROM vehiculo_taller WHERE placa = ? LIMIT 1');
             $q->execute([$placa]);
         }
         $vehiculo = $q->fetch(PDO::FETCH_ASSOC);
