@@ -1,0 +1,205 @@
+<!DOCTYPE HTML>
+<html lang="es">
+	<head>
+		<title>Iniciar Sesión - Olimac Riders Store</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/modulos.css" />
+		<link rel="stylesheet" href="assets/css/repuestos.css?v=5" />
+		<style>
+			.login-contenedor {
+				max-width: 460px;
+				margin: 2rem auto;
+				padding: 2rem;
+				background: #ffffff;
+				border: 1px solid #e2e8f0;
+				border-radius: 12px;
+				box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+			}
+			.login-contenedor h2 {
+				margin-bottom: 0.4rem;
+				text-align: center;
+			}
+			.login-subtitulo {
+				text-align: center;
+				color: #64748b;
+				margin-bottom: 1.5rem;
+				font-size: 0.95rem;
+			}
+			.login-campo {
+				display: flex;
+				flex-direction: column;
+				gap: 0.35rem;
+				margin-bottom: 1.1rem;
+			}
+			.login-campo span {
+				font-weight: 600;
+				color: #1e293b;
+			}
+			.login-campo input {
+				width: 100%;
+				padding: 0.7rem 0.9rem;
+				border: 1px solid #cbd5e1;
+				border-radius: 8px;
+				font-size: 1rem;
+			}
+			.login-boton {
+				width: 100%;
+				padding: 0.85rem;
+				font-size: 1rem;
+				margin-top: 0.5rem;
+				cursor: pointer;
+			}
+			.login-error {
+				margin-top: 1rem;
+				padding: 0.75rem 1rem;
+				border-radius: 8px;
+				background: #fef2f2;
+				border: 1px solid #fecaca;
+				color: #b91c1c;
+				font-size: 0.9rem;
+			}
+			.login-volver {
+				display: block;
+				text-align: center;
+				margin-top: 1.25rem;
+				font-size: 0.9rem;
+			}
+		</style>
+	</head>
+	<body class="is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+			<header id="header">
+				<div class="logo container">
+					<div>
+						<h1><a href="../index.html" id="logo">Olimac Riders Store</a></h1>
+						<p>Acceso al Sistema de Gestión de Taller Mecánico</p>
+					</div>
+				</div>
+			</header>
+
+			<!-- Main -->
+			<section id="main">
+				<div class="container">
+					<div class="login-contenedor">
+						<h2>Iniciar Sesión</h2>
+						<p class="login-subtitulo">Ingresa tus credenciales de Administrador o Empleado</p>
+
+						<form id="formLoginPrincipal" autocomplete="on">
+							<label class="login-campo">
+								<span>Usuario</span>
+								<input type="text" id="loginUsuario" placeholder="Ej. admin o empleado" autocomplete="username" required>
+							</label>
+
+							<label class="login-campo">
+								<span>Contraseña</span>
+								<input type="password" id="loginPassword" placeholder="Ingresa tu contraseña" autocomplete="current-password" required>
+							</label>
+
+							<button type="submit" id="btnIniciarSesion" class="rep-boton rep-boton-principal login-boton">
+								Ingresar al Sistema
+							</button>
+
+							<div id="mensajeErrorLogin" class="login-error" hidden></div>
+						</form>
+
+						<a href="../index.html" class="login-volver">← Volver a la página principal</a>
+					</div>
+				</div>
+			</section>
+
+		</div>
+
+		<script>
+			(function () {
+				const TOKEN_KEY = "olimac_panther_token";
+				const USER_KEY = "olimac_panther_user";
+				const ROLE_KEY = "olimac_panther_role";
+				const API_LOGIN = "../backend/rest/useraction/login";
+
+				// Si ya tiene sesión activa, redirige directo según su rol
+				const tokenExistente = sessionStorage.getItem(TOKEN_KEY);
+				const rolExistente = (sessionStorage.getItem(ROLE_KEY) || "").toLowerCase();
+				if (tokenExistente) {
+					window.location.href = (rolExistente === "empleado") ? "orden-servicio.html" : "no-sidebar.html";
+					return;
+				}
+
+				const form = document.getElementById("formLoginPrincipal");
+				const inputUser = document.getElementById("loginUsuario");
+				const inputPass = document.getElementById("loginPassword");
+				const btnSubmit = document.getElementById("btnIniciarSesion");
+				const cajaError = document.getElementById("mensajeErrorLogin");
+
+				function mostrarError(texto) {
+					cajaError.textContent = texto;
+					cajaError.hidden = false;
+				}
+
+				form.addEventListener("submit", async function (e) {
+					e.preventDefault();
+					cajaError.hidden = true;
+
+					const user = inputUser.value.trim();
+					const password = inputPass.value;
+
+					if (!user || !password) {
+						mostrarError("Debes ingresar tu usuario y contraseña.");
+						return;
+					}
+
+					btnSubmit.disabled = true;
+					btnSubmit.textContent = "Verificando...";
+
+					try {
+						const respuesta = await fetch(API_LOGIN, {
+							method: "POST",
+							headers: { "Content-Type": "application/json" },
+							body: JSON.stringify({ user, password })
+						});
+
+						const data = await respuesta.json().catch(() => null);
+
+						if (!respuesta.ok || !data || !data.body || !data.body.keyAPI) {
+							const msg = (data && (data.message || data.body)) || "Usuario o contraseña incorrectos.";
+							throw new Error(typeof msg === "string" ? msg : "Credenciales inválidas.");
+						}
+
+						const usuarioData = data.body;
+						const rolNormalizado = String(usuarioData.roles || "empleado").trim().toLowerCase();
+
+						// Guarda sesión persistente en sessionStorage para todos los módulos
+						sessionStorage.setItem(TOKEN_KEY, usuarioData.keyAPI);
+						sessionStorage.setItem(USER_KEY, usuarioData.user || user);
+						sessionStorage.setItem(ROLE_KEY, rolNormalizado);
+
+						// Sincroniza también sesión compatible con el módulo de facturación
+						if (!sessionStorage.getItem("olimac_sesion")) {
+							sessionStorage.setItem("olimac_sesion", JSON.stringify({
+								token: usuarioData.keyAPI,
+								userName: usuarioData.user || user,
+								permisos: [rolNormalizado],
+								createdAt: Date.now()
+							}));
+						}
+
+						// Redirige según el rol del usuario
+						if (rolNormalizado === "admin" || rolNormalizado === "administrador") {
+							window.location.href = "no-sidebar.html";
+						} else {
+							window.location.href = "orden-servicio.html";
+						}
+					} catch (error) {
+						mostrarError(error.message || "Error de conexión con el servidor.");
+					} finally {
+						btnSubmit.disabled = false;
+						btnSubmit.textContent = "Ingresar al Sistema";
+					}
+				});
+			})();
+		</script>
+	</body>
+</html>
