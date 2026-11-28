@@ -40,6 +40,7 @@
 						<li><a href="right-sidebar.html">Empleados</a></li>
 						<li><a href="repuestos.html">Repuestos</a></li>
 						<li><a href="inventario.html">Inventario</a></li>
+						<li><a href="factura.html">Facturación</a></li>
 					</ul>
 				</nav>
 
@@ -53,39 +54,9 @@
 									<!-- Content principal con semántica HTML5 -->
 									<article class="box page-content">
 
-										<!-- NAV: ACCESO RÁPIDO A LOGIN -->
 										<nav class="text-end mb-4" aria-label="Navegación de usuario">
-											<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
-												🔑 Iniciar Sesión / Login
-											</button>
+											<a href="login.html" class="btn btn-outline-primary">Iniciar sesión</a>
 										</nav>
-
-										<!-- ASIDE: MODAL DE LOGIN -->
-										<aside class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true" role="dialog">
-											<section class="modal-dialog modal-dialog-centered">
-												<article class="modal-content">
-													<header class="modal-header bg-primary text-white">
-														<h3 class="modal-title h5">Acceso al Sistema - Olimac Riders Store</h3>
-														<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-													</header>
-													<main class="modal-body">
-														<form id="formLogin" class="needs-validation" novalidate>
-															<fieldset class="mb-3">
-																<label for="loginUser" class="form-label text-dark">Correo / Usuario</label>
-																<input type="email" id="loginUser" class="form-control" placeholder="admin@olimac.com" required>
-																<p class="invalid-feedback">Ingresa un correo válido.</p>
-															</fieldset>
-															<fieldset class="mb-3">
-																<label for="loginPass" class="form-label text-dark">Contraseña</label>
-																<input type="password" id="loginPass" class="form-control" required>
-																<p class="invalid-feedback">La contraseña es requerida.</p>
-															</fieldset>
-															<button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
-														</form>
-													</main>
-												</article>
-											</section>
-										</aside>
 
 										<!-- SECTION: MÓDULO PRINCIPAL CRUD CLIENTES -->
 										<section class="container mt-2" id="modulo-clientes">

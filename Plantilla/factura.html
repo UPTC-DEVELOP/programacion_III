@@ -1,0 +1,264 @@
+<!DOCTYPE HTML>
+<!--
+	TXT by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html lang="es">
+	<head>
+		<title>Taller Mecánico - Factura electrónica</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+		<link rel="stylesheet" href="assets/css/modulos.css" />
+		<script src="assets/js/sesion-taller.js"></script>
+		<script>protegerRutaFactura();</script>
+	</head>
+	<body class="is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<header id="header">
+					<div class="logo container">
+						<div>
+							<h1><a href="index.html" id="logo">Olimac Riders Store</a></h1>
+							<p>Sistema de Gestión de Taller Mecánico</p>
+						</div>
+					</div>
+				</header>
+
+			<!-- Nav -->
+				<nav id="nav">
+					<ul>
+						<li><a href="index.html">Inicio</a></li>
+						<li><a href="no-sidebar.html">Clientes</a></li>
+						<li><a href="left-sidebar.html">Vehículos</a></li>
+						<li><a href="proveedores.html">Proveedores</a></li>
+						<li><a href="orden-servicio.html">Servicios</a></li>
+						<li><a href="right-sidebar.html">Empleados</a></li>
+						<li><a href="repuestos.html">Repuestos</a></li>
+						<li><a href="inventario.html">Inventario</a></li>
+						<li class="current"><a href="factura.html">Facturación</a></li>
+					</ul>
+				</nav>
+
+			<!-- Main -->
+				<section id="main">
+					<div class="container">
+						<div class="row">
+							<div class="col-12">
+								<div class="content">
+									<article class="box page-content">
+										<section class="container mt-2" id="modulo-factura">
+											<header class="d-flex flex-wrap justify-content-between align-items-start gap-3">
+												<div>
+													<h2>Factura electrónica</h2>
+													<p>Emisión a Clarisa Cloud.</p>
+												</div>
+												<div class="text-end">
+													<p class="mb-2" id="usuarioSesion"></p>
+													<button type="button" class="btn btn-outline-secondary btn-sm" id="btnCerrarSesion">Cerrar sesión</button>
+												</div>
+											</header>
+
+											<output id="alertaFactura" class="alert alert-success d-none animate__animated animate__fadeIn mb-3" role="alert"></output>
+											<div id="resultadoFactura" class="card border-success d-none mb-3">
+												<div class="card-body">
+													<h3 class="h5 mb-3">Resultado de la emisión</h3>
+													<p class="mb-1"><strong>Número:</strong> <span id="resNumero">—</span></p>
+													<p class="mb-1"><strong>Estado Clarisa:</strong> <span id="resClarisa">—</span></p>
+													<p class="mb-1"><strong>Estado DIAN:</strong> <span id="resDian">—</span></p>
+													<p class="mb-0"><strong>CUFE:</strong> <span id="resCufe" class="d-inline-block text-break">—</span></p>
+												</div>
+											</div>
+
+											<form id="formFactura" class="row g-3 needs-validation" novalidate>
+												<h3 class="col-12">Encabezado</h3>
+												<fieldset class="col-md-4">
+													<label for="nitEmisor" class="form-label text-dark fw-bold">NIT emisor</label>
+													<input type="text" class="form-control" id="nitEmisor" maxlength="13" placeholder="NIT de la empresa en Clarisa" required>
+													<p class="invalid-feedback">El NIT emisor es obligatorio (3 a 13 dígitos, sin DV).</p>
+												</fieldset>
+												<fieldset class="col-md-4">
+													<label for="numeroResolucion" class="form-label text-dark fw-bold">Resolución DIAN</label>
+													<input type="text" class="form-control" id="numeroResolucion" maxlength="14" placeholder="Resolución de la empresa Demo" required>
+													<p class="invalid-feedback">La resolución DIAN es obligatoria (solo números).</p>
+												</fieldset>
+												<fieldset class="col-md-2">
+													<label for="prefijoDcto" class="form-label text-dark fw-bold">Prefijo</label>
+													<input type="text" class="form-control" id="prefijoDcto" maxlength="4" placeholder="SETP">
+													<p class="invalid-feedback">El prefijo no es válido (máximo 4 caracteres).</p>
+												</fieldset>
+												<fieldset class="col-md-2">
+													<label for="consecutivoDcto" class="form-label text-dark fw-bold">Consecutivo</label>
+													<input type="number" min="1" class="form-control" id="consecutivoDcto" required>
+													<p class="invalid-feedback">Indique un consecutivo mayor a 0.</p>
+												</fieldset>
+												<fieldset class="col-md-4">
+													<label for="fechaVencimiento" class="form-label text-dark fw-bold">Fecha de vencimiento</label>
+													<input type="date" class="form-control" id="fechaVencimiento" required>
+													<p class="invalid-feedback">La fecha de vencimiento es obligatoria.</p>
+												</fieldset>
+												<fieldset class="col-md-4">
+													<label for="formaPago" class="form-label text-dark fw-bold">Forma de pago</label>
+													<select class="form-select" id="formaPago" required>
+														<option value="1">Contado</option>
+														<option value="2">Crédito</option>
+													</select>
+													<p class="invalid-feedback">Seleccione la forma de pago.</p>
+												</fieldset>
+												<fieldset class="col-md-4">
+													<label for="mediosPago" class="form-label text-dark fw-bold">Medio de pago</label>
+													<select class="form-select" id="mediosPago" required>
+														<option value="10">Efectivo</option>
+														<option value="42">Consignación bancaria</option>
+														<option value="30">Tarjeta crédito</option>
+														<option value="49">Tarjeta débito</option>
+														<option value="47">Transferencia débito bancaria</option>
+													</select>
+													<p class="invalid-feedback">Seleccione el medio de pago.</p>
+												</fieldset>
+
+												<h3 class="col-12 mt-3">Adquiriente</h3>
+												<fieldset class="col-12">
+													<label for="clienteTaller" class="form-label text-dark fw-bold">Cliente del taller</label>
+													<select class="form-select" id="clienteTaller"></select>
+												</fieldset>
+												<fieldset class="col-md-6">
+													<label for="nombreRazonSocial" class="form-label text-dark fw-bold">Nombre / razón social</label>
+													<input type="text" class="form-control" id="nombreRazonSocial" minlength="5" maxlength="255" placeholder="CONSUMIDOR FINAL" required>
+													<p class="invalid-feedback">Mínimo 5 caracteres (ej. CONSUMIDOR FINAL).</p>
+												</fieldset>
+												<fieldset class="col-md-3">
+													<label for="tipoIdentificacion" class="form-label text-dark fw-bold">Tipo de identificación</label>
+													<select class="form-select" id="tipoIdentificacion" required>
+														<option value="CC">Cédula de ciudadanía</option>
+														<option value="NI" selected>NIT</option>
+														<option value="CE">Cédula de extranjería</option>
+														<option value="PA">Pasaporte</option>
+														<option value="PE">Permiso especial de permanencia</option>
+														<option value="PT">Permiso protección temporal</option>
+													</select>
+													<p class="invalid-feedback">Seleccione el tipo de identificación.</p>
+												</fieldset>
+												<fieldset class="col-md-3">
+													<label for="numIdentificacion" class="form-label text-dark fw-bold">N.° identificación</label>
+													<input type="text" class="form-control" id="numIdentificacion" maxlength="13" placeholder="222222222222" required>
+													<p class="invalid-feedback">Solo dígitos, 3 a 13 (ej. 222222222222).</p>
+												</fieldset>
+												<fieldset class="col-md-4">
+													<label for="naturalezaCliente" class="form-label text-dark fw-bold">Naturaleza</label>
+													<select class="form-select" id="naturalezaCliente" required>
+														<option value="NATURAL">Persona natural</option>
+														<option value="JURIDICA">Persona jurídica</option>
+													</select>
+													<p class="invalid-feedback">Seleccione la naturaleza del cliente.</p>
+												</fieldset>
+												<fieldset class="col-md-4">
+													<label for="respFiscales" class="form-label text-dark fw-bold">Resp. fiscales</label>
+													<select class="form-select" id="respFiscales" required>
+														<option value="NOA">No aplica – Otros</option>
+														<option value="GRC">Gran contribuyente</option>
+														<option value="ART">Autorretenedor</option>
+														<option value="RIV">Agente de retención IVA</option>
+														<option value="RST">Régimen SIMPLE</option>
+													</select>
+													<p class="invalid-feedback">Seleccione la responsabilidad fiscal.</p>
+												</fieldset>
+												<fieldset class="col-md-4">
+													<label for="respTributarias" class="form-label text-dark fw-bold">Resp. tributarias</label>
+													<select class="form-select" id="respTributarias" required>
+														<option value="NOA">No aplica</option>
+														<option value="IVA">IVA</option>
+														<option value="INC">INC</option>
+														<option value="IEC">IVA + INC</option>
+													</select>
+													<p class="invalid-feedback">Seleccione la responsabilidad tributaria.</p>
+												</fieldset>
+												<fieldset class="col-md-6">
+													<label for="emailCliente" class="form-label text-dark fw-bold">Correo</label>
+													<input type="email" class="form-control" id="emailCliente" maxlength="100" placeholder="prueba@correo.com" required>
+													<p class="invalid-feedback">Ingrese un correo válido.</p>
+												</fieldset>
+												<fieldset class="col-md-3">
+													<label for="telefonoCliente" class="form-label text-dark fw-bold">Teléfono</label>
+													<input type="text" class="form-control" id="telefonoCliente" maxlength="15" placeholder="3001234567">
+													<p class="invalid-feedback">El teléfono debe ser numérico (máximo 15 dígitos).</p>
+												</fieldset>
+												<fieldset class="col-md-3">
+													<label for="ciudadCliente" class="form-label text-dark fw-bold">Ciudad DANE</label>
+													<input type="text" class="form-control" id="ciudadCliente" maxlength="5" value="15001" placeholder="15001 Tunja">
+													<p class="invalid-feedback">Use el código DANE de 5 dígitos (Tunja: 15001).</p>
+												</fieldset>
+												<fieldset class="col-12">
+													<label for="direccionCliente" class="form-label text-dark fw-bold">Dirección</label>
+													<input type="text" class="form-control" id="direccionCliente" maxlength="100" placeholder="Calle 1 # 2-3">
+													<p class="invalid-feedback">La dirección no puede superar 100 caracteres.</p>
+												</fieldset>
+												<fieldset class="col-12">
+													<label for="observacionFactura" class="form-label text-dark fw-bold">Observación</label>
+													<textarea class="form-control" id="observacionFactura" maxlength="1000" rows="2" placeholder="Servicio de taller"></textarea>
+													<p class="invalid-feedback">La observación no puede superar 1000 caracteres.</p>
+												</fieldset>
+
+												<h3 class="col-12 mt-3">Ítems</h3>
+												<div class="col-12" id="lineasItems"></div>
+												<div class="col-12">
+													<button type="button" class="btn btn-outline-secondary btn-sm" id="btnAgregarItem">Agregar ítem</button>
+												</div>
+
+												<section class="col-12" id="totalesFactura">
+													<p><strong>Subtotal:</strong> <span id="subtotalFactura">$ 0</span></p>
+													<p><strong>Impuestos:</strong> <span id="impuestosFactura">$ 0</span></p>
+													<p><strong>Total:</strong> <span id="totalFactura">$ 0</span></p>
+												</section>
+
+												<footer class="col-12 text-end mt-4">
+													<button type="submit" class="btn btn-success" id="btnEmitirFactura">Emitir factura nacional</button>
+												</footer>
+											</form>
+										</section>
+									</article>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+			<!-- Footer -->
+				<footer id="footer">
+					<div class="container">
+						<div class="row gtr-200">
+							<div class="col-12">
+								<section>
+									<h2 class="major"><span>Olimac Riders Store</span></h2>
+									<p>Sistema Web para la administración integral de talleres mecánicos. Desarrollo para Programación III - UPTC.</p>
+								</section>
+							</div>
+						</div>
+						<div id="copyright">
+							<ul class="menu">
+								<li>&copy; Olimac Riders Store. Todos los derechos reservados.</li>
+								<li>Diseño base: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</div>
+				</footer>
+
+		</div>
+
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.dropotron.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="assets/js/clarisa-api.js?v=4"></script>
+		<script src="assets/js/crud-factura.js?v=7"></script>
+	</body>
+</html>

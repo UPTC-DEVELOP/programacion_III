@@ -1,0 +1,4 @@
+.env
+node_modules/
+_panther_tmp/
+backend/vendor/

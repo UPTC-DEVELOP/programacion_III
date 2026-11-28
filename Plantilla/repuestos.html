@@ -10,9 +10,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 		<link rel="stylesheet" href="assets/css/modulos.css" />
+		<link rel="stylesheet" href="assets/css/repuestos.css?v=5" />
 	</head>
 	<body class="is-preload">
 		<div id="page-wrapper">
@@ -38,6 +37,7 @@
 						<li><a href="right-sidebar.html">Empleados</a></li>
 						<li class="current"><a href="repuestos.html">Repuestos</a></li>
 						<li><a href="inventario.html">Inventario</a></li>
+						<li><a href="factura.html">Facturación</a></li>
 					</ul>
 				</nav>
 
@@ -48,69 +48,88 @@
 							<div class="col-12">
 								<div class="content">
 									<article class="box page-content">
-										<section class="container mt-2" id="modulo-repuestos">
-											<header>
+										<section id="modulo-repuestos" class="rep-modulo">
+											<header class="rep-encabezado">
 												<h2>Gestión de Repuestos</h2>
 												<p>Catálogo del taller. Inventario y órdenes usan estas mismas referencias.</p>
 											</header>
 
-											<output id="alertaRepuesto" class="alert alert-success d-none animate__animated animate__fadeIn d-block mb-3" role="alert"></output>
-
-											<form id="formRepuesto" class="row g-3 needs-validation" novalidate>
-												<input type="hidden" id="repuestoId">
-
-												<fieldset class="col-md-6">
-													<label for="referenciaRepuesto" class="form-label text-dark fw-bold">Referencia</label>
-													<input type="text" class="form-control" id="referenciaRepuesto" maxlength="20" placeholder="Ej. BOS-4821" required>
-													<p class="invalid-feedback">Referencia inválida (3 a 20 caracteres: letras, números o guion).</p>
-												</fieldset>
-
-												<fieldset class="col-md-6">
-													<label for="descripcionRepuesto" class="form-label text-dark fw-bold">Descripción</label>
-													<input type="text" class="form-control" id="descripcionRepuesto" maxlength="150" placeholder="Ej. Pastillas de freno" required>
-													<p class="invalid-feedback">La descripción es obligatoria (máximo 150 caracteres).</p>
-												</fieldset>
-
-												<fieldset class="col-md-6">
-													<label for="marcaRepuesto" class="form-label text-dark fw-bold">Marca</label>
-													<input type="text" class="form-control" id="marcaRepuesto" maxlength="50" placeholder="Ej. Bosch" required>
-													<p class="invalid-feedback">La marca es obligatoria (máximo 50 caracteres).</p>
-												</fieldset>
-
-												<fieldset class="col-md-6">
-													<label for="precioRepuesto" class="form-label text-dark fw-bold">Precio unitario</label>
-													<input type="text" class="form-control" id="precioRepuesto" placeholder="Ej. 145000" required>
-													<p class="invalid-feedback">El precio debe ser un número mayor a 0.</p>
-												</fieldset>
-
-												<footer class="col-12 text-end mt-4">
-													<button type="button" class="btn btn-secondary me-2" onclick="limpiarFormularioRepuesto()">Limpiar</button>
-													<button type="submit" class="btn btn-success" id="btnGuardarRepuesto">Registrar Repuesto</button>
-												</footer>
+											<form id="formSesionPanther" class="rep-sesion" autocomplete="on">
+												<label class="rep-campo">
+													<span>Usuario</span>
+													<input type="text" id="usuarioPanther" placeholder="Ej. admin" autocomplete="username" required>
+												</label>
+												<label class="rep-campo">
+													<span>Contraseña</span>
+													<input type="password" id="contraseniaPanther" placeholder="Ingrese su contraseña" autocomplete="current-password" required>
+												</label>
+												<button type="submit" id="btnEntrarPanther" class="rep-boton rep-boton-principal">Entrar</button>
 											</form>
 
-											<hr class="my-5">
+											<div id="sesionActivaPanther" class="rep-sesion-activa" hidden>
+												<p class="rep-sesion-estado">
+													<span class="rep-sesion-indicador" aria-hidden="true"></span>
+													<span>Sesión iniciada (<strong id="usuarioActivoPanther"></strong>)</span>
+												</p>
+												<button type="button" id="btnCerrarSesionPanther" class="rep-boton rep-boton-secundario">Cerrar sesión</button>
+											</div>
 
-											<section>
-												<header>
-													<h3>Listado de Repuestos Registrados</h3>
-												</header>
-												<figure class="table-responsive">
-													<table class="table table-hover table-striped align-middle">
-														<thead class="table-dark">
-															<tr>
-																<th scope="col">Referencia</th>
-																<th scope="col">Descripción</th>
-																<th scope="col">Marca</th>
-																<th scope="col">Precio</th>
-																<th scope="col">Acciones</th>
-															</tr>
-														</thead>
-														<tbody id="tablaRepuestos"></tbody>
-													</table>
-												</figure>
-											</section>
+											<div id="avisoBloqueoRepuestos" class="rep-aviso-bloqueo">
+												<p><strong>Autenticación requerida:</strong> Inicia sesión con tu usuario del taller para habilitar el registro y la gestión del catálogo de repuestos.</p>
+											</div>
+
+											<div id="panelCrudRepuestos" class="rep-crud-contenido" hidden>
+												<form id="formRepuesto" class="rep-panel rep-formulario" novalidate>
+													<input type="hidden" id="repuestoId">
+													<label class="rep-campo">
+														<span>Referencia</span>
+														<input type="text" id="referenciaRepuesto" maxlength="20" placeholder="Ej. BOS-4821" required>
+														<p class="rep-ayuda">De 3 a 20 caracteres: letras, números o guion.</p>
+													</label>
+													<label class="rep-campo">
+														<span>Descripción</span>
+														<input type="text" id="descripcionRepuesto" maxlength="150" placeholder="Ej. Pastillas de freno" required>
+													</label>
+													<label class="rep-campo">
+														<span>Marca</span>
+														<input type="text" id="marcaRepuesto" maxlength="50" placeholder="Ej. Bosch" required>
+													</label>
+													<label class="rep-campo">
+														<span>Precio unitario</span>
+														<input type="text" id="precioRepuesto" placeholder="Ej. 145000" required>
+													</label>
+													<div class="rep-acciones">
+														<button type="button" class="rep-boton rep-boton-secundario" id="btnLimpiarRepuesto">Limpiar</button>
+														<button type="submit" class="rep-boton rep-boton-principal" id="btnGuardarRepuesto">Registrar repuesto</button>
+													</div>
+												</form>
+
+												<section class="rep-listado">
+													<header>
+														<h3>Listado de repuestos</h3>
+													</header>
+													<label class="rep-buscar">
+														<span>Buscar</span>
+														<input type="search" id="buscarRepuesto" placeholder="Referencia, descripción o marca">
+													</label>
+													<div class="rep-tabla-contenedor">
+														<table class="rep-tabla">
+															<thead>
+																<tr>
+																	<th scope="col">Referencia</th>
+																	<th scope="col">Descripción</th>
+																	<th scope="col">Marca</th>
+																	<th scope="col">Precio</th>
+																	<th scope="col">Acciones</th>
+																</tr>
+															</thead>
+															<tbody id="tablaRepuestos"></tbody>
+														</table>
+													</div>
+												</section>
+											</div>
 										</section>
+										<div id="toastRepuesto" class="rep-toast" hidden></div>
 									</article>
 								</div>
 							</div>
@@ -148,8 +167,8 @@
 		<script src="assets/js/breakpoints.min.js"></script>
 		<script src="assets/js/util.js"></script>
 		<script src="assets/js/main.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 		<script src="assets/js/datos-taller.js"></script>
-		<script src="assets/js/crud-repuestos.js"></script>
+		<script src="assets/js/api-taller.js?v=5"></script>
+		<script src="assets/js/repuestos.js?v=5"></script>
 	</body>
 </html>
