@@ -1,10 +1,6 @@
 [hidden] { display: none !important; }
 
-.btn-sm {
-	min-height: 2.2rem;
-	padding: 0.45rem 0.85rem;
-	font-size: 0.85rem;
-}
+/* .btn-sm / botones: estándar en buttons.css */
 
 .fac-modulo {
 	display: grid;
@@ -21,7 +17,7 @@
 	padding: 1.1rem 1.2rem;
 	border-radius: 16px;
 	border: 1px solid rgba(0, 0, 0, 0.07);
-	background: #fff;
+	background: var(--bg-surface, #fff);
 	box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
 }
 
@@ -50,7 +46,7 @@
 .fac-panel {
 	padding: 24px;
 	border-radius: 16px;
-	background: #fff;
+	background: var(--bg-surface, #fff);
 	border: 1px solid rgba(0, 0, 0, 0.07);
 	box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
 }
@@ -88,9 +84,10 @@
 .fac-campo textarea {
 	min-height: 2.75rem;
 	border-radius: 10px;
-	border: 1px solid rgba(109, 125, 116, 0.28);
+	border: 1px solid var(--border-color, rgba(109, 125, 116, 0.28));
 	padding: 0.7rem 0.9rem;
-	background: #fbfcfb;
+	background-color: var(--bg-input, #fbfcfb);
+	color: var(--text-primary);
 }
 
 .fac-resumen-orden {
@@ -135,7 +132,8 @@
 	justify-content: stretch;
 }
 
-.fac-acciones--split .btn {
+.fac-acciones--split .btn,
+.fac-acciones--split .rep-boton {
 	flex: 1 1 12rem;
 	text-align: center;
 }
@@ -235,7 +233,7 @@
 	overflow: auto;
 	padding: 0.75rem;
 	border-radius: 10px;
-	background: #0f172a;
+	background: #3e4554;
 	color: #e2e8f0;
 	font-size: 0.78rem;
 	line-height: 1.4;
@@ -246,9 +244,9 @@
 html.theme-dark .fac-clarisa-estado,
 html.theme-dark .fac-clarisa-respuesta,
 html.theme-dark .fac-clarisa-respuesta__meta div {
-	background: #0f172a;
-	border-color: rgba(248, 250, 252, 0.12);
-	color: #cbd5e1;
+	background: #3e4554;
+	border-color: #474f5e;
+	color: #d1d5db;
 }
 
 html.theme-dark .fac-clarisa-estado.is-ok {
@@ -260,7 +258,7 @@ html.theme-dark .fac-clarisa-estado.is-error {
 }
 
 html.theme-dark .fac-clarisa-estado__info span {
-	color: #94a3b8;
+	color: #d1d5db;
 }
 
 .fac-filtros {
@@ -338,7 +336,7 @@ html.theme-dark .fac-clarisa-estado__info span {
 	width: min(920px, 100%);
 	max-height: 92vh;
 	overflow: auto;
-	background: #fff;
+	background: var(--bg-surface, #fff);
 	border-radius: 16px;
 	padding: 1.5rem;
 }
@@ -387,20 +385,20 @@ html.theme-dark .fac-kpi,
 html.theme-dark .fac-panel,
 html.theme-dark .fac-print-card,
 html.theme-dark .fac-comprobante {
-	background: #1e293b;
-	border-color: rgba(248, 250, 252, 0.1);
-	color: #cbd5e1;
+	background: #353b48;
+	border-color: #474f5e;
+	color: #d1d5db;
 }
 
 html.theme-dark .fac-kpi strong,
 html.theme-dark .fac-panel h2,
 html.theme-dark .fac-panel h3 {
-	color: #f8fafc;
+	color: #f3f4f6;
 }
 
 html.theme-dark .fac-resumen-orden,
 html.theme-dark .fac-tabla th {
-	background: #0f172a;
+	background: #3e4554;
 }
 
 @media (max-width: 980px) {
@@ -431,6 +429,6 @@ html.theme-dark .fac-tabla th {
 		box-shadow: none;
 	}
 	.fac-print-acciones { display: none !important; }
-	.fac-print { position: static; background: #fff; padding: 0; }
+	.fac-print { position: static; background: var(--bg-surface, #fff); padding: 0; }
 	.fac-print-card { max-height: none; overflow: visible; box-shadow: none; }
 }

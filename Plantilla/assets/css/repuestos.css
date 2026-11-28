@@ -18,8 +18,8 @@
 .rep-aviso-bloqueo,
 .rep-panel,
 .rep-listado {
-	background: #fff;
-	border: 1px solid rgba(107, 119, 112, 0.18);
+	background: var(--bg-surface, #fff);
+	border: 1px solid var(--border-color, rgba(107, 119, 112, 0.18));
 	border-radius: 12px;
 	padding: 1.25rem;
 }
@@ -37,8 +37,8 @@
 	justify-content: space-between;
 	gap: 1rem;
 	flex-wrap: wrap;
-	background: #f2f8f4;
-	border-color: rgba(47, 111, 78, 0.35);
+	background: var(--bg-surface-alt, #f2f8f4);
+	border-color: var(--border-color, rgba(47, 111, 78, 0.35));
 }
 
 .rep-sesion-estado {
@@ -46,7 +46,7 @@
 	align-items: center;
 	gap: 0.6rem;
 	margin: 0;
-	color: #1f4d35;
+	color: var(--text-secondary, #1f4d35);
 	font-size: 0.98rem;
 }
 
@@ -147,44 +147,7 @@
 	justify-content: flex-end;
 }
 
-.rep-boton {
-	border: 0;
-	border-radius: 8px;
-	padding: 0.7rem 1rem;
-	cursor: pointer;
-	font-weight: 700;
-	transition: transform 0.15s ease, opacity 0.15s ease;
-}
-
-.rep-boton:hover {
-	transform: translateY(-1px);
-}
-
-.rep-boton:disabled {
-	opacity: 0.6;
-	cursor: wait;
-	transform: none;
-}
-
-.rep-boton-principal {
-	background: #2f6f4e;
-	color: #fff;
-}
-
-.rep-boton-secundario {
-	background: #e7ece9;
-	color: #314038;
-}
-
-.rep-boton-editar {
-	background: #f4c95d;
-	color: #2c2614;
-}
-
-.rep-boton-eliminar {
-	background: #c62828;
-	color: #fff;
-}
+/* Estilos de .rep-boton* delegados a assets/css/buttons.css (estándar global) */
 
 .rep-buscar {
 	margin-bottom: 1rem;

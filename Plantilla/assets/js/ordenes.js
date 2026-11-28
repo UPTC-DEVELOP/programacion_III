@@ -28,9 +28,11 @@ document.addEventListener("DOMContentLoaded", function () {
   var btnCerrarModal = document.getElementById("btnCerrarDetalleOrden");
 
   formSesion.addEventListener("submit", iniciarSesionOrdenes);
-  btnCerrarSesion.addEventListener("click", function () {
-    cerrarSesionOrdenes(true);
-  });
+  if (btnCerrarSesion) {
+    btnCerrarSesion.addEventListener("click", function () {
+      cerrarSesionOrdenes(true);
+    });
+  }
 
   selectCliente.addEventListener("change", function () {
     llenarSelectVehiculos(selectVehiculo.value);

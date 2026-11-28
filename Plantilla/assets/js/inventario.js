@@ -19,9 +19,11 @@ document.addEventListener("DOMContentLoaded", function () {
   var tbody = document.getElementById("tablaInventario");
 
   formSesion.addEventListener("submit", iniciarSesionInventario);
-  btnCerrarSesion.addEventListener("click", function () {
-    cerrarSesionInventario(true);
-  });
+  if (btnCerrarSesion) {
+    btnCerrarSesion.addEventListener("click", function () {
+      cerrarSesionInventario(true);
+    });
+  }
 
   selectRepuesto.addEventListener("change", function () {
     actualizarDetalleRepuestoSeleccionado();

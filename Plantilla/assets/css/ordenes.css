@@ -19,7 +19,7 @@
 .ord-panel,
 .ord-listado,
 .ord-tarjeta {
-	background: #fff;
+	background: var(--bg-surface, #fff);
 	border: 1px solid rgba(107, 119, 112, 0.18);
 	border-radius: 12px;
 	padding: 1.25rem;
@@ -130,11 +130,11 @@
 .ord-campo select,
 .ord-campo textarea {
 	width: 100%;
-	border: 1px solid #c5cdc8;
+	border: 1px solid var(--border-color, #c5cdc8);
 	border-radius: 8px;
 	padding: 0.7rem 0.8rem;
-	background: #f7f8f7;
-	color: #25332b;
+	background-color: var(--bg-input, #f7f8f7);
+	color: var(--text-primary, #25332b);
 	transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -205,7 +205,7 @@
 	grid-template-columns: 2.5fr 0.75fr 1fr 1fr auto;
 	gap: 0.65rem;
 	align-items: end;
-	background: #fff;
+	background: var(--bg-surface, #fff);
 	border: 1px solid #e2e8e4;
 	border-radius: 8px;
 	padding: 0.75rem;
@@ -235,55 +235,7 @@
 	justify-content: flex-end;
 }
 
-.ord-boton {
-	border: 0;
-	border-radius: 8px;
-	padding: 0.7rem 1rem;
-	cursor: pointer;
-	font-weight: 700;
-	transition: transform 0.15s ease, opacity 0.15s ease;
-}
-
-.ord-boton:hover {
-	transform: translateY(-1px);
-}
-
-.ord-boton:disabled {
-	opacity: 0.6;
-	cursor: wait;
-	transform: none;
-}
-
-.ord-boton-principal {
-	background: #2f6f4e;
-	color: #fff;
-}
-
-.ord-boton-secundario {
-	background: #e7ece9;
-	color: #314038;
-}
-
-.ord-boton-detalle {
-	background: #2c5d7c;
-	color: #fff;
-	padding: 0.45rem 0.7rem;
-	font-size: 0.82rem;
-}
-
-.ord-boton-editar {
-	background: #f4c95d;
-	color: #2c2614;
-	padding: 0.45rem 0.7rem;
-	font-size: 0.82rem;
-}
-
-.ord-boton-eliminar {
-	background: #c62828;
-	color: #fff;
-	padding: 0.45rem 0.7rem;
-	font-size: 0.82rem;
-}
+/* Estilos de .ord-boton* delegados a assets/css/buttons.css (estándar global) */
 
 .ord-filtros {
 	display: grid;
@@ -380,7 +332,7 @@
 	width: min(760px, 100%);
 	max-height: 90vh;
 	overflow-y: auto;
-	background: #fff;
+	background: var(--bg-surface, #fff);
 	border-radius: 14px;
 	padding: 1.5rem;
 	box-shadow: 0 20px 50px rgba(0, 0, 0, 0.28);

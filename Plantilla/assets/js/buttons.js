@@ -1,13 +1,17 @@
 (function () {
   var SELECTOR =
-    'a.button, .button, button:not(.ors-theme-toggle), .btn, input[type="submit"], input[type="button"], input[type="reset"], .login-boton, .login-toggle-pass, .panel-btn-salir, .rep-boton, .ors-nav__cta';
+    'a.button, .button, button:not(.ors-theme-toggle), .btn, input[type="submit"], input[type="button"], input[type="reset"], .login-boton, .login-toggle-pass, .panel-btn-salir, .rep-boton, .inv-boton, .ord-boton, .ors-nav__cta';
   var DURACION_PRESIONADO = 250;
 
   function esExcluido(nodo) {
     if (!nodo || !nodo.closest) {
       return true;
     }
-    if (nodo.classList && nodo.classList.contains("ors-theme-toggle")) {
+    if (
+      nodo.classList &&
+      (nodo.classList.contains("ors-theme-toggle") ||
+        nodo.classList.contains("btn-theme-toggle"))
+    ) {
       return true;
     }
     if (document.body.classList.contains("homepage") && nodo.closest(".ors-navbar")) {

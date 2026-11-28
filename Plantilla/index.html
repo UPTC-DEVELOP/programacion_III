@@ -12,19 +12,21 @@
 		<script>
 			(function () {
 				try {
-					if (localStorage.getItem("olimac_theme_mode") === "dark") {
-						document.documentElement.classList.add("theme-dark");
+					var modo = localStorage.getItem("olimac-theme") || localStorage.getItem("olimac_theme_mode");
+					if (modo === "dark") {
+						document.documentElement.classList.add("dark-mode", "theme-dark");
+						if (document.body) document.body.classList.add("dark-mode");
 					}
 				} catch (e) {}
 			})();
 		</script>
-		<link rel="stylesheet" href="assets/css/main.css?v=12" />
-		<link rel="stylesheet" href="assets/css/modulos.css?v=12" />
-		<link rel="stylesheet" href="assets/css/navbar-home.css?v=12" />
-		<link rel="stylesheet" href="assets/css/theme.css?v=12" />
-		<link rel="stylesheet" href="assets/css/components.css?v=12" />
-		<link rel="stylesheet" href="assets/css/buttons.css?v=12" />
-		<link rel="stylesheet" href="assets/css/home-landing.css?v=12" />
+		<link rel="stylesheet" href="assets/css/main.css?v=19" />
+		<link rel="stylesheet" href="assets/css/modulos.css?v=19" />
+		<link rel="stylesheet" href="assets/css/navbar-home.css?v=19" />
+		<link rel="stylesheet" href="assets/css/theme.css?v=19" />
+		<link rel="stylesheet" href="assets/css/components.css?v=19" />
+		<link rel="stylesheet" href="assets/css/home-landing.css?v=19" />
+		<link rel="stylesheet" href="assets/css/buttons.css?v=19" />
 	</head>
 	<body class="homepage is-preload">
 		<div id="page-wrapper">
@@ -195,8 +197,45 @@
 													registramos horas y repuestos, y calculamos la factura legal con utilidad e IVA del 19 %.
 												</p>
 											</article>
+										</div>
+									</section>
+							</div>
 
-											<aside class="box contacto-info-card" aria-label="Datos de contacto">
+							<div class="col-12" id="contacto">
+									<section class="box">
+										<h2 class="major"><span>Escríbenos</span></h2>
+										<div class="contacto-layout">
+											<div class="contacto-form-card">
+												<p>¿Tienes preguntas o necesitas asesoría? Estamos listos para ayudarte.</p>
+												<form id="formContacto">
+													<div class="row">
+														<div class="col-6 col-12-medium">
+															<label for="nombreTaller">Nombre del taller</label>
+															<input type="text" id="nombreTaller" name="nombreTaller" placeholder="Ej. Riders Store" required />
+														</div>
+														<div class="col-6 col-12-medium">
+															<label for="propietario">Propietario</label>
+															<input type="text" id="propietario" name="propietario" placeholder="Nombre completo" required />
+														</div>
+														<div class="col-6 col-12-medium">
+															<label for="emailContacto">Email</label>
+															<input type="email" id="emailContacto" name="email" placeholder="correo@ejemplo.com" required />
+														</div>
+														<div class="col-6 col-12-medium">
+															<label for="telefonoContacto">Número celular</label>
+															<input type="tel" id="telefonoContacto" name="telefono" placeholder="Ej. 3001234567" required />
+														</div>
+														<div class="col-12">
+															<ul class="actions">
+																<li><input type="submit" value="Enviar" class="rep-boton rep-boton-principal" /></li>
+																<li><input type="reset" value="Limpiar" class="rep-boton rep-boton-secundario" /></li>
+															</ul>
+														</div>
+													</div>
+												</form>
+												<p id="mensajeContacto"></p>
+											</div>
+											<aside class="contacto-info-card" aria-label="Datos de contacto">
 												<ul class="contacto-grid">
 													<li class="contacto-item">
 														<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.4 7-11a7 7 0 1 0-14 0c0 5.6 7 11 7 11z"></path><circle cx="12" cy="10" r="2.4"></circle></svg>
@@ -221,40 +260,6 @@
 												</ul>
 											</aside>
 										</div>
-									</section>
-							</div>
-
-							<div class="col-12" id="contacto">
-									<section class="box">
-										<h2 class="major"><span>Escríbenos</span></h2>
-										<p>¿Tienes preguntas o necesitas asesoría? Estamos listos para ayudarte.</p>
-										<form id="formContacto">
-											<div class="row">
-												<div class="col-6 col-12-medium">
-													<label for="nombreTaller">Nombre del taller</label>
-													<input type="text" id="nombreTaller" name="nombreTaller" placeholder="Ej. Riders Store" required />
-												</div>
-												<div class="col-6 col-12-medium">
-													<label for="propietario">Propietario</label>
-													<input type="text" id="propietario" name="propietario" placeholder="Nombre completo" required />
-												</div>
-												<div class="col-6 col-12-medium">
-													<label for="emailContacto">Email</label>
-													<input type="email" id="emailContacto" name="email" placeholder="correo@ejemplo.com" required />
-												</div>
-												<div class="col-6 col-12-medium">
-													<label for="telefonoContacto">Número celular</label>
-													<input type="tel" id="telefonoContacto" name="telefono" placeholder="Ej. 3001234567" required />
-												</div>
-												<div class="col-12">
-													<ul class="actions">
-														<li><input type="submit" value="Enviar" /></li>
-														<li><input type="reset" value="Limpiar" class="alt" /></li>
-													</ul>
-												</div>
-											</div>
-										</form>
-										<p id="mensajeContacto"></p>
 									</section>
 							</div>
 						</div>
@@ -296,20 +301,20 @@
 
 		</div>
 
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-			<script src="assets/js/contacto.js?v=12"></script>
-			<script src="assets/js/api-taller.js?v=12"></script>
-			<script src="assets/js/theme-toggle.js?v=12"></script>
-			<script src="assets/js/navbar-home.js?v=12"></script>
-			<script src="assets/js/buttons.js?v=12"></script>
-			<script src="assets/js/hero-neon.js?v=12"></script>
-			<script src="assets/js/special-hover.js?v=12"></script>
+			<script src="assets/js/jquery.min.js?v=18"></script>
+			<script src="assets/js/jquery.dropotron.min.js?v=18"></script>
+			<script src="assets/js/jquery.scrolly.min.js?v=18"></script>
+			<script src="assets/js/browser.min.js?v=18"></script>
+			<script src="assets/js/breakpoints.min.js?v=18"></script>
+			<script src="assets/js/util.js?v=18"></script>
+			<script src="assets/js/main.js?v=18"></script>
+			<script src="assets/js/contacto.js?v=18"></script>
+			<script src="assets/js/api-taller.js?v=18"></script>
+			<script src="assets/js/theme.js?v=18"></script>
+			<script src="assets/js/navbar-home.js?v=18"></script>
+			<script src="assets/js/buttons.js?v=18"></script>
+			<script src="assets/js/hero-neon.js?v=18"></script>
+			<script src="assets/js/special-hover.js?v=18"></script>
 
 	</body>
 </html>

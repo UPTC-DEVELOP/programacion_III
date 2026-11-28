@@ -4,27 +4,43 @@
 		<title>Iniciar Sesión - Olimac Riders Store</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css?v=8" />
-		<link rel="stylesheet" href="assets/css/modulos.css?v=8" />
-		<link rel="stylesheet" href="assets/css/navbar.css?v=8" />
-		<link rel="stylesheet" href="assets/css/repuestos.css?v=8" />
+		<script>
+			(function () {
+				try {
+					var modo = localStorage.getItem("olimac-theme") || localStorage.getItem("olimac_theme_mode");
+					if (modo === "dark") {
+						document.documentElement.classList.add("dark-mode", "theme-dark");
+						if (document.body) document.body.classList.add("dark-mode");
+					}
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="assets/css/main.css?v=19" />
+		<link rel="stylesheet" href="assets/css/modulos.css?v=19" />
+		<link rel="stylesheet" href="assets/css/navbar.css?v=21" />
+		<link rel="stylesheet" href="assets/css/theme.css?v=19" />
+		<link rel="stylesheet" href="assets/css/components.css?v=19" />
+		<link rel="stylesheet" href="assets/css/repuestos.css?v=19" />
+		<link rel="stylesheet" href="assets/css/buttons.css?v=19" />
 		<style>
 			.login-contenedor {
 				max-width: 460px;
 				margin: 2rem auto;
 				padding: 2rem;
-				background: #ffffff;
-				border: 1px solid #e2e8f0;
+				background: var(--bg-surface, #ffffff);
+				border: 1px solid var(--border-color, #e2e8f0);
 				border-radius: 12px;
 				box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+				color: var(--text-secondary, #475569);
 			}
 			.login-contenedor h2 {
 				margin-bottom: 0.4rem;
 				text-align: center;
+				color: var(--text-primary, #1e293b);
 			}
 			.login-subtitulo {
 				text-align: center;
-				color: #64748b;
+				color: var(--text-muted, #64748b);
 				margin-bottom: 1.5rem;
 				font-size: 0.95rem;
 			}
@@ -36,14 +52,16 @@
 			}
 			.login-campo span {
 				font-weight: 600;
-				color: #1e293b;
+				color: var(--text-primary, #1e293b);
 			}
 			.login-campo input {
 				width: 100%;
 				padding: 0.7rem 0.9rem;
-				border: 1px solid #cbd5e1;
+				border: 1px solid var(--border-color, #cbd5e1);
 				border-radius: 8px;
 				font-size: 1rem;
+				background: var(--bg-input, #fff);
+				color: var(--text-primary, #1e293b);
 			}
 			.login-boton {
 				width: 100%;
@@ -99,7 +117,6 @@
 				</div>
 			</header>
 
-			<!-- Main -->
 			<section id="main">
 				<div class="container">
 					<div class="login-contenedor">
@@ -131,8 +148,9 @@
 
 		</div>
 
-		<script src="assets/js/api-taller.js?v=8"></script>
-		<script src="assets/js/navbar.js?v=8"></script>
+		<script src="assets/js/api-taller.js?v=20"></script>
+		<script src="assets/js/theme.js?v=18"></script>
+		<script src="assets/js/navbar.js?v=21"></script>
 		<script>
 			(function () {
 				const TOKEN_KEY = "olimac_panther_token";
@@ -140,7 +158,6 @@
 				const ROLE_KEY = "olimac_panther_role";
 				const API_LOGIN = "../backend/rest/useraction/login";
 
-				// Si ya tiene sesión activa, redirige directo según su rol
 				const tokenExistente = sessionStorage.getItem(TOKEN_KEY);
 				const rolExistente = (sessionStorage.getItem(ROLE_KEY) || "").toLowerCase();
 				if (tokenExistente) {
@@ -192,12 +209,10 @@
 
 						const rolNormalizado = String(usuarioData.roles || "mecanico").trim().toLowerCase();
 
-						// Guarda sesión persistente en sessionStorage para todos los módulos
 						sessionStorage.setItem(TOKEN_KEY, usuarioData.keyAPI);
 						sessionStorage.setItem(USER_KEY, usuarioData.user || user);
 						sessionStorage.setItem(ROLE_KEY, rolNormalizado);
 
-						// Sincroniza también sesión compatible con el módulo de facturación
 						sessionStorage.setItem("olimac_sesion", JSON.stringify({
 							token: usuarioData.keyAPI,
 							userName: usuarioData.user || user,
@@ -205,7 +220,6 @@
 							createdAt: Date.now()
 						}));
 
-						// Redirige según el rol del usuario
 						if (rolNormalizado === "admin" || rolNormalizado === "administrador") {
 							window.location.href = "no-sidebar.html";
 						} else {
@@ -220,5 +234,6 @@
 				});
 			})();
 		</script>
-	</body>
+		<script src="assets/js/buttons.js?v=18"></script>
+</body>
 </html>

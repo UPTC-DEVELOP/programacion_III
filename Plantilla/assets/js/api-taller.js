@@ -361,6 +361,85 @@
     }
   }
 
+  var GRUPOS_NAV = {
+    directorio: {
+      id: "directorio",
+      etiqueta: "Directorio",
+      modulos: ["Clientes", "Vehículos", "Proveedores", "Empleados"]
+    },
+    taller: {
+      id: "taller",
+      etiqueta: "Taller",
+      modulos: ["Servicios", "Repuestos", "Inventario"]
+    }
+  };
+
+  function mapaCatalogoPorId() {
+    var mapa = {};
+    for (var i = 0; i < CATALOGO_MODULOS.length; i++) {
+      mapa[CATALOGO_MODULOS[i].id] = CATALOGO_MODULOS[i];
+    }
+    return mapa;
+  }
+
+  function filtrarModulosGrupo(idsGrupo, permitidos, catalogo) {
+    var lista = [];
+    for (var i = 0; i < idsGrupo.length; i++) {
+      var id = idsGrupo[i];
+      if (permitidos.indexOf(id) === -1) {
+        continue;
+      }
+      if (catalogo[id]) {
+        lista.push(catalogo[id]);
+      }
+    }
+    return lista;
+  }
+
+  function renderDropdownNav(grupo, items, paginaActual) {
+    if (!items.length) {
+      return "";
+    }
+    var grupoActivo = false;
+    var opciones = "";
+    for (var i = 0; i < items.length; i++) {
+      var item = items[i];
+      var actual = paginaActual === String(item.pagina).toLowerCase();
+      if (actual) {
+        grupoActivo = true;
+      }
+      opciones +=
+        '<a class="ors-nav__dropdown-item' +
+        (actual ? " is-active" : "") +
+        '" href="' +
+        item.pagina +
+        '" data-modulo="' +
+        item.id +
+        '">' +
+        item.etiqueta +
+        "</a>";
+    }
+    return (
+      '<div class="ors-nav__dropdown" data-group="' +
+      grupo.id +
+      '">' +
+      '<button type="button" class="ors-nav__link ors-nav__dropdown-toggle' +
+      (grupoActivo ? " is-active" : "") +
+      '" aria-expanded="false" aria-haspopup="true">' +
+      '<span>' +
+      grupo.etiqueta +
+      "</span>" +
+      '<svg class="ors-nav__chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+      '<polyline points="6 9 12 15 18 9"></polyline>' +
+      "</svg>" +
+      "</button>" +
+      '<div class="ors-nav__dropdown-menu" role="menu">' +
+      opciones +
+      "</div>" +
+      "</div>"
+    );
+  }
+
   function montarNavbarApp(opciones) {
     var opts = opciones || {};
     var links = document.getElementById(opts.linksId || "orsNavLinks");
@@ -372,6 +451,8 @@
     var sesion = obtenerSesion();
     var paginaActual = String(global.location.pathname || "").split("/").pop().toLowerCase() || "index.html";
     var html = "";
+    var catalogo = mapaCatalogoPorId();
+    var permitidos = sesion ? modulosPermitidos(sesion.rol) : [];
 
     if (opts.incluirInicio !== false) {
       html +=
@@ -383,37 +464,49 @@
       html +=
         '<a class="ors-nav__link' +
         (paginaActual === "panel-control.html" ? " is-active" : "") +
-        '" href="panel-control.html">Panel de control</a>';
+        '" href="panel-control.html">Panel</a>';
     }
 
     if (sesion) {
-      var permitidos = modulosPermitidos(sesion.rol);
-      for (var i = 0; i < CATALOGO_MODULOS.length; i++) {
-        var item = CATALOGO_MODULOS[i];
-        if (permitidos.indexOf(item.id) === -1) {
-          continue;
-        }
-        var actual = paginaActual === String(item.pagina).toLowerCase();
+      html += renderDropdownNav(
+        GRUPOS_NAV.directorio,
+        filtrarModulosGrupo(GRUPOS_NAV.directorio.modulos, permitidos, catalogo),
+        paginaActual
+      );
+      html += renderDropdownNav(
+        GRUPOS_NAV.taller,
+        filtrarModulosGrupo(GRUPOS_NAV.taller.modulos, permitidos, catalogo),
+        paginaActual
+      );
+
+      if (permitidos.indexOf("Facturación") !== -1 && catalogo["Facturación"]) {
+        var fac = catalogo["Facturación"];
+        var facActiva = paginaActual === String(fac.pagina).toLowerCase();
         html +=
           '<a class="ors-nav__link' +
-          (actual ? " is-active" : "") +
+          (facActiva ? " is-active" : "") +
           '" href="' +
-          item.pagina +
-          '">' +
-          item.etiqueta +
-          "</a>";
+          fac.pagina +
+          '" data-modulo="Facturación">Facturación</a>';
       }
     }
 
     links.innerHTML = html;
+    links.classList.add("ors-nav__links--grouped");
 
     if (sessionBox) {
       if (sesion) {
+        var usuario = String(sesion.usuario || "—").toUpperCase();
+        var rol = String(sesion.rol || "—").toUpperCase();
         sessionBox.innerHTML =
-          '<span class="ors-nav__user">Usuario: ' +
-          (sesion.usuario || "—") +
+          '<span class="ors-nav__user" title="Usuario: ' +
+          usuario +
           " | Rol: " +
-          sesion.rol +
+          rol +
+          '">' +
+          usuario +
+          " | " +
+          rol +
           "</span>" +
           '<button type="button" class="ors-nav__cta ors-nav__cta--logout" id="btnCerrarSesionNav">' +
           '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M10 12h9"></path><path d="M15.5 8.5L19 12l-3.5 3.5"></path><path d="M13 5H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h6"></path></svg>' +
@@ -433,6 +526,12 @@
           '<span class="ors-nav__cta-label">Iniciar sesión</span>' +
           "</a>";
       }
+    }
+
+    if (typeof global.dispatchEvent === "function") {
+      try {
+        global.dispatchEvent(new CustomEvent("ors-navbar-ready"));
+      } catch (e) {}
     }
 
     return true;

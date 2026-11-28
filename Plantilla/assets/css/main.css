@@ -133,7 +133,7 @@ input, select, textarea {
 		}
 
 			h2.major span {
-				background: #fff;
+				background: var(--bg-surface, #fff);
 				position: relative;
 				display: inline-block;
 				top: -0.775em;
@@ -2382,7 +2382,7 @@ input, select, textarea {
 		font-weight: 700;
 		text-transform: uppercase;
 		padding: 2em 0;
-		background: #fff;
+		background: var(--bg-surface, #fff);
 		margin: 0 auto;
 	}
 
@@ -2394,7 +2394,7 @@ input, select, textarea {
 		}
 
 			#header .logo div {
-				background: #fff;
+				background: var(--bg-surface, #fff);
 				position: relative;
 				display: inline-block;
 				padding: 0 1.5em 0 1.5em;
@@ -2626,7 +2626,7 @@ input, select, textarea {
 /* Main */
 
 	#main {
-		background: #fff;
+		background: var(--bg-surface, #fff);
 		border-top: solid 5px #b1ddab;
 		border-bottom: solid 5px #c1cac5;
 		border-top-width: 35px;

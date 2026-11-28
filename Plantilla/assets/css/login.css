@@ -1,25 +1,38 @@
 :root {
 	--bg-page: linear-gradient(160deg, #f7f9f8 0%, #e8eeeb 48%, #d5dfd9 100%);
-	--card-bg: rgba(255, 255, 255, 0.96);
+	--card-bg: var(--bg-surface, rgba(255, 255, 255, 0.96));
 	--accent: #61756a;
 	--accent-hover: #4f6359;
-	--text-primary: #55645d;
-	--text-muted: #7a877f;
-	--border-color: #d5ddd8;
+	--login-text: #55645d;
+	--login-muted: #7a877f;
+	--login-border: #d5ddd8;
 	--input-border: #c5d0ca;
 	--shadow-card: 0 18px 40px rgba(60, 80, 70, 0.12);
 	--focus-ring: rgba(127, 149, 137, 0.2);
 	--ors-transicion: background-color 0.45s ease, color 0.45s ease, border-color 0.45s ease, box-shadow 0.45s ease;
 }
 
-body.theme-pastel-pink {
+html.dark-mode,
+html.theme-dark,
+body.dark-mode {
+	--bg-page: linear-gradient(165deg, var(--bg-body) 0%, #2a303b 55%, var(--bg-surface) 100%);
+	--card-bg: var(--bg-surface);
+	--login-text: var(--text-primary);
+	--login-muted: var(--text-muted);
+	--login-border: var(--border-color);
+	--input-border: var(--border-color);
+	--shadow-card: var(--theme-shadow);
+	--ors-blanco: var(--bg-surface);
+}
+
+body.theme-pastel-pink:not(.dark-mode) {
 	--bg-page: linear-gradient(160deg, #fff0f5 0%, #fde2e4 55%, #f8c8d4 100%);
 	--card-bg: rgba(255, 248, 250, 0.96);
 	--accent: #f4a6b8;
 	--accent-hover: #e58fa6;
-	--text-primary: #7a3e4e;
-	--text-muted: #9a6572;
-	--border-color: #f8c8d4;
+	--login-text: #7a3e4e;
+	--login-muted: #9a6572;
+	--login-border: #f8c8d4;
 	--input-border: #f0b9c8;
 	--shadow-card: 0 18px 40px rgba(229, 143, 166, 0.22);
 	--focus-ring: rgba(244, 166, 184, 0.35);
@@ -45,11 +58,18 @@ body.theme-pastel-pink {
 .login-page {
 	min-height: 100vh;
 	background: var(--bg-page);
-	background-color: #f7f9f8;
+	background-color: var(--bg-body, #f7f9f8);
 }
 
-body.theme-pastel-pink.login-page {
+body.theme-pastel-pink.login-page:not(.dark-mode) {
 	background-color: #fff0f5;
+}
+
+html.dark-mode .login-page,
+html.theme-dark .login-page,
+body.dark-mode.login-page {
+	background: var(--bg-page) !important;
+	background-color: var(--bg-body) !important;
 }
 
 .login-envoltorio {
@@ -59,8 +79,8 @@ body.theme-pastel-pink.login-page {
 }
 
 .login-tarjeta {
-	background: var(--card-bg);
-	border: 1px solid var(--border-color);
+	background: var(--card-bg, var(--bg-surface));
+	border: 1px solid var(--login-border, var(--border-color));
 	border-radius: 14px;
 	box-shadow: var(--shadow-card);
 	padding: 2rem 1.6rem 1.75rem;
@@ -109,7 +129,7 @@ body.theme-pastel-pink.login-page {
 	border: 1px solid var(--input-border);
 	border-radius: 8px;
 	padding: 0.85rem 0.95rem;
-	background: #fff;
+	background: var(--bg-input, #fff);
 	color: var(--text-primary);
 	font-size: 1rem;
 	transition: var(--ors-transicion);
@@ -133,22 +153,7 @@ body.theme-pastel-pink.login-page {
 
 .login-toggle-pass {
 	flex: 0 0 auto;
-	min-width: 3rem;
-	border: 1px solid var(--input-border);
-	border-radius: 8px;
-	background: color-mix(in srgb, var(--accent) 12%, white);
-	color: var(--text-primary);
-	cursor: pointer;
-	font-family: "Open Sans Condensed", sans-serif;
-	font-weight: 700;
-	text-transform: uppercase;
-	font-size: 0.78rem;
-	padding: 0 0.75rem;
-	transition: var(--ors-transicion);
-}
-
-.login-toggle-pass:hover {
-	background: color-mix(in srgb, var(--accent) 22%, white);
+	min-width: 3.5rem;
 }
 
 .login-acciones {
@@ -157,31 +162,6 @@ body.theme-pastel-pink.login-page {
 
 .login-boton {
 	width: 100%;
-	border: 0;
-	border-radius: 8px;
-	padding: 0.95rem 1rem;
-	background: var(--accent);
-	color: #fff;
-	font-family: "Open Sans Condensed", sans-serif;
-	font-weight: 700;
-	text-transform: uppercase;
-	letter-spacing: 0.05em;
-	cursor: pointer;
-	transition: background 0.45s ease, transform 0.15s ease, box-shadow 0.45s ease, color 0.45s ease;
-}
-
-body.theme-pastel-pink .login-boton {
-	color: #7a3e4e;
-	font-weight: 700;
-}
-
-.login-boton:hover:not(:disabled) {
-	background: var(--accent-hover);
-}
-
-.login-boton:disabled {
-	opacity: 0.72;
-	cursor: wait;
 }
 
 .login-mensaje {

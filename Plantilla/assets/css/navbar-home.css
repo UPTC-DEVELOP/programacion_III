@@ -1,10 +1,10 @@
 :root {
-	--ors-verde: #7db87a;
-	--ors-verde-hover: #6aa866;
-	--ors-verde-suave: #b1ddab;
-	--ors-carbon: #3d4842;
-	--ors-gris: #6b7770;
-	--ors-blanco: #ffffff;
+	--ors-verde: #a8d5ba;
+	--ors-verde-hover: #8fc9a7;
+	--ors-verde-suave: #c5e6d1;
+	--ors-carbon: var(--text-primary, #1e3a2f);
+	--ors-gris: var(--text-secondary, #6b7770);
+	--ors-blanco: var(--bg-surface, #ffffff);
 	--ors-navbar-h: 4.35rem;
 }
 
@@ -39,7 +39,7 @@ body.homepage.navPanel-visible #page-wrapper {
 }
 
 .ors-navbar.navbar-scrolled {
-	background: rgba(255, 255, 255, 0.78);
+	background: color-mix(in srgb, var(--bg-surface, #ffffff) 78%, transparent);
 	backdrop-filter: blur(10px);
 	-webkit-backdrop-filter: blur(10px);
 	box-shadow: 0 8px 24px rgba(61, 72, 66, 0.1);
@@ -60,17 +60,21 @@ body.homepage.navPanel-visible #page-wrapper {
 .ors-brand {
 	display: inline-flex;
 	align-items: center;
-	gap: 0.75rem;
+	gap: 0.65rem;
 	text-decoration: none;
 	color: inherit;
-	min-width: 0;
+	flex: 0 0 auto;
+	flex-shrink: 0;
+	min-width: max-content;
 }
 
 .ors-brand__text {
 	display: flex;
 	flex-direction: column;
-	min-width: 0;
+	flex-shrink: 0;
+	min-width: max-content;
 	line-height: 1.15;
+	white-space: nowrap;
 }
 
 .ors-brand__name {
@@ -82,8 +86,8 @@ body.homepage.navPanel-visible #page-wrapper {
 	text-transform: uppercase;
 	color: var(--ors-carbon);
 	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+	overflow: visible;
+	text-overflow: clip;
 }
 
 .ors-brand__sub {
@@ -91,8 +95,8 @@ body.homepage.navPanel-visible #page-wrapper {
 	font-size: 0.78rem;
 	color: var(--ors-gris);
 	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+	overflow: visible;
+	text-overflow: clip;
 }
 
 .ors-nav {
@@ -145,15 +149,15 @@ body.homepage.navPanel-visible #page-wrapper {
 	gap: 0.45rem;
 	padding: 0.62rem 1.15rem;
 	border-radius: 999px;
-	background: var(--ors-verde);
-	color: var(--ors-blanco) !important;
+	background: linear-gradient(145deg, var(--ors-verde), var(--ors-verde-hover));
+	color: #1e3a2f !important;
 	text-decoration: none;
 	font-family: "Open Sans Condensed", sans-serif;
 	font-weight: 700;
 	font-size: 0.88rem;
 	letter-spacing: 0.04em;
 	text-transform: uppercase;
-	box-shadow: 0 8px 18px rgba(125, 184, 122, 0.28);
+	box-shadow: 0 8px 18px rgba(143, 201, 167, 0.28);
 	transition:
 		background 0.22s ease,
 		transform 0.22s ease,
@@ -240,14 +244,12 @@ body.homepage.navPanel-visible #page-wrapper {
 }
 
 @media (max-width: 480px) {
-	.ors-brand__sub {
-		display: none;
+	.ors-brand__name {
+		font-size: 0.88rem;
 	}
 
-	.ors-nav__cta .ors-nav__cta-label {
-		max-width: 7.5rem;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
+	.ors-brand__sub {
+		display: block;
+		font-size: 0.66rem;
 	}
 }

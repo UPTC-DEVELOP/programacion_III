@@ -30,9 +30,12 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   document.getElementById("formSesionPanther").addEventListener("submit", entrarPantherEmp);
-  document.getElementById("btnCerrarSesionPanther").addEventListener("click", function () {
-    cerrarSesionEmp(true);
-  });
+  var btnCerrarSesionPanther = document.getElementById("btnCerrarSesionPanther");
+  if (btnCerrarSesionPanther) {
+    btnCerrarSesionPanther.addEventListener("click", function () {
+      cerrarSesionEmp(true);
+    });
+  }
   form.addEventListener("submit", guardarEmpleado);
   document.getElementById("btnLimpiarEmpleado").addEventListener("click", limpiarFormularioEmpleado);
   buscar.addEventListener("input", pintarTablaEmpleados);

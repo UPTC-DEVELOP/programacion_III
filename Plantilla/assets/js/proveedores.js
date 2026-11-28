@@ -24,9 +24,12 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   document.getElementById("formSesionPanther").addEventListener("submit", entrarPantherProv);
-  document.getElementById("btnCerrarSesionPanther").addEventListener("click", function () {
-    cerrarSesionProv(true);
-  });
+  var btnCerrarSesionPanther = document.getElementById("btnCerrarSesionPanther");
+  if (btnCerrarSesionPanther) {
+    btnCerrarSesionPanther.addEventListener("click", function () {
+      cerrarSesionProv(true);
+    });
+  }
   form.addEventListener("submit", guardarProveedor);
   document.getElementById("btnLimpiarProveedor").addEventListener("click", limpiarFormularioProveedor);
   document.getElementById("buscarProveedor").addEventListener("input", pintarTablaProveedores);

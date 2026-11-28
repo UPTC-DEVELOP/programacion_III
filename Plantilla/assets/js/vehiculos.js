@@ -28,9 +28,12 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   document.getElementById("formSesionPanther").addEventListener("submit", entrarPantherVeh);
-  document.getElementById("btnCerrarSesionPanther").addEventListener("click", function () {
-    cerrarSesionVeh(true);
-  });
+  var btnCerrarSesionPanther = document.getElementById("btnCerrarSesionPanther");
+  if (btnCerrarSesionPanther) {
+    btnCerrarSesionPanther.addEventListener("click", function () {
+      cerrarSesionVeh(true);
+    });
+  }
   form.addEventListener("submit", guardarVehiculo);
   document.getElementById("btnLimpiarVehiculo").addEventListener("click", limpiarFormularioVehiculo);
   document.getElementById("buscarVehiculo").addEventListener("input", pintarTablaVehiculos);

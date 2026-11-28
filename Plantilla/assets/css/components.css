@@ -1,13 +1,13 @@
 :root {
-	--ors-surface: #ffffff;
-	--ors-surface-soft: rgba(255, 255, 255, 0.92);
-	--ors-border: rgba(0, 0, 0, 0.07);
+	--ors-surface: var(--bg-surface, #ffffff);
+	--ors-surface-soft: color-mix(in srgb, var(--bg-surface, #ffffff) 92%, transparent);
+	--ors-border: var(--border-color, rgba(0, 0, 0, 0.07));
 	--ors-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
 	--ors-shadow-hover: 0 16px 34px rgba(15, 23, 42, 0.1);
 	--ors-radius-box: 16px;
 	--ors-radius-input: 10px;
-	--ors-text: #3d4842;
-	--ors-muted: #6b7770;
+	--ors-text: var(--text-primary, #3d4842);
+	--ors-muted: var(--text-secondary, #6b7770);
 	--ors-accent: #7db87a;
 	--ors-focus: rgba(125, 184, 122, 0.28);
 	--ors-ease: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -64,11 +64,9 @@ a.panel-tarjeta {
 }
 
 .box.feature:hover,
-.panel-tarjeta:hover,
-a.panel-tarjeta:hover,
 .card.is-interactive:hover {
 	transform: translateY(-3px);
-	border-color: rgba(125, 184, 122, 0.35) !important;
+	border-color: rgba(143, 201, 167, 0.45) !important;
 	box-shadow: var(--ors-shadow-hover) !important;
 }
 
@@ -206,9 +204,9 @@ a.panel-tarjeta:hover,
 #formContacto select {
 	min-height: 2.75rem;
 	border-radius: var(--ors-radius-input) !important;
-	border: 1px solid rgba(109, 125, 116, 0.28) !important;
-	background: #fbfcfb !important;
-	color: var(--ors-text) !important;
+	border: 1px solid var(--border-color, rgba(109, 125, 116, 0.28)) !important;
+	background-color: var(--bg-input, #fbfcfb) !important;
+	color: var(--text-primary, var(--ors-text)) !important;
 	padding: 0.7rem 0.9rem !important;
 	transition: var(--ors-ease);
 	box-shadow: none;
@@ -238,7 +236,7 @@ a.panel-tarjeta:hover,
 	outline: none !important;
 	border-color: var(--ors-accent) !important;
 	box-shadow: 0 0 0 3px var(--ors-focus) !important;
-	background: #fff !important;
+	background-color: var(--bg-input, #fff) !important;
 }
 
 .rep-tabla-contenedor,
@@ -267,7 +265,7 @@ a.panel-tarjeta:hover,
 .ors-table thead th,
 .box table thead th,
 .card table thead th {
-	background: #f3f6f4;
+	background: var(--bg-surface-alt, #f3f6f4);
 	color: var(--ors-text);
 	font-family: "Open Sans Condensed", sans-serif;
 	font-weight: 700;
@@ -275,7 +273,7 @@ a.panel-tarjeta:hover,
 	letter-spacing: 0.04em;
 	font-size: 0.82rem;
 	padding: 0.85rem 0.9rem;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+	border-bottom: 1px solid var(--border-color, rgba(0, 0, 0, 0.06));
 }
 
 .rep-tabla tbody td,
@@ -283,9 +281,9 @@ a.panel-tarjeta:hover,
 .box table tbody td,
 .card table tbody td {
 	padding: 0.8rem 0.9rem;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.045);
+	border-bottom: 1px solid var(--border-color, rgba(0, 0, 0, 0.045));
 	color: var(--ors-muted);
-	background: #fff;
+	background: var(--bg-surface, #fff);
 	transition: background 0.2s ease;
 }
 
@@ -293,7 +291,7 @@ a.panel-tarjeta:hover,
 .ors-table tbody tr:hover td,
 .box table tbody tr:hover td,
 .card table tbody tr:hover td {
-	background: #f7faf8;
+	background: var(--bg-surface-alt, #f7faf8);
 }
 
 .rep-tabla tbody tr:last-child td,

@@ -36,9 +36,12 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   document.getElementById("formSesionPanther").addEventListener("submit", entrarPanther);
-  document.getElementById("btnCerrarSesionPanther").addEventListener("click", function () {
-    cerrarSesionPanther(true);
-  });
+  var btnCerrarSesionPanther = document.getElementById("btnCerrarSesionPanther");
+  if (btnCerrarSesionPanther) {
+    btnCerrarSesionPanther.addEventListener("click", function () {
+      cerrarSesionPanther(true);
+    });
+  }
   form.addEventListener("submit", guardarCliente);
   document.getElementById("btnLimpiarCliente").addEventListener("click", limpiarFormularioCliente);
   buscar.addEventListener("input", pintarTabla);

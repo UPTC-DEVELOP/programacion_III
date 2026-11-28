@@ -4,10 +4,24 @@
 		<title>Taller Mecánico - Gestión de Empleados</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css?v=8" />
-		<link rel="stylesheet" href="assets/css/modulos.css?v=8" />
-		<link rel="stylesheet" href="assets/css/navbar.css?v=8" />
-		<link rel="stylesheet" href="assets/css/repuestos.css?v=5" />
+		<script>
+			(function () {
+				try {
+					var modo = localStorage.getItem("olimac-theme") || localStorage.getItem("olimac_theme_mode");
+					if (modo === "dark") {
+						document.documentElement.classList.add("dark-mode", "theme-dark");
+						if (document.body) document.body.classList.add("dark-mode");
+					}
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="assets/css/main.css?v=19" />
+		<link rel="stylesheet" href="assets/css/modulos.css?v=19" />
+		<link rel="stylesheet" href="assets/css/navbar.css?v=21" />
+		<link rel="stylesheet" href="assets/css/theme.css?v=19" />
+		<link rel="stylesheet" href="assets/css/components.css?v=19" />
+		<link rel="stylesheet" href="assets/css/repuestos.css?v=19" />
+		<link rel="stylesheet" href="assets/css/buttons.css?v=19" />
 	</head>
 	<body class="is-preload ors-app">
 		<div id="page-wrapper">
@@ -64,7 +78,6 @@
 													<span class="rep-sesion-indicador" aria-hidden="true"></span>
 													<span>Sesión iniciada (<strong id="usuarioActivoPanther"></strong>)</span>
 												</p>
-												<button type="button" id="btnCerrarSesionPanther" class="rep-boton rep-boton-secundario">Cerrar sesión</button>
 											</div>
 
 											<div id="avisoBloqueoEmpleados" class="rep-aviso-bloqueo">
@@ -174,16 +187,18 @@
 		</div>
 
 		<!-- Scripts -->
-		<script src="assets/js/jquery.min.js"></script>
-		<script src="assets/js/jquery.dropotron.min.js"></script>
-		<script src="assets/js/jquery.scrolly.min.js"></script>
-		<script src="assets/js/browser.min.js"></script>
-		<script src="assets/js/breakpoints.min.js"></script>
-		<script src="assets/js/util.js"></script>
-		<script src="assets/js/main.js"></script>
-		<script src="assets/js/datos-taller.js"></script>
-		<script src="assets/js/api-taller.js?v=8"></script>
-		<script src="assets/js/navbar.js?v=8"></script>
-		<script src="assets/js/empleados.js?v=1"></script>
-	</body>
+		<script src="assets/js/jquery.min.js?v=18"></script>
+		<script src="assets/js/jquery.dropotron.min.js?v=18"></script>
+		<script src="assets/js/jquery.scrolly.min.js?v=18"></script>
+		<script src="assets/js/browser.min.js?v=18"></script>
+		<script src="assets/js/breakpoints.min.js?v=18"></script>
+		<script src="assets/js/util.js?v=18"></script>
+		<script src="assets/js/main.js?v=18"></script>
+		<script src="assets/js/datos-taller.js?v=18"></script>
+		<script src="assets/js/api-taller.js?v=20"></script>
+		<script src="assets/js/theme.js?v=18"></script>
+		<script src="assets/js/navbar.js?v=21"></script>
+		<script src="assets/js/empleados.js?v=18"></script>
+			<script src="assets/js/buttons.js?v=18"></script>
+</body>
 </html>

@@ -587,21 +587,21 @@
           "</td>" +
           "<td>" +
           '<div class="fac-acciones" style="margin:0;justify-content:flex-start">' +
-          '<button type="button" class="btn btn-secondary btn-sm" data-ver="' +
+          '<button type="button" class="rep-boton rep-boton-editar" data-ver="' +
           f.id +
           '">Ver / Imprimir</button>' +
           (estado !== "ANULADA" && !f.cufe
-            ? '<button type="button" class="btn btn-primary btn-sm" data-emitir-clarisa="' +
+            ? '<button type="button" class="rep-boton rep-boton-principal" data-emitir-clarisa="' +
               f.id +
               '">Enviar a Clarisa</button>'
             : "") +
           (estado !== "PAGADA" && estado !== "ANULADA"
-            ? '<button type="button" class="btn btn-primary btn-sm" data-pagar="' +
+            ? '<button type="button" class="rep-boton rep-boton-principal" data-pagar="' +
               f.id +
               '">Marcar pagada</button>'
             : "") +
           (estado !== "ANULADA"
-            ? '<button type="button" class="btn btn-danger btn-sm" data-anular="' +
+            ? '<button type="button" class="rep-boton rep-boton-eliminar" data-anular="' +
               f.id +
               '">Anular</button>'
             : "") +

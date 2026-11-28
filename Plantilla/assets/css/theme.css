@@ -1,191 +1,603 @@
 :root {
-	--theme-bg: #f7f9f8;
-	--theme-surface: #ffffff;
-	--theme-surface-soft: rgba(255, 255, 255, 0.94);
-	--theme-text: #0f172a;
-	--theme-muted: #64748b;
-	--theme-border: rgba(15, 23, 42, 0.08);
-	--theme-nav: #ffffff;
-	--theme-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
-	--theme-accent: #7db87a;
-	--theme-transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+	--bg-body: #f4f6f9;
+	--bg-surface: #ffffff;
+	--bg-surface-alt: #f8fafc;
+	--bg-input: #ffffff;
+	--border-color: #e2e8f0;
+	--text-primary: #1e293b;
+	--text-secondary: #475569;
+	--text-muted: #64748b;
+
+	--theme-bg: var(--bg-body);
+	--theme-surface: var(--bg-surface);
+	--theme-surface-soft: var(--bg-surface);
+	--theme-surface-2: var(--bg-surface-alt);
+	--theme-text: var(--text-primary);
+	--theme-muted: var(--text-secondary);
+	--theme-border: var(--border-color);
+	--theme-nav: var(--bg-surface);
+	--theme-shadow: 0 10px 28px rgba(30, 41, 59, 0.08);
+	--theme-accent: #8fc9a7;
+	--theme-transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+	--ors-surface: var(--bg-surface);
+	--ors-border: var(--border-color);
+	--ors-text: var(--text-primary);
+	--ors-muted: var(--text-secondary);
+	--ors-blanco: var(--bg-surface);
+	--ors-carbon: var(--text-primary);
+	--ors-gris: var(--text-secondary);
 }
 
-html.theme-dark {
-	--theme-bg: #0f172a;
-	--theme-surface: #1e293b;
-	--theme-surface-soft: rgba(30, 41, 59, 0.96);
-	--theme-text: #f8fafc;
-	--theme-muted: #cbd5e1;
-	--theme-border: rgba(248, 250, 252, 0.1);
-	--theme-nav: rgba(15, 23, 42, 0.92);
-	--theme-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
-	--theme-accent: #8fca8b;
+html.dark-mode,
+html.theme-dark,
+body.dark-mode,
+[data-theme="dark"] {
+	color-scheme: dark;
+	--bg-body: #262b34;
+	--bg-surface: #313743;
+	--bg-surface-alt: #3a4150;
+	--bg-input: #2a303b;
+	--border-color: #475061;
+	--text-primary: #f1f5f9;
+	--text-secondary: #cbd5e1;
+	--text-muted: #94a3b8;
+
+	--theme-bg: var(--bg-body);
+	--theme-surface: var(--bg-surface);
+	--theme-surface-soft: var(--bg-surface);
+	--theme-surface-2: var(--bg-surface-alt);
+	--theme-text: var(--text-primary);
+	--theme-muted: var(--text-secondary);
+	--theme-border: var(--border-color);
+	--theme-nav: var(--bg-surface);
+	--theme-shadow: 0 12px 30px rgba(38, 43, 52, 0.35);
+	--ors-surface: var(--bg-surface);
+	--ors-border: var(--border-color);
+	--ors-text: var(--text-primary);
+	--ors-muted: var(--text-secondary);
+	--ors-blanco: var(--bg-surface);
+	--ors-carbon: var(--text-primary);
+	--ors-gris: var(--text-secondary);
 }
 
 html,
-body {
-	transition: var(--theme-transition);
-}
-
 body,
-body.homepage,
-body.login-page,
-body.panel-page,
-body.ors-app {
-	background-color: var(--theme-bg) !important;
-	color: var(--theme-muted) !important;
-}
-
+#page-wrapper,
 #main,
 #footer,
 .box,
 .card,
-.login-tarjeta,
-.panel-cabecera,
-.panel-tarjeta,
-.rep-panel,
-.rep-listado,
-.ors-navbar {
-	background: var(--theme-surface) !important;
-	border-color: var(--theme-border) !important;
-	box-shadow: var(--theme-shadow) !important;
-	color: var(--theme-muted);
+.panel,
+.ors-navbar,
+input,
+select,
+textarea,
+button,
+table,
+th,
+td {
 	transition: var(--theme-transition);
 }
 
-.ors-navbar.navbar-scrolled {
-	background: color-mix(in srgb, var(--theme-nav) 82%, transparent) !important;
+html,
+body,
+body.homepage,
+body.login-page,
+body.panel-page,
+body.ors-app,
+body.is-preload {
+	background-color: var(--bg-body) !important;
+	color: var(--text-secondary) !important;
 }
 
-.ors-brand__name,
+#page-wrapper,
+#main,
+#footer,
+.content,
+.container {
+	background-color: transparent;
+	color: inherit;
+}
+
+#main > .container > .row > * > .content > .box,
+.box,
+.card,
+.box.highlight,
+.box.feature,
+.box.features,
+.box.page-content,
+.box.post,
+.box.post-summary,
+.box.blog,
+.login-tarjeta,
+.panel-cabecera,
+.panel-tarjeta,
+a.panel-tarjeta,
+.rep-panel,
+.rep-listado,
+.rep-formulario,
+.rep-tabla-contenedor,
+.rep-sesion,
+.rep-sesion-activa,
+.rep-aviso-bloqueo,
+.inv-panel,
+.inv-listado,
+.inv-sesion,
+.inv-sesion-activa,
+.inv-aviso-bloqueo,
+.inv-tarjeta,
+.ord-panel,
+.ord-listado,
+.ord-sesion,
+.ord-sesion-activa,
+.ord-aviso-bloqueo,
+.ord-tarjeta,
+.ord-modal-card,
+.fac-kpi,
+.fac-panel,
+.fac-print-card,
+.fac-comprobante,
+.fac-resumen-orden,
+.ors-navbar {
+	background: var(--bg-surface) !important;
+	background-color: var(--bg-surface) !important;
+	border-color: var(--border-color) !important;
+	color: var(--text-secondary) !important;
+	box-shadow: var(--theme-shadow) !important;
+}
+
+.ors-navbar.navbar-scrolled {
+	background: color-mix(in srgb, var(--bg-surface) 88%, transparent) !important;
+}
+
 h1, h2, h3, h4, h5, h6,
-.box.feature h3,
+.ors-brand__name,
+.box header h2,
+.box header h3,
+.panel-cabecera h2,
 .panel-tarjeta h3,
+.rep-encabezado h2,
+.inv-encabezado h2,
+.ord-encabezado h2,
 .login-marca h2,
-.panel-cabecera h2 {
-	color: var(--theme-text) !important;
-	transition: color 0.35s ease;
+.fac-kpi strong,
+.fac-panel h2,
+.fac-panel h3 {
+	color: var(--text-primary) !important;
 }
 
 .ors-brand__sub,
 .ors-nav__link,
+.ors-nav__user,
 .panel-sesion-info,
 .panel-intro,
 .login-marca p,
 .box p,
-.panel-tarjeta p {
-	color: var(--theme-muted) !important;
+.panel-tarjeta p,
+.rep-sesion-estado,
+.inv-sesion-estado,
+.ord-sesion-estado,
+.rep-encabezado p,
+.inv-encabezado p,
+.ord-encabezado p,
+.fac-campo span,
+label {
+	color: var(--text-secondary) !important;
 }
 
 .ors-nav__link:hover,
 .ors-nav__link.is-active {
-	color: var(--theme-text) !important;
+	color: var(--text-primary) !important;
 }
 
-html.theme-dark #main {
-	border-top-color: #334155 !important;
-	border-bottom-color: #334155 !important;
+input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]),
+select,
+textarea,
+.login-campo input,
+.rep-campo input,
+.rep-buscar input,
+.fac-campo input,
+.fac-campo select,
+.fac-campo textarea,
+.inv-campo input,
+.inv-campo select,
+.ord-campo input,
+.ord-campo select,
+.ord-campo textarea,
+.box select,
+.card select,
+.panel-page select,
+.form-select,
+form select {
+	background-color: var(--bg-input) !important;
+	color: var(--text-primary) !important;
+	border: 1px solid var(--border-color) !important;
 }
 
-html.theme-dark .rep-tabla thead th,
-html.theme-dark .box table thead th {
-	background: #334155 !important;
-	color: #f8fafc !important;
-}
-
-html.theme-dark .rep-tabla tbody td,
-html.theme-dark .box table tbody td {
-	background: #1e293b !important;
-	color: #cbd5e1 !important;
-	border-bottom-color: rgba(248, 250, 252, 0.08) !important;
-}
-
-html.theme-dark .rep-tabla tbody tr:hover td,
-html.theme-dark .box table tbody tr:hover td {
-	background: #273449 !important;
-}
-
-html.theme-dark input,
-html.theme-dark select,
-html.theme-dark textarea,
-html.theme-dark .login-campo input,
-html.theme-dark .rep-campo input,
-html.theme-dark .rep-buscar input {
-	background: #0f172a !important;
-	color: #f8fafc !important;
-	border-color: rgba(248, 250, 252, 0.14) !important;
-}
-
-.ors-theme-toggle {
-	flex: 0 0 auto;
-	width: 2.35rem;
-	height: 2.35rem;
-	border: 0;
-	border-radius: 0.7rem;
-	background: linear-gradient(145deg, #b1ddab, #7db87a);
-	display: grid;
-	place-items: center;
+select,
+.form-select,
+form select,
+.box select,
+.card select,
+.panel-page select,
+.fac-campo select,
+.inv-campo select,
+.ord-campo select,
+.rep-campo select,
+#formContacto select {
+	-moz-appearance: none !important;
+	-webkit-appearance: none !important;
+	appearance: none !important;
+	background-color: var(--bg-input) !important;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+	background-repeat: no-repeat !important;
+	background-position: right 0.75rem center !important;
+	background-size: 1rem 1rem !important;
+	padding-right: 2.35rem !important;
+	color: var(--text-primary) !important;
+	border: 1px solid var(--border-color) !important;
 	cursor: pointer;
-	box-shadow: 0 6px 14px rgba(125, 184, 122, 0.35);
-	position: relative;
-	overflow: hidden;
-	transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.35s ease;
 }
 
-.ors-theme-toggle:hover {
-	transform: translateY(-1px) scale(1.04);
+select:hover,
+select:focus,
+select:active,
+.form-select:hover,
+.form-select:focus,
+.form-select:active,
+form select:hover,
+form select:focus,
+form select:active,
+.box select:hover,
+.box select:focus,
+.box select:active,
+.card select:hover,
+.card select:focus,
+.card select:active,
+.panel-page select:hover,
+.panel-page select:focus,
+.panel-page select:active,
+.fac-campo select:hover,
+.fac-campo select:focus,
+.inv-campo select:hover,
+.inv-campo select:focus,
+.ord-campo select:hover,
+.ord-campo select:focus,
+.rep-campo select:hover,
+.rep-campo select:focus,
+#formContacto select:hover,
+#formContacto select:focus {
+	background-color: var(--bg-input) !important;
+	color: var(--text-primary) !important;
+	border-color: var(--border-color) !important;
 }
 
-.ors-theme-toggle svg {
-	width: 1.15rem;
-	height: 1.15rem;
+select:disabled,
+.form-select:disabled,
+form select:disabled {
+	background-color: var(--bg-surface-alt) !important;
+	color: var(--text-muted) !important;
+	opacity: 0.75;
+	cursor: not-allowed;
+}
+
+select option,
+.form-select option,
+form select option {
+	background-color: var(--bg-input) !important;
+	color: var(--text-primary) !important;
+}
+
+html.dark-mode select,
+html.theme-dark select,
+body.dark-mode select,
+html.dark-mode .form-select,
+html.theme-dark .form-select,
+body.dark-mode .form-select,
+html.dark-mode form select,
+html.theme-dark form select,
+body.dark-mode form select,
+html.dark-mode .box select,
+html.theme-dark .box select,
+body.dark-mode .box select,
+html.dark-mode .card select,
+html.theme-dark .card select,
+body.dark-mode .card select,
+html.dark-mode .panel-page select,
+html.theme-dark .panel-page select,
+body.dark-mode .panel-page select,
+html.dark-mode .fac-campo select,
+html.theme-dark .fac-campo select,
+body.dark-mode .fac-campo select,
+html.dark-mode .inv-campo select,
+html.theme-dark .inv-campo select,
+body.dark-mode .inv-campo select,
+html.dark-mode .ord-campo select,
+html.theme-dark .ord-campo select,
+body.dark-mode .ord-campo select,
+html.dark-mode .rep-campo select,
+html.theme-dark .rep-campo select,
+body.dark-mode .rep-campo select,
+html.dark-mode #formContacto select,
+html.theme-dark #formContacto select,
+body.dark-mode #formContacto select {
+	background-color: var(--bg-input) !important;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23F1F5F9' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+	background-repeat: no-repeat !important;
+	background-position: right 0.75rem center !important;
+	background-size: 1rem 1rem !important;
+	color: #f1f5f9 !important;
+	border: 1px solid var(--border-color) !important;
+}
+
+html.dark-mode select:hover,
+html.dark-mode select:focus,
+html.dark-mode select:active,
+html.theme-dark select:hover,
+html.theme-dark select:focus,
+html.theme-dark select:active,
+body.dark-mode select:hover,
+body.dark-mode select:focus,
+body.dark-mode select:active {
+	background-color: var(--bg-input) !important;
+	color: #f1f5f9 !important;
+	border-color: var(--border-color) !important;
+}
+
+html.dark-mode select option,
+html.theme-dark select option,
+body.dark-mode select option,
+html.dark-mode .form-select option,
+html.theme-dark .form-select option,
+body.dark-mode .form-select option {
+	background-color: #2a303b !important;
+	color: #f1f5f9 !important;
+}
+
+table thead th,
+.rep-tabla thead th,
+.fac-tabla th,
+.inv-tabla thead th,
+.ord-tabla thead th,
+.box table thead th {
+	background: var(--bg-surface-alt) !important;
+	color: var(--text-primary) !important;
+	border-color: var(--border-color) !important;
+}
+
+table tbody td,
+.rep-tabla tbody td,
+.fac-tabla td,
+.inv-tabla tbody td,
+.ord-tabla tbody td,
+.box table tbody td {
+	background: var(--bg-surface) !important;
+	color: var(--text-secondary) !important;
+	border-color: var(--border-color) !important;
+}
+
+table tbody tr:nth-child(even) td,
+.rep-tabla tbody tr:nth-child(even) td,
+.fac-tabla tbody tr:nth-child(even) td,
+.inv-tabla tbody tr:nth-child(even) td,
+.ord-tabla tbody tr:nth-child(even) td {
+	background: var(--bg-surface-alt) !important;
+}
+
+table tbody tr:hover td,
+.rep-tabla tbody tr:hover td,
+.fac-tabla tbody tr:hover td,
+.inv-tabla tbody tr:hover td,
+.ord-tabla tbody tr:hover td {
+	background: var(--bg-surface-alt) !important;
+	filter: brightness(1.04);
+}
+
+.fac-resumen-orden,
+.contacto-item,
+.inv-tarjeta,
+.ord-tarjeta,
+.panel-bloqueado {
+	background: var(--bg-surface-alt) !important;
+	border-color: var(--border-color) !important;
+	color: var(--text-secondary) !important;
+}
+
+html.dark-mode #main,
+html.theme-dark #main,
+body.dark-mode #main {
+	border-top-color: var(--border-color) !important;
+	border-bottom-color: var(--border-color) !important;
+}
+
+html.dark-mode .box,
+html.theme-dark .box,
+body.dark-mode .box,
+html.dark-mode .card,
+html.theme-dark .card,
+body.dark-mode .card,
+html.dark-mode #footer,
+html.theme-dark #footer,
+body.dark-mode #footer,
+html.dark-mode .content,
+html.theme-dark .content,
+body.dark-mode .content {
+	background: var(--bg-surface) !important;
+	background-color: var(--bg-surface) !important;
+	color: var(--text-secondary) !important;
+}
+
+html.dark-mode body.panel-page,
+html.theme-dark body.panel-page,
+body.dark-mode.panel-page {
+	background:
+		radial-gradient(circle at top right, rgba(61, 44, 53, 0.35), transparent 42%),
+		linear-gradient(165deg, var(--bg-body) 0%, #2a303b 55%, var(--bg-surface) 100%) !important;
+}
+
+.ors-theme-toggle,
+.btn-theme-toggle {
+	flex: 0 0 auto !important;
+	flex-shrink: 0 !important;
+	width: 36px !important;
+	height: 36px !important;
+	min-width: 36px !important;
+	min-height: 36px !important;
+	max-width: 36px !important;
+	max-height: 36px !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	border: 0 !important;
+	border-radius: 10px !important;
+	background: linear-gradient(145deg, #a8d5ba, #8fc9a7) !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	cursor: pointer;
+	box-shadow: 0 4px 10px rgba(143, 201, 167, 0.3) !important;
+	position: relative !important;
+	overflow: hidden !important;
+	gap: 0 !important;
+	letter-spacing: 0 !important;
+	text-transform: none !important;
+	font-size: 0 !important;
+	line-height: 0 !important;
+	transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.35s ease !important;
+}
+
+.ors-theme-toggle:hover,
+.btn-theme-toggle:hover {
+	transform: translateY(-1px) scale(1.04) !important;
+	filter: none !important;
+}
+
+.ors-theme-toggle:active,
+.btn-theme-toggle:active,
+.ors-theme-toggle.btn-pressed,
+.btn-theme-toggle.btn-pressed {
+	background: linear-gradient(135deg, #fadadd, #f4a6b8) !important;
+	border: 1px solid #f29bb2 !important;
+	box-shadow: 0 0 0 3px rgba(244, 166, 184, 0.3) !important;
+	transform: translateY(1px) scale(0.97) !important;
+}
+
+.ors-theme-toggle svg,
+.btn-theme-toggle svg {
+	width: 18px !important;
+	height: 18px !important;
 	fill: none;
-	stroke: #fff;
+	stroke: #1e3a2f;
 	stroke-width: 1.9;
 	stroke-linecap: round;
 	stroke-linejoin: round;
 	position: absolute;
-	transition: opacity 0.28s ease, transform 0.35s ease;
+	transition: opacity 0.28s ease, transform 0.35s ease, stroke 0.25s ease;
 }
 
-.ors-theme-toggle .icon-moon {
+.ors-theme-toggle .icon-moon,
+.btn-theme-toggle .icon-moon {
 	opacity: 0;
 	transform: rotate(-90deg) scale(0.6);
 }
 
-.ors-theme-toggle .icon-sun {
+.ors-theme-toggle .icon-sun,
+.btn-theme-toggle .icon-sun {
 	opacity: 1;
 	transform: rotate(0deg) scale(1);
 }
 
-html.theme-dark .ors-theme-toggle {
-	background: linear-gradient(145deg, #64748b, #334155);
-	box-shadow: 0 6px 14px rgba(15, 23, 42, 0.45);
+html.dark-mode .ors-theme-toggle,
+html.theme-dark .ors-theme-toggle,
+html.dark-mode .btn-theme-toggle,
+html.theme-dark .btn-theme-toggle,
+body.dark-mode .ors-theme-toggle,
+body.dark-mode .btn-theme-toggle {
+	background: linear-gradient(145deg, #475061, #3a4150) !important;
+	box-shadow: 0 4px 10px rgba(38, 43, 52, 0.35) !important;
 }
 
-html.theme-dark .ors-theme-toggle .icon-sun {
+html.dark-mode .ors-theme-toggle svg,
+html.theme-dark .ors-theme-toggle svg,
+html.dark-mode .btn-theme-toggle svg,
+html.theme-dark .btn-theme-toggle svg,
+body.dark-mode .ors-theme-toggle svg,
+body.dark-mode .btn-theme-toggle svg {
+	stroke: #f1f5f9;
+}
+
+html.dark-mode .ors-theme-toggle .icon-sun,
+html.theme-dark .ors-theme-toggle .icon-sun,
+html.dark-mode .btn-theme-toggle .icon-sun,
+html.theme-dark .btn-theme-toggle .icon-sun,
+body.dark-mode .ors-theme-toggle .icon-sun,
+body.dark-mode .btn-theme-toggle .icon-sun {
 	opacity: 0;
 	transform: rotate(90deg) scale(0.6);
 }
 
-html.theme-dark .ors-theme-toggle .icon-moon {
+html.dark-mode .ors-theme-toggle .icon-moon,
+html.theme-dark .ors-theme-toggle .icon-moon,
+html.dark-mode .btn-theme-toggle .icon-moon,
+html.theme-dark .btn-theme-toggle .icon-moon,
+body.dark-mode .ors-theme-toggle .icon-moon,
+body.dark-mode .btn-theme-toggle .icon-moon {
 	opacity: 1;
 	transform: rotate(0deg) scale(1);
 }
 
-.ors-brand {
+.ors-brand-cluster {
 	display: inline-flex;
 	align-items: center;
-	gap: 0.75rem;
-	min-width: 0;
+	gap: 0.65rem;
+	flex-shrink: 0;
+	min-width: max-content;
 }
 
-.ors-brand__text {
-	display: flex;
-	flex-direction: column;
-	min-width: 0;
-	text-decoration: none;
-	color: inherit;
-	line-height: 1.15;
+.login-contenedor,
+.login-tarjeta,
+#nosotros .nosotros-card,
+#contacto .contacto-form-card,
+#contacto .contacto-info-card,
+.box.highlight,
+.features,
+.feature,
+.post,
+.page-content {
+	background: var(--bg-surface) !important;
+	background-color: var(--bg-surface) !important;
+	border-color: var(--border-color) !important;
+	color: var(--text-secondary) !important;
+}
+
+h2.major span,
+#header .logo div {
+	background: var(--bg-surface) !important;
+	color: var(--text-primary) !important;
+}
+
+.ors-nav__user,
+.panel-sesion-info,
+.rep-sesion-estado,
+.inv-sesion-estado,
+.ord-sesion-estado {
+	color: var(--text-secondary) !important;
+}
+
+html.dark-mode .login-contenedor,
+html.theme-dark .login-contenedor,
+body.dark-mode .login-contenedor,
+html.dark-mode #main,
+html.theme-dark #main,
+body.dark-mode #main,
+html.dark-mode #header,
+html.theme-dark #header,
+body.dark-mode #header {
+	background: var(--bg-surface) !important;
+	background-color: var(--bg-surface) !important;
+}
+
+html.dark-mode body.login-page,
+html.theme-dark body.login-page,
+body.dark-mode.login-page {
+	background: var(--bg-body) !important;
 }
