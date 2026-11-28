@@ -2,13 +2,13 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    // 1. DATOS INICIALES (simulación frontend)
-
-    let proveedores = [
-        { codigo: "PROV001", razonSocial: "Repuestos El Motor S.A.S.", nit: "900123456-7", direccion: "Cra 10 # 20-30, Bogotá", telefono: "6012345678", correo: "contacto@elmotor.com", estado: "Activo" },
-        { codigo: "PROV002", razonSocial: "Lubricantes Andinos Ltda.", nit: "901234567-1", direccion: "Cl 45 # 12-08, Medellín", telefono: "3101234567", correo: "ventas@lubricantesandinos.co", estado: "Activo" },
-        { codigo: "PROV003", razonSocial: "Distribuidora Llantas del Sur", nit: "890123456-2", direccion: "Av 68 # 30-15, Cali", telefono: "3209876543", correo: "info@llantasdelsur.com", estado: "Inactivo" }
-    ];
+    let proveedores = [];
+    async function cargar() {
+        try {
+            proveedores = await catalogoApi("proveedores");
+            inputBusqueda.dispatchEvent(new Event("input"));
+        } catch (e) { mostrarToast(e.message, true); }
+    }
 
     // 2. REFERENCIAS AL DOM
 
@@ -57,12 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const claseBadge = prov.estado === "Activo" ? "badge-activo" : "badge-inactivo";
 
             fila.innerHTML = `
-                <td>${prov.codigo}</td>
-                <td>${prov.razonSocial}</td>
-                <td>${prov.nit}</td>
-                <td>${prov.direccion}</td>
-                <td>${prov.telefono}</td>
-                <td>${prov.correo}</td>
                 <td><span class="badge-estado ${claseBadge}">${prov.estado}</span></td>
                 <td>
                     <div class="acciones-celda">
@@ -73,6 +67,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
                 </td>
             `;
+            for (const campo of ["correo","telefono","direccion","nit","razonSocial","codigo"]) {
+                const celda = fila.insertCell(0);
+                celda.textContent = prov[campo];
+            }
             cuerpoTabla.appendChild(fila);
         });
 
@@ -298,7 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 9. ENVÍO DEL FORMULARIO (Crear / Actualizar)
 
-    formProveedor.addEventListener("submit", function (e) {
+    formProveedor.addEventListener("submit", async function (e) {
         e.preventDefault();
 
         if (!validarFormulario()) return;
@@ -310,36 +308,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const telefono = inputTelefono.value.trim();
         const correo = inputCorreo.value.trim();
 
-        if (codigoEditando) {
-            // ACTUALIZAR
-            const index = proveedores.findIndex((p) => p.codigo === codigoEditando);
-            if (index !== -1) {
-                proveedores[index] = {
-                    ...proveedores[index],
-                    razonSocial,
-                    nit,
-                    direccion,
-                    telefono,
-                    correo
-                };
-            }
-            mostrarToast("Proveedor actualizado correctamente", false);
-        } else {
-            // CREAR
-            proveedores.push({
-                codigo,
-                razonSocial,
-                nit,
-                direccion,
-                telefono,
-                correo,
-                estado: "Activo"
-            });
-            mostrarToast("Proveedor registrado correctamente", false);
-        }
-
-        cerrarModal();
-        renderizarTabla();
+        const actual = proveedores.find(p => p.codigo === codigoEditando);
+        const boton = document.getElementById("btnGuardar");
+        boton.disabled = true;
+        try {
+            await catalogoApi(actual ? "proveedores/" + actual.id : "proveedores", actual ? "PUT" : "POST",
+                { codigo, razonSocial, nit, direccion, telefono, correo });
+            cerrarModal();
+            mostrarToast("Proveedor guardado");
+            await cargar();
+        } catch (e) { mostrarToast(e.message, true); }
+        finally { boton.disabled = false; }
     });
 
     // 10. CONFIRMACIÓN DE ACTIVAR / INACTIVAR
@@ -351,11 +330,7 @@ document.addEventListener("DOMContentLoaded", () => {
         codigoAEliminar = codigo;
         const accion = prov.estado === "Activo" ? "inactivar" : "activar";
 
-        textoConfirmacion.innerHTML = `
-            ¿Estás seguro que deseas <strong>${accion}</strong> al proveedor
-            <strong>${prov.razonSocial}</strong>?
-            Esta acción se puede revertir posteriormente.
-        `;
+        textoConfirmacion.textContent = `¿Deseas ${accion} al proveedor ${prov.razonSocial}?`;
         modalConfirmacion.classList.add("activo");
     }
 
@@ -364,17 +339,18 @@ document.addEventListener("DOMContentLoaded", () => {
         codigoAEliminar = null;
     }
 
-    document.getElementById("btnConfirmarEliminar").addEventListener("click", () => {
-        const prov = proveedores.find((p) => p.codigo === codigoAEliminar);
-        if (prov) {
-            prov.estado = prov.estado === "Activo" ? "Inactivo" : "Activo";
-            mostrarToast(
-                `Proveedor ${prov.estado === "Activo" ? "activado" : "inactivado"} correctamente`,
-                false
-            );
-        }
-        cerrarConfirmacion();
-        renderizarTabla();
+    document.getElementById("btnConfirmarEliminar").addEventListener("click", async () => {
+        const prov = proveedores.find(p => p.codigo === codigoAEliminar);
+        if (!prov) return;
+        const boton = document.getElementById("btnConfirmarEliminar");
+        boton.disabled = true;
+        try {
+            await catalogoApi("proveedores/" + prov.id + "/estado", "PUT",
+                { estado: prov.estado === "Activo" ? "Inactivo" : "Activo" });
+            cerrarConfirmacion();
+            await cargar();
+        } catch (e) { mostrarToast(e.message, true); }
+        finally { boton.disabled = false; }
     });
 
     // 11. BÚSQUEDA EN TIEMPO REAL
@@ -420,5 +396,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 14. INICIALIZACIÓN
 
-    renderizarTabla();
+    cargar();
 });

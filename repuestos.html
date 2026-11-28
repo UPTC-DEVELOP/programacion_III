@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repuestos | AutoGestión ERP</title>
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/vehiculos.css">
+    <script src="js/config.js"></script>
+    <script src="js/sesion.js"></script>
+    <script src="js/acceso.js"></script>
+</head>
+<body>
+
+    <!-- BARRA DE NAVEGACIÓN -->
+    <header class="header-principal" data-cabecera-sesion></header>
+
+    <main class="contenedor" data-recurso="repuestos">
+
+        <header class="pagina-encabezado">
+            <p class="etiqueta">GESTIÓN DE REPUESTOS</p>
+            <h1>REPUESTOS</h1>
+        </header>
+
+        <!-- BUSCADOR Y BOTÓN NUEVO -->
+        <section class="barra-herramientas" aria-label="Búsqueda">
+            <input type="search" id="buscador" placeholder="Buscar…" aria-label="Buscar repuesto">
+            <button type="button" class="btn btn-primario" id="btnNuevo">NUEVO REPUESTO</button>
+        </section>
+
+        <!-- TABLA -->
+        <section class="tabla-wrap">
+            <table>
+                <thead>
+                    <tr><th>Referencia</th><th>Nombre</th><th>Precio</th><th>Existencias</th><th>Acciones</th></tr>
+                </thead>
+                <tbody id="tablaRegistros"></tbody>
+            </table>
+            <p id="vacio" class="vacio" hidden></p>
+        </section>
+
+    </main>
+
+    <!-- MODAL CREAR / EDITAR -->
+    <dialog id="modalForm">
+        <header class="modal-encabezado">
+            <h2 id="modalTitulo">NUEVO REPUESTO</h2>
+            <button type="button" class="btn-cerrar" data-cerrar aria-label="Cerrar">×</button>
+        </header>
+
+        <form id="formRegistro">
+            <p class="modal-info">Todos los campos marcados con * son obligatorios.</p>
+
+            <input type="hidden" id="idRegistro">
+
+            <div class="form-grid">
+                <div class="campo"><label for="referencia">Referencia *</label><input id="referencia" name="referencia" maxlength="30" required></div>
+                <div class="campo"><label for="nombre">Nombre *</label><input id="nombre" name="nombre" minlength="2" maxlength="100" required></div>
+                <div class="campo"><label for="precio">Precio *</label><input id="precio" name="precio" type="number" min="0" step=".01" max="9999999999.99" required></div>
+            </div>
+            <footer class="modal-pie">
+                <button type="button" class="btn btn-secundario" data-cerrar>CANCELAR</button>
+                <button type="submit" class="btn btn-primario" id="btnGuardar">GUARDAR</button>
+            </footer>
+        </form>
+    </dialog>
+
+    <!-- MODAL CONFIRMAR ELIMINACIÓN -->
+    <dialog id="modalEliminar" class="modal-chico">
+        <header class="modal-encabezado">
+            <h2>ELIMINAR REPUESTO</h2>
+            <button type="button" class="btn-cerrar" data-cerrar aria-label="Cerrar">×</button>
+        </header>
+        <p id="textoEliminar" class="modal-info"></p>
+        <footer class="modal-pie">
+            <button type="button" class="btn btn-secundario" data-cerrar>CANCELAR</button>
+            <button type="button" class="btn btn-primario" id="btnConfirmarEliminar">ELIMINAR</button>
+        </footer>
+    </dialog>
+
+    <div id="aviso" class="aviso" role="status" aria-live="polite"></div>
+
+    <script src="js/catalogoApi.js"></script>
+    <script src="js/fichaCatalogo.js"></script>
+</body>
+</html>

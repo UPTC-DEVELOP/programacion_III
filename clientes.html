@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes | AutoGestión ERP</title>
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/vehiculos.css">
+    <script src="js/config.js"></script>
+    <script src="js/sesion.js"></script>
+    <script src="js/acceso.js"></script>
+</head>
+<body>
+
+    <!-- BARRA DE NAVEGACIÓN -->
+    <header class="header-principal" data-cabecera-sesion></header>
+
+    <main class="contenedor" data-recurso="clientes">
+
+        <header class="pagina-encabezado">
+            <p class="etiqueta">GESTIÓN DE CLIENTES</p>
+            <h1>CLIENTES</h1>
+        </header>
+
+        <!-- BUSCADOR Y BOTÓN NUEVO -->
+        <section class="barra-herramientas" aria-label="Búsqueda">
+            <input type="search" id="buscador" placeholder="Buscar…" aria-label="Buscar cliente">
+            <button type="button" class="btn btn-primario" id="btnNuevo">NUEVO CLIENTE</button>
+        </section>
+
+        <!-- TABLA -->
+        <section class="tabla-wrap">
+            <table>
+                <thead>
+                    <tr><th>Documento</th><th>Nombre</th><th>Teléfono</th><th>Correo</th><th>Acciones</th></tr>
+                </thead>
+                <tbody id="tablaRegistros"></tbody>
+            </table>
+            <p id="vacio" class="vacio" hidden></p>
+        </section>
+
+    </main>
+
+    <!-- MODAL CREAR / EDITAR -->
+    <dialog id="modalForm">
+        <header class="modal-encabezado">
+            <h2 id="modalTitulo">NUEVO CLIENTE</h2>
+            <button type="button" class="btn-cerrar" data-cerrar aria-label="Cerrar">×</button>
+        </header>
+
+        <form id="formRegistro">
+            <p class="modal-info">Todos los campos marcados con * son obligatorios.</p>
+
+            <input type="hidden" id="idRegistro">
+
+            <div class="form-grid">
+                <div class="campo"><label for="documento">Documento *</label><input id="documento" name="documento" pattern="[A-Za-z0-9\-]{3,20}" maxlength="20" required></div>
+                <div class="campo"><label for="nombre">Nombre *</label><input id="nombre" name="nombre" minlength="2" maxlength="100" required></div>
+                <div class="campo"><label for="telefono">Teléfono *</label><input id="telefono" name="telefono" pattern="[0-9]{7,10}" maxlength="10" required></div>
+                <div class="campo"><label for="correo">Correo</label><input id="correo" name="correo" type="email" maxlength="100" ></div>
+            </div>
+            <footer class="modal-pie">
+                <button type="button" class="btn btn-secundario" data-cerrar>CANCELAR</button>
+                <button type="submit" class="btn btn-primario" id="btnGuardar">GUARDAR</button>
+            </footer>
+        </form>
+    </dialog>
+
+    <!-- MODAL CONFIRMAR ELIMINACIÓN -->
+    <dialog id="modalEliminar" class="modal-chico">
+        <header class="modal-encabezado">
+            <h2>ELIMINAR CLIENTE</h2>
+            <button type="button" class="btn-cerrar" data-cerrar aria-label="Cerrar">×</button>
+        </header>
+        <p id="textoEliminar" class="modal-info"></p>
+        <footer class="modal-pie">
+            <button type="button" class="btn btn-secundario" data-cerrar>CANCELAR</button>
+            <button type="button" class="btn btn-primario" id="btnConfirmarEliminar">ELIMINAR</button>
+        </footer>
+    </dialog>
+
+    <div id="aviso" class="aviso" role="status" aria-live="polite"></div>
+
+    <script src="js/catalogoApi.js"></script>
+    <script src="js/fichaCatalogo.js"></script>
+</body>
+</html>

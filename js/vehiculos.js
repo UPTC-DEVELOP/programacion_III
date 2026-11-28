@@ -1,65 +1,18 @@
-/* ==========================================================
-   CRUD Vehículos — AutoGestión ERP
-   Persistencia: localStorage (clave "ag_vehiculos").
-   Cuando tengas backend, reemplaza solo la sección
-   "CAPA DE DATOS" por llamadas fetch() a tu API.
-   ========================================================== */
+let vehiculos = [];
+let clientes = [];
+let puedeEliminar = false;
 
-/* ---------- CAPA DE DATOS ---------- */
-const CLAVE = "ag_vehiculos";
-const CLAVE_CLIENTES = "ag_clientes";   // la llenará el CRUD de clientes
-const CLAVE_INICIO = "ag_vehiculos_init";
-
-// Se usan solo si aún no existe el módulo de clientes
-const CLIENTES_DEMO = ["Carlos Rodríguez", "Laura Gómez", "Andrés Pérez"];
-
-const VEHICULOS_DEMO = [
-    { id: "demo1", placa: "ABC123", propietario: "Carlos Rodríguez", marca: "Toyota", modelo: "Corolla", anio: "2022", color: "Gris", kilometraje: "35000" },
-    { id: "demo2", placa: "XYZ987", propietario: "Laura Gómez", marca: "Mazda", modelo: "3", anio: "2020", color: "Rojo", kilometraje: "58000" }
-];
-
-function leerVehiculos() {
+async function cargar() {
     try {
-        return JSON.parse(localStorage.getItem(CLAVE)) || [];
-    } catch (e) {
-        return [];
-    }
+        const [filas, propietarios, perfil] = await Promise.all([
+            catalogoApi("vehiculos"), catalogoApi("clientes"), catalogoApi("perfil")
+        ]);
+        vehiculos = filas.map(v => ({ ...v, id: String(v.id) }));
+        clientes = propietarios;
+        puedeEliminar = perfil.rol === "admin";
+        render();
+    } catch (e) { mostrarAviso(e.message, true); }
 }
-
-function guardarVehiculos(lista) {
-    localStorage.setItem(CLAVE, JSON.stringify(lista));
-}
-
-function crearVehiculo(datos) {
-    const lista = leerVehiculos();
-    lista.push({ id: Date.now().toString(), ...datos });
-    guardarVehiculos(lista);
-}
-
-function actualizarVehiculo(id, datos) {
-    guardarVehiculos(leerVehiculos().map(v => (v.id === id ? { ...v, ...datos } : v)));
-}
-
-function eliminarVehiculo(id) {
-    guardarVehiculos(leerVehiculos().filter(v => v.id !== id));
-}
-
-// Devuelve los nombres de clientes para el select de propietario
-function leerPropietarios() {
-    try {
-        const clientes = JSON.parse(localStorage.getItem(CLAVE_CLIENTES)) || [];
-        const nombres = clientes.map(c => c.nombre).filter(Boolean);
-        if (nombres.length) return nombres;
-    } catch (e) { /* usa la lista demo */ }
-    return CLIENTES_DEMO;
-}
-
-// Datos de ejemplo la primera vez que se abre el módulo
-if (!localStorage.getItem(CLAVE_INICIO)) {
-    if (leerVehiculos().length === 0) guardarVehiculos(VEHICULOS_DEMO);
-    localStorage.setItem(CLAVE_INICIO, "1");
-}
-
 /* ---------- REFERENCIAS DOM ---------- */
 const $ = id => document.getElementById(id);
 
@@ -91,7 +44,7 @@ function mostrarAviso(mensaje, esError = false) {
 
 /* ---------- RENDER (READ) ---------- */
 function render() {
-    const lista = leerVehiculos();
+    const lista = vehiculos;
     const texto = buscador.value.trim().toLowerCase();
 
     const filtrados = lista
@@ -111,7 +64,7 @@ function render() {
             <td class="acciones-celda">
                 <div class="acciones">
                     <button type="button" class="btn-tabla" data-editar="${v.id}">Editar</button>
-                    <button type="button" class="btn-tabla eliminar" data-eliminar="${v.id}">Eliminar</button>
+                    <button type="button" class="btn-tabla eliminar" ${puedeEliminar ? "" : "hidden"} data-eliminar="${v.id}">Eliminar</button>
                 </div>
             </td>
         </tr>
@@ -129,14 +82,10 @@ function render() {
 
 /* ---------- SELECT DE PROPIETARIO ---------- */
 function cargarPropietarios(seleccionado = "") {
-    const nombres = [...leerPropietarios()];
-    // Si el propietario guardado ya no está en la lista, se conserva igual
-    if (seleccionado && !nombres.includes(seleccionado)) nombres.push(seleccionado);
-
-    $("propietario").innerHTML =
-        `<option value="">Selecciona un cliente…</option>` +
-        nombres.map(n => `<option value="${escapar(n)}">${escapar(n)}</option>`).join("");
-    $("propietario").value = seleccionado;
+    const select = $("propietario");
+    select.replaceChildren(new Option("Selecciona un cliente…", ""));
+    clientes.forEach(c => select.add(new Option(c.nombre + " · " + c.documento, c.id)));
+    select.value = seleccionado;
 }
 
 /* ---------- VALIDACIÓN ---------- */
@@ -147,7 +96,7 @@ function validar(datos, idActual) {
     // Placa colombiana: carro ABC123 | moto ABC12D
     if (!/^[A-Z]{3}\d{2}[A-Z0-9]$/.test(datos.placa)) {
         errores.placa = "Formato inválido. Ej: ABC123 o ABC12D.";
-    } else if (leerVehiculos().some(v => v.placa === datos.placa && v.id !== idActual)) {
+    } else if (vehiculos.some(v => v.placa === datos.placa && v.id !== idActual)) {
         errores.placa = "Ya existe un vehículo con esta placa.";
     }
 
@@ -185,7 +134,7 @@ function leerFormulario() {
 function abrirFormulario(vehiculo = null) {
     form.reset();
     mostrarErrores({});
-    cargarPropietarios(vehiculo ? vehiculo.propietario : "");
+    cargarPropietarios(vehiculo ? vehiculo.cliente_id : "");
 
     $("idVehiculo").value = vehiculo ? vehiculo.id : "";
     $("modalTitulo").textContent = vehiculo ? "EDITAR VEHÍCULO" : "NUEVO VEHÍCULO";
@@ -205,7 +154,7 @@ $("placa").addEventListener("input", e => {
 });
 
 // Crear / actualizar
-form.addEventListener("submit", e => {
+form.addEventListener("submit", async e => {
     e.preventDefault();
     const id = $("idVehiculo").value;
     const datos = leerFormulario();
@@ -213,15 +162,16 @@ form.addEventListener("submit", e => {
     mostrarErrores(errores);
     if (Object.keys(errores).length) return;
 
-    if (id) {
-        actualizarVehiculo(id, datos);
-        mostrarAviso("Vehículo actualizado");
-    } else {
-        crearVehiculo(datos);
-        mostrarAviso("Vehículo registrado");
-    }
-    modalForm.close();
-    render();
+    const { propietario, ...ficha } = datos;
+    $("btnGuardar").disabled = true;
+    try {
+        await catalogoApi(id ? "vehiculos/" + id : "vehiculos", id ? "PUT" : "POST",
+            { ...ficha, cliente_id: propietario });
+        modalForm.close();
+        mostrarAviso("Vehículo guardado");
+        await cargar();
+    } catch (e) { window.alert(e.message); }
+    finally { $("btnGuardar").disabled = false; }
 });
 
 // Editar / eliminar (delegación de eventos)
@@ -230,12 +180,12 @@ tabla.addEventListener("click", e => {
     const btnEliminar = e.target.closest("[data-eliminar]");
 
     if (btnEditar) {
-        const v = leerVehiculos().find(x => x.id === btnEditar.dataset.editar);
+        const v = vehiculos.find(x => x.id === btnEditar.dataset.editar);
         if (v) abrirFormulario(v);
     }
 
     if (btnEliminar) {
-        const v = leerVehiculos().find(x => x.id === btnEliminar.dataset.eliminar);
+        const v = vehiculos.find(x => x.id === btnEliminar.dataset.eliminar);
         if (!v) return;
         idAEliminar = v.id;
         $("textoEliminar").textContent =
@@ -244,14 +194,16 @@ tabla.addEventListener("click", e => {
     }
 });
 
-$("btnConfirmarEliminar").addEventListener("click", () => {
-    if (idAEliminar) {
-        eliminarVehiculo(idAEliminar);
+$("btnConfirmarEliminar").addEventListener("click", async () => {
+    if (!idAEliminar) return;
+    $("btnConfirmarEliminar").disabled = true;
+    try {
+        await catalogoApi("vehiculos/" + idAEliminar, "DELETE");
         idAEliminar = null;
-        mostrarAviso("Vehículo eliminado");
-        render();
-    }
-    modalEliminar.close();
+        modalEliminar.close();
+        await cargar();
+    } catch (e) { modalEliminar.close(); mostrarAviso(e.message, true); }
+    finally { $("btnConfirmarEliminar").disabled = false; }
 });
 
 // Cerrar modales (botones y clic fuera)
@@ -267,4 +219,4 @@ document.querySelectorAll("[data-cerrar]").forEach(btn => {
 buscador.addEventListener("input", render);
 
 /* ---------- INICIO ---------- */
-render();
+cargar();
