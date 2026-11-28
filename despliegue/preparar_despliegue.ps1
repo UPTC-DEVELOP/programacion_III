@@ -32,8 +32,21 @@ Copy-Item (Join-Path $backend '.htaccess') $destinoBackend
 Remove-Item (Join-Path $destinoBackend 'cxn\LoginMysql.prod.example.php')
 
 # Zip para subirlo con el File Manager del hosting y usar "Extract"
+# Se arma a mano con rutas "/" : Compress-Archive de Windows PowerShell 5 usa "\" y
+# el servidor Linux extrae archivos sueltos llamados "Login\Login.html" en vez de carpetas
 $zip = Join-Path $raiz 'dist\tallerpro.zip'
-Compress-Archive -Path (Join-Path $dist '*') -DestinationPath $zip -Force
+Add-Type -AssemblyName System.IO.Compression
+Add-Type -AssemblyName System.IO.Compression.FileSystem
+$archivoZip = [System.IO.Compression.ZipFile]::Open($zip, [System.IO.Compression.ZipArchiveMode]::Create)
+try {
+    $base = (Resolve-Path $dist).Path.TrimEnd('\') + '\'
+    Get-ChildItem $dist -Recurse -File -Force | ForEach-Object {
+        $nombre = $_.FullName.Substring($base.Length).Replace('\', '/')
+        [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile($archivoZip, $_.FullName, $nombre) | Out-Null
+    }
+} finally {
+    $archivoZip.Dispose()
+}
 
 Write-Host "Listo: $dist" -ForegroundColor Green
 Write-Host "Zip:   $zip" -ForegroundColor Green

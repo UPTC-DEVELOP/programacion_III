@@ -36,6 +36,7 @@ require 'ctrl/business/Empleados.php';
 require 'ctrl/business/Administradores.php';
 require 'ctrl/business/Autos.php';
 require 'ctrl/business/Citas.php';
+require 'ctrl/business/Servicios.php';
 // Preparar manejo de excepciones
 /**
  * *Formatos permitidos enviados por parametro

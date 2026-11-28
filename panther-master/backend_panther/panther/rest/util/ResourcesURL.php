@@ -19,7 +19,8 @@ define("RESOURCES_URL", array(
     'empleados',
     'administradores',
     'autos',
-    'citas'
+    'citas',
+    'servicios'
 ));
 
 /**
