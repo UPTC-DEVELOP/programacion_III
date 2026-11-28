@@ -1,156 +1,177 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="es">
+	<head>
+		<title>Taller Mecánico - Gestión de Proveedores</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/modulos.css" />
+		<link rel="stylesheet" href="assets/css/repuestos.css?v=5" />
+	</head>
+	<body class="is-preload">
+		<div id="page-wrapper">
 
-<head>
-    <title>Gestión de proveedores</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <link rel="stylesheet" href="assets/css/modulos.css" />
-</head>
+			<!-- Header -->
+				<header id="header">
+					<div class="logo container">
+						<div>
+							<h1><a href="index.html" id="logo">Olimac Riders Store</a></h1>
+							<p>Sistema de Gestión de Taller Mecánico</p>
+						</div>
+					</div>
+				</header>
 
-<body class="is-preload">
-    <div id="page-wrapper">
+			<!-- Nav -->
+				<nav id="nav">
+					<ul>
+						<li><a href="index.html">Inicio</a></li>
+						<li><a href="no-sidebar.html">Clientes</a></li>
+						<li><a href="left-sidebar.html">Vehículos</a></li>
+						<li class="current"><a href="proveedores.html">Proveedores</a></li>
+						<li><a href="orden-servicio.html">Servicios</a></li>
+						<li><a href="right-sidebar.html">Empleados</a></li>
+						<li><a href="repuestos.html">Repuestos</a></li>
+						<li><a href="inventario.html">Inventario</a></li>
+						<li><a href="factura.html">Facturación</a></li>
+					</ul>
+				</nav>
 
-        <!-- Header -->
-        <header id="header">
-            <div class="logo container">
-                <div>
-                    <h1><a href="index.html" id="logo">Olimac Riders Store</a></h1>
-                    <p>Sistema de Gestión de Taller Mecánico</p>
-                </div>
-            </div>
-        </header>
+			<!-- Main -->
+				<section id="main">
+					<div class="container">
+						<div class="row">
+							<div class="col-12">
+								<div class="content">
+									<article class="box page-content">
+										<section id="modulo-proveedores" class="rep-modulo">
+											<header class="rep-encabezado">
+												<h2>Gestión de Proveedores</h2>
+												<p>Proveedores que suministran repuestos y productos al taller mecánico.</p>
+											</header>
 
-        <!-- Nav -->
-        <nav id="nav">
-            <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="no-sidebar.html">Clientes</a></li>
-                <li><a href="left-sidebar.html">Vehículos</a></li>
-                <li class="current"><a href="proveedores.html">Proveedores</a></li>
-                <li><a href="orden-servicio.html">Servicios</a></li>
-                <li><a href="right-sidebar.html">Empleados</a></li>
-                <li><a href="repuestos.html">Repuestos</a></li>
-                <li><a href="inventario.html">Inventario</a></li>
-                <li><a href="factura.html">Facturación</a></li>
-            </ul>
-        </nav>
+											<form id="formSesionPanther" class="rep-sesion" autocomplete="on">
+												<label class="rep-campo">
+													<span>Usuario</span>
+													<input type="text" id="usuarioPanther" placeholder="Ej. admin" autocomplete="username" required>
+												</label>
+												<label class="rep-campo">
+													<span>Contraseña</span>
+													<input type="password" id="contraseniaPanther" placeholder="Ingrese su contraseña" autocomplete="current-password" required>
+												</label>
+												<button type="submit" id="btnEntrarPanther" class="rep-boton rep-boton-principal">Entrar</button>
+											</form>
 
-        <!-- Main -->
-        <section id="main">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="content">
+											<div id="sesionActivaPanther" class="rep-sesion-activa" hidden>
+												<p class="rep-sesion-estado">
+													<span class="rep-sesion-indicador" aria-hidden="true"></span>
+													<span>Sesión iniciada (<strong id="usuarioActivoPanther"></strong>)</span>
+												</p>
+												<button type="button" id="btnCerrarSesionPanther" class="rep-boton rep-boton-secundario">Cerrar sesión</button>
+											</div>
 
-                            <article class="box page-content">
+											<div id="avisoBloqueoProveedores" class="rep-aviso-bloqueo">
+												<p><strong>Autenticación requerida:</strong> Inicia sesión con tu usuario del taller para habilitar la gestión de proveedores.</p>
+											</div>
 
-                                <header>
-                                    <h2>Gestión de Proveedores</h2>
-                                    <p>
-                                        Registro y administración de los proveedores del taller mecánico.
-                                    </p>
-                                </header>
+											<div id="panelCrudProveedores" class="rep-crud-contenido" hidden>
+												<form id="formProveedor" class="rep-panel rep-formulario" novalidate>
+													<input type="hidden" id="proveedorId">
+													<label class="rep-campo">
+														<span>NIT / Identificación</span>
+														<input type="text" id="nitProveedor" maxlength="25" placeholder="Ej. 900123456-7" required>
+													</label>
+													<label class="rep-campo">
+														<span>Nombre o razón social</span>
+														<input type="text" id="nombreProveedor" maxlength="120" placeholder="Ej. Repuestos El Motor" required>
+													</label>
+													<label class="rep-campo">
+														<span>Teléfono</span>
+														<input type="text" id="telefonoProveedor" maxlength="20" placeholder="Ej. 3001234567" required>
+													</label>
+													<label class="rep-campo">
+														<span>Correo electrónico</span>
+														<input type="email" id="correoProveedor" maxlength="120" placeholder="proveedor@correo.com" required>
+													</label>
+													<label class="rep-campo">
+														<span>Dirección</span>
+														<input type="text" id="direccionProveedor" maxlength="180" placeholder="Ej. Calle 10 # 15-20" required>
+													</label>
+													<div class="rep-acciones">
+														<button type="button" class="rep-boton rep-boton-secundario" id="btnLimpiarProveedor">Limpiar</button>
+														<button type="submit" class="rep-boton rep-boton-principal" id="btnGuardarProveedor">Registrar proveedor</button>
+													</div>
+												</form>
 
-                                <section>
-                                    <h3>Registrar proveedor</h3>
+												<section class="rep-listado">
+													<header>
+														<h3>Listado de proveedores</h3>
+													</header>
+													<label class="rep-buscar">
+														<span>Buscar</span>
+														<input type="search" id="buscarProveedor" placeholder="NIT, nombre, correo o teléfono">
+													</label>
+													<div class="rep-tabla-contenedor">
+														<table class="rep-tabla">
+															<thead>
+																<tr>
+																	<th scope="col">NIT</th>
+																	<th scope="col">Nombre</th>
+																	<th scope="col">Teléfono</th>
+																	<th scope="col">Correo</th>
+																	<th scope="col">Dirección</th>
+																	<th scope="col">Acciones</th>
+																</tr>
+															</thead>
+															<tbody id="tablaProveedores"></tbody>
+														</table>
+													</div>
+												</section>
+											</div>
+										</section>
+										<div id="toastProveedor" class="rep-toast" hidden></div>
+									</article>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
 
-                                    <form id="formProveedor">
+			<!-- Footer -->
+				<footer id="footer">
+					<div class="container">
+						<div class="row gtr-200">
+							<div class="col-12">
+								<section>
+									<h2 class="major"><span>Contacto</span></h2>
+									<ul class="contact">
+										<li><a class="icon brands fa-facebook-f" href="#"><span class="label">Facebook</span></a></li>
+										<li><a class="icon brands fa-twitter" href="#"><span class="label">Twitter</span></a></li>
+										<li><a class="icon brands fa-instagram" href="#"><span class="label">Instagram</span></a></li>
+									</ul>
+								</section>
+							</div>
+						</div>
+						<div id="copyright">
+							<ul class="menu">
+								<li>&copy; Olimac Riders Store. Todos los derechos reservados.</li>
+								<li>Diseño base: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</div>
+				</footer>
 
-                                        <input type="hidden" id="proveedorId">
+		</div>
 
-                                        <fieldset>
-                                            <label for="nitProveedor">NIT / Identificación</label>
-                                            <input type="text" id="nitProveedor" placeholder="Ej. 900123456-7" required>
-                                        </fieldset>
-
-                                        <fieldset>
-                                            <label for="nombreProveedor">Nombre o razón social</label>
-                                            <input type="text" id="nombreProveedor" placeholder="Ej. Repuestos El Motor"
-                                                required>
-                                        </fieldset>
-
-                                        <fieldset>
-                                            <label for="telefonoProveedor">Teléfono</label>
-                                            <input type="text" id="telefonoProveedor" placeholder="Ej. 3001234567"
-                                                required>
-                                        </fieldset>
-
-                                        <fieldset>
-                                            <label for="correoProveedor">Correo electrónico</label>
-                                            <input type="email" id="correoProveedor" placeholder="proveedor@correo.com"
-                                                required>
-                                        </fieldset>
-
-                                        <fieldset>
-                                            <label for="direccionProveedor">Dirección</label>
-                                            <input type="text" id="direccionProveedor"
-                                                placeholder="Ej. Calle 10 # 15-20" required>
-                                        </fieldset>
-
-                                        <footer style="margin-top: 25px;">
-                                            <button type="reset">Limpiar</button>
-                                            <button type="submit" id="btnGuardarProveedor" style="margin-left: 10px;">
-                                                Registrar Proveedor
-                                            </button>
-                                        </footer>
-
-                                    </form>
-                                </section>
-
-                                <section>
-                                    <header>
-                                        <h3>Proveedores registrados</h3>
-                                    </header>
-
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>NIT</th>
-                                                <th>Nombre / Razón social</th>
-                                                <th>Teléfono</th>
-                                                <th>Correo</th>
-                                                <th>Dirección</th>
-                                                <th>Acciones</th>
-                                            </tr>
-                                        </thead>
-
-                                        <tbody id="tablaProveedores">
-                                        </tbody>
-                                    </table>
-                                </section>
-
-                                <aside>
-                                    <h3>Información</h3>
-
-                                    <p>
-                                        En este módulo se pueden registrar, consultar,
-                                        actualizar y eliminar los proveedores que suministran
-                                        repuestos y productos al taller mecánico.
-                                    </p>
-                                </aside>
-
-                            </article>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Scripts -->
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/js/jquery.dropotron.min.js"></script>
-        <script src="assets/js/jquery.scrolly.min.js"></script>
-        <script src="assets/js/browser.min.js"></script>
-        <script src="assets/js/breakpoints.min.js"></script>
-        <script src="assets/js/util.js"></script>
-        <script src="assets/js/main.js"></script>
-
-        <script src="assets/js/datos-taller.js"></script>
-        <script src="assets/js/crud-proveedores.js"></script>
-
-</body>
-
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.dropotron.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+		<script src="assets/js/datos-taller.js"></script>
+		<script src="assets/js/api-taller.js?v=5"></script>
+		<script src="assets/js/proveedores.js?v=1"></script>
+	</body>
 </html>

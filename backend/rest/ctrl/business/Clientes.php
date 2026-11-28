@@ -65,9 +65,27 @@ class Clientes extends Request
         UserAction::authenticator();
         $object = JSONUtil::decodeJSON();
         $this->validarCliente($object);
-        $this->asegurarCedulaLibre($object->cedula, null);
 
         $pdo = Connection::getInstance()->getConnection();
+        $existente = $this->buscarPorCedulaTodos($object->cedula);
+
+        if ($existente !== null) {
+            if ($existente['dateDelete'] === null) {
+                throw new ExcepcionAPI(Status::BAD_REQUEST, Status::ST400, "Esa cédula ya se encuentra registrada.");
+            }
+
+            // Reactivar registro eliminado lógicamente respetando UNIQUE KEY de cédula
+            $statement = $pdo->prepare(ClientesQueries::REACTIVATE);
+            $statement->bindValue(1, $object->nombre, PDO::PARAM_STR);
+            $statement->bindValue(2, $object->correo, PDO::PARAM_STR);
+            $statement->bindValue(3, $object->telefono, PDO::PARAM_STR);
+            $statement->bindValue(4, $object->direccion, $object->direccion === null ? PDO::PARAM_NULL : PDO::PARAM_STR);
+            $statement->bindValue(5, (int) $existente['id'], PDO::PARAM_INT);
+            $statement->execute();
+
+            return new ContentBody(Status::CREATE, Status::ST201, MessageUser::SUCCESSFUL);
+        }
+
         $statement = $pdo->prepare($this->queryInsert);
         $this->insertParameter($object, $statement);
         $statement->execute();
@@ -180,7 +198,7 @@ class Clientes extends Request
 
     private function asegurarCedulaLibre(string $cedula, ?int $idActual): void
     {
-        $existente = $this->buscarPorCedula($cedula);
+        $existente = $this->buscarPorCedulaTodos($cedula);
 
         if ($existente !== null && (int) $existente['id'] !== $idActual) {
             throw new ExcepcionAPI(Status::BAD_REQUEST, Status::ST400, "Esa cédula ya se encuentra registrada.");
@@ -198,10 +216,10 @@ class Clientes extends Request
         return $fila === false ? null : $fila;
     }
 
-    private function buscarPorCedula(string $cedula): ?array
+    private function buscarPorCedulaTodos(string $cedula): ?array
     {
         $pdo = Connection::getInstance()->getConnection();
-        $statement = $pdo->prepare(ClientesQueries::SELECT_BY_CEDULA);
+        $statement = $pdo->prepare(ClientesQueries::SELECT_BY_CEDULA_ALL);
         $statement->bindValue(1, $cedula, PDO::PARAM_STR);
         $statement->execute();
         $fila = $statement->fetch(PDO::FETCH_ASSOC);

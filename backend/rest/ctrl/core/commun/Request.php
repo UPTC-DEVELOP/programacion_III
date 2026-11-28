@@ -187,7 +187,7 @@ abstract class Request
             $value  = $request[1] ?? null;
 
             if (!$column || !$value) {
-                throw new ExcepcionApi(
+                throw new ExcepcionAPI(
                     Status::BAD_REQUEST,
                     Status::ST400,
                     "Parámetros de búsqueda incompletos"
@@ -213,14 +213,16 @@ abstract class Request
             return new ContentBody(Status::OK, Status::ST200, $result);
         }
 
-        throw new ExcepcionApi(
+        throw new ExcepcionAPI(
             Status::NO_CONTENT,
             Status::ST204,
             MessageUser::NO_RESULT
         );
 
+    } catch (ExcepcionAPI $e) {
+        throw $e;
     } catch (Throwable $e) {
-        throw new ExcepcionApi(
+        throw new ExcepcionAPI(
             Status::INTERNAL_SERVER_ERROR,
             Status::ST500,
             $e->getMessage()

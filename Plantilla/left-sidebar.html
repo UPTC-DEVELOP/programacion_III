@@ -1,150 +1,182 @@
 <!DOCTYPE HTML>
-<html>
-<head>
-	<title>Gestión de Vehículos</title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="assets/css/main.css" />
-	<link rel="stylesheet" href="assets/css/modulos.css" />
-</head>
+<html lang="es">
+	<head>
+		<title>Taller Mecánico - Gestión de Vehículos</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/modulos.css" />
+		<link rel="stylesheet" href="assets/css/repuestos.css?v=5" />
+	</head>
+	<body class="is-preload">
+		<div id="page-wrapper">
 
-<body class="is-preload">
-	<div id="page-wrapper">
-
-		<!-- Header -->
-		<header id="header">
-			<div class="logo container">
-				<div>
-					<h1><a href="index.html" id="logo">Olimac Riders Store</a></h1>
-					<p>Sistema de Gestión de Taller Mecánico</p>
-				</div>
-			</div>
-		</header>
-
-		<!-- Nav -->
-		<nav id="nav">
-			<ul>
-				<li><a href="index.html">Inicio</a></li>
-				<li><a href="no-sidebar.html">Clientes</a></li>
-				<li class="current"><a href="left-sidebar.html">Vehículos</a></li>
-				<li><a href="proveedores.html">Proveedores</a></li>
-				<li><a href="orden-servicio.html">Servicios</a></li>
-				<li><a href="right-sidebar.html">Empleados</a></li>
-				<li><a href="repuestos.html">Repuestos</a></li>
-				<li><a href="inventario.html">Inventario</a></li>
-				<li><a href="factura.html">Facturación</a></li>
-			</ul>
-		</nav>
-
-		<!-- Main -->
-		<section id="main">
-			<div class="container">
-				<div class="row">
-					<div class="col-12">
-						<div class="content">
-
-							<article class="box page-content">
-
-								<header>
-									<h2>Gestión de Vehículos</h2>
-									<p>Registro y administración de los vehículos del taller mecánico.</p>
-								</header>
-
-								<section>
-									<h3>Registrar vehículo</h3>
-
-									<form id="formVehiculo">
-
-										<input type="hidden" id="vehiculoId">
-
-										<fieldset>
-											<label for="placaVehiculo">Placa</label>
-											<input type="text" id="placaVehiculo" placeholder="Ej. ABC123" required>
-										</fieldset>
-
-										<fieldset>
-											<label for="marcaVehiculo">Marca</label>
-											<input type="text" id="marcaVehiculo" placeholder="Ej. Chevrolet" required>
-										</fieldset>
-
-										<fieldset>
-											<label for="modeloVehiculo">Modelo</label>
-											<input type="number" id="modeloVehiculo" placeholder="Ej. 2020" required>
-										</fieldset>
-
-										<fieldset>
-											<label for="colorVehiculo">Color</label>
-											<input type="text" id="colorVehiculo" placeholder="Ej. Blanco" required>
-										</fieldset>
-
-										<fieldset>
-											<label for="tipoVehiculo">Tipo de vehículo</label>
-											<select id="tipoVehiculo" required>
-												<option value="">Seleccione un tipo</option>
-												<option value="Automóvil">Automóvil</option>
-												<option value="Camioneta">Camioneta</option>
-												<option value="Motocicleta">Motocicleta</option>
-												<option value="Camión">Camión</option>
-												<option value="Bus">Bus</option>
-											</select>
-										</fieldset>
-
-										<fieldset>
-											<label for="clienteVehiculo">Cliente propietario</label>
-											<select id="clienteVehiculo" required>
-												<option value="">Seleccione un cliente</option>
-											</select>
-										</fieldset>
-
-										<footer style="margin-top: 25px;">
-											<button type="reset">Limpiar</button>
-											<button type="submit" id="btnGuardarVehiculo" style="margin-left: 10px;">
-												Registrar Vehículo
-											</button>
-										</footer>
-
-									</form>
-								</section>
-
-								<section>
-									<header>
-										<h3>Vehículos registrados</h3>
-									</header>
-
-									<table>
-										<thead>
-											<tr>
-												<th>Placa</th>
-												<th>Marca</th>
-												<th>Modelo</th>
-												<th>Color</th>
-												<th>Tipo</th>
-												<th>Cliente</th>
-												<th>Acciones</th>
-											</tr>
-										</thead>
-
-										<tbody id="tablaVehiculos">
-										</tbody>
-									</table>
-								</section>
-
-								<aside>
-									<h3>Información</h3>
-									<p>
-										En este módulo se pueden registrar, consultar,
-										actualizar y eliminar los vehículos asociados
-										a los clientes del taller.
-									</p>
-								</aside>
-
-							</article>
-
+			<!-- Header -->
+				<header id="header">
+					<div class="logo container">
+						<div>
+							<h1><a href="index.html" id="logo">Olimac Riders Store</a></h1>
+							<p>Sistema de Gestión de Taller Mecánico</p>
 						</div>
 					</div>
-				</div>
-			</div>
-		</section>
+				</header>
+
+			<!-- Nav -->
+				<nav id="nav">
+					<ul>
+						<li><a href="index.html">Inicio</a></li>
+						<li><a href="no-sidebar.html">Clientes</a></li>
+						<li class="current"><a href="left-sidebar.html">Vehículos</a></li>
+						<li><a href="proveedores.html">Proveedores</a></li>
+						<li><a href="orden-servicio.html">Servicios</a></li>
+						<li><a href="right-sidebar.html">Empleados</a></li>
+						<li><a href="repuestos.html">Repuestos</a></li>
+						<li><a href="inventario.html">Inventario</a></li>
+						<li><a href="factura.html">Facturación</a></li>
+					</ul>
+				</nav>
+
+			<!-- Main -->
+				<section id="main">
+					<div class="container">
+						<div class="row">
+							<div class="col-12">
+								<div class="content">
+									<article class="box page-content">
+										<section id="modulo-vehiculos" class="rep-modulo">
+											<header class="rep-encabezado">
+												<h2>Gestión de Vehículos</h2>
+												<p>Parque automotor vinculado a clientes. Las órdenes de servicio usan estas placas y dueños.</p>
+											</header>
+
+											<form id="formSesionPanther" class="rep-sesion" autocomplete="on">
+												<label class="rep-campo">
+													<span>Usuario</span>
+													<input type="text" id="usuarioPanther" placeholder="Ej. admin" autocomplete="username" required>
+												</label>
+												<label class="rep-campo">
+													<span>Contraseña</span>
+													<input type="password" id="contraseniaPanther" placeholder="Ingrese su contraseña" autocomplete="current-password" required>
+												</label>
+												<button type="submit" id="btnEntrarPanther" class="rep-boton rep-boton-principal">Entrar</button>
+											</form>
+
+											<div id="sesionActivaPanther" class="rep-sesion-activa" hidden>
+												<p class="rep-sesion-estado">
+													<span class="rep-sesion-indicador" aria-hidden="true"></span>
+													<span>Sesión iniciada (<strong id="usuarioActivoPanther"></strong>)</span>
+												</p>
+												<button type="button" id="btnCerrarSesionPanther" class="rep-boton rep-boton-secundario">Cerrar sesión</button>
+											</div>
+
+											<div id="avisoBloqueoVehiculos" class="rep-aviso-bloqueo">
+												<p><strong>Autenticación requerida:</strong> Inicia sesión con tu usuario del taller para habilitar la gestión de vehículos.</p>
+											</div>
+
+											<div id="panelCrudVehiculos" class="rep-crud-contenido" hidden>
+												<form id="formVehiculo" class="rep-panel rep-formulario" novalidate>
+													<input type="hidden" id="vehiculoId">
+													<label class="rep-campo">
+														<span>Placa</span>
+														<input type="text" id="placaVehiculo" maxlength="15" placeholder="Ej. ABC123" required>
+														<p class="rep-ayuda">De 5 a 15 caracteres alfanuméricos o guion.</p>
+													</label>
+													<label class="rep-campo">
+														<span>Marca</span>
+														<input type="text" id="marcaVehiculo" maxlength="60" placeholder="Ej. Yamaha" required>
+													</label>
+													<label class="rep-campo">
+														<span>Modelo</span>
+														<input type="text" id="modeloVehiculo" maxlength="60" placeholder="Ej. MT-07 / 2020" required>
+													</label>
+													<label class="rep-campo">
+														<span>Color</span>
+														<input type="text" id="colorVehiculo" maxlength="40" placeholder="Ej. Negro" required>
+													</label>
+													<label class="rep-campo">
+														<span>Tipo de vehículo</span>
+														<select id="tipoVehiculo" required>
+															<option value="">Seleccione un tipo</option>
+															<option value="Automóvil">Automóvil</option>
+															<option value="Camioneta">Camioneta</option>
+															<option value="Motocicleta">Motocicleta</option>
+															<option value="Camión">Camión</option>
+															<option value="Bus">Bus</option>
+														</select>
+													</label>
+													<label class="rep-campo">
+														<span>Cliente propietario</span>
+														<select id="clienteVehiculo" required>
+															<option value="">Seleccione un cliente</option>
+														</select>
+														<p class="rep-ayuda">Debe existir previamente en el módulo de Clientes.</p>
+													</label>
+													<div class="rep-acciones">
+														<button type="button" class="rep-boton rep-boton-secundario" id="btnLimpiarVehiculo">Limpiar</button>
+														<button type="submit" class="rep-boton rep-boton-principal" id="btnGuardarVehiculo">Registrar vehículo</button>
+													</div>
+												</form>
+
+												<section class="rep-listado">
+													<header>
+														<h3>Listado de vehículos</h3>
+													</header>
+													<label class="rep-buscar">
+														<span>Buscar</span>
+														<input type="search" id="buscarVehiculo" placeholder="Placa, marca, modelo o cliente">
+													</label>
+													<div class="rep-tabla-contenedor">
+														<table class="rep-tabla">
+															<thead>
+																<tr>
+																	<th scope="col">Placa</th>
+																	<th scope="col">Marca</th>
+																	<th scope="col">Modelo</th>
+																	<th scope="col">Color</th>
+																	<th scope="col">Tipo</th>
+																	<th scope="col">Cliente</th>
+																	<th scope="col">Acciones</th>
+																</tr>
+															</thead>
+															<tbody id="tablaVehiculos"></tbody>
+														</table>
+													</div>
+												</section>
+											</div>
+										</section>
+										<div id="toastVehiculo" class="rep-toast" hidden></div>
+									</article>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+			<!-- Footer -->
+				<footer id="footer">
+					<div class="container">
+						<div class="row gtr-200">
+							<div class="col-12">
+								<section>
+									<h2 class="major"><span>Contacto</span></h2>
+									<ul class="contact">
+										<li><a class="icon brands fa-facebook-f" href="#"><span class="label">Facebook</span></a></li>
+										<li><a class="icon brands fa-twitter" href="#"><span class="label">Twitter</span></a></li>
+										<li><a class="icon brands fa-instagram" href="#"><span class="label">Instagram</span></a></li>
+									</ul>
+								</section>
+							</div>
+						</div>
+						<div id="copyright">
+							<ul class="menu">
+								<li>&copy; Olimac Riders Store. Todos los derechos reservados.</li>
+								<li>Diseño base: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</div>
+				</footer>
+
+		</div>
 
 		<!-- Scripts -->
 		<script src="assets/js/jquery.min.js"></script>
@@ -154,10 +186,8 @@
 		<script src="assets/js/breakpoints.min.js"></script>
 		<script src="assets/js/util.js"></script>
 		<script src="assets/js/main.js"></script>
-
 		<script src="assets/js/datos-taller.js"></script>
-		<script src="assets/js/crud-vehiculos.js"></script>
-
-</body>
-
+		<script src="assets/js/api-taller.js?v=5"></script>
+		<script src="assets/js/vehiculos.js?v=1"></script>
+	</body>
 </html>
