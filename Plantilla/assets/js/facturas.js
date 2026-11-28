@@ -166,12 +166,178 @@
     pintarLiquidacion(liq);
   }
 
+  function setBotonesFactura(habilitado) {
+    var off = !habilitado;
+    if ($("facBtnGuardar")) $("facBtnGuardar").disabled = off;
+    if ($("facBtnEmitirClarisa")) $("facBtnEmitirClarisa").disabled = off;
+  }
+
+  function pintarEstadoClarisa(auth) {
+    var caja = $("facClarisaEstado");
+    var msg = $("facClarisaMensaje");
+    if (!caja || !msg) return;
+    var ok = Boolean(auth && auth.ok);
+    caja.classList.toggle("is-ok", ok);
+    caja.classList.toggle("is-error", !ok);
+    msg.textContent =
+      (auth && auth.mensaje) ||
+      (ok
+        ? "Conectado a Clarisa."
+        : "Sin conexión con Clarisa. Puedes seguir usando el taller.");
+  }
+
+  function leerClarisaLocal() {
+    if (typeof window.obtenerClarisaAuth === "function") {
+      return window.obtenerClarisaAuth();
+    }
+    try {
+      return JSON.parse(sessionStorage.getItem("olimac_clarisa_auth") || "null");
+    } catch (e) {
+      return null;
+    }
+  }
+
+  async function refrescarEstadoClarisa() {
+    pintarEstadoClarisa(leerClarisaLocal());
+    try {
+      var res = await apiFacturas(API + "/clarisa-estado");
+      var data = res.data || {};
+      if (data.clarisaAuth && typeof window.guardarClarisaAuth === "function") {
+        window.guardarClarisaAuth({
+          clarisaAuth: data.clarisaAuth,
+          clarisaToken:
+            typeof window.obtenerClarisaToken === "function"
+              ? window.obtenerClarisaToken()
+              : sessionStorage.getItem("olimac_clarisa_token")
+        });
+      }
+      pintarEstadoClarisa(data.clarisaAuth || leerClarisaLocal());
+    } catch (err) {
+      /* ignore */
+    }
+  }
+
+  async function reintentarClarisa() {
+    var btn = $("facBtnReintentarClarisa");
+    if (btn) btn.disabled = true;
+    try {
+      var res = await apiFacturas(API + "/clarisa-auth", {
+        method: "POST",
+        body: JSON.stringify({})
+      });
+      var data = res.data || {};
+      if (typeof window.guardarClarisaAuth === "function") {
+        window.guardarClarisaAuth(data);
+      }
+      pintarEstadoClarisa(data.clarisaAuth || null);
+      toast(
+        (data.clarisaAuth && data.clarisaAuth.mensaje) ||
+          "Reintento Clarisa finalizado",
+        data.clarisaAuth && data.clarisaAuth.ok ? "ok" : "aviso"
+      );
+    } catch (err) {
+      toast(err.message || "No se pudo reautenticar Clarisa", "error");
+      pintarEstadoClarisa({
+        ok: false,
+        mensaje: err.message || "No se pudo reconectar con Clarisa."
+      });
+    } finally {
+      if (btn) btn.disabled = false;
+    }
+  }
+
   function limpiarOrden() {
     ordenActual = null;
     $("facResumenOrden").hidden = true;
     $("facRepuestosWrap").hidden = true;
-    $("facBtnGuardar").disabled = true;
+    setBotonesFactura(false);
     actualizarCalculo();
+  }
+
+  function inferirTipoId(cedula) {
+    var digitos = String(cedula || "").replace(/\D+/g, "");
+    if (digitos.length >= 9 && digitos.length <= 10) {
+      /* NIT colombiano típico sin DV ~9; cédulas suelen ser 6-10 */
+    }
+    if (digitos.length === 9) return "NI";
+    return "CC";
+  }
+
+  function prellenarCamposClarisa(data) {
+    if ($("facTipoId")) {
+      $("facTipoId").value = inferirTipoId(data.cliente_cedula);
+    }
+    if ($("facNaturaleza")) {
+      $("facNaturaleza").value =
+        inferirTipoId(data.cliente_cedula) === "NI" ? "JURIDICA" : "NATURAL";
+    }
+    if ($("facRespFiscales") && !$("facRespFiscales").value) {
+      $("facRespFiscales").value = "NOA";
+    }
+    if ($("facRespTributarias") && !$("facRespTributarias").value) {
+      $("facRespTributarias").value = "IVA";
+    }
+    if ($("facFormaPago") && !$("facFormaPago").value) {
+      $("facFormaPago").value = "1";
+    }
+    if ($("facPrefijo") && !$("facPrefijo").value) {
+      $("facPrefijo").value = "SETP";
+    }
+  }
+
+  function construirPayloadLocal() {
+    return {
+      orden_id: Number(ordenActual.id),
+      valor_hora: Number($("facValorHora").value),
+      porcentaje_utilidad: Number($("facUtilidadPct").value),
+      estado_pago: $("facEstadoPago").value || "PENDIENTE",
+      medio_pago: $("facMetodoPago").value || "EFECTIVO",
+      forma_pago: $("facFormaPago") && $("facFormaPago").value === "2" ? "CREDITO" : "CONTADO",
+      forma_pago_codigo: ($("facFormaPago") && $("facFormaPago").value) || "1",
+      medio_pago_codigo: $("facMetodoPago").value || "EFECTIVO",
+      prefijo: (($("facPrefijo") && $("facPrefijo").value) || "SETP").trim().toUpperCase(),
+      observacion: $("facObservaciones").value || "",
+      tipo_identificacion: ($("facTipoId") && $("facTipoId").value) || "CC",
+      naturaleza: ($("facNaturaleza") && $("facNaturaleza").value) || "NATURAL",
+      resp_fiscales: ($("facRespFiscales") && $("facRespFiscales").value) || "NOA",
+      resp_tributarias: ($("facRespTributarias") && $("facRespTributarias").value) || "IVA",
+      ciudad: ($("facCiudadDane") && $("facCiudadDane").value) || "",
+      email_cliente:
+        (ordenActual.raw && ordenActual.raw.cliente_correo) || "",
+      num_identificacion:
+        (ordenActual.raw && ordenActual.raw.cliente_cedula) || "",
+      nombre_razon_social:
+        (ordenActual.raw && ordenActual.raw.cliente_nombre) || "",
+      direccion_cliente:
+        (ordenActual.raw && ordenActual.raw.cliente_direccion) || "",
+      telefono_cliente:
+        (ordenActual.raw && ordenActual.raw.cliente_telefono) || "",
+      clarisa_token:
+        typeof window.obtenerClarisaToken === "function"
+          ? window.obtenerClarisaToken()
+          : sessionStorage.getItem("olimac_clarisa_token") || ""
+    };
+  }
+
+  function mostrarRespuestaClarisa(bloque) {
+    var caja = $("facClarisaRespuesta");
+    if (!caja) return;
+    var c = bloque || {};
+    $("facClarisaResEstado").textContent = c.estado || (c.ok ? "OK" : "ERROR");
+    $("facClarisaResHttp").textContent = c.httpCode != null ? String(c.httpCode) : "—";
+    $("facClarisaResCufe").textContent = c.cufe || "Aún no reportado";
+    $("facClarisaResMensaje").textContent = c.mensaje || "";
+    $("facClarisaResJson").textContent = JSON.stringify(
+      c.respuesta != null ? c.respuesta : c,
+      null,
+      2
+    );
+    caja.hidden = false;
+  }
+
+  function cerrarRespuestaClarisa() {
+    var caja = $("facClarisaRespuesta");
+    if (caja) caja.hidden = true;
   }
 
   async function cargarOrdenesFacturables() {
@@ -249,9 +415,10 @@
           : UTILIDAD_DEFAULT;
 
       pintarRepuestos(data.repuestos || []);
+      prellenarCamposClarisa(data);
       $("facResumenOrden").hidden = false;
       $("facRepuestosWrap").hidden = false;
-      $("facBtnGuardar").disabled = false;
+      setBotonesFactura(true);
       actualizarCalculo();
     } catch (err) {
       limpiarOrden();
@@ -261,23 +428,15 @@
 
   async function guardarFactura() {
     if (!ordenActual) return;
-    var payload = {
-      orden_id: Number(ordenActual.id),
-      valor_hora: Number($("facValorHora").value),
-      porcentaje_utilidad: Number($("facUtilidadPct").value),
-      estado_pago: $("facEstadoPago").value || "PENDIENTE",
-      medio_pago: $("facMetodoPago").value || "EFECTIVO",
-      forma_pago: "CONTADO",
-      observacion: $("facObservaciones").value || ""
-    };
-    $("facBtnGuardar").disabled = true;
+    var payload = construirPayloadLocal();
+    setBotonesFactura(false);
     try {
       var res = await apiFacturas(API, {
         method: "POST",
         body: JSON.stringify(payload)
       });
       var num = (res.data && res.data.numero_documento) || "";
-      toast("Factura " + num + " generada correctamente", "ok");
+      toast("Factura " + num + " guardada en el taller (sin Clarisa)", "ok");
       $("facOrdenSelect").value = "";
       $("facObservaciones").value = "";
       limpiarOrden();
@@ -288,7 +447,82 @@
       ]);
     } catch (err) {
       toast(err.message || "No se pudo guardar la factura", "error");
-      $("facBtnGuardar").disabled = false;
+      setBotonesFactura(true);
+    }
+  }
+
+  async function emitirFacturaClarisa(facturaIdOpcional) {
+    var payload;
+    if (facturaIdOpcional) {
+      payload = {
+        factura_id: Number(facturaIdOpcional),
+        tipo_identificacion: ($("facTipoId") && $("facTipoId").value) || "CC",
+        naturaleza: ($("facNaturaleza") && $("facNaturaleza").value) || "NATURAL",
+        resp_fiscales: ($("facRespFiscales") && $("facRespFiscales").value) || "NOA",
+        resp_tributarias:
+          ($("facRespTributarias") && $("facRespTributarias").value) || "IVA",
+        ciudad: ($("facCiudadDane") && $("facCiudadDane").value) || "",
+        forma_pago_codigo: ($("facFormaPago") && $("facFormaPago").value) || "1",
+        medio_pago_codigo: ($("facMetodoPago") && $("facMetodoPago").value) || "EFECTIVO",
+        clarisa_token:
+          typeof window.obtenerClarisaToken === "function"
+            ? window.obtenerClarisaToken()
+            : sessionStorage.getItem("olimac_clarisa_token") || ""
+      };
+    } else {
+      if (!ordenActual) return;
+      payload = construirPayloadLocal();
+    }
+
+    setBotonesFactura(false);
+    try {
+      var res = await apiFacturas(API + "/emitir-clarisa", {
+        method: "POST",
+        body: JSON.stringify(payload)
+      });
+      var data = res.data || {};
+      var clarisa = data.clarisa || {};
+      mostrarRespuestaClarisa(clarisa);
+      var num =
+        (data.factura && data.factura.numero_documento) ||
+        (facturaIdOpcional ? "#" + facturaIdOpcional : "");
+      if (clarisa.ok) {
+        toast(
+          "Factura " + num + " enviada a Clarisa" +
+            (clarisa.cufe ? " · CUFE: " + clarisa.cufe : ""),
+          "ok"
+        );
+      } else {
+        toast(
+          clarisa.mensaje || "Clarisa no aceptó la factura. Revisa el detalle.",
+          "aviso"
+        );
+      }
+      if (!facturaIdOpcional) {
+        $("facOrdenSelect").value = "";
+        $("facObservaciones").value = "";
+        limpiarOrden();
+      } else {
+        setBotonesFactura(Boolean(ordenActual));
+      }
+      await Promise.all([
+        cargarOrdenesFacturables(),
+        cargarFacturas(),
+        cargarKpis(),
+        refrescarEstadoClarisa()
+      ]);
+    } catch (err) {
+      toast(err.message || "No se pudo enviar a Clarisa", "error");
+      if (err.payload && err.payload.data && err.payload.data.clarisa) {
+        mostrarRespuestaClarisa(err.payload.data.clarisa);
+      } else if (err.payload) {
+        mostrarRespuestaClarisa({
+          ok: false,
+          mensaje: err.message,
+          respuesta: err.payload
+        });
+      }
+      setBotonesFactura(Boolean(ordenActual) || Boolean(facturaIdOpcional));
     }
   }
 
@@ -356,6 +590,11 @@
           '<button type="button" class="btn btn-secondary btn-sm" data-ver="' +
           f.id +
           '">Ver / Imprimir</button>' +
+          (estado !== "ANULADA" && !f.cufe
+            ? '<button type="button" class="btn btn-primary btn-sm" data-emitir-clarisa="' +
+              f.id +
+              '">Enviar a Clarisa</button>'
+            : "") +
           (estado !== "PAGADA" && estado !== "ANULADA"
             ? '<button type="button" class="btn btn-primary btn-sm" data-pagar="' +
               f.id +
@@ -564,13 +803,25 @@
     $("facValorHora").addEventListener("input", actualizarCalculo);
     $("facUtilidadPct").addEventListener("input", actualizarCalculo);
     $("facBtnGuardar").addEventListener("click", guardarFactura);
+    if ($("facBtnEmitirClarisa")) {
+      $("facBtnEmitirClarisa").addEventListener("click", function () {
+        emitirFacturaClarisa(null);
+      });
+    }
+    if ($("facBtnReintentarClarisa")) {
+      $("facBtnReintentarClarisa").addEventListener("click", reintentarClarisa);
+    }
+    if ($("facBtnCerrarClarisaResp")) {
+      $("facBtnCerrarClarisaResp").addEventListener("click", cerrarRespuestaClarisa);
+    }
     $("facBuscar").addEventListener("input", pintarTabla);
     $("facFiltroEstado").addEventListener("change", pintarTabla);
     $("facBtnRefrescar").addEventListener("click", function () {
       Promise.all([
         cargarOrdenesFacturables(),
         cargarFacturas(),
-        cargarKpis()
+        cargarKpis(),
+        refrescarEstadoClarisa()
       ]);
     });
     $("facTablaBody").addEventListener("click", function (ev) {
@@ -579,6 +830,7 @@
       if (btn.dataset.ver) verFactura(btn.dataset.ver);
       if (btn.dataset.pagar) marcarPagada(btn.dataset.pagar);
       if (btn.dataset.anular) anularFactura(btn.dataset.anular);
+      if (btn.dataset.emitirClarisa) emitirFacturaClarisa(btn.dataset.emitirClarisa);
     });
     $("facBtnCerrarPrint").addEventListener("click", cerrarPrint);
     $("facBtnImprimir").addEventListener("click", function () {
@@ -623,10 +875,12 @@
 
     bindEvents();
     limpiarOrden();
+    pintarEstadoClarisa(leerClarisaLocal());
     Promise.all([
       cargarOrdenesFacturables(),
       cargarFacturas(),
-      cargarKpis()
+      cargarKpis(),
+      refrescarEstadoClarisa()
     ]);
   }
 

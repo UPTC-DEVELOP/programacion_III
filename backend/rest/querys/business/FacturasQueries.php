@@ -209,6 +209,13 @@ class FacturasQueries
          WHERE id = ?
            AND dateDelete IS NULL;";
 
+    public const UPDATE_EMISION_CLARISA =
+        "UPDATE facturas
+         SET estado_dian = ?,
+             cufe = ?
+         WHERE id = ?
+           AND dateDelete IS NULL;";
+
     public const SOFT_DELETE =
         "UPDATE facturas
          SET dateDelete = ?,

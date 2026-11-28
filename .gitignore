@@ -2,3 +2,4 @@
 node_modules/
 _panther_tmp/
 backend/vendor/
+backend/rest/storage/clarisa_tokens.json

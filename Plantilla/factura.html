@@ -10,13 +10,13 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<script>(function(){try{if(localStorage.getItem('olimac_theme_mode')==='dark'){document.documentElement.classList.add('theme-dark');}}catch(e){}})();</script>
-		<link rel="stylesheet" href="assets/css/main.css?v=13" />
-		<link rel="stylesheet" href="assets/css/modulos.css?v=13" />
-		<link rel="stylesheet" href="assets/css/navbar.css?v=13" />
-		<link rel="stylesheet" href="assets/css/theme.css?v=13" />
-		<link rel="stylesheet" href="assets/css/components.css?v=13" />
-		<link rel="stylesheet" href="assets/css/buttons.css?v=13" />
-		<link rel="stylesheet" href="assets/css/facturas.css?v=13" />
+		<link rel="stylesheet" href="assets/css/main.css?v=14" />
+		<link rel="stylesheet" href="assets/css/modulos.css?v=14" />
+		<link rel="stylesheet" href="assets/css/navbar.css?v=14" />
+		<link rel="stylesheet" href="assets/css/theme.css?v=14" />
+		<link rel="stylesheet" href="assets/css/components.css?v=14" />
+		<link rel="stylesheet" href="assets/css/buttons.css?v=14" />
+		<link rel="stylesheet" href="assets/css/facturas.css?v=14" />
 	</head>
 	<body class="is-preload ors-app">
 		<div id="page-wrapper" hidden>
@@ -53,8 +53,16 @@
 									<section id="modulo-factura" class="fac-modulo">
 										<header>
 											<h2>Facturación</h2>
-											<p>Genera la factura legal a partir de una orden de servicio: repuestos, mano de obra, utilidad e IVA 19%.</p>
+											<p>Genera la factura a partir de una orden de servicio: repuestos, mano de obra, utilidad e IVA 19%.</p>
 										</header>
+
+										<div id="facClarisaEstado" class="fac-clarisa-estado" role="status" aria-live="polite">
+											<div class="fac-clarisa-estado__info">
+												<strong>Clarisa</strong>
+												<span id="facClarisaMensaje">Verificando conexión…</span>
+											</div>
+											<button type="button" class="btn btn-secondary btn-sm" id="facBtnReintentarClarisa">Reintentar</button>
+										</div>
 
 										<div class="fac-kpis" aria-label="Resumen de facturación">
 											<div class="fac-kpi">
@@ -101,13 +109,67 @@
 														</select>
 													</label>
 													<label class="fac-campo">
-														<span>Medio de pago</span>
-														<select id="facMetodoPago">
-															<option value="EFECTIVO">EFECTIVO</option>
-															<option value="TRANSFERENCIA">TRANSFERENCIA</option>
-															<option value="TARJETA">TARJETA</option>
-															<option value="NEQUI">NEQUI</option>
+														<span>Forma de pago (DIAN)</span>
+														<select id="facFormaPago">
+															<option value="1">Contado (1)</option>
+															<option value="2">Crédito (2)</option>
 														</select>
+													</label>
+													<label class="fac-campo">
+														<span>Medio de pago (DIAN)</span>
+														<select id="facMetodoPago">
+															<option value="EFECTIVO">Efectivo (10)</option>
+															<option value="TRANSFERENCIA">Transferencia (45)</option>
+															<option value="TARJETA">Tarjeta crédito (48)</option>
+															<option value="TARJETA_DEBITO">Tarjeta débito (49)</option>
+															<option value="NEQUI">Nequi / efectivo digital (10)</option>
+														</select>
+													</label>
+													<label class="fac-campo">
+														<span>Tipo identificación</span>
+														<select id="facTipoId">
+															<option value="CC">Cédula (CC)</option>
+															<option value="NI">NIT (NI)</option>
+															<option value="CE">Cédula extranjería (CE)</option>
+															<option value="PA">Pasaporte (PA)</option>
+															<option value="TI">Tarjeta identidad (TI)</option>
+															<option value="PE">PEP (PE)</option>
+															<option value="PT">PPT (PT)</option>
+														</select>
+													</label>
+													<label class="fac-campo">
+														<span>Naturaleza adquirente</span>
+														<select id="facNaturaleza">
+															<option value="NATURAL">Persona natural</option>
+															<option value="JURIDICA">Persona jurídica</option>
+														</select>
+													</label>
+													<label class="fac-campo">
+														<span>Resp. fiscal</span>
+														<select id="facRespFiscales">
+															<option value="NOA">No aplica – Otros (NOA)</option>
+															<option value="GRC">Gran contribuyente (GRC)</option>
+															<option value="ART">Autorretenedor (ART)</option>
+															<option value="RIV">Agente retención IVA (RIV)</option>
+															<option value="RST">Régimen SIMPLE (RST)</option>
+														</select>
+													</label>
+													<label class="fac-campo">
+														<span>Resp. tributaria</span>
+														<select id="facRespTributarias">
+															<option value="IVA">IVA</option>
+															<option value="NOA">No aplica (NOA)</option>
+															<option value="INC">INC</option>
+															<option value="IEC">IVA + INC</option>
+														</select>
+													</label>
+													<label class="fac-campo">
+														<span>Ciudad (código DANE)</span>
+														<input type="text" id="facCiudadDane" maxlength="5" placeholder="Ej. 15001 Tunja" autocomplete="off">
+													</label>
+													<label class="fac-campo">
+														<span>Prefijo numeración</span>
+														<input type="text" id="facPrefijo" maxlength="4" value="SETP" autocomplete="off">
 													</label>
 													<label class="fac-campo full">
 														<span>Observaciones</span>
@@ -156,8 +218,23 @@
 													<div class="total"><span>Total a pagar</span> <strong id="facTotal">$0</strong></div>
 												</div>
 
-												<div class="fac-acciones">
-													<button type="button" class="btn btn-primary" id="facBtnGuardar" disabled>Generar y Guardar Factura</button>
+												<div class="fac-acciones fac-acciones--split">
+													<button type="button" class="btn btn-secondary" id="facBtnGuardar" disabled>Guardar factura</button>
+													<button type="button" class="btn btn-primary" id="facBtnEmitirClarisa" disabled>Generar factura</button>
+												</div>
+
+												<div id="facClarisaRespuesta" class="fac-clarisa-respuesta" hidden>
+													<header>
+														<h3>Respuesta de Clarisa</h3>
+														<button type="button" class="btn btn-secondary btn-sm" id="facBtnCerrarClarisaResp">Cerrar</button>
+													</header>
+													<div class="fac-clarisa-respuesta__meta">
+														<div><span>Estado</span><strong id="facClarisaResEstado">—</strong></div>
+														<div><span>HTTP</span><strong id="facClarisaResHttp">—</strong></div>
+														<div><span>CUFE / ID</span><strong id="facClarisaResCufe">—</strong></div>
+													</div>
+													<p id="facClarisaResMensaje" class="fac-clarisa-respuesta__msg"></p>
+													<pre id="facClarisaResJson" class="fac-clarisa-respuesta__json"></pre>
 												</div>
 											</section>
 
@@ -248,10 +325,10 @@
 		<script src="assets/js/util.js"></script>
 		<script src="assets/js/main.js"></script>
 		<script src="assets/js/datos-taller.js"></script>
-		<script src="assets/js/api-taller.js?v=13"></script>
-		<script src="assets/js/theme-toggle.js?v=13"></script>
-		<script src="assets/js/navbar.js?v=13"></script>
-		<script src="assets/js/buttons.js?v=13"></script>
+		<script src="assets/js/api-taller.js?v=14"></script>
+		<script src="assets/js/theme-toggle.js?v=14"></script>
+		<script src="assets/js/navbar.js?v=14"></script>
+		<script src="assets/js/buttons.js?v=14"></script>
 		<script src="assets/js/facturas.js?v=14"></script>
 	</body>
 </html>

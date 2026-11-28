@@ -22,6 +22,9 @@ use Exception;
  *     Actualizado por Proyecto Actualización Panther 2025
  */
 use panther\cxn\Connection;
+use panther\util\ClarisaConfig;
+use panther\util\ClarisaService;
+use panther\util\ClarisaTokenStore;
 use panther\util\ExcepcionAPI;
 use panther\util\ContentBody;
 use panther\util\JSONUtil;
@@ -29,6 +32,7 @@ use panther\util\Status;
 use panther\model\core\segurity\User;
 use panther\ctrl\core\commun\IRequest;
 use panther\querys\core\UserQueries;
+use Throwable;
 
 class UserAction implements IRequest
 {
@@ -40,6 +44,7 @@ class UserAction implements IRequest
      * de usuario en el flujo de peticiones REST (POST /userAction/login).
      */
     private const LOGIN = 'login';
+    private const CLARISA_AUTH = 'clarisa-auth';
 
     /**
      * ------------------------------------------------------------
@@ -109,6 +114,10 @@ class UserAction implements IRequest
             return $this->login();
         }
 
+        if ($request[0] === self::CLARISA_AUTH) {
+            return $this->reautenticarClarisa();
+        }
+
         throw new ExcepcionApi(Status::NOT_FOUND, Status::ST404, 'Método no encontrado en UserAction.');
     }
 
@@ -139,12 +148,20 @@ class UserAction implements IRequest
                 }
 
                 $user = new User();
-                $user->setId($userBD['id']);
-                $user->setUser($userBD['user']);
+                $user->setId((int) $userBD['id']);
+                $user->setUser((string) $userBD['user']);
                 $user->setRoles($rol);
-                $user->setKeyAPI($userBD['keyAPI']);
+                $user->setKeyAPI((string) $userBD['keyAPI']);
 
-                return new ContentBody(Status::OK, Status::ST200, $user);
+                $payload = $user->jsonSerialize();
+                $payload['clarisaAuth'] = null;
+                $payload['clarisaToken'] = null;
+
+                if ($rol === 'ADMIN') {
+                    $payload = array_merge($payload, self::intentarAuthClarisa((string) $userBD['keyAPI']));
+                }
+
+                return new ContentBody(Status::OK, Status::ST200, $payload);
             }
 
             // En caso de credenciales incorrectas
@@ -152,6 +169,80 @@ class UserAction implements IRequest
         } catch (Exception $e) {
             throw new ExcepcionApi(Status::INTERNAL_SERVER_ERROR, Status::ST500, $e->getMessage());
         }
+    }
+
+    public function reautenticarClarisa(): ContentBody
+    {
+        UserAction::authenticator();
+        $keyAPI = self::obtenerKeyAPIDeCabecera();
+        if ($keyAPI === null) {
+            throw new ExcepcionApi(Status::UNAUTHORIZED, Status::ST401, 'Sesión Panther no válida.');
+        }
+
+        $resultado = self::intentarAuthClarisa($keyAPI);
+        return new ContentBody(Status::OK, Status::ST200, $resultado);
+    }
+
+    /** @return array{clarisaAuth: array{ok: bool, mensaje: string}, clarisaToken: ?string} */
+    public static function intentarAuthClarisa(string $keyAPI): array
+    {
+        if (!ClarisaConfig::credencialesConfiguradas()) {
+            return [
+                'clarisaAuth' => [
+                    'ok' => false,
+                    'mensaje' => 'Faltan las credenciales de Clarisa en ClarisaConfig.php.',
+                ],
+                'clarisaToken' => null,
+            ];
+        }
+
+        try {
+            $servicio = new ClarisaService();
+            $auth = $servicio->autenticar();
+            ClarisaTokenStore::save($keyAPI, $auth['token']);
+            return [
+                'clarisaAuth' => [
+                    'ok' => true,
+                    'mensaje' => $auth['message'] !== '' ? $auth['message'] : 'Conectado a Clarisa.',
+                ],
+                'clarisaToken' => $auth['token'],
+            ];
+        } catch (Throwable $e) {
+            ClarisaTokenStore::forget($keyAPI);
+            return [
+                'clarisaAuth' => [
+                    'ok' => false,
+                    'mensaje' => $e->getMessage(),
+                ],
+                'clarisaToken' => null,
+            ];
+        }
+    }
+
+    public static function obtenerKeyAPIDeCabecera(): ?string
+    {
+        $headers = function_exists('apache_request_headers')
+            ? apache_request_headers()
+            : (function_exists('getallheaders') ? getallheaders() : []);
+
+        $normalizedHeaders = array_change_key_case($headers ?: [], CASE_LOWER);
+        $authHeader = $normalizedHeaders['authorization']
+            ?? $normalizedHeaders['keyapi']
+            ?? $_SERVER['HTTP_AUTHORIZATION']
+            ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION']
+            ?? $_SERVER['HTTP_KEYAPI']
+            ?? null;
+
+        if ($authHeader === null || trim((string) $authHeader) === '') {
+            return null;
+        }
+
+        $keyAPI = trim((string) $authHeader);
+        if (stripos($keyAPI, 'Bearer ') === 0) {
+            $keyAPI = trim(substr($keyAPI, 7));
+        }
+
+        return $keyAPI !== '' ? $keyAPI : null;
     }
 
     /**

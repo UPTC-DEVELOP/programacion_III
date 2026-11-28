@@ -129,6 +129,8 @@
   var CLAVE_TOKEN = "olimac_panther_token";
   var CLAVE_USUARIO = "olimac_panther_user";
   var CLAVE_ROL = "olimac_panther_role";
+  var CLAVE_CLARISA_AUTH = "olimac_clarisa_auth";
+  var CLAVE_CLARISA_TOKEN = "olimac_clarisa_token";
 
   var MODULOS_POR_ROL = {
     ADMIN: ["Clientes", "Vehículos", "Proveedores", "Empleados", "Servicios", "Repuestos", "Inventario", "Facturación"],
@@ -184,7 +186,7 @@
     return bruto;
   }
 
-  function guardarSesion(keyAPI, usuario, rol) {
+  function guardarSesion(keyAPI, usuario, rol, clarisaExtra) {
     var token = String(keyAPI || "").trim();
     var user = String(usuario || "").trim();
     var role = normalizarRol(rol);
@@ -194,7 +196,48 @@
     sessionStorage.setItem(CLAVE_TOKEN, token);
     sessionStorage.setItem(CLAVE_USUARIO, user);
     sessionStorage.setItem(CLAVE_ROL, role);
+    if (clarisaExtra !== undefined) {
+      guardarClarisaAuth(clarisaExtra);
+    }
     return true;
+  }
+
+  function guardarClarisaAuth(clarisaExtra) {
+    var extra = clarisaExtra || {};
+    var auth = extra.clarisaAuth || null;
+    var clarisaToken = extra.clarisaToken || null;
+    if (auth && typeof auth === "object") {
+      sessionStorage.setItem(
+        CLAVE_CLARISA_AUTH,
+        JSON.stringify({
+          ok: Boolean(auth.ok),
+          mensaje: String(auth.mensaje || auth.message || "")
+        })
+      );
+    } else {
+      sessionStorage.removeItem(CLAVE_CLARISA_AUTH);
+    }
+    if (clarisaToken) {
+      sessionStorage.setItem(CLAVE_CLARISA_TOKEN, String(clarisaToken));
+    } else {
+      sessionStorage.removeItem(CLAVE_CLARISA_TOKEN);
+    }
+  }
+
+  function obtenerClarisaAuth() {
+    var raw = sessionStorage.getItem(CLAVE_CLARISA_AUTH);
+    if (!raw) {
+      return null;
+    }
+    try {
+      return JSON.parse(raw);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function obtenerClarisaToken() {
+    return sessionStorage.getItem(CLAVE_CLARISA_TOKEN) || "";
   }
 
   function obtenerSesion() {
@@ -208,7 +251,9 @@
       keyAPI: keyAPI,
       usuario: usuario,
       rol: rol,
-      token: keyAPI
+      token: keyAPI,
+      clarisaAuth: obtenerClarisaAuth(),
+      clarisaToken: obtenerClarisaToken()
     };
   }
 
@@ -216,6 +261,8 @@
     sessionStorage.removeItem(CLAVE_TOKEN);
     sessionStorage.removeItem(CLAVE_USUARIO);
     sessionStorage.removeItem(CLAVE_ROL);
+    sessionStorage.removeItem(CLAVE_CLARISA_AUTH);
+    sessionStorage.removeItem(CLAVE_CLARISA_TOKEN);
     sessionStorage.removeItem("olimac_panther_logout_manual");
     sessionStorage.removeItem("olimac_sesion");
     localStorage.removeItem(CLAVE_TOKEN);
@@ -418,8 +465,13 @@
   global.MODULOS_POR_ROL = MODULOS_POR_ROL;
   global.CATALOGO_MODULOS = CATALOGO_MODULOS;
   global.guardarSesion = guardarSesion;
+  global.guardarClarisaAuth = guardarClarisaAuth;
+  global.obtenerClarisaAuth = obtenerClarisaAuth;
+  global.obtenerClarisaToken = obtenerClarisaToken;
   global.obtenerSesion = obtenerSesion;
   global.cerrarSesion = cerrarSesion;
+  global.CLAVE_CLARISA_AUTH = CLAVE_CLARISA_AUTH;
+  global.CLAVE_CLARISA_TOKEN = CLAVE_CLARISA_TOKEN;
   global.tienePermisoModulo = tienePermisoModulo;
   global.modulosPermitidos = modulosPermitidos;
   global.protegerAccesoModulo = protegerAccesoModulo;

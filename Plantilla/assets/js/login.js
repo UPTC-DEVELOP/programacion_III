@@ -111,12 +111,26 @@
           return;
         }
 
-        if (typeof window.guardarSesion !== "function" || !window.guardarSesion(keyAPI, nombreUsuario, rol)) {
+        var clarisaExtra = {
+          clarisaAuth: data && data.clarisaAuth ? data.clarisaAuth : null,
+          clarisaToken: data && data.clarisaToken ? data.clarisaToken : null
+        };
+
+        if (
+          typeof window.guardarSesion !== "function" ||
+          !window.guardarSesion(keyAPI, nombreUsuario, rol, clarisaExtra)
+        ) {
           mostrarMensaje("No fue posible guardar la sesión. Inténtalo nuevamente.", "error");
           return;
         }
 
-        mostrarMensaje("Acceso correcto. Redirigiendo al panel…", "ok");
+        var msgOk = "Acceso correcto. Redirigiendo al panel…";
+        if (String(rol).toUpperCase() === "ADMIN" && clarisaExtra.clarisaAuth) {
+          msgOk = clarisaExtra.clarisaAuth.ok
+            ? "Acceso correcto. Clarisa conectada. Redirigiendo…"
+            : "Acceso correcto. Clarisa no disponible por ahora. Redirigiendo…";
+        }
+        mostrarMensaje(msgOk, "ok");
         window.location.replace("panel-control.html");
       } catch (error) {
         var mensaje =
