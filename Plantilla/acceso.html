@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<link rel="stylesheet" href="assets/css/modulos.css" />
-		<link rel="stylesheet" href="assets/css/repuestos.css?v=5" />
+		<link rel="stylesheet" href="assets/css/repuestos.css?v=6" />
 		<style>
 			.login-contenedor {
 				max-width: 460px;
@@ -91,7 +91,7 @@
 						<form id="formLoginPrincipal" autocomplete="on">
 							<label class="login-campo">
 								<span>Usuario</span>
-								<input type="text" id="loginUsuario" placeholder="Ej. admin o empleado" autocomplete="username" required>
+								<input type="text" id="loginUsuario" placeholder="Ej. admin o mecanico" autocomplete="username" required>
 							</label>
 
 							<label class="login-campo">
@@ -124,7 +124,8 @@
 				const tokenExistente = sessionStorage.getItem(TOKEN_KEY);
 				const rolExistente = (sessionStorage.getItem(ROLE_KEY) || "").toLowerCase();
 				if (tokenExistente) {
-					window.location.href = (rolExistente === "empleado") ? "orden-servicio.html" : "no-sidebar.html";
+					const esAdmin = (rolExistente === "admin" || rolExistente === "administrador");
+					window.location.href = esAdmin ? "no-sidebar.html" : "orden-servicio.html";
 					return;
 				}
 
@@ -161,15 +162,15 @@
 							body: JSON.stringify({ user, password })
 						});
 
-						const data = await respuesta.json().catch(() => null);
+						const payload = await respuesta.json().catch(() => null);
+						const usuarioData = payload && (payload.data || payload.body);
 
-						if (!respuesta.ok || !data || !data.body || !data.body.keyAPI) {
-							const msg = (data && (data.message || data.body)) || "Usuario o contraseña incorrectos.";
+						if (!respuesta.ok || !payload || payload.code >= 400 || !usuarioData || !usuarioData.keyAPI) {
+							const msg = (payload && (payload.message || payload.data || payload.body)) || "Usuario o contraseña incorrectos.";
 							throw new Error(typeof msg === "string" ? msg : "Credenciales inválidas.");
 						}
 
-						const usuarioData = data.body;
-						const rolNormalizado = String(usuarioData.roles || "empleado").trim().toLowerCase();
+						const rolNormalizado = String(usuarioData.roles || "mecanico").trim().toLowerCase();
 
 						// Guarda sesión persistente en sessionStorage para todos los módulos
 						sessionStorage.setItem(TOKEN_KEY, usuarioData.keyAPI);
@@ -177,14 +178,12 @@
 						sessionStorage.setItem(ROLE_KEY, rolNormalizado);
 
 						// Sincroniza también sesión compatible con el módulo de facturación
-						if (!sessionStorage.getItem("olimac_sesion")) {
-							sessionStorage.setItem("olimac_sesion", JSON.stringify({
-								token: usuarioData.keyAPI,
-								userName: usuarioData.user || user,
-								permisos: [rolNormalizado],
-								createdAt: Date.now()
-							}));
-						}
+						sessionStorage.setItem("olimac_sesion", JSON.stringify({
+							token: usuarioData.keyAPI,
+							userName: usuarioData.user || user,
+							permisos: [rolNormalizado],
+							createdAt: Date.now()
+						}));
 
 						// Redirige según el rol del usuario
 						if (rolNormalizado === "admin" || rolNormalizado === "administrador") {

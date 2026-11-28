@@ -36,7 +36,7 @@ final class LoginMysql
             'PORT'      => '3306',
             'DATA_BASE' => 'taller_mecanico',
             'USER'      => 'root',
-            'PASSWORD'  => '12345',
+            'PASSWORD'  => '',
             'CHARSET'   => 'utf8mb4',
         ],
         'test' => [
@@ -44,7 +44,7 @@ final class LoginMysql
             'PORT'      => '3306',
             'DATA_BASE' => 'taller_mecanico',
             'USER'      => 'root',
-            'PASSWORD'  => '12345',
+            'PASSWORD'  => '',
             'CHARSET'   => 'utf8mb4',
         ],
         'prod' => [
@@ -85,4 +85,3 @@ final class LoginMysql
             ?? throw new RuntimeException("Parámetro de conexión no encontrado: {$key}");
     }
 }
-

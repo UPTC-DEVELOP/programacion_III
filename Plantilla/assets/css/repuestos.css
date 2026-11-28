@@ -3,8 +3,9 @@
 	gap: 1.5rem;
 }
 
-#modulo-repuestos [hidden],
-.rep-toast[hidden] {
+.rep-modulo [hidden],
+.rep-toast[hidden],
+[hidden] {
 	display: none !important;
 }
 

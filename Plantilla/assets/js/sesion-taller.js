@@ -45,7 +45,7 @@ function cerrarSesionTaller() {
 
 function protegerRutaFactura() {
   if (!haySesionTaller()) {
-    window.location.replace("login.html");
+    window.location.replace("acceso.html");
   }
 }
 
