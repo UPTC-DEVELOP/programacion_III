@@ -104,6 +104,20 @@ CREATE TABLE IF NOT EXISTS `administrador` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE IF NOT EXISTS servicio (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  id_cliente int(11) NOT NULL,
+  id_auto int(11) DEFAULT NULL,
+  fecha date NOT NULL,
+  descripcion varchar(255) NOT NULL,
+  costo decimal(12,2) NOT NULL DEFAULT 0,
+  estado varchar(15) NOT NULL DEFAULT 'Pendiente',
+  dateDelete timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (id),
+  KEY fk_servicio_cliente (id_cliente),
+  CONSTRAINT fk_servicio_cliente FOREIGN KEY (id_cliente) REFERENCES cliente (id) ON DELETE RESTRICT
+  
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 -- Autos de los clientes (recurso REST "autos")
 CREATE TABLE IF NOT EXISTS `auto` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -119,6 +133,31 @@ CREATE TABLE IF NOT EXISTS `auto` (
   KEY `fk_auto_cliente` (`id_cliente`),
   CONSTRAINT `fk_auto_cliente` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id`) ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+-- --------------------------------------------------------
+-- Gestión de citas TallerPro
+-- --------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `cita` (
+    `id_cita` INT NOT NULL AUTO_INCREMENT,
+    `nombre` VARCHAR(120) NOT NULL,
+    `correo` VARCHAR(150) NOT NULL,
+    `telefono` VARCHAR(15) NOT NULL,
+    `servicio` VARCHAR(100) NOT NULL,
+    `mensaje` TEXT NOT NULL,
+    `fecha_cita` DATE NOT NULL,
+    `hora_cita` TIME NOT NULL,
+    `estado` ENUM(
+        'Pendiente',
+        'Confirmada',
+        'Cancelada',
+        'Atendida'
+    ) NOT NULL DEFAULT 'Pendiente',
+    `fecha_registro` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id_cita`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 -- --------------------------------------------------------
 -- Datos de ejemplo (solo si las tablas están vacías)

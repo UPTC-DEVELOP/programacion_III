@@ -56,17 +56,30 @@ class Connection
     public function getConnection()
     {
         if (self::$pdo == null) {
-            self::$pdo = new PDO('mysql:dbname=' . DATA_BASE . ';host=' . HOST_NAME . ";", USER, PASSWORD, array(
-                PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES UTF8",
-                // rowCount() cuenta filas encontradas aunque no cambien sus valores,
-                // así un PUT sin cambios no responde "recurso no encontrado"
-                PDO::MYSQL_ATTR_FOUND_ROWS => true
-            ));
-            
+
+            // Configuración adaptable al entorno de cada integrante
+            $host = getenv('PANTHER_DB_HOST') ?: HOST_NAME;
+            $port = getenv('PANTHER_DB_PORT') ?: 3306;
+
+            self::$pdo = new PDO(
+                'mysql:dbname=' . DATA_BASE .
+                ';host=' . $host .
+                ';port=' . $port . ';',
+                USER,
+                PASSWORD,
+                array(
+                    PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES UTF8",
+
+                    // rowCount() cuenta filas encontradas aunque no cambien sus valores,
+                    // así un PUT sin cambios no responde "recurso no encontrado"
+                    PDO::MYSQL_ATTR_FOUND_ROWS => true
+                )
+            );
+
             // Habilitar excepciones
             self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
-        
+
         return self::$pdo;
     }
 

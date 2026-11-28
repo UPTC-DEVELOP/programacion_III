@@ -3,23 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesion | Taller Pro</title>
-    <link rel="stylesheet" href="Login.css">
+    <title>Iniciar Sesión | TallerPro</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><text y=%2218%22 font-size=%2218%22>🔧</text></svg>">
+    <link rel="stylesheet" href="LoginPanther.css">
 </head>
 <body>
     <main class="tarjeta">
-        <h1>Iniciar Sesion</h1>
 
-        <form id="formLogin" novalidate>
-            <label for="usuario">Usuario</label>
-            <input id="usuario" type="text" maxlength="254" required autocomplete="username">
+        <!-- Panel izquierdo: bienvenida -->
+        <aside class="panel-bienvenida">
+            <a href="../index.html" class="logo" aria-label="Ir al inicio de TallerPro">
+                <svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true">
+                    <path d="M3 13l1.5-4.5A2 2 0 0 1 6.4 7h11.2a2 2 0 0 1 1.9 1.5L21 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    <rect x="2.5" y="13" width="19" height="5" rx="1.5" stroke="currentColor" stroke-width="1.6" fill="none"/>
+                    <circle cx="6.5" cy="18" r="1.6" fill="currentColor"/>
+                    <circle cx="17.5" cy="18" r="1.6" fill="currentColor"/>
+                </svg>
+                <span>Taller<strong>Pro</strong></span>
+            </a>
 
-            <label for="contrasenia">Contraseña</label>
-            <input id="contrasenia" type="password" maxlength="255" required autocomplete="current-password">
+            <div class="panel-texto">
+                <h2>¡Hola, Bienvenido!</h2>
+                <p>Inicia sesión para gestionar clientes, empleados y facturas de tu taller.</p>
+            </div>
+        </aside>
 
-            <p id="mensaje" role="alert"></p>
-            <button type="submit" id="btnEntrar">Iniciar Sesion</button>
-        </form>
+        <!-- Panel derecho: formulario -->
+        <section class="form-contenido">
+            <h1>Iniciar Sesión</h1>
+            <p class="subtitulo">Ingresa tus credenciales para continuar</p>
+
+            <form id="formLogin" novalidate>
+                <label for="usuario">Usuario</label>
+                <input id="usuario" type="text" maxlength="254" placeholder="Tu usuario" required autocomplete="username">
+
+                <label for="contrasenia">Contraseña</label>
+                <div class="campo-clave">
+                    <input id="contrasenia" type="password" maxlength="255" placeholder="Tu contraseña" required autocomplete="current-password">
+                    <button type="button" id="verClave" class="btn-ver" aria-label="Mostrar contraseña">Mostrar</button>
+                </div>
+
+                <p id="mensaje" role="alert"></p>
+                <button type="submit" id="btnEntrar">Iniciar Sesión</button>
+            </form>
+
+            <a class="volver" href="../index.html">← Volver al inicio</a>
+        </section>
+
     </main>
 
 <script src="../api/panther.js"></script>
