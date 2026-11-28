@@ -1,20 +1,12 @@
 <!DOCTYPE HTML>
-<!--
-	TXT by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
+<html lang="es">
 	<head>
-		<title>Olimac Riders Store - Gestión de Clientes</title>
+		<title>Taller Mecánico - Gestión de Clientes</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
-		
-		<!-- Bootstrap 5 CSS y Animate.css -->
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 		<link rel="stylesheet" href="assets/css/modulos.css" />
+		<link rel="stylesheet" href="assets/css/repuestos.css?v=5" />
 	</head>
 	<body class="is-preload">
 		<div id="page-wrapper">
@@ -50,88 +42,95 @@
 						<div class="row">
 							<div class="col-12">
 								<div class="content">
-
-									<!-- Content principal con semántica HTML5 -->
 									<article class="box page-content">
-
-										<nav class="text-end mb-4" aria-label="Navegación de usuario">
-											<a href="login.html" class="btn btn-outline-primary">Iniciar sesión</a>
-										</nav>
-
-										<!-- SECTION: MÓDULO PRINCIPAL CRUD CLIENTES -->
-										<section class="container mt-2" id="modulo-clientes">
-											<header>
+										<section id="modulo-clientes" class="rep-modulo">
+											<header class="rep-encabezado">
 												<h2>Gestión de Clientes</h2>
-												<p>Módulo de registro, consulta, modificación y eliminación de clientes de Olimac Riders Store.</p>
+												<p>Directorio oficial del taller. Vehículos, órdenes y facturas se vinculan a estos clientes.</p>
 											</header>
-											
-											<!-- Alerta dinámica -->
-											<output id="alertaCliente" class="alert alert-success d-none animate__animated animate__fadeIn d-block mb-3" role="alert">
-												¡Operación realizada correctamente!
-											</output>
 
-											<!-- Formulario CRUD -->
-											<form id="formCliente" class="row g-3 needs-validation" novalidate>
-												<input type="hidden" id="clienteId">
-												
-												<fieldset class="col-md-6">
-													<label for="nombreCliente" class="form-label text-dark fw-bold">Nombres y Apellidos</label>
-													<input type="text" class="form-control" id="nombreCliente" placeholder="Ej. Pedro Pérez" required>
-													<p class="invalid-feedback">Ingresa el nombre completo.</p>
-												</fieldset>
-
-												<fieldset class="col-md-6">
-													<label for="cedulaCliente" class="form-label text-dark fw-bold">Cédula / NIT</label>
-													<input type="text" class="form-control" id="cedulaCliente" placeholder="Ej. 1012345678" required>
-													<p class="invalid-feedback">Cédula inválida (solo números, 7 a 10 dígitos).</p>
-												</fieldset>
-
-												<fieldset class="col-md-6">
-													<label for="correoCliente" class="form-label text-dark fw-bold">Correo Electrónico</label>
-													<input type="email" class="form-control" id="correoCliente" placeholder="cliente@correo.com" required>
-													<p class="invalid-feedback">Ingrese un correo válido (ejemplo@dominio.com).</p>
-												</fieldset>
-
-												<fieldset class="col-md-6">
-													<label for="telefonoCliente" class="form-label text-dark fw-bold">Teléfono de Contacto</label>
-													<input type="text" class="form-control" id="telefonoCliente" placeholder="3001234567" required>
-													<p class="invalid-feedback">Teléfono inválido (10 dígitos).</p>
-												</fieldset>
-
-												<footer class="col-12 text-end mt-4">
-													<button type="button" class="btn btn-secondary me-2" onclick="limpiarFormulario()">Limpiar</button>
-													<button type="submit" class="btn btn-success" id="btnGuardar">Registrar Cliente</button>
-												</footer>
+											<form id="formSesionPanther" class="rep-sesion" autocomplete="on">
+												<label class="rep-campo">
+													<span>Usuario</span>
+													<input type="text" id="usuarioPanther" placeholder="Ej. admin" autocomplete="username" required>
+												</label>
+												<label class="rep-campo">
+													<span>Contraseña</span>
+													<input type="password" id="contraseniaPanther" placeholder="Ingrese su contraseña" autocomplete="current-password" required>
+												</label>
+												<button type="submit" id="btnEntrarPanther" class="rep-boton rep-boton-principal">Entrar</button>
 											</form>
 
-											<hr class="my-5">
+											<div id="sesionActivaPanther" class="rep-sesion-activa" hidden>
+												<p class="rep-sesion-estado">
+													<span class="rep-sesion-indicador" aria-hidden="true"></span>
+													<span>Sesión iniciada (<strong id="usuarioActivoPanther"></strong>)</span>
+												</p>
+												<button type="button" id="btnCerrarSesionPanther" class="rep-boton rep-boton-secundario">Cerrar sesión</button>
+											</div>
 
-											<!-- Tabla Dinámica para listar registros -->
-											<section>
-												<header>
-													<h3>Listado de Clientes Registrados</h3>
-												</header>
-												<figure class="table-responsive">
-													<table class="table table-hover table-striped align-middle">
-														<thead class="table-dark">
-															<tr>
-																<th scope="col">Cédula</th>
-																<th scope="col">Nombre</th>
-																<th scope="col">Correo</th>
-																<th scope="col">Teléfono</th>
-																<th scope="col">Acciones</th>
-															</tr>
-														</thead>
-														<tbody id="tablaClientes">
-															<!-- Se llena dinámicamente mediante script.js -->
-														</tbody>
-													</table>
-												</figure>
-											</section>
+											<div id="avisoBloqueoClientes" class="rep-aviso-bloqueo">
+												<p><strong>Autenticación requerida:</strong> Inicia sesión con tu usuario del taller para habilitar el registro y la gestión de clientes.</p>
+											</div>
+
+											<div id="panelCrudClientes" class="rep-crud-contenido" hidden>
+												<form id="formCliente" class="rep-panel rep-formulario" novalidate>
+													<input type="hidden" id="clienteId">
+													<label class="rep-campo">
+														<span>Cédula</span>
+														<input type="text" id="cedulaCliente" maxlength="20" placeholder="Ej. 1049654321" required>
+														<p class="rep-ayuda">Solo números, entre 5 y 20 dígitos.</p>
+													</label>
+													<label class="rep-campo">
+														<span>Nombre completo</span>
+														<input type="text" id="nombreCliente" maxlength="120" placeholder="Ej. Carlos Andrés Pérez" required>
+													</label>
+													<label class="rep-campo">
+														<span>Correo electrónico</span>
+														<input type="email" id="correoCliente" maxlength="120" placeholder="Ej. carlos@correo.com" required>
+													</label>
+													<label class="rep-campo">
+														<span>Teléfono</span>
+														<input type="text" id="telefonoCliente" maxlength="20" placeholder="Ej. 3001234567" required>
+													</label>
+													<label class="rep-campo">
+														<span>Dirección (opcional)</span>
+														<input type="text" id="direccionCliente" maxlength="180" placeholder="Ej. Calle 20 # 10-45, Tunja">
+													</label>
+													<div class="rep-acciones">
+														<button type="button" class="rep-boton rep-boton-secundario" id="btnLimpiarCliente">Limpiar</button>
+														<button type="submit" class="rep-boton rep-boton-principal" id="btnGuardarCliente">Registrar cliente</button>
+													</div>
+												</form>
+
+												<section class="rep-listado">
+													<header>
+														<h3>Listado de clientes</h3>
+													</header>
+													<label class="rep-buscar">
+														<span>Buscar</span>
+														<input type="search" id="buscarCliente" placeholder="Cédula, nombre, correo o teléfono">
+													</label>
+													<div class="rep-tabla-contenedor">
+														<table class="rep-tabla">
+															<thead>
+																<tr>
+																	<th scope="col">Cédula</th>
+																	<th scope="col">Nombre</th>
+																	<th scope="col">Correo</th>
+																	<th scope="col">Teléfono</th>
+																	<th scope="col">Dirección</th>
+																	<th scope="col">Acciones</th>
+																</tr>
+															</thead>
+															<tbody id="tablaClientes"></tbody>
+														</table>
+													</div>
+												</section>
+											</div>
 										</section>
-
+										<div id="toastCliente" class="rep-toast" hidden></div>
 									</article>
-
 								</div>
 							</div>
 						</div>
@@ -149,10 +148,10 @@
 								</section>
 							</div>
 						</div>
-
 						<div id="copyright">
 							<ul class="menu">
-								<li>&copy; Olimac Riders Store. Todos los derechos reservados.</li><li>Diseño base: <a href="http://html5up.net">HTML5 UP</a></li>
+								<li>&copy; Olimac Riders Store. Todos los derechos reservados.</li>
+								<li>Diseño base: <a href="http://html5up.net">HTML5 UP</a></li>
 							</ul>
 						</div>
 					</div>
@@ -160,7 +159,7 @@
 
 		</div>
 
-		<!-- Scripts de la plantilla -->
+		<!-- Scripts -->
 		<script src="assets/js/jquery.min.js"></script>
 		<script src="assets/js/jquery.dropotron.min.js"></script>
 		<script src="assets/js/jquery.scrolly.min.js"></script>
@@ -168,12 +167,8 @@
 		<script src="assets/js/breakpoints.min.js"></script>
 		<script src="assets/js/util.js"></script>
 		<script src="assets/js/main.js"></script>
-
-		<!-- Bootstrap 5 JS -->
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-		<!-- Lógica del CRUD en JavaScript -->
-		<script src="../script.js"></script>
-
+		<script src="assets/js/datos-taller.js"></script>
+		<script src="assets/js/api-taller.js?v=5"></script>
+		<script src="assets/js/clientes.js?v=1"></script>
 	</body>
 </html>
