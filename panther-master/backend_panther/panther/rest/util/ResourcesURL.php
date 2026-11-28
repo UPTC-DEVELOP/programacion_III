@@ -18,7 +18,8 @@ define("RESOURCES_URL", array(
     'clientes',
     'empleados',
     'administradores',
-    'autos'
+    'autos',
+    'citas'
 ));
 
 /**

@@ -1,0 +1,239 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de citas | TallerPro</title>
+
+    <link rel="stylesheet" href="../crud_administrador/administradores.css">
+    <link rel="stylesheet" href="citas.css">
+</head>
+
+<body class="ca-body">
+
+    <!-- BARRA SUPERIOR -->
+    <header class="ca-topbar">
+        <a href="../index.html" class="ca-brand">
+            <span>Taller<span>Pro</span></span>
+        </a>
+
+        <div class="ca-user">
+            <span>Administrador</span>
+        </div>
+    </header>
+
+    <div class="ca-layout">
+
+        <!-- MENÚ LATERAL -->
+        <aside class="ca-sidebar">
+            <nav class="ca-menu" aria-label="Menú del panel">
+
+                <a href="../crud_administrador/administradores.html">
+                    Administradores
+                </a>
+
+                <a href="citas.html" class="is-active" aria-current="page">
+                    Gestión de citas
+                </a>
+
+                <a href="../index.html">
+                    Inicio
+                </a>
+
+                <a href="../index.html" id="cerrarSesion">
+                    Cerrar sesión
+                </a>
+
+            </nav>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="ca-content">
+
+            <section class="ca-card">
+
+                <div class="ca-card__head">
+                    <h1>Gestión de citas</h1>
+
+                    <button type="button"
+                            class="ca-btn ca-btn--primary"
+                            id="btnActualizar">
+                        Actualizar listado
+                    </button>
+                </div>
+
+                <!-- RESUMEN DE CITAS -->
+                <div class="citas-resumen">
+
+                    <div class="cita-indicador">
+                        <span>Total de citas</span>
+                        <strong id="totalCitas">0</strong>
+                    </div>
+
+                    <div class="cita-indicador">
+                        <span>Pendientes</span>
+                        <strong id="totalPendientes">0</strong>
+                    </div>
+
+                    <div class="cita-indicador">
+                        <span>Confirmadas</span>
+                        <strong id="totalConfirmadas">0</strong>
+                    </div>
+
+                    <div class="cita-indicador">
+                        <span>Atendidas</span>
+                        <strong id="totalAtendidas">0</strong>
+                    </div>
+
+                    <div class="cita-indicador">
+                        <span>Canceladas</span>
+                        <strong id="totalCanceladas">0</strong>
+                    </div>
+
+                </div>
+
+                <!-- FILTROS -->
+                <div class="citas-filtros">
+
+                    <div class="ca-field">
+                        <label for="buscarCita">Buscar cita</label>
+                        <input type="search"
+                               id="buscarCita"
+                               placeholder="Nombre, correo o celular">
+                    </div>
+
+                    <div class="ca-field">
+                        <label for="filtroEstado">Estado</label>
+
+                        <select id="filtroEstado">
+                            <option value="">Todos los estados</option>
+                            <option value="Pendiente">Pendientes</option>
+                            <option value="Confirmada">Confirmadas</option>
+                            <option value="Atendida">Atendidas</option>
+                            <option value="Cancelada">Canceladas</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <!-- TABLA DE CITAS -->
+                <div class="ca-table-wrap">
+
+                    <table class="ca-table">
+
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Cliente</th>
+                                <th>Correo</th>
+                                <th>Celular</th>
+                                <th>Servicio</th>
+                                <th>Descripción</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tablaCitas"></tbody>
+
+                    </table>
+
+                    <p class="ca-empty" id="sinDatos" hidden>
+                        No hay citas para mostrar.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- MODAL PARA GESTIONAR CITA -->
+    <div class="ca-modal"
+         id="modalCita"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="modalTitulo"
+         hidden>
+
+        <div class="ca-modal__card">
+
+            <button type="button"
+                    class="ca-modal__close"
+                    id="cerrarModal"
+                    aria-label="Cerrar">
+                &times;
+            </button>
+
+            <h2 id="modalTitulo">Gestionar cita</h2>
+
+            <p id="detalleCliente"></p>
+
+            <form id="formCita">
+
+                <input type="hidden" id="citaId">
+
+                <div class="ca-field">
+                    <label for="fFecha">Fecha de la cita</label>
+                    <input type="date" id="fFecha" required>
+                </div>
+
+                <div class="ca-field">
+                    <label for="fHora">Hora de la cita</label>
+                    <input type="time" id="fHora" required>
+                </div>
+
+                <div class="ca-field">
+
+                    <label for="fEstado">Estado de la cita</label>
+
+                    <select id="fEstado" required>
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="Confirmada">Confirmada</option>
+                        <option value="Atendida">Atendida</option>
+                        <option value="Cancelada">Cancelada</option>
+                    </select>
+
+                </div>
+
+                <div class="ca-modal__actions">
+
+                    <button type="button"
+                            class="ca-btn ca-btn--ghost"
+                            id="cancelarModal">
+                        Cerrar
+                    </button>
+
+                    <button type="submit"
+                            class="ca-btn ca-btn--primary"
+                            id="btnGuardar">
+                        Guardar cambios
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- MENSAJES DEL SISTEMA -->
+    <div class="ca-toast"
+         id="toast"
+         role="status"
+         aria-live="polite"
+         hidden>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script src="../api/panther.js"></script>
+    <script src="citas.js"></script>
+
+</body>
+</html>

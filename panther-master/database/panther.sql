@@ -134,6 +134,31 @@ CREATE TABLE IF NOT EXISTS `auto` (
   CONSTRAINT `fk_auto_cliente` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id`) ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
+-- --------------------------------------------------------
+-- Gestión de citas TallerPro
+-- --------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `cita` (
+    `id_cita` INT NOT NULL AUTO_INCREMENT,
+    `nombre` VARCHAR(120) NOT NULL,
+    `correo` VARCHAR(150) NOT NULL,
+    `telefono` VARCHAR(15) NOT NULL,
+    `servicio` VARCHAR(100) NOT NULL,
+    `mensaje` TEXT NOT NULL,
+    `fecha_cita` DATE NOT NULL,
+    `hora_cita` TIME NOT NULL,
+    `estado` ENUM(
+        'Pendiente',
+        'Confirmada',
+        'Cancelada',
+        'Atendida'
+    ) NOT NULL DEFAULT 'Pendiente',
+    `fecha_registro` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id_cita`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
 -- --------------------------------------------------------
 -- Datos de ejemplo (solo si las tablas están vacías)
 -- --------------------------------------------------------

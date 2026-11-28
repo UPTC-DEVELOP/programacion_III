@@ -110,7 +110,7 @@
           </div>
 
 
-          <form id="leadForm" novalidate>
+          <form id="leadForm" method="post" novalidate>
             <div class="field">
               <label for="nombre">Nombre completo</label>
               <input type="text" id="nombre" name="nombre" placeholder="Escribe tu nombre" required>
@@ -138,12 +138,25 @@
               </select>
               <span class="field__error" id="err-servicio"></span>
             </div>
-            <div class="field">
-              <label for="mensaje">¿Qué servicio necesitas?</label>
-              <textarea id="mensaje" name="mensaje" rows="3" placeholder="Cuéntanos brevemente" required></textarea>
-              <span class="field__error" id="err-mensaje"></span>
-            </div>
-            <button type="submit" class="btn btn--primary btn--block">Solicitar información</button>
+           <div class="field">
+    <label for="fecha_cita">Fecha preferida</label>
+    <input type="date" id="fecha_cita" name="fecha_cita" required>
+    <span class="field__error" id="err-fecha_cita"></span>
+</div>
+
+<div class="field">
+    <label for="hora_cita">Hora preferida</label>
+    <input type="time" id="hora_cita" name="hora_cita" required>
+    <span class="field__error" id="err-hora_cita"></span>
+</div>
+
+<div class="field">
+    <label for="mensaje">¿Qué servicio necesitas?</label>
+    <textarea id="mensaje" name="mensaje" rows="3" placeholder="Cuéntanos brevemente" required></textarea>
+    <span class="field__error" id="err-mensaje"></span>
+</div>
+
+<button type="submit" class="btn btn--primary btn--block">Solicitar cita</button>
             <p class="form__confirm" id="formConfirm" role="status" aria-live="polite"></p>
           </form>
         </aside>
