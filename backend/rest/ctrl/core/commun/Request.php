@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace panther\ctrl\core\commun;
 use PDO;
 use PDOStatement;
+use Throwable;
 
 use panther\ctrl\core\commun\IRequest;
 use panther\cxn\Connection;
