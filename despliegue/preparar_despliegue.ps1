@@ -11,7 +11,8 @@ $dist = Join-Path $raiz 'dist\htdocs'
 $backend = Join-Path $raiz 'panther-master\backend_panther\panther\rest'
 $prod = Join-Path $backend 'cxn\LoginMysql.prod.php'
 
-if (Test-Path (Join-Path $raiz 'dist')) { Remove-Item (Join-Path $raiz 'dist') -Recurse -Force }
+# Se vacía el contenido (no la carpeta) por si dist está abierta en el Explorador
+if (Test-Path (Join-Path $raiz 'dist')) { Get-ChildItem (Join-Path $raiz 'dist') -Force | Remove-Item -Recurse -Force }
 New-Item -ItemType Directory -Force $dist | Out-Null
 
 # ---------- Frontend ----------
@@ -30,7 +31,12 @@ Copy-Item (Join-Path $backend '.htaccess') $destinoBackend
 # La plantilla de ejemplo no se publica
 Remove-Item (Join-Path $destinoBackend 'cxn\LoginMysql.prod.example.php')
 
+# Zip para subirlo con el File Manager del hosting y usar "Extract"
+$zip = Join-Path $raiz 'dist\tallerpro.zip'
+Compress-Archive -Path (Join-Path $dist '*') -DestinationPath $zip -Force
+
 Write-Host "Listo: $dist" -ForegroundColor Green
+Write-Host "Zip:   $zip" -ForegroundColor Green
 if (Test-Path $prod) {
     Write-Host "Se incluyo cxn\LoginMysql.prod.php (datos de MySQL del hosting)." -ForegroundColor Green
 } else {

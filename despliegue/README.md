@@ -30,7 +30,7 @@ y en el hosting usa `https://<tu-dominio>/panther/rest`.
 ## 3. Configurar la conexión
 1. Copia `panther-master/backend_panther/panther/rest/cxn/LoginMysql.prod.example.php`
    como `LoginMysql.prod.php` en la misma carpeta.
-2. Llena los cuatro datos del paso 2.
+2. Llena los cuatro datos del paso 2.  
    Este archivo está en `.gitignore`: **no se sube al repositorio**.
 
 ## 4. Armar y subir los archivos

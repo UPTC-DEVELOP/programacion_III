@@ -7,7 +7,10 @@
  * cxn/LoginMysql.prod.php copiando LoginMysql.prod.example.php y pon ahí
  * los datos del hosting. Ese archivo no se sube a git.
  */
-if (file_exists(__DIR__ . '/LoginMysql.prod.php')) {
+// En local (XAMPP) siempre se usan los datos de abajo, aunque exista el archivo de producción
+$hostActual = isset($_SERVER['HTTP_HOST']) ? strtolower(preg_replace('/:\d+$/', '', $_SERVER['HTTP_HOST'])) : 'localhost';
+$esLocal = in_array($hostActual, array('localhost', '127.0.0.1', '::1', '[::1]'));
+if (! $esLocal && file_exists(__DIR__ . '/LoginMysql.prod.php')) {
     require __DIR__ . '/LoginMysql.prod.php';
     return;
 }
