@@ -10,9 +10,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 		<link rel="stylesheet" href="assets/css/modulos.css" />
+		<link rel="stylesheet" href="assets/css/inventario.css?v=5" />
 	</head>
 	<body class="is-preload">
 		<div id="page-wrapper">
@@ -49,68 +48,135 @@
 							<div class="col-12">
 								<div class="content">
 									<article class="box page-content">
-										<section class="container mt-2" id="modulo-inventario">
-											<header>
+										<section id="modulo-inventario" class="inv-modulo">
+											<header class="inv-encabezado">
 												<h2>Gestión de Inventario</h2>
-												<p>La referencia debe existir primero en el catálogo de repuestos. El texto en rojo indica stock bajo el mínimo.</p>
+												<p>Control de existencias, alertas de bajo stock y ubicación en bodega para los repuestos del taller.</p>
 											</header>
 
-											<output id="alertaInventario" class="alert alert-success d-none animate__animated animate__fadeIn d-block mb-3" role="alert"></output>
-
-											<form id="formInventario" class="row g-3 needs-validation" novalidate>
-												<input type="hidden" id="inventarioId">
-
-												<fieldset class="col-md-6">
-													<label for="referenciaInventario" class="form-label text-dark fw-bold">Referencia</label>
-													<select class="form-select" id="referenciaInventario" required></select>
-													<p class="invalid-feedback">Debe elegir una referencia del catálogo de repuestos.</p>
-												</fieldset>
-
-												<fieldset class="col-md-6">
-													<label for="descripcionInventario" class="form-label text-dark fw-bold">Descripción</label>
-													<input type="text" class="form-control" id="descripcionInventario" readonly placeholder="Se completa al elegir la referencia">
-												</fieldset>
-
-												<fieldset class="col-md-6">
-													<label for="stockInventario" class="form-label text-dark fw-bold">Stock</label>
-													<input type="text" class="form-control" id="stockInventario" placeholder="Ej. 15" required>
-													<p class="invalid-feedback">El stock debe ser un número entero mayor o igual a 0.</p>
-												</fieldset>
-
-												<fieldset class="col-md-6">
-													<label for="stockMinimoInventario" class="form-label text-dark fw-bold">Stock mínimo</label>
-													<input type="text" class="form-control" id="stockMinimoInventario" placeholder="Ej. 5" required>
-													<p class="invalid-feedback">El stock mínimo debe ser un número entero mayor o igual a 0.</p>
-												</fieldset>
-
-												<footer class="col-12 text-end mt-4">
-													<button type="button" class="btn btn-secondary me-2" onclick="limpiarFormularioInventario()">Limpiar</button>
-													<button type="submit" class="btn btn-success" id="btnGuardarInventario">Registrar en Inventario</button>
-												</footer>
+											<form id="formSesionInventario" class="inv-sesion" autocomplete="on">
+												<label class="inv-campo">
+													<span>Usuario</span>
+													<input type="text" id="usuarioInventario" placeholder="Ej. admin" autocomplete="username" required>
+												</label>
+												<label class="inv-campo">
+													<span>Contraseña</span>
+													<input type="password" id="contraseniaInventario" placeholder="Ingrese su contraseña" autocomplete="current-password" required>
+												</label>
+												<button type="submit" id="btnEntrarInventario" class="inv-boton inv-boton-principal">Entrar</button>
 											</form>
 
-											<hr class="my-5">
+											<div id="sesionActivaInventario" class="inv-sesion-activa" hidden>
+												<p class="inv-sesion-estado">
+													<span class="inv-sesion-indicador" aria-hidden="true"></span>
+													<span>Sesión iniciada (<strong id="usuarioActivoInventario"></strong>)</span>
+												</p>
+												<button type="button" id="btnCerrarSesionInventario" class="inv-boton inv-boton-secundario">Cerrar sesión</button>
+											</div>
 
-											<section>
-												<header>
-													<h3>Listado de Inventario</h3>
-												</header>
-												<figure class="table-responsive">
-													<table class="table table-hover table-striped align-middle">
-														<thead class="table-dark">
-															<tr>
-																<th scope="col">Referencia</th>
-																<th scope="col">Descripción</th>
-																<th scope="col">Stock</th>
-																<th scope="col">Stock mínimo</th>
-																<th scope="col">Acciones</th>
-															</tr>
-														</thead>
-														<tbody id="tablaInventario"></tbody>
-													</table>
-												</figure>
-											</section>
+											<div id="avisoBloqueoInventario" class="inv-aviso-bloqueo">
+												<p><strong>Autenticación requerida:</strong> Inicia sesión con tu usuario del taller para habilitar la gestión del inventario.</p>
+											</div>
+
+											<div id="panelCrudInventario" class="inv-crud-contenido" hidden>
+												<section class="inv-resumen" aria-label="Resumen de inventario">
+													<article class="inv-tarjeta">
+														<span class="inv-tarjeta-etiqueta">Total referencias</span>
+														<strong id="kpiTotalReferencias" class="inv-tarjeta-valor">0</strong>
+														<span id="kpiTotalUnidades" class="inv-tarjeta-sub">0 unidades en bodega</span>
+													</article>
+													<article class="inv-tarjeta">
+														<span class="inv-tarjeta-etiqueta">Valor total del inventario</span>
+														<strong id="kpiValorTotal" class="inv-tarjeta-valor">$ 0</strong>
+														<span class="inv-tarjeta-sub">Calculado con stock y precio unitario</span>
+													</article>
+													<article class="inv-tarjeta inv-tarjeta-alerta">
+														<span class="inv-tarjeta-etiqueta">Alertas de stock</span>
+														<strong id="kpiAlertasTotal" class="inv-tarjeta-valor">0</strong>
+														<span id="kpiAlertasDetalle" class="inv-tarjeta-sub">0 bajo stock · 0 agotados</span>
+													</article>
+												</section>
+
+												<form id="formInventario" class="inv-panel inv-formulario" novalidate>
+													<input type="hidden" id="inventarioId">
+
+													<label class="inv-campo">
+														<span>Repuesto del catálogo</span>
+														<select id="repuestoInventario" required></select>
+														<p class="inv-ayuda">El repuesto debe existir previamente en el módulo de Repuestos.</p>
+													</label>
+
+													<label class="inv-campo">
+														<span>Detalle del repuesto</span>
+														<input type="text" id="detalleRepuestoInventario" readonly placeholder="Se completa al elegir la referencia">
+													</label>
+
+													<label class="inv-campo">
+														<span>Stock actual</span>
+														<input type="text" id="stockInventario" inputmode="numeric" placeholder="Ej. 15" required>
+														<p class="inv-ayuda">Número entero mayor o igual a 0.</p>
+													</label>
+
+													<label class="inv-campo">
+														<span>Stock mínimo</span>
+														<input type="text" id="stockMinimoInventario" inputmode="numeric" placeholder="Ej. 5" required>
+														<p class="inv-ayuda">Nivel a partir del cual se marca alerta de bajo stock.</p>
+													</label>
+
+													<label class="inv-campo inv-campo-ancho">
+														<span>Ubicación en bodega</span>
+														<input type="text" id="ubicacionInventario" maxlength="60" placeholder="Ej. Estante A - Nivel 2 (opcional)">
+													</label>
+
+													<div class="inv-acciones">
+														<button type="button" class="inv-boton inv-boton-secundario" id="btnLimpiarInventario">Limpiar</button>
+														<button type="submit" class="inv-boton inv-boton-principal" id="btnGuardarInventario">Registrar en inventario</button>
+													</div>
+												</form>
+
+												<section class="inv-listado">
+													<header>
+														<h3>Listado de inventario</h3>
+													</header>
+
+													<div class="inv-filtros">
+														<label class="inv-campo">
+															<span>Buscar</span>
+															<input type="search" id="buscarInventario" placeholder="Referencia, descripción, marca o ubicación">
+														</label>
+														<label class="inv-campo">
+															<span>Filtrar por estado</span>
+															<select id="filtroEstadoInventario">
+																<option value="">Todos los estados</option>
+																<option value="DISPONIBLE">Disponible</option>
+																<option value="BAJO_STOCK">Bajo stock</option>
+																<option value="AGOTADO">Agotado</option>
+															</select>
+														</label>
+													</div>
+
+													<div class="inv-tabla-contenedor">
+														<table class="inv-tabla">
+															<thead>
+																<tr>
+																	<th scope="col">Referencia</th>
+																	<th scope="col">Repuesto</th>
+																	<th scope="col">Precio unit.</th>
+																	<th scope="col">Stock</th>
+																	<th scope="col">Mínimo</th>
+																	<th scope="col">Ubicación</th>
+																	<th scope="col">Estado</th>
+																	<th scope="col">Valor total</th>
+																	<th scope="col">Acciones</th>
+																</tr>
+															</thead>
+															<tbody id="tablaInventario"></tbody>
+														</table>
+													</div>
+												</section>
+											</div>
 										</section>
+										<div id="toastInventario" class="inv-toast" hidden></div>
 									</article>
 								</div>
 							</div>
@@ -148,8 +214,7 @@
 		<script src="assets/js/breakpoints.min.js"></script>
 		<script src="assets/js/util.js"></script>
 		<script src="assets/js/main.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-		<script src="assets/js/datos-taller.js"></script>
-		<script src="assets/js/crud-inventario.js"></script>
+		<script src="assets/js/api-taller.js?v=5"></script>
+		<script src="assets/js/inventario.js?v=5"></script>
 	</body>
 </html>
