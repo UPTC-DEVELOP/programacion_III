@@ -19,7 +19,8 @@ define("RESOURCES_URL", array(
     'vehiculos', 
     'proveedores', 
     'repuestos', 
-    'ordenes'
+    'ordenes',
+    'movimientos'
 ));
 
 /**

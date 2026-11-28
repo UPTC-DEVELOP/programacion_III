@@ -31,6 +31,7 @@ require_once 'ctrl/business/Facturas.php';
 require_once 'ctrl/business/Empleados.php';
 require_once 'ctrl/business/Ordenes.php';
 require_once 'ctrl/business/CatalogosTaller.php';
+require_once 'ctrl/business/Movimientos.php';
 require 'model/business/Person.php';
 require 'querys/business/BusinessQuery.php';
 

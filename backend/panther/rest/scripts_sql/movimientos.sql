@@ -1,0 +1,23 @@
+CREATE TABLE IF NOT EXISTS movimiento_inventario (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    tipo ENUM('entrada', 'despacho', 'devolucion') NOT NULL,
+    repuesto_id INT UNSIGNED NOT NULL,
+    referencia VARCHAR(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    cantidad INT UNSIGNED NOT NULL,
+    precio_unitario DECIMAL(12,2) UNSIGNED NOT NULL,
+    proveedor_id INT UNSIGNED NULL,
+    orden_id INT UNSIGNED NULL,
+    despacho_id INT UNSIGNED NULL,
+    usuario_cedula VARCHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+    usuario_id INT NOT NULL,
+    fecha DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_mov_repuesto (repuesto_id),
+    INDEX idx_mov_orden (orden_id),
+    INDEX idx_mov_proveedor (proveedor_id),
+    INDEX idx_mov_despacho (despacho_id),
+    CONSTRAINT fk_mov_repuesto FOREIGN KEY (repuesto_id) REFERENCES repuesto_taller(id),
+    CONSTRAINT fk_mov_proveedor FOREIGN KEY (proveedor_id) REFERENCES proveedor_taller(id),
+    CONSTRAINT fk_mov_orden FOREIGN KEY (orden_id) REFERENCES ordenes(id),
+    CONSTRAINT fk_mov_despacho FOREIGN KEY (despacho_id) REFERENCES movimiento_inventario(id),
+    CONSTRAINT fk_mov_usuario FOREIGN KEY (usuario_id) REFERENCES j4user(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
