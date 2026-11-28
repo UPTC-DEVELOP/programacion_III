@@ -9,37 +9,35 @@
 		<title>Taller Mecánico - Órdenes de Servicio</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<link rel="stylesheet" href="assets/css/modulos.css" />
+		<link rel="stylesheet" href="assets/css/main.css?v=8" />
+		<link rel="stylesheet" href="assets/css/modulos.css?v=8" />
+		<link rel="stylesheet" href="assets/css/navbar.css?v=8" />
 		<link rel="stylesheet" href="assets/css/ordenes.css?v=5" />
 	</head>
-	<body class="is-preload">
+	<body class="is-preload ors-app">
 		<div id="page-wrapper">
 
-			<!-- Header -->
-				<header id="header">
-					<div class="logo container">
-						<div>
-							<h1><a href="index.html" id="logo">Olimac Riders Store</a></h1>
-							<p>Sistema de Gestión de Taller Mecánico</p>
-						</div>
-					</div>
-				</header>
-
-			<!-- Nav -->
-				<nav id="nav">
-					<ul>
-						<li><a href="index.html">Inicio</a></li>
-						<li><a href="no-sidebar.html">Clientes</a></li>
-						<li><a href="left-sidebar.html">Vehículos</a></li>
-						<li><a href="proveedores.html">Proveedores</a></li>
-						<li class="current"><a href="orden-servicio.html">Servicios</a></li>
-						<li><a href="right-sidebar.html">Empleados</a></li>
-						<li><a href="repuestos.html">Repuestos</a></li>
-						<li><a href="inventario.html">Inventario</a></li>
-						<li><a href="factura.html">Facturación</a></li>
-					</ul>
-				</nav>
+						<header class="ors-navbar" id="orsNavbar">
+				<div class="ors-navbar__inner">
+					<a class="ors-brand" href="index.html" aria-label="Olimac Riders Store - Inicio">
+						<span class="ors-brand__icon" aria-hidden="true">
+							<svg viewBox="0 0 24 24" role="img" focusable="false">
+								<circle cx="12" cy="12" r="3.2"></circle>
+								<path d="M12 3.5v2.2M12 18.3v2.2M3.5 12h2.2M18.3 12h2.2M6.1 6.1l1.6 1.6M16.3 16.3l1.6 1.6M17.9 6.1l-1.6 1.6M7.7 16.3l-1.6 1.6"></path>
+								<path d="M14.8 9.2l3.4-1.1 1.1 3.4"></path>
+							</svg>
+						</span>
+						<span class="ors-brand__text">
+							<span class="ors-brand__name">Olimac Riders Store</span>
+							<span class="ors-brand__sub">Gestión de Taller Mecánico</span>
+						</span>
+					</a>
+					<nav class="ors-nav ors-nav--app" aria-label="Navegación del taller">
+						<div class="ors-nav__links" id="orsNavLinks"></div>
+						<div class="ors-nav__session" id="orsNavSession"></div>
+					</nav>
+				</div>
+			</header>
 
 			<!-- Main -->
 				<section id="main">
@@ -288,7 +286,8 @@
 		<script src="assets/js/breakpoints.min.js"></script>
 		<script src="assets/js/util.js"></script>
 		<script src="assets/js/main.js"></script>
-		<script src="assets/js/api-taller.js?v=5"></script>
+		<script src="assets/js/api-taller.js?v=8"></script>
+		<script src="assets/js/navbar.js?v=8"></script>
 		<script src="assets/js/ordenes.js?v=5"></script>
 	</body>
 </html>

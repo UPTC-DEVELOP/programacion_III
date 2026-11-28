@@ -43,7 +43,18 @@ class UserQueries
      * Parámetros: user
      */
     public const SELECT =
-        "SELECT id, password, user, keyAPI, roles FROM j4user WHERE user LIKE ?;";
+        "SELECT
+            u.id,
+            u.password,
+            u.user,
+            u.keyAPI,
+            COALESCE(r.name, u.roles) AS roles
+         FROM j4user u
+         LEFT JOIN j4rol r
+             ON r.name = u.roles
+            AND r.dateDelete IS NULL
+         WHERE u.user LIKE ?
+           AND u.dateDelete IS NULL;";
 
     /**
      * Verifica la validez de una clave API.

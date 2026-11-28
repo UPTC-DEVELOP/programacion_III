@@ -36,7 +36,7 @@ final class LoginMysql
             'PORT'      => '3306',
             'DATA_BASE' => 'taller_mecanico',
             'USER'      => 'root',
-            'PASSWORD'  => '',
+            'PASSWORD'  => '12345',
             'CHARSET'   => 'utf8mb4',
         ],
         'test' => [
@@ -44,7 +44,7 @@ final class LoginMysql
             'PORT'      => '3306',
             'DATA_BASE' => 'taller_mecanico',
             'USER'      => 'root',
-            'PASSWORD'  => '',
+            'PASSWORD'  => '12345',
             'CHARSET'   => 'utf8mb4',
         ],
         'prod' => [

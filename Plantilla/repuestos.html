@@ -9,157 +9,135 @@
 		<title>Taller Mecánico - Gestión de Repuestos</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<link rel="stylesheet" href="assets/css/modulos.css" />
-		<link rel="stylesheet" href="assets/css/repuestos.css?v=5" />
+		<script>(function(){try{if(localStorage.getItem('olimac_theme_mode')==='dark'){document.documentElement.classList.add('theme-dark');}}catch(e){}})();</script>
+		<link rel="stylesheet" href="assets/css/main.css?v=12" />
+		<link rel="stylesheet" href="assets/css/modulos.css?v=12" />
+		<link rel="stylesheet" href="assets/css/navbar.css?v=12" />
+		<link rel="stylesheet" href="assets/css/theme.css?v=12" />
+		<link rel="stylesheet" href="assets/css/components.css?v=12" />
+		<link rel="stylesheet" href="assets/css/repuestos.css?v=12" />
+		<link rel="stylesheet" href="assets/css/buttons.css?v=12" />
+		<style>
+			[hidden] { display: none !important; }
+		</style>
 	</head>
-	<body class="is-preload">
-		<div id="page-wrapper">
-
-			<!-- Header -->
-				<header id="header">
-					<div class="logo container">
-						<div>
-							<h1><a href="index.html" id="logo">Olimac Riders Store</a></h1>
-							<p>Sistema de Gestión de Taller Mecánico</p>
-						</div>
+	<body class="is-preload ors-app">
+		<div id="page-wrapper" hidden>
+						<header class="ors-navbar" id="orsNavbar">
+				<div class="ors-navbar__inner">
+					<div class="ors-brand">
+						<button type="button" class="ors-theme-toggle" title="Cambiar a modo oscuro" aria-label="Cambiar a modo oscuro" aria-pressed="false">
+							<svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+								<circle cx="12" cy="12" r="4"></circle>
+								<path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.1 5.1l1.6 1.6M17.3 17.3l1.6 1.6M18.9 5.1l-1.6 1.6M6.7 17.3l-1.6 1.6"></path>
+							</svg>
+							<svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+								<path d="M19.5 13.2A7.5 7.5 0 0 1 10.8 4.5 6.8 6.8 0 1 0 19.5 13.2z"></path>
+							</svg>
+						</button>
+						<a class="ors-brand__text" href="index.html" aria-label="Olimac Riders Store - Inicio">
+							<span class="ors-brand__name">Olimac Riders Store</span>
+							<span class="ors-brand__sub">Gestión de Taller Mecánico</span>
+						</a>
 					</div>
-				</header>
+					<nav class="ors-nav ors-nav--app" aria-label="Navegación del taller">
+						<div class="ors-nav__links" id="orsNavLinks"></div>
+						<div class="ors-nav__session" id="orsNavSession"></div>
+					</nav>
+				</div>
+			</header>
 
-			<!-- Nav -->
-				<nav id="nav">
-					<ul>
-						<li><a href="index.html">Inicio</a></li>
-						<li><a href="no-sidebar.html">Clientes</a></li>
-						<li><a href="left-sidebar.html">Vehículos</a></li>
-						<li><a href="proveedores.html">Proveedores</a></li>
-						<li><a href="orden-servicio.html">Servicios</a></li>
-						<li><a href="right-sidebar.html">Empleados</a></li>
-						<li class="current"><a href="repuestos.html">Repuestos</a></li>
-						<li><a href="inventario.html">Inventario</a></li>
-						<li><a href="factura.html">Facturación</a></li>
-					</ul>
-				</nav>
+			<section id="main">
+				<div class="container">
+					<div class="row">
+						<div class="col-12">
+							<div class="content">
+								<article class="box page-content">
+									<section id="modulo-repuestos" class="rep-modulo">
+										<header class="rep-encabezado">
+											<h2>Gestión de Repuestos</h2>
+											<p>Catálogo del taller. Inventario y órdenes usan estas mismas referencias.</p>
+										</header>
 
-			<!-- Main -->
-				<section id="main">
-					<div class="container">
-						<div class="row">
-							<div class="col-12">
-								<div class="content">
-									<article class="box page-content">
-										<section id="modulo-repuestos" class="rep-modulo">
-											<header class="rep-encabezado">
-												<h2>Gestión de Repuestos</h2>
-												<p>Catálogo del taller. Inventario y órdenes usan estas mismas referencias.</p>
-											</header>
-
-											<form id="formSesionPanther" class="rep-sesion" autocomplete="on">
+										<div id="panelCrudRepuestos" class="rep-crud-contenido">
+											<form id="formRepuesto" class="rep-panel rep-formulario" novalidate>
+												<input type="hidden" id="repuestoId">
 												<label class="rep-campo">
-													<span>Usuario</span>
-													<input type="text" id="usuarioPanther" placeholder="Ej. admin" autocomplete="username" required>
+													<span>Referencia</span>
+													<input type="text" id="referenciaRepuesto" maxlength="20" placeholder="Ej. BOS-4821" required>
+													<p class="rep-ayuda">De 3 a 20 caracteres: letras, números o guion.</p>
 												</label>
 												<label class="rep-campo">
-													<span>Contraseña</span>
-													<input type="password" id="contraseniaPanther" placeholder="Ingrese su contraseña" autocomplete="current-password" required>
+													<span>Descripción</span>
+													<input type="text" id="descripcionRepuesto" maxlength="150" placeholder="Ej. Pastillas de freno" required>
 												</label>
-												<button type="submit" id="btnEntrarPanther" class="rep-boton rep-boton-principal">Entrar</button>
+												<label class="rep-campo">
+													<span>Marca</span>
+													<input type="text" id="marcaRepuesto" maxlength="50" placeholder="Ej. Bosch" required>
+												</label>
+												<label class="rep-campo">
+													<span>Precio unitario</span>
+													<input type="text" id="precioRepuesto" placeholder="Ej. 145000" required>
+												</label>
+												<div class="rep-acciones">
+													<button type="button" class="rep-boton rep-boton-secundario" id="btnLimpiarRepuesto">Limpiar</button>
+													<button type="submit" class="rep-boton rep-boton-principal" id="btnGuardarRepuesto">Registrar repuesto</button>
+												</div>
 											</form>
 
-											<div id="sesionActivaPanther" class="rep-sesion-activa" hidden>
-												<p class="rep-sesion-estado">
-													<span class="rep-sesion-indicador" aria-hidden="true"></span>
-													<span>Sesión iniciada (<strong id="usuarioActivoPanther"></strong>)</span>
-												</p>
-												<button type="button" id="btnCerrarSesionPanther" class="rep-boton rep-boton-secundario">Cerrar sesión</button>
-											</div>
-
-											<div id="avisoBloqueoRepuestos" class="rep-aviso-bloqueo">
-												<p><strong>Autenticación requerida:</strong> Inicia sesión con tu usuario del taller para habilitar el registro y la gestión del catálogo de repuestos.</p>
-											</div>
-
-											<div id="panelCrudRepuestos" class="rep-crud-contenido" hidden>
-												<form id="formRepuesto" class="rep-panel rep-formulario" novalidate>
-													<input type="hidden" id="repuestoId">
-													<label class="rep-campo">
-														<span>Referencia</span>
-														<input type="text" id="referenciaRepuesto" maxlength="20" placeholder="Ej. BOS-4821" required>
-														<p class="rep-ayuda">De 3 a 20 caracteres: letras, números o guion.</p>
-													</label>
-													<label class="rep-campo">
-														<span>Descripción</span>
-														<input type="text" id="descripcionRepuesto" maxlength="150" placeholder="Ej. Pastillas de freno" required>
-													</label>
-													<label class="rep-campo">
-														<span>Marca</span>
-														<input type="text" id="marcaRepuesto" maxlength="50" placeholder="Ej. Bosch" required>
-													</label>
-													<label class="rep-campo">
-														<span>Precio unitario</span>
-														<input type="text" id="precioRepuesto" placeholder="Ej. 145000" required>
-													</label>
-													<div class="rep-acciones">
-														<button type="button" class="rep-boton rep-boton-secundario" id="btnLimpiarRepuesto">Limpiar</button>
-														<button type="submit" class="rep-boton rep-boton-principal" id="btnGuardarRepuesto">Registrar repuesto</button>
-													</div>
-												</form>
-
-												<section class="rep-listado">
-													<header>
-														<h3>Listado de repuestos</h3>
-													</header>
-													<label class="rep-buscar">
-														<span>Buscar</span>
-														<input type="search" id="buscarRepuesto" placeholder="Referencia, descripción o marca">
-													</label>
-													<div class="rep-tabla-contenedor">
-														<table class="rep-tabla">
-															<thead>
-																<tr>
-																	<th scope="col">Referencia</th>
-																	<th scope="col">Descripción</th>
-																	<th scope="col">Marca</th>
-																	<th scope="col">Precio</th>
-																	<th scope="col">Acciones</th>
-																</tr>
-															</thead>
-															<tbody id="tablaRepuestos"></tbody>
-														</table>
-													</div>
-												</section>
-											</div>
-										</section>
-										<div id="toastRepuesto" class="rep-toast" hidden></div>
-									</article>
-								</div>
+											<section class="rep-listado">
+												<header>
+													<h3>Listado de repuestos</h3>
+												</header>
+												<label class="rep-buscar">
+													<span>Buscar</span>
+													<input type="search" id="buscarRepuesto" placeholder="Referencia, descripción o marca">
+												</label>
+												<div class="rep-tabla-contenedor">
+													<table class="rep-tabla">
+														<thead>
+															<tr>
+																<th scope="col">Referencia</th>
+																<th scope="col">Descripción</th>
+																<th scope="col">Marca</th>
+																<th scope="col">Precio</th>
+																<th scope="col">Acciones</th>
+															</tr>
+														</thead>
+														<tbody id="tablaRepuestos"></tbody>
+													</table>
+												</div>
+											</section>
+										</div>
+									</section>
+									<div id="toastRepuesto" class="rep-toast" hidden></div>
+								</article>
 							</div>
 						</div>
 					</div>
-				</section>
+				</div>
+			</section>
 
-			<!-- Footer -->
-				<footer id="footer">
-					<div class="container">
-						<div class="row gtr-200">
-							<div class="col-12">
-								<section>
-									<h2 class="major"><span>Olimac Riders Store</span></h2>
-									<p>Sistema Web para la administración integral de talleres mecánicos. Desarrollo para Programación III - UPTC.</p>
-								</section>
-							</div>
-						</div>
-						<div id="copyright">
-							<ul class="menu">
-								<li>&copy; Olimac Riders Store. Todos los derechos reservados.</li>
-								<li>Diseño base: <a href="http://html5up.net">HTML5 UP</a></li>
-							</ul>
+			<footer id="footer">
+				<div class="container">
+					<div class="row gtr-200">
+						<div class="col-12">
+							<section>
+								<h2 class="major"><span>Olimac Riders Store</span></h2>
+								<p>Sistema Web para la administración integral de talleres mecánicos. Desarrollo para Programación III - UPTC.</p>
+							</section>
 						</div>
 					</div>
-				</footer>
-
+					<div id="copyright">
+						<ul class="menu">
+							<li>&copy; Olimac Riders Store. Todos los derechos reservados.</li>
+							<li>Diseño base: <a href="http://html5up.net">HTML5 UP</a></li>
+						</ul>
+					</div>
+				</div>
+			</footer>
 		</div>
 
-		<!-- Scripts -->
 		<script src="assets/js/jquery.min.js"></script>
 		<script src="assets/js/jquery.dropotron.min.js"></script>
 		<script src="assets/js/jquery.scrolly.min.js"></script>
@@ -168,7 +146,10 @@
 		<script src="assets/js/util.js"></script>
 		<script src="assets/js/main.js"></script>
 		<script src="assets/js/datos-taller.js"></script>
-		<script src="assets/js/api-taller.js?v=5"></script>
-		<script src="assets/js/repuestos.js?v=5"></script>
+		<script src="assets/js/api-taller.js?v=12"></script>
+		<script src="assets/js/theme-toggle.js?v=12"></script>
+		<script src="assets/js/navbar.js?v=12"></script>
+		<script src="assets/js/repuestos.js?v=12"></script>
+		<script src="assets/js/buttons.js?v=12"></script>
 	</body>
 </html>

@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html lang="es">
+	<head>
+		<title>Panel de control - Olimac Riders Store</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<script>(function(){try{if(localStorage.getItem('olimac_theme_mode')==='dark'){document.documentElement.classList.add('theme-dark');}}catch(e){}})();</script>
+		<link rel="stylesheet" href="assets/css/main.css?v=13" />
+		<link rel="stylesheet" href="assets/css/modulos.css?v=13" />
+		<link rel="stylesheet" href="assets/css/navbar.css?v=13" />
+		<link rel="stylesheet" href="assets/css/theme.css?v=13" />
+		<link rel="stylesheet" href="assets/css/components.css?v=13" />
+		<link rel="stylesheet" href="assets/css/panel-control.css?v=13" />
+		<link rel="stylesheet" href="assets/css/buttons.css?v=13" />
+	</head>
+	<body class="is-preload panel-page ors-app">
+		<div id="avisoSinSesion" class="panel-bloqueado" hidden>
+			<p>Redirigiendo al inicio de sesión…</p>
+		</div>
+
+		<div id="page-wrapper" hidden>
+						<header class="ors-navbar" id="orsNavbar">
+				<div class="ors-navbar__inner">
+					<div class="ors-brand">
+						<button type="button" class="ors-theme-toggle" title="Cambiar a modo oscuro" aria-label="Cambiar a modo oscuro" aria-pressed="false">
+							<svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+								<circle cx="12" cy="12" r="4"></circle>
+								<path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.1 5.1l1.6 1.6M17.3 17.3l1.6 1.6M18.9 5.1l-1.6 1.6M6.7 17.3l-1.6 1.6"></path>
+							</svg>
+							<svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+								<path d="M19.5 13.2A7.5 7.5 0 0 1 10.8 4.5 6.8 6.8 0 1 0 19.5 13.2z"></path>
+							</svg>
+						</button>
+						<a class="ors-brand__text" href="index.html" aria-label="Olimac Riders Store - Inicio">
+							<span class="ors-brand__name">Olimac Riders Store</span>
+							<span class="ors-brand__sub">Gestión de Taller Mecánico</span>
+						</a>
+					</div>
+					<nav class="ors-nav ors-nav--app" aria-label="Navegación del taller">
+						<div class="ors-nav__links" id="orsNavLinks"></div>
+						<div class="ors-nav__session" id="orsNavSession"></div>
+					</nav>
+				</div>
+			</header>
+
+			<section id="main">
+				<div class="container">
+					<header class="panel-cabecera">
+						<div>
+							<h2>Panel de control</h2>
+							<p id="infoSesionPanel" class="panel-sesion-info">Usuario: — | Rol: —</p>
+						</div>
+						<button type="button" id="btnCerrarSesionPanel" class="panel-btn-salir">Cerrar sesión</button>
+					</header>
+
+					<p class="panel-intro">Selecciona un módulo disponible según tu rol para continuar con la gestión del taller.</p>
+
+					<div id="gridModulos" class="panel-modulos" aria-live="polite">
+						<a class="panel-tarjeta" data-modulo="Clientes" href="no-sidebar.html" hidden>
+							<div>
+								<h3>Clientes</h3>
+								<p>Consulta y administra la información de los clientes del taller.</p>
+							</div>
+							<span class="panel-ir">Abrir módulo →</span>
+						</a>
+						<a class="panel-tarjeta" data-modulo="Vehículos" href="left-sidebar.html" hidden>
+							<div>
+								<h3>Vehículos</h3>
+								<p>Registra ingresos y consulta los vehículos asociados a cada cliente.</p>
+							</div>
+							<span class="panel-ir">Abrir módulo →</span>
+						</a>
+						<a class="panel-tarjeta" data-modulo="Proveedores" href="proveedores.html" hidden>
+							<div>
+								<h3>Proveedores</h3>
+								<p>Gestiona los proveedores vinculados al abastecimiento del taller.</p>
+							</div>
+							<span class="panel-ir">Abrir módulo →</span>
+						</a>
+						<a class="panel-tarjeta" data-modulo="Empleados" href="right-sidebar.html" hidden>
+							<div>
+								<h3>Empleados</h3>
+								<p>Administra el personal disponible para atender los servicios.</p>
+							</div>
+							<span class="panel-ir">Abrir módulo →</span>
+						</a>
+						<a class="panel-tarjeta" data-modulo="Servicios" href="orden-servicio.html" hidden>
+							<div>
+								<h3>Servicios</h3>
+								<p>Crea y da seguimiento a las órdenes de servicio del taller.</p>
+							</div>
+							<span class="panel-ir">Abrir módulo →</span>
+						</a>
+						<a class="panel-tarjeta" data-modulo="Repuestos" href="repuestos.html" hidden>
+							<div>
+								<h3>Repuestos</h3>
+								<p>Mantén el catálogo de referencias, marcas y precios unitarios.</p>
+							</div>
+							<span class="panel-ir">Abrir módulo →</span>
+						</a>
+						<a class="panel-tarjeta" data-modulo="Inventario" href="inventario.html" hidden>
+							<div>
+								<h3>Inventario</h3>
+								<p>Controla existencias y movimientos de los repuestos disponibles.</p>
+							</div>
+							<span class="panel-ir">Abrir módulo →</span>
+						</a>
+						<a class="panel-tarjeta" data-modulo="Facturación" href="factura.html" hidden>
+							<div>
+								<h3>Facturación</h3>
+								<p>Emite y consulta facturas asociadas a los servicios realizados.</p>
+							</div>
+							<span class="panel-ir">Abrir módulo →</span>
+						</a>
+					</div>
+				</div>
+			</section>
+
+			<footer id="footer">
+				<div class="container">
+					<div id="copyright">
+						<ul class="menu">
+							<li>&copy; Olimac Riders Store. Todos los derechos reservados.</li>
+						</ul>
+					</div>
+				</div>
+			</footer>
+		</div>
+
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.dropotron.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+		<script src="assets/js/api-taller.js?v=13"></script>
+		<script src="assets/js/theme-toggle.js?v=13"></script>
+		<script src="assets/js/navbar.js?v=13"></script>
+		<script src="assets/js/panel-control.js?v=13"></script>
+		<script src="assets/js/buttons.js?v=13"></script>
+	</body>
+</html>

@@ -118,7 +118,10 @@ async function iniciarSesionInventario(evento) {
     avisarInventario("Sesión iniciada correctamente.", "ok");
     await cargarDatosInventario();
   } catch (error) {
-    avisarInventario(mensajeErrorConexionInv(), "error");
+    avisarInventario(
+      (error && error.message) || mensajeErrorConexionInv(),
+      "error"
+    );
   } finally {
     btnEntrar.disabled = false;
   }

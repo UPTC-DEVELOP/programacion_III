@@ -225,6 +225,12 @@ CREATE TABLE IF NOT EXISTS `facturas` (
     `fecha_vencimiento` DATE NOT NULL,
     `forma_pago` VARCHAR(30) NOT NULL DEFAULT 'CONTADO',
     `medio_pago` VARCHAR(30) NOT NULL DEFAULT 'EFECTIVO',
+    `valor_hora` DECIMAL(12,2) NOT NULL DEFAULT 25000.00,
+    `porcentaje_utilidad` DECIMAL(5,2) NOT NULL DEFAULT 10.00,
+    `subtotal_repuestos` DECIMAL(12,2) NOT NULL DEFAULT 0.00,
+    `mano_obra` DECIMAL(12,2) NOT NULL DEFAULT 0.00,
+    `utilidad` DECIMAL(12,2) NOT NULL DEFAULT 0.00,
+    `estado_pago` VARCHAR(30) NOT NULL DEFAULT 'PENDIENTE',
     `subtotal` DECIMAL(12,2) NOT NULL DEFAULT 0.00,
     `impuestos` DECIMAL(12,2) NOT NULL DEFAULT 0.00,
     `total` DECIMAL(12,2) NOT NULL DEFAULT 0.00,
@@ -236,6 +242,7 @@ CREATE TABLE IF NOT EXISTS `facturas` (
     UNIQUE KEY `uq_facturas_numero` (`numero_documento`),
     KEY `idx_facturas_orden` (`orden_id`),
     KEY `idx_facturas_cliente` (`cliente_id`),
+    KEY `idx_facturas_estado_pago` (`estado_pago`),
     CONSTRAINT `fk_facturas_orden`
         FOREIGN KEY (`orden_id`) REFERENCES `ordenes` (`id`)
         ON UPDATE CASCADE

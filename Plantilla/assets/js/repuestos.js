@@ -1,10 +1,29 @@
 var API_REPUESTOS = typeof window.API_TALLER === "string" ? window.API_TALLER : "../backend/rest";
-var CLAVE_PANTHER = "olimac_panther_token";
-var CLAVE_PANTHER_USUARIO = "olimac_panther_user";
-var CLAVE_PANTHER_LOGOUT_LEGACY = "olimac_panther_logout_manual";
 var listaRepuestosApi = [];
 
 document.addEventListener("DOMContentLoaded", function () {
+  if (typeof window.protegerAccesoModulo === "function") {
+    if (!window.protegerAccesoModulo("Repuestos", { login: "login.html", panel: "panel-control.html" })) {
+      return;
+    }
+  } else if (typeof window.obtenerSesion === "function" && !window.obtenerSesion()) {
+    window.location.replace("login.html");
+    return;
+  }
+
+  var pagina = document.getElementById("page-wrapper");
+  if (pagina) {
+    pagina.hidden = false;
+  }
+
+  if (typeof window.montarNavbarApp === "function" && document.getElementById("orsNavLinks")) {
+    window.montarNavbarApp({
+      incluirInicio: true,
+      incluirPanel: true,
+      destinoLogout: "index.html"
+    });
+  }
+
   var form = document.getElementById("formRepuesto");
   var buscar = document.getElementById("buscarRepuesto");
   var referencia = document.getElementById("referenciaRepuesto");
@@ -26,10 +45,6 @@ document.addEventListener("DOMContentLoaded", function () {
     marcarCampo(this, /^\d+(\.\d{1,2})?$/.test(this.value) && Number(this.value) > 0);
   });
 
-  document.getElementById("formSesionPanther").addEventListener("submit", entrarPanther);
-  document.getElementById("btnCerrarSesionPanther").addEventListener("click", function () {
-    cerrarSesionPanther(true);
-  });
   form.addEventListener("submit", guardarRepuesto);
   document.getElementById("btnLimpiarRepuesto").addEventListener("click", limpiarFormularioRepuesto);
   buscar.addEventListener("input", pintarTabla);
@@ -47,123 +62,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Limpiar bandera heredada si existía
-  sessionStorage.removeItem(CLAVE_PANTHER_LOGOUT_LEGACY);
-
-  // Sin auto-login: si no existe un token guardado por el usuario, inicia CERRADA
-  actualizarVistaSesion();
-  if (obtenerTokenPanther()) {
-    cargarRepuestos();
-  }
+  cargarRepuestos();
 });
 
 function obtenerTokenPanther() {
-  return sessionStorage.getItem(CLAVE_PANTHER) || "";
-}
-
-function obtenerUsuarioPanther() {
-  return sessionStorage.getItem(CLAVE_PANTHER_USUARIO) || "";
-}
-
-function guardarSesionPanther(token, usuario) {
-  sessionStorage.setItem(CLAVE_PANTHER, token);
-  sessionStorage.setItem(CLAVE_PANTHER_USUARIO, usuario);
-}
-
-function limpiarStoragePanther() {
-  sessionStorage.removeItem(CLAVE_PANTHER);
-  sessionStorage.removeItem(CLAVE_PANTHER_USUARIO);
-  sessionStorage.removeItem(CLAVE_PANTHER_LOGOUT_LEGACY);
-  localStorage.removeItem(CLAVE_PANTHER);
-  localStorage.removeItem(CLAVE_PANTHER_USUARIO);
-  localStorage.removeItem(CLAVE_PANTHER_LOGOUT_LEGACY);
-}
-
-async function entrarPanther(evento) {
-  evento.preventDefault();
-  var campoUsuario = document.getElementById("usuarioPanther");
-  var campoContrasenia = document.getElementById("contraseniaPanther");
-  var btnEntrar = document.getElementById("btnEntrarPanther");
-  var usuario = campoUsuario.value.trim();
-  var contrasenia = campoContrasenia.value;
-
-  if (!usuario || !contrasenia) {
-    avisar("Escriba su usuario y contraseña.", "aviso");
-    if (!usuario) {
-      campoUsuario.focus();
-    } else {
-      campoContrasenia.focus();
-    }
-    return;
-  }
-
-  btnEntrar.disabled = true;
-  try {
-    var resultado = await llamarRepuestos("useraction/login", {
-      method: "POST",
-      body: { user: usuario, password: contrasenia }
-    });
-    var token = resultado.json && resultado.json.data && resultado.json.data.keyAPI;
-    var usuarioAutenticado = (resultado.json && resultado.json.data && resultado.json.data.user) || usuario;
-    if (!resultado.respuesta.ok || !token) {
-      avisar(mensajeApi(resultado.json) || "Usuario o contraseña incorrectos.", "error");
-      return;
-    }
-
-    guardarSesionPanther(token, usuarioAutenticado);
-    campoUsuario.value = "";
-    campoContrasenia.value = "";
-    actualizarVistaSesion();
-    avisar("Sesión iniciada correctamente.", "ok");
-    await cargarRepuestos();
-  } catch (error) {
-    avisar(mensajeErrorConexion(), "error");
-  } finally {
-    btnEntrar.disabled = false;
-  }
-}
-
-function actualizarVistaSesion() {
-  var activa = Boolean(obtenerTokenPanther());
-  var usuario = obtenerUsuarioPanther();
-
-  var formLogin = document.getElementById("formSesionPanther");
-  var barraActiva = document.getElementById("sesionActivaPanther");
-  var etiquetaUsuario = document.getElementById("usuarioActivoPanther");
-  var avisoBloqueo = document.getElementById("avisoBloqueoRepuestos");
-  var panelCrud = document.getElementById("panelCrudRepuestos");
-
-  // Cuando hay sesión activa: ocultar formulario login + aviso y mostrar barra de sesión + CRUD
-  // Cuando NO hay sesión: mostrar formulario login + aviso y ocultar barra de sesión + CRUD
-  formLogin.hidden = activa;
-  barraActiva.hidden = !activa;
-  avisoBloqueo.hidden = activa;
-  panelCrud.hidden = !activa;
-
-  if (etiquetaUsuario) {
-    etiquetaUsuario.textContent = activa ? usuario : "";
-  }
-
-  // Habilitar / deshabilitar controles del CRUD como resguardo adicional
-  var controlesCrud = panelCrud.querySelectorAll("input, button, select, textarea");
-  controlesCrud.forEach(function (control) {
-    control.disabled = !activa;
-  });
-}
-
-function cerrarSesionPanther(notificar) {
-  limpiarStoragePanther();
-  listaRepuestosApi = [];
-  limpiarFormularioRepuesto();
-  document.getElementById("buscarRepuesto").value = "";
-  document.getElementById("tablaRepuestos").innerHTML = "";
-  document.getElementById("usuarioPanther").value = "";
-  document.getElementById("contraseniaPanther").value = "";
-  actualizarVistaSesion();
-  if (notificar) {
-    avisar("Sesión cerrada.", "aviso");
-  }
-  document.getElementById("usuarioPanther").focus();
+  var sesion = typeof window.obtenerSesion === "function" ? window.obtenerSesion() : null;
+  return (sesion && sesion.keyAPI) || sessionStorage.getItem("olimac_panther_token") || "";
 }
 
 function esErrorAutenticacion(resultado) {
@@ -177,16 +81,24 @@ function esErrorAutenticacion(resultado) {
   return resultado.respuesta.status === 400 && (texto.indexOf("authorization") !== -1 || texto.indexOf("keyapi") !== -1);
 }
 
+function forzarCierrePorSesionInvalida() {
+  if (typeof window.cerrarSesion === "function") {
+    window.cerrarSesion("login.html");
+    return;
+  }
+  window.location.replace("login.html");
+}
+
 async function cargarRepuestos() {
   if (!obtenerTokenPanther()) {
-    actualizarVistaSesion();
+    forzarCierrePorSesionInvalida();
     return;
   }
   try {
     var resultado = await llamarRepuestos("repuestos");
     if (esErrorAutenticacion(resultado)) {
-      cerrarSesionPanther(false);
       avisar("Tu sesión no es válida o expiró. Inicia sesión nuevamente.", "aviso");
+      forzarCierrePorSesionInvalida();
       return;
     }
     if (!resultado.respuesta.ok) {
@@ -204,8 +116,8 @@ async function cargarRepuestos() {
 async function guardarRepuesto(evento) {
   evento.preventDefault();
   if (!obtenerTokenPanther()) {
-    actualizarVistaSesion();
     avisar("Debes iniciar sesión antes de registrar o editar repuestos.", "aviso");
+    forzarCierrePorSesionInvalida();
     return;
   }
 
@@ -240,8 +152,8 @@ async function guardarRepuesto(evento) {
   try {
     var resultado = await llamarRepuestos(ruta, { method: metodo, body: cuerpo });
     if (esErrorAutenticacion(resultado)) {
-      cerrarSesionPanther(false);
       avisar("Tu sesión expiró. Inicia sesión nuevamente.", "aviso");
+      forzarCierrePorSesionInvalida();
       return;
     }
     if (!resultado.respuesta.ok) {
@@ -273,8 +185,8 @@ function cargarParaEditar(id) {
 
 async function eliminarRepuesto(id) {
   if (!obtenerTokenPanther()) {
-    actualizarVistaSesion();
     avisar("Debes iniciar sesión para eliminar repuestos.", "aviso");
+    forzarCierrePorSesionInvalida();
     return;
   }
   if (!window.confirm("¿Está seguro de eliminar este repuesto?")) {
@@ -283,8 +195,8 @@ async function eliminarRepuesto(id) {
   try {
     var resultado = await llamarRepuestos("repuestos/" + encodeURIComponent(id), { method: "DELETE" });
     if (esErrorAutenticacion(resultado)) {
-      cerrarSesionPanther(false);
       avisar("Tu sesión expiró. Inicia sesión nuevamente.", "aviso");
+      forzarCierrePorSesionInvalida();
       return;
     }
     if (!resultado.respuesta.ok) {
@@ -364,10 +276,10 @@ function reflejarCatalogoLocal() {
 async function llamarRepuestos(ruta, opciones) {
   var headers = {
     "Content-Type": "application/json",
-    "Accept": "application/json"
+    Accept: "application/json"
   };
   var token = obtenerTokenPanther();
-  if (token && ruta !== "useraction/login") {
+  if (token) {
     headers.Authorization = token;
     headers.keyAPI = token;
   }

@@ -9,61 +9,101 @@
 		<title>Taller Mecánico - Olimac Riders Store</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<link rel="stylesheet" href="assets/css/modulos.css" />
+		<script>
+			(function () {
+				try {
+					if (localStorage.getItem("olimac_theme_mode") === "dark") {
+						document.documentElement.classList.add("theme-dark");
+					}
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="assets/css/main.css?v=12" />
+		<link rel="stylesheet" href="assets/css/modulos.css?v=12" />
+		<link rel="stylesheet" href="assets/css/navbar-home.css?v=12" />
+		<link rel="stylesheet" href="assets/css/theme.css?v=12" />
+		<link rel="stylesheet" href="assets/css/components.css?v=12" />
+		<link rel="stylesheet" href="assets/css/buttons.css?v=12" />
+		<link rel="stylesheet" href="assets/css/home-landing.css?v=12" />
 	</head>
 	<body class="homepage is-preload">
 		<div id="page-wrapper">
 
-			<!-- Header -->
-				<header id="header">
-					<div class="logo container">
-						<div>
-							<h1><a href="index.html" id="logo">Olimac Riders Store</a></h1>
-							<p>Sistema de Gestión de Taller Mecánico</p>
+				<header class="ors-navbar" id="orsNavbar">
+					<div class="ors-navbar__inner">
+						<div class="ors-brand">
+							<button type="button" class="ors-theme-toggle" title="Cambiar a modo oscuro" aria-label="Cambiar a modo oscuro" aria-pressed="false">
+								<svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+									<circle cx="12" cy="12" r="4"></circle>
+									<path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.1 5.1l1.6 1.6M17.3 17.3l1.6 1.6M18.9 5.1l-1.6 1.6M6.7 17.3l-1.6 1.6"></path>
+								</svg>
+								<svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+									<path d="M19.5 13.2A7.5 7.5 0 0 1 10.8 4.5 6.8 6.8 0 1 0 19.5 13.2z"></path>
+								</svg>
+							</button>
+							<a class="ors-brand__text" href="index.html" aria-label="Olimac Riders Store - Inicio">
+								<span class="ors-brand__name">Olimac Riders Store</span>
+								<span class="ors-brand__sub">Gestión de Taller Mecánico</span>
+							</a>
 						</div>
+
+						<nav class="ors-nav" aria-label="Navegación principal">
+							<a class="ors-nav__link is-active" href="index.html">Inicio</a>
+							<a class="ors-nav__cta" id="btnAccesoPublico" href="login.html">
+								<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+									<path d="M10 12h9"></path>
+									<path d="M15.5 8.5L19 12l-3.5 3.5"></path>
+									<path d="M13 5H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h6"></path>
+								</svg>
+								<span class="ors-nav__cta-label">Iniciar sesión</span>
+							</a>
+						</nav>
 					</div>
 				</header>
 
-			<!-- Nav -->
-				<nav id="nav">
-					<ul>
-						<li class="current"><a href="index.html">Inicio</a></li>
-						<li><a href="no-sidebar.html">Clientes</a></li>
-						<li><a href="left-sidebar.html">Vehículos</a></li>
-						<li><a href="proveedores.html">Proveedores</a></li>
-						<li><a href="orden-servicio.html">Servicios</a></li>
-						<li><a href="right-sidebar.html">Empleados</a></li>
-						<li><a href="repuestos.html">Repuestos</a></li>
-						<li><a href="inventario.html">Inventario</a></li>
-						<li><a href="factura.html">Facturación</a></li>
-						<li><a href="acceso.html">Iniciar sesión</a></li>
-					</ul>
-				</nav>
-
-			<!-- Banner -->
 				<section id="banner">
-					<div class="content">
+					<div class="hero-bg-shift" aria-hidden="true"></div>
+					<div class="content hero-card" id="heroFranja" tabindex="0" aria-label="Presentación del taller">
 						<h2>Gestión taller mecánico</h2>
 						<p>Administra clientes, vehículos, servicios, repuestos y facturación.</p>
 						<a href="#servicios" class="button scrolly">Conocer servicios</a>
-						<a href="acceso.html" class="button scrolly">Acceder al sistema</a>
 					</div>
 				</section>
 
-			<!-- Main -->
 				<section id="main">
 					<div class="container">
 						<div class="row gtr-200">
 							<div class="col-12">
-
-								<!-- Highlight -->
 									<section class="box highlight">
-										<ul class="special">
-											<li><a href="no-sidebar.html" class="icon solid fa-users"><span class="label">Clientes</span></a></li>
-											<li><a href="repuestos.html" class="icon solid fa-cog"><span class="label">Repuestos</span></a></li>
-											<li><a href="left-sidebar.html" class="icon solid fa-car"><span class="label">Vehículos</span></a></li>
-											<li><a href="#servicios" class="icon solid fa-file-alt"><span class="label">Facturación</span></a></li>
+										<ul class="special-grid">
+											<li>
+												<a class="special-item" href="no-sidebar.html">
+													<span class="special-circle icon solid fa-users" aria-hidden="true"></span>
+													<span class="special-title">Clientes</span>
+													<span class="special-desc">Registro y contacto</span>
+												</a>
+											</li>
+											<li>
+												<a class="special-item" href="repuestos.html">
+													<span class="special-circle icon solid fa-cog" aria-hidden="true"></span>
+													<span class="special-title">Servicios y Repuestos</span>
+													<span class="special-desc">Órdenes e inventario</span>
+												</a>
+											</li>
+											<li>
+												<a class="special-item" href="left-sidebar.html">
+													<span class="special-circle icon solid fa-car" aria-hidden="true"></span>
+													<span class="special-title">Vehículos</span>
+													<span class="special-desc">Control por placa e ingreso</span>
+												</a>
+											</li>
+											<li>
+												<a class="special-item" href="factura.html">
+													<span class="special-circle icon solid fa-file-alt" aria-hidden="true"></span>
+													<span class="special-title">Facturación</span>
+													<span class="special-desc">Liquidación legal + IVA 19%</span>
+												</a>
+											</li>
 										</ul>
 										<header>
 											<h2>Un sistema para el taller</h2>
@@ -74,11 +114,9 @@
 											y los repuestos utilizados para cada servicio.
 										</p>
 									</section>
-
 							</div>
-							<div class="col-12" id="servicios">
 
-								<!-- Features -->
+							<div class="col-12" id="servicios">
 									<section class="box features">
 										<h2 class="major"><span>Servicios del sistema</span></h2>
 										<div>
@@ -137,81 +175,141 @@
 														</p>
 													</section>
 												</div>
-												<div class="col-12">
-													<ul class="actions">
-														<li><a href="no-sidebar.html" class="button large">Acceder a clientes</a></li>
-														<li><a href="#contacto" class="button alt large">Ir a contacto</a></li>
-													</ul>
-												</div>
 											</div>
 										</div>
 									</section>
-
 							</div>
-							<div class="col-12" id="nosotros">
 
-								<!-- Blog -->
+							<div class="col-12" id="nosotros">
 									<section class="box blog">
 										<h2 class="major"><span>Nosotros</span></h2>
-										<div>
-											<div class="row">
-												<div class="col-9 col-12-medium">
-													<div class="content">
-														<article class="box post">
-															<header>
-																<h3>Olimac Riders Store</h3>
-																<p>Taller mecánico en Tunja, Boyacá</p>
-															</header>
-															<a href="#" class="image featured nosotros-foto"><img src="images/Nosotros.jpg" alt="Fachada de Olimac Riders Store" /></a>
-															<p>
-																Atendemos el ingreso de vehículos, asignamos mecánicos a cada servicio,
-																registramos horas y repuestos, y calculamos la factura legal con utilidad e IVA del 19 %.
-															</p>
-														</article>
-													</div>
-												</div>
-												<div class="col-3 col-12-medium">
-													<div class="sidebar">
-														<ul class="divided">
-															<li>
-																<article class="box post-summary">
-																	<h3>Dirección</h3>
-																	<p>Tunja, Colombia. Calle -- #--</p>
-																</article>
-															</li>
-															<li>
-																<article class="box post-summary">
-																	<h3>Teléfono</h3>
-																	<p>3024555555</p>
-																</article>
-															</li>
-															<li>
-																<article class="box post-summary">
-																	<h3>Horario</h3>
-																	<p>Lunes a sábado, 8:00 a.m. a 6:00 p.m.</p>
-																</article>
-															</li>
-															<li>
-																<article class="box post-summary">
-																	<h3>Correo</h3>
-																	<p>tallermecanico@gmail.com</p>
-																</article>
-															</li>
-														</ul>
-														<a href="#contacto" class="button alt">Contacto</a>
-													</div>
-												</div>
-											</div>
+										<div class="nosotros-layout">
+											<article class="box post nosotros-card">
+												<header>
+													<h3>Olimac Riders Store</h3>
+													<p class="nosotros-sub">Taller mecánico en Tunja, Boyacá</p>
+												</header>
+												<a href="#nosotros" class="image featured nosotros-foto"><img src="images/Nosotros.jpg" alt="Fachada de Olimac Riders Store" /></a>
+												<p>
+													Atendemos el ingreso de vehículos, asignamos mecánicos a cada servicio,
+													registramos horas y repuestos, y calculamos la factura legal con utilidad e IVA del 19 %.
+												</p>
+											</article>
+
+											<aside class="box contacto-info-card" aria-label="Datos de contacto">
+												<ul class="contacto-grid">
+													<li class="contacto-item">
+														<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.4 7-11a7 7 0 1 0-14 0c0 5.6 7 11 7 11z"></path><circle cx="12" cy="10" r="2.4"></circle></svg>
+														<h3>Dirección</h3>
+														<p>Tunja, Colombia. Calle -- #--</p>
+													</li>
+													<li class="contacto-item">
+														<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.2 1.4a12 12 0 0 0 5.8 5.8L16 14l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"></path></svg>
+														<h3>Teléfono</h3>
+														<p>3024555555</p>
+													</li>
+													<li class="contacto-item">
+														<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 7.5V12l3 2"></path></svg>
+														<h3>Horario</h3>
+														<p>Lunes a sábado, 8:00 a.m. a 6:00 p.m.</p>
+													</li>
+													<li class="contacto-item">
+														<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4z"></path><path d="M4 7l8 6 8-6"></path></svg>
+														<h3>Correo</h3>
+														<p>tallermecanico@gmail.com</p>
+													</li>
+												</ul>
+											</aside>
 										</div>
 									</section>
-
 							</div>
+
 							<div class="col-12" id="contacto">
 									<section class="box">
-										<h2 class="major"><span>Contacto</span></h2>
+										<h2 class="major"><span>Escríbenos</span></h2>
 										<p>¿Tienes preguntas o necesitas asesoría? Estamos listos para ayudarte.</p>
 										<form id="formContacto">
 											<div class="row">
 												<div class="col-6 col-12-medium">
 													<label for="nombreTaller">Nombre del taller</label>
-													<input type="text" id="nombreTaller" name="nombreTaller" placeholder="Ej. Riders Store" required
+													<input type="text" id="nombreTaller" name="nombreTaller" placeholder="Ej. Riders Store" required />
+												</div>
+												<div class="col-6 col-12-medium">
+													<label for="propietario">Propietario</label>
+													<input type="text" id="propietario" name="propietario" placeholder="Nombre completo" required />
+												</div>
+												<div class="col-6 col-12-medium">
+													<label for="emailContacto">Email</label>
+													<input type="email" id="emailContacto" name="email" placeholder="correo@ejemplo.com" required />
+												</div>
+												<div class="col-6 col-12-medium">
+													<label for="telefonoContacto">Número celular</label>
+													<input type="tel" id="telefonoContacto" name="telefono" placeholder="Ej. 3001234567" required />
+												</div>
+												<div class="col-12">
+													<ul class="actions">
+														<li><input type="submit" value="Enviar" /></li>
+														<li><input type="reset" value="Limpiar" class="alt" /></li>
+													</ul>
+												</div>
+											</div>
+										</form>
+										<p id="mensajeContacto"></p>
+									</section>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<footer id="footer">
+					<div class="container">
+						<div class="row gtr-200">
+							<div class="col-12">
+								<section>
+									<h2 class="major"><span>Taller Mecánico</span></h2>
+									<p>
+										Servicio y mantenimiento para tu vehículo. Sistema web de Programación III - UPTC, Grupo 3.
+										Diseño basado en la plantilla <a href="http://html5up.net">TXT de HTML5 UP</a>.
+									</p>
+								</section>
+							</div>
+							<div class="col-12">
+								<section>
+									<h2 class="major"><span>Redes</span></h2>
+									<ul class="contact">
+										<li><a class="icon brands fa-twitter" href="#"><span class="label">X</span></a></li>
+										<li><a class="icon brands fa-instagram" href="#"><span class="label">Instagram</span></a></li>
+										<li><a class="icon brands fa-youtube" href="#"><span class="label">YouTube</span></a></li>
+										<li><a class="icon brands fa-linkedin-in" href="#"><span class="label">LinkedIn</span></a></li>
+									</ul>
+								</section>
+							</div>
+						</div>
+						<div id="copyright">
+							<ul class="menu">
+								<li>&copy; 2026 Olimac Riders Store - UPTC</li>
+								<li>Diseño: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</div>
+				</footer>
+
+		</div>
+
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script src="assets/js/contacto.js?v=12"></script>
+			<script src="assets/js/api-taller.js?v=12"></script>
+			<script src="assets/js/theme-toggle.js?v=12"></script>
+			<script src="assets/js/navbar-home.js?v=12"></script>
+			<script src="assets/js/buttons.js?v=12"></script>
+			<script src="assets/js/hero-neon.js?v=12"></script>
+			<script src="assets/js/special-hover.js?v=12"></script>
+
+	</body>
+</html>

@@ -133,14 +133,18 @@ class UserAction implements IRequest
             $userBD = self::authenticate($userLogin->user, $userLogin->password);
 
             if ($userBD !== null) {
+                $rol = strtoupper(trim((string) ($userBD['roles'] ?? '')));
+                if ($rol === '') {
+                    $rol = 'MECANICO';
+                }
+
                 $user = new User();
                 $user->setId($userBD['id']);
                 $user->setUser($userBD['user']);
-                $user->setRoles($userBD['roles']);
+                $user->setRoles($rol);
                 $user->setKeyAPI($userBD['keyAPI']);
 
-                // Retorna respuesta exitosa con los datos del usuario
-                return new ContentBody(Status::OK,Status::ST200, $user);
+                return new ContentBody(Status::OK, Status::ST200, $user);
             }
 
             // En caso de credenciales incorrectas

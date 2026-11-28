@@ -153,10 +153,12 @@ class User implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
+        $rol = $this->roles ?? null;
         return [
             'id' => $this->id ?? null,
             'user' => $this->user ?? null,
-            'roles' => $this->roles ?? null,
+            'roles' => $rol,
+            'rol' => $rol,
             'keyAPI' => $this->keyAPI ?? null
         ];
     }

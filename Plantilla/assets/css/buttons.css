@@ -1,0 +1,211 @@
+:root {
+	--btn-radius: 12px;
+	--btn-radius-pill: 999px;
+	--btn-transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+	--btn-verde: #7db87a;
+	--btn-verde-hover: #6aa866;
+	--btn-carbon: #3d4842;
+	--btn-blanco: #ffffff;
+	--btn-shadow: 0 8px 18px rgba(125, 184, 122, 0.28);
+	--btn-shadow-hover: 0 12px 24px rgba(106, 168, 102, 0.34);
+	--btn-pink-a: #fadadd;
+	--btn-pink-b: #f4a6b8;
+	--btn-pink-border: #f29bb2;
+	--btn-pink-text: #6d2e46;
+	--btn-pink-glow: 0 0 0 4px rgba(244, 166, 184, 0.35), 0 4px 12px rgba(244, 166, 184, 0.45);
+}
+
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+button:not(.ors-nav__cta),
+.button,
+.btn,
+.login-boton,
+.login-toggle-pass,
+.panel-btn-salir,
+.rep-boton {
+	position: relative;
+	overflow: hidden;
+	isolation: isolate;
+	border-radius: var(--btn-radius) !important;
+	font-family: "Open Sans Condensed", sans-serif !important;
+	font-weight: 700 !important;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	transition: var(--btn-transition) !important;
+	will-change: transform, box-shadow, background, color, border-color;
+	cursor: pointer;
+}
+
+input[type="button"],
+input[type="submit"],
+button:not(.ors-nav__cta):not(.login-toggle-pass):not(.rep-boton-secundario):not(.rep-boton-editar):not(.rep-boton-eliminar):not(.panel-btn-salir),
+.button:not(.alt),
+.btn:not(.alt):not(.btn-secondary):not(.btn-warning):not(.btn-danger),
+.login-boton,
+.rep-boton-principal,
+.btn-primary {
+	background: linear-gradient(145deg, #9dcf98, var(--btn-verde)) !important;
+	color: var(--btn-blanco) !important;
+	border: 1px solid transparent !important;
+	box-shadow: var(--btn-shadow);
+	padding: 0.85em 1.65em;
+	line-height: 1.15;
+}
+
+.button.large,
+button.large,
+.btn.large {
+	border-radius: 14px !important;
+	padding: 0.95em 1.85em;
+}
+
+input[type="reset"],
+.button.alt,
+button.alt,
+.btn.alt,
+.btn-secondary,
+.rep-boton-secundario,
+.login-toggle-pass {
+	background: rgba(255, 255, 255, 0.62) !important;
+	color: var(--btn-carbon) !important;
+	border: 1px solid rgba(109, 125, 116, 0.28) !important;
+	box-shadow: 0 6px 16px rgba(61, 72, 66, 0.08);
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+}
+
+.rep-boton-editar,
+.btn-warning {
+	background: linear-gradient(145deg, #8eb9d4, #6a9fbf) !important;
+	color: #fff !important;
+	border: 1px solid transparent !important;
+	box-shadow: 0 6px 14px rgba(106, 159, 191, 0.28);
+}
+
+.rep-boton-eliminar,
+.btn-danger {
+	background: linear-gradient(145deg, #d98989, #c56b6b) !important;
+	color: #fff !important;
+	border: 1px solid transparent !important;
+	box-shadow: 0 6px 14px rgba(197, 107, 107, 0.28);
+}
+
+#banner .content .button {
+	border-radius: var(--btn-radius-pill) !important;
+	padding: 0.95em 1.9em !important;
+	font-size: 1.15em !important;
+	background: rgba(255, 255, 255, 0.16) !important;
+	color: #f4f7f5 !important;
+	border: 1px solid rgba(255, 255, 255, 0.38) !important;
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+}
+
+.panel-btn-salir {
+	border-radius: var(--btn-radius-pill) !important;
+	background: linear-gradient(145deg, #74887c, #61756a) !important;
+	color: #fff !important;
+	border: 1px solid transparent !important;
+	box-shadow: 0 8px 18px rgba(97, 117, 106, 0.28);
+}
+
+.login-boton {
+	width: 100%;
+}
+
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+button:not(.ors-nav__cta):not(:disabled):hover,
+.button:hover,
+.btn:hover,
+.login-boton:hover:not(:disabled),
+.login-toggle-pass:hover,
+.panel-btn-salir:hover,
+.rep-boton:hover:not(:disabled) {
+	transform: translateY(-2px);
+	filter: brightness(1.04);
+	box-shadow: var(--btn-shadow-hover);
+}
+
+.button.alt:hover,
+button.alt:hover,
+.btn.alt:hover,
+.btn-secondary:hover,
+.rep-boton-secundario:hover,
+.login-toggle-pass:hover,
+input[type="reset"]:hover {
+	background: rgba(255, 255, 255, 0.82) !important;
+	border-color: rgba(109, 125, 116, 0.4) !important;
+}
+
+#banner .content .button:hover {
+	transform: translateY(-2px);
+	filter: brightness(1.08);
+	background: rgba(255, 255, 255, 0.24) !important;
+}
+
+input[type="button"]:active,
+input[type="submit"]:active,
+input[type="reset"]:active,
+button:not(.ors-nav__cta):active,
+.button:active,
+.btn:active,
+.login-boton:active,
+.login-toggle-pass:active,
+.panel-btn-salir:active,
+.rep-boton:active,
+.btn-pressed {
+	background: linear-gradient(135deg, var(--btn-pink-a) 0%, var(--btn-pink-b) 100%) !important;
+	border: 1px solid var(--btn-pink-border) !important;
+	color: var(--btn-pink-text) !important;
+	box-shadow: var(--btn-pink-glow) !important;
+	transform: translateY(1px) scale(0.97) !important;
+	filter: none !important;
+}
+
+body:not(.homepage) .ors-nav__cta {
+	position: relative;
+	overflow: hidden;
+	isolation: isolate;
+	transition: var(--btn-transition) !important;
+}
+
+body:not(.homepage) .ors-nav__cta:active,
+body:not(.homepage) .ors-nav__cta.btn-pressed {
+	background: linear-gradient(135deg, var(--btn-pink-a) 0%, var(--btn-pink-b) 100%) !important;
+	border: 1px solid var(--btn-pink-border) !important;
+	color: var(--btn-pink-text) !important;
+	box-shadow: var(--btn-pink-glow) !important;
+	transform: translateY(1px) scale(0.97) !important;
+}
+
+.btn-pressed svg,
+.button:active svg,
+button:active svg,
+.rep-boton:active svg,
+body:not(.homepage) .ors-nav__cta:active svg,
+body:not(.homepage) .ors-nav__cta.btn-pressed svg {
+	stroke: var(--btn-pink-text);
+	color: var(--btn-pink-text);
+}
+
+.btn-ripple {
+	position: absolute;
+	border-radius: 50%;
+	transform: scale(0);
+	background: rgba(255, 240, 245, 0.65);
+	pointer-events: none;
+	animation: ors-btn-ripple 0.55s ease-out forwards;
+	z-index: 1;
+}
+
+@keyframes ors-btn-ripple {
+	to {
+		transform: scale(2.6);
+		opacity: 0;
+	}
+}
