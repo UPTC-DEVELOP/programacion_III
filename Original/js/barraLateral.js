@@ -20,7 +20,11 @@ document.addEventListener('DOMContentLoaded', async () => {
    }
   const enlacesCompletos = (contenidoBarra.match(/barra-lateral__enlace/g) || []).length >= 5
     && contenidoBarra.includes('barraLateralCerrarSesion');
-  contenedor.innerHTML = enlacesCompletos ? contenidoBarra : PLANTILLA_BARRA_LATERAL;
+  if (!enlacesCompletos) {
+    console.error('barraLateral.html no se pudo leer completo; no se muestra la barra lateral.');
+    return;
+  }
+  contenedor.innerHTML = contenidoBarra;
   
 
   const barra = document.getElementById('barraLateral');
