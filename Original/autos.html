@@ -104,12 +104,13 @@
             <span class="error" id="errorColor"></span>
           </div>
 
-          <!-- Campo: cédula del dueño -->
+          <!-- Campo: cédula del dueño (se llena con los clientes registrados) -->
           <div class="campo">
             <label for="cedulaDueno">Cédula del dueño</label>
-            <input type="text" id="cedulaDueno" name="cedulaDueno" maxlength="20" 
-              placeholder="Ej: 1015896321" autocomplete="off">
-            <small class="ayuda">Debe corresponder a un cliente ya registrado.</small>
+            <select id="cedulaDueno" name="cedulaDueno">
+              <option value="">-- Selecciona un cliente --</option>
+            </select>
+            <small class="ayuda">Elige un cliente ya registrado.</small>
             <span class="error" id="errorCedulaDueno"></span>
           </div>
 

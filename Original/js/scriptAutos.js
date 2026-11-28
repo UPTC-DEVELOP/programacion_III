@@ -23,7 +23,31 @@ async function cargarDatos() {
     autos = [];
     mostrarMensaje('No se pudieron cargar los datos: ' + error.message, 'error');
   }
+  llenarSelectClientes(); 
   refrescarTabla();
+}
+
+// Llena el desplegable del dueño con los clientes que vienen del backend
+function llenarSelectClientes() {
+  const select = document.getElementById('cedulaDueno');
+  const seleccionado = select.value; // por si ya había uno elegido
+
+  select.innerHTML = '';
+  const primera = document.createElement('option');
+  primera.value = '';
+  primera.textContent = clientesRegistrados.length
+    ? '-- Selecciona un cliente --'
+    : 'No hay clientes registrados';
+  select.appendChild(primera);
+
+  clientesRegistrados.forEach((c) => {
+    const opcion = document.createElement('option');
+    opcion.value = c.document;
+    opcion.textContent = c.name ? `${c.document} · ${c.name}` : c.document;
+    select.appendChild(opcion);
+  });
+
+  select.value = seleccionado;
 }
 
 // ---------- Utilidades ----------
