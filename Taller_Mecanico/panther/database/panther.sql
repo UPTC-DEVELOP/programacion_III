@@ -14,7 +14,8 @@
 CREATE TABLE `j4rol` (
   `id` int(11) NOT NULL,
   `name` varchar(30) NOT NULL,
-  `description` varchar(200) NOT NULL
+  `description` varchar(200) NOT NULL,
+  `dateDelete` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -36,7 +37,7 @@ CREATE TABLE `j4user` (
   `user` varchar(254) NOT NULL,
   `password` varchar(128) NOT NULL,
   `keyAPI` varchar(60) NOT NULL,
-  `roles` int(30) NOT NULL,
+  `roles` int(2) NOT NULL DEFAULT 3,
   `dateDelete` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -66,24 +67,52 @@ ALTER TABLE `j4user`
 --
 ALTER TABLE `j4user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-  
+
+CREATE TABLE `documenttype` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre_corto` varchar(5) DEFAULT NULL,
+  `nombre_largo` text DEFAULT NULL,
+  `dateDelete` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `documenttype` (`id`, `nombre_corto`, `nombre_largo`, `dateDelete`) VALUES
+(1, 'CC', 'Cedula ciudadania', NULL),
+(2, 'CE', 'Cedula Extranjeria', NULL),
+(3, 'NIT', 'Numero Identificacion Tributario', NULL),
+(11, 'PA', 'Pasaporte', NULL);
+
 CREATE TABLE `person` (
   `id` int(11) NOT NULL,
   `name` varchar(30) NOT NULL,
   `lastName` varchar(30) NOT NULL,
-  `phone` int(10) NOT NULL
+  `phone` varchar(20) NOT NULL,
+  `dateDelete` datetime DEFAULT NULL,
+  `document_type_id` int(11) NOT NULL,
+  `identitydocument` varchar(20) NOT NULL,
+  `email` text DEFAULT NULL,
+  `address` varchar(60) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Indices de la tabla `person`
 --
 ALTER TABLE `person`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `documenttype` (`document_type_id`);
 
 --
 -- AUTO_INCREMENT de la tabla `person`
 --
 ALTER TABLE `person`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;COMMIT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
-INSERT INTO person(name, lastName, phone) VALUES ('Nicolás','Pinzón',3419478);
+ALTER TABLE `person`
+  ADD CONSTRAINT `fk_person_documenttype`
+  FOREIGN KEY (`document_type_id`) REFERENCES `documenttype` (`id`)
+  ON UPDATE CASCADE;
+
+COMMIT;
+
+INSERT INTO person(name, lastName, phone, document_type_id, identitydocument)
+VALUES ('Nicolás', 'Pinzón', '3419478', 1, '3419478');

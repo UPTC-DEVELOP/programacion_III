@@ -1,5 +1,6 @@
 <?php
 require_once 'LoginMysql.php';
+require_once __DIR__ . '/DatabaseMigrations.php';
 
 /**
  * <b>Descripcion:</b> Clase que <br/> gestiona la conexion a la base de datos mysql
@@ -62,6 +63,7 @@ class Connection
             
             // Habilitar excepciones
             self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            DatabaseMigrations::run(self::$pdo);
         }
         
         return self::$pdo;
